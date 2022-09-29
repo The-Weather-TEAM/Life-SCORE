@@ -1,3 +1,14 @@
 code avec tkinter (python) qui donne la météo en temps réel de la ville souhaitée
 
-efefefe
+petite fenêtre pas énorme qui se redimentionne pas
+ 
+ 
+ une seule page
+ en haut à gauche = espace pour rechercher la ville
+ 
+ emojis pour donner la météo ET d'autres pour la température
+ (peut être un petit code pour visualser le thermomètre) -> vraiment optionnel
+ 
+ (prévisions mais si on a le temps aussi)
+ 
+ NATHAN  = couchcer et lever du soleil -> convertion d'unix en temps réel + traitement UTC (en fonction de la position)
