@@ -3,16 +3,25 @@ import requests
 
 def température() :
     
+    ville = 'Béziers'
     #ville = input('Votre ville : ')
-    url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q='+'Rennes'
+    url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + ville
     
     
     data =  requests.get(url).json()
     print(data)
     
     temp = round(data['main']['temp'] - 273.15, 1)             # convertion kelvin en degrés celsus
-    
-    print('\n\n\n\n\n\n', temp, '°C ⛈')
+    temp_min = round(data['main']['temp_min'] - 273.15, 1)
+    temp_max = round(data['main']['temp_max'] - 273.15, 1) 
+    ressenti = round(data['main']['feels_like'] - 273.15, 1)
+    humidité = (data['main']['humidity'])
+    #description = data['weather']['desciption']               J'ai un souci avec les chaines de caractères
+    print('\n',f"La température actuelle de {ville} est de {temp} °C")
+    print('\n',f"La température minimale de {ville} est de {temp_min} °C")
+    print('\n',f"La température maximale de {ville} est de {temp_max} °C")
+    print('\n',f"Le ressenti actuel de {ville} est de {ressenti} °C")
+    print('\n',f"Le taux d'humidité de {ville} est de {humidité} %")
 
 
 
