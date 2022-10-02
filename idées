@@ -10,5 +10,10 @@ petite fenêtre pas énorme qui se redimentionne pas
  (peut être un petit code pour visualser le thermomètre) -> vraiment optionnel
  
  (prévisions mais si on a le temps aussi)
- 
- NATHAN  = couchcer et lever du soleil -> convertion d'unix en temps réel + traitement UTC (en fonction de la position)
+
+
+maintenant il faut :
+- ameliorer le système d'emojis (en fonction des nuages)
+- rajouter des emojis en fonction de la température
+
+puis après on commence tkinter
