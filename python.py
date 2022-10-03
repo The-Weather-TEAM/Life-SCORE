@@ -1,31 +1,55 @@
+'''
+                    LOGICIEL MÉTÉO
+affiche les données météorologiques de la ville souhaitée.
+
+                       créé par 
+                   Frédéric MARQUET 
+                          & 
+                     Nathan BOSY
+
+
+                        v0.2
+'''
+
+
 import requests
-from datetime import datetime
 from requests.exceptions import ConnectionError
+
+from datetime import datetime
 from time import sleep
 
+researches = 0
 
-def data() :
+def data(researches) :
 
+    
 
     '''
     Ici on a un programme qui demande ET vérifie si la ville qui est entrée existe,
     puis après on récupère toutes ses données
     '''
+
+    new = ''
+    
     temp = 0
     while temp == 0 :
         
-            ville = input('Votre ville : ')
-            #ville = ville.replace(' ','') -> pas possible (contre-exemple : New York)
-            #ville = 'Béziers'                         # test plus rapide
+            if researches >= 1 :
+                new = 'nouvelle '                      # pour changer le texte en recherchant
             
-            test_connexion()                           # test de connexion à internet
+            ville = input(f'Veillez rentrer le nom de la {new}ville : ')
+            #ville = 'Béziers'                         # test plus rapide
+            #ville = ville.replace(' ','')             -> pas possible (contre-exemple : New York)
+            
+            test_connexion()                           # vérification d'accès à internet
             url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + ville
             data =  requests.get(url).json()
             
-            if data['cod'] == 200 :
+
+            if data['cod'] == 200 :                    # code signifiant que la ville existe
                 temp = 1
                 
-            else : print('\n Cette ville n\'existe pas. Veuillez réessayer.\n')
+            else : print('\nCette ville n\'existe pas ! Veuillez réessayer.\n\n')
             
 
     #print(data)     # test pour avoir toutes les données
@@ -35,38 +59,47 @@ def data() :
     '''
     Récupération de toutes les données puis conversion avec les bonnes unités
     '''  
+    
     t     = round(data['main']['temp'] - 273.15, 1)            # convertion kelvin en degrés celsus
     t_min = round(data['main']['temp_min'] - 273.15, 1)        
     t_max = round(data['main']['temp_max'] - 273.15, 1)     
-    
     res   = round(data['main']['feels_like'] - 273.15, 1)
+    
     hum   = data['main']['humidity']
     desc  = data['weather'][0]['description']  
+    
     pres  = round(data['main']['pressure']/1013.25, 3)         # convertion hP en ATM
     vis   = round(data['visibility']/1000, 1)                  # convertion m en degrés km
     
     logo  = data['weather'][0]['icon']
     
+    time = datetime.utcfromtimestamp(data['dt'] + data['timezone']).strftime('nous sommes le %d/%m/%Y et il est %Hh%Mm%Ss')
     lever = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%Mm%Ss') 
     coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%Mm%Ss')
-    
+
     wind  = round(data['wind']['speed'] * 3.6, 1)
     cloud = data['clouds']['all']
     
-
     
     
     UTC =   round(data['timezone']/3600)      # diviser par le nombre de sec dans une heure
     
     if UTC >= 0 :
-        UTC = '+'+str(UTC)                    # rajouter "+" si l'UTC est positif
+        str_UTC = '+'+str(UTC)                # rajouter "+" si l'UTC est positif
+    else :
+        str_UTC = str(UTC)
+        
+    
+
     
     
     
     '''
     Affichage (pour l'instant que dans la console) des données extraites avec la convertion
     '''   
+    
     print('\n\n',f"DONNÉES DE LA VILLE DE {ville.upper()} -", image(logo, data))    # fonction upper pour mettre la var en majuscules
+    print(f" là bas, {time} (UTC{str_UTC}) !")
     
     print('\n',f" - Température :          {t}°C",
           '\n',f" - Température min :      {t_min}°C",
@@ -76,10 +109,10 @@ def data() :
           '\n',f" - Description :          {desc.capitalize()}",                    # capitalize pour rajouter une majuscule
           '\n',f" - Pression :             {pres} ATM",
           '\n',f" - Visibilité :           {vis}km",
-          '\n',f" - Lever du soleil :      {lever} (UTC{UTC})",
-          '\n',f" - Coucher :              {coucher} (UTC{UTC})",
-          '\n',f" - Vent :                 {wind}hm/h",
-          '\n',f" - Nuages :               {cloud}%",)
+          '\n',f" - Lever du soleil :      {lever} (UTC{str_UTC})",
+          '\n',f" - Coucher :              {coucher} (UTC{str_UTC})",
+          '\n',f" - Vent :                 {wind}km/h",
+          '\n',f" - Nuages :               {cloud}%")
 
 
 
@@ -90,6 +123,9 @@ def data() :
     if ('snow' in data) :
         snow = data['snow']['1h']
         print(f"  - Neige :                {snow}mm/h")
+    
+
+    print("\n")          # retour à la ligne
     
 
 
@@ -140,6 +176,10 @@ EXEMPLE DE DONNEES RECUPEREES
  'name': 'Béziers',                                FAIT
 
  'cod': 200}                                       FAIT
+
+
++ SNOW ET RAIN BIEN SÛR !!!
+
 '''
 
 
@@ -147,12 +187,13 @@ EXEMPLE DE DONNEES RECUPEREES
 
 
 
-def image(code, data) : #data pour calculer ensuite les % des nuages
+def image(code, data) : # data pour calculer ensuite les % des nuages
     
     '''
     Convertion du code de la météo en émoji
     
-    A AMELIORER EN FONCTION DES PRECIPITATIONS / NUAGES
+    A AMELIORER EN FONCTION DES PRECIPITATIONS / NUAGES (ou le code de la météo c'est sympa aussi')
+    à voir si on préfère les images
     '''
     
     if   code == '01d' :
@@ -204,7 +245,9 @@ def test_connexion() :
 '''
 PROGRAMME DE TEST
 '''
+
 while True :
-    data()
+    data(researches)
+    researches += 1 
     
     
