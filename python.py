@@ -35,7 +35,7 @@ def data(researches) :
     while temp == 0 :
         
             if researches >= 1 :
-                new = 'nouvelle '                      # pour changer le texte en recherchant
+                new = 'nouvelle '                      # pour changer le texte en recherchant plus d'une fois
             
             ville = input(f'Veillez rentrer le nom de la {new}ville : ')
             #ville = 'Béziers'                         # test plus rapide
