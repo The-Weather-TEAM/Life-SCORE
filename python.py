@@ -171,7 +171,7 @@ EXEMPLE DE DONNEES RECUPEREES
 
  'timezone': 7200,                                 FAIT
  
- 'id': 3032832,
+ 'id': 3032832,                                    FAIT
  
  'name': 'Béziers',                                FAIT
 
