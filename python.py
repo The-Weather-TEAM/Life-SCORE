@@ -15,6 +15,7 @@ def data() :
     while temp == 0 :
         
             ville = input('Votre ville : ')
+            #ville = ville.replace(' ','') -> pas possible (contre-exemple : New York)
             #ville = 'Béziers'                         # test plus rapide
             
             test_connexion()                           # test de connexion à internet
@@ -49,6 +50,11 @@ def data() :
     lever = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%Mm%Ss') 
     coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%Mm%Ss')
     
+    wind  = round(data['wind']['speed'] * 3.6, 1)
+    cloud = data['clouds']['all']
+    
+
+    
     
     UTC =   round(data['timezone']/3600)      # diviser par le nombre de sec dans une heure
     
@@ -71,10 +77,19 @@ def data() :
           '\n',f" - Pression :             {pres} ATM",
           '\n',f" - Visibilité :           {vis}km",
           '\n',f" - Lever du soleil :      {lever} (UTC{UTC})",
-          '\n',f" - Coucher :              {coucher} (UTC{UTC})\n\n\n")
+          '\n',f" - Coucher :              {coucher} (UTC{UTC})",
+          '\n',f" - Vent :                 {wind}hm/h",
+          '\n',f" - Nuages :               {cloud}%",)
 
 
 
+    if ('rain' in data) :
+        rain = data['rain']['1h']
+        print(f"  - Précipitations :       {rain}mm/h")
+        
+    if ('snow' in data) :
+        snow = data['snow']['1h']
+        print(f"  - Neige :                {snow}mm/h")
     
 
 
