@@ -1,8 +1,11 @@
 import requests
 from datetime import datetime
+from requests.exceptions import ConnectionError
+from time import sleep
 
 
 def data() :
+
 
     '''
     Ici on a un programme qui demande ET vérifie si la ville qui est entrée existe,
@@ -14,6 +17,7 @@ def data() :
             ville = input('Votre ville : ')
             #ville = 'Béziers'                         # test plus rapide
             
+            test_connexion()                           # test de connexion à internet
             url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + ville
             data =  requests.get(url).json()
             
@@ -37,7 +41,7 @@ def data() :
     res   = round(data['main']['feels_like'] - 273.15, 1)
     hum   = data['main']['humidity']
     desc  = data['weather'][0]['description']  
-    pres  = round(data['main']['pressure']/1013.25, 2)         # convertion hP en ATM
+    pres  = round(data['main']['pressure']/1013.25, 3)         # convertion hP en ATM
     vis   = round(data['visibility']/1000, 1)                  # convertion m en degrés km
     
     logo  = data['weather'][0]['icon']
@@ -49,7 +53,7 @@ def data() :
     UTC =   round(data['timezone']/3600)      # diviser par le nombre de sec dans une heure
     
     if UTC >= 0 :
-        UTC = '+'+str(UTC)      # rajouter "+" si l'UTC est positif
+        UTC = '+'+str(UTC)                    # rajouter "+" si l'UTC est positif
     
     
     
@@ -63,7 +67,7 @@ def data() :
           '\n',f" - Température max :      {t_max}°C",
           '\n',f" - Ressenti :             {res}°C",
           '\n',f" - Humidité :             {hum}%",
-          '\n',f" - Description :          {desc.capitalize()}",       # capitalize pour rajouter une majuscule
+          '\n',f" - Description :          {desc.capitalize()}",                    # capitalize pour rajouter une majuscule
           '\n',f" - Pression :             {pres} ATM",
           '\n',f" - Visibilité :           {vis}km",
           '\n',f" - Lever du soleil :      {lever} (UTC{UTC})",
@@ -82,7 +86,7 @@ EXEMPLE DE DONNEES RECUPEREES
 {'coord': {'lon': 3.0833,
            'lat': 43.5},
  
- 'weather': [{'id': 804,
+ 'weather': [{'id': 804,                          -> à améliorer avec les emojis
               'main': 'Clouds',
               'description': 'couvert',           FAIT
               'icon': '04d'}],                    -> à améliorer avec les emojis
@@ -100,7 +104,7 @@ EXEMPLE DE DONNEES RECUPEREES
  
  'visibility': 10000,                             FAIT
  
- 'wind': {'speed': 2.54,
+ 'wind': {'speed': 2.54,                          -> à améliorer avec les emojis
           'deg': 325,
           'gust': 3.71},
 
@@ -166,7 +170,19 @@ def image(code, data) : #data pour calculer ensuite les % des nuages
 
 
 
-
+def test_connexion() :
+    temp, trys = 0, 0
+    while temp == 0 and trys < 3 :
+        try :
+            requests.get("https://google.com", timeout=5)
+            temp = 1
+        except ConnectionError :    
+            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+            sleep(10)
+            trys += 1
+    assert trys != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+        
+    
 
 
 
@@ -175,3 +191,5 @@ PROGRAMME DE TEST
 '''
 while True :
     data()
+    
+    
