@@ -80,6 +80,8 @@ def data(researches) :
     wind  = round(data['wind']['speed'] * 3.6, 1)
     cloud = data['clouds']['all']
     
+    pays  = data['sys']['country']
+    
     
     
     UTC =   round(data['timezone']/3600)      # diviser par le nombre de sec dans une heure
@@ -112,7 +114,8 @@ def data(researches) :
           '\n',f" - Lever du soleil :      {lever} (UTC{str_UTC})",
           '\n',f" - Coucher :              {coucher} (UTC{str_UTC})",
           '\n',f" - Vent :                 {wind}km/h",
-          '\n',f" - Nuages :               {cloud}%")
+          '\n',f" - Nuages :               {cloud}%",
+          '\n',f" - Pays :                 {pays}")
 
 
 
@@ -165,7 +168,7 @@ EXEMPLE DE DONNEES RECUPEREES
  
  'sys': {'type': 1,
          'id': 6519,
-         'country': 'FR',                          -> à faire (+emojis)
+         'country': 'FR',                          -> à améliorer (avec emoji ou data.gouv.fr)
          'sunrise': 1664689553,                    FAIT
          'sunset': 1664731685},                    FAIT
 
