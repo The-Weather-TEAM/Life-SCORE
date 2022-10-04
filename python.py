@@ -174,24 +174,24 @@ EXEMPLE DE DONNEES RECUPEREES
 
  'clouds': {'all': 100},                          -> à améliorer avec les emojis
  
- 'dt': 1664730576,                                 FAIT
+ 'dt': 1664730576,                                FAIT
  
  'sys': {'type': 1,
          'id': 6519,
-         'country': 'FR',                          -> à améliorer (avec emoji ou data.gouv.fr)
-         'sunrise': 1664689553,                    FAIT
-         'sunset': 1664731685},                    FAIT
+         'country': 'FR',                         -> à améliorer (avec emoji ou data.gouv.fr)
+         'sunrise': 1664689553,                   FAIT
+         'sunset': 1664731685},                   FAIT
 
- 'timezone': 7200,                                 FAIT
+ 'timezone': 7200,                                FAIT
  
  'id': 3032832,
  
- 'name': 'Béziers',                                FAIT
+ 'name': 'Béziers',                               FAIT
 
- 'cod': 200}                                       FAIT
+ 'cod': 200}                                      FAIT
 
 
-+ SNOW ET RAIN BIEN SÛR !!!                        FAIT
++ SNOW ET RAIN BIEN SÛR !!!                       FAIT
 '''
 
 
