@@ -8,7 +8,7 @@ affiche les données météorologiques de la ville souhaitée.
                      Nathan BOSY
 
 
-                       v0.2.1
+                        v0.3
 '''
 
 
@@ -17,6 +17,7 @@ from requests.exceptions import ConnectionError
 
 from datetime import datetime
 from time import sleep
+
 
 researches = 0
 
@@ -31,13 +32,22 @@ def data(researches) :
 
     new = ''
     
+    if researches == 0 :
+        print('\n                    LOGICIEL MÉTÉO',
+              '\nAffiche les données météorologiques de la ville souhaitée.\n',)   # message de bienvenue (:
+    
     temp = 0
     while temp == 0 :
         
             if researches >= 1 :
                 new = 'nouvelle '                      # pour changer le texte en recherchant
+                print('(appuyez sur \"q\" pour quitter)')
             
-            ville = input(f'Veuillez rentrer le nom de la {new}ville : ')
+            ville = input(f'Veuillez entrer le nom de la {new}ville : ')
+            
+            assert ville != 'q', ('\nMerci d\'avoir utilisé nos services !')   # pour quitter le programme
+            
+            
             #ville = 'Béziers'                         # test plus rapide
             #ville = ville.replace(' ','')             -> pas possible (contre-exemple : New York)
             
@@ -52,7 +62,7 @@ def data(researches) :
             else : print('\nCette ville n\'existe pas ! Veuillez réessayer.\n\n')
             
 
-    print(data)     # test pour avoir toutes les données
+    #print(data)     # test pour avoir toutes les données
 
 
 
@@ -73,16 +83,17 @@ def data(researches) :
     
     logo  = data['weather'][0]['icon']
     
-    time = datetime.utcfromtimestamp(data['dt'] + data['timezone']).strftime('nous sommes le %d/%m/%Y et il est %Hh%Mm%Ss')
-    lever = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%Mm%Ss') 
-    coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%Mm%Ss')
+    time = datetime.utcfromtimestamp(data['dt'] + data['timezone']).strftime('%Hh%M')
+    lever = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%M') 
+    coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%M')
 
     wind  = round(data['wind']['speed'] * 3.6, 1)
+    orientation = direction(data['wind']['deg'])               # pour calculer la direction du vent
 
     
     cloud = data['clouds']['all']
     
-    pays  = data['sys']['country']
+    pays  = data['sys']['country']          # -> à améliorer avec un fichier CSV des pays
     
     
     
@@ -101,99 +112,142 @@ def data(researches) :
     Affichage (pour l'instant que dans la console) des données extraites avec la convertion
     '''   
     
-    print('\n\n',f"DONNÉES DE LA VILLE DE {ville.upper()} -", image(logo, data))    # fonction upper pour mettre la var en majuscules
-    print(f" là bas, {time} (UTC{str_UTC}) !")
     
-    print('\n',f" - Température :          {t}°C",
-          '\n',f" - Température min :      {t_min}°C",
-          '\n',f" - Température max :      {t_max}°C",
-          '\n',f" - Ressenti :             {res}°C",
-          '\n',f" - Humidité :             {hum}%",
-          '\n',f" - Description :          {desc.capitalize()}",                    # capitalize pour rajouter une majuscule
-          '\n',f" - Pression :             {pres} ATM",
-          '\n',f" - Visibilité :           {vis}km",
-          '\n',f" - Lever du soleil :      {lever} (UTC{str_UTC})",
-          '\n',f" - Coucher :              {coucher} (UTC{str_UTC})",
-          '\n',f" - Vent :                 {wind}km/h",
-          '\n',f" - Nuages :               {cloud}%",
-          '\n',f" - Pays :                 {pays}")
+    print(f'\n\n\n\nDONNÉES DE LA VILLE DE {ville.upper()}, {pays.upper()}',
+          
+        f'\n\n{desc.capitalize()}  - ', image(logo, data), f' -  {t}°C',
+        f'\nil est {time} (UTC{str_UTC})',
+           
+         '\n\n\nTEMPÉRATURES',
+        f'\n  • Minimum :       {t_min}°C',
+        f'\n  • Maximum :       {t_max}°C',
+        f'\n  • Ressenti :      {res}°C',
+
+
+         '\n\nPRÉCIPITATIONS')
 
 
 
     if ('rain' in data) :
         rain = data['rain']['1h']
-        print(f"  - Précipitations :       {rain}mm/h")
+        print(f'  • Pluie :         {rain}mm/h')
         
     if ('snow' in data) :
         snow = data['snow']['1h']
-        print(f"  - Neige :                {snow}mm/h")
+        print(f'  • Neige :         {snow}mm/h')
     
+    
+    
+    print(f'  • Humidité :      {hum}%',
+        f'\n  • Pression :      {pres} ATM'   
+          
+          
+         '\n\nTEMPS',
+        f'\n  • Nuages :        {cloud}%',
+        f'\n  • Visibilité :    {vis}km' 
+          
+          
+         '\n\nVENT',
+        f'\n  • Moyenne :       {wind}km/h')
+    
+    
+
     if ('gust' in data['wind']) :
         wind_max  = round(data['wind']['gust'] * 3.6, 1)
-        print(f"  - Rafales :              {wind_max}km/h")
+        print(f'  • Rafales :       {wind_max}km/h')
+    
+              
 
+    print(f'  • Orientation :   {orientation}', 
+    
+    
+         '\n\nSOLEIL',
+        f'\n  • Lever :         {lever}',
+        f'\n  • Coucher :       {coucher}')
     
     
     
     
+    '''
+    ANCIENNE VERSION
+    '''
     
+    #print('\n\n',f"DONNÉES DE LA VILLE DE {ville.upper()} -", image(logo, data))    # fonction upper pour mettre la var en majuscules
+    #print(f" là bas, {time} (UTC{str_UTC}) !")
+    
+    #print(#'\n',f" - Température :          {t}°C",
+          #'\n',f" - Température min :      {t_min}°C",
+          #'\n',f" - Température max :      {t_max}°C",
+          #'\n',f" - Ressenti :             {res}°C",
+          #'\n',f" - Humidité :             {hum}%",
+          #'\n',f" - Description :          {desc.capitalize()}",                    # capitalize pour rajouter une majuscule
+          #'\n',f" - Pression :             {pres} ATM",
+          #'\n',f" - Visibilité :           {vis}km",
+          #'\n',f" - Lever du soleil :      {lever} (UTC{str_UTC})",
+          #'\n',f" - Coucher :              {coucher} (UTC{str_UTC})",
+          #'\n',f" - Vent :                 {wind}km/h",
+          #'\n',f" - Nuages :               {cloud}%",
+          #'\n',f" - Orientation :          {orientation}",
+          #'\n',f" - Pays :                 {pays}")
+
 
     print("\n")          # retour à la ligne
     
 
-
-
-'''
-EXEMPLE DE DONNEES RECUPEREES
-
-
-{'coord': {'lon': 3.0833,
-           'lat': 43.5},
- 
- 'weather': [{'id': 804,                          -> à améliorer avec les emojis
-              'main': 'Clouds',
-              'description': 'couvert',           FAIT
-              'icon': '04d'}],                    -> à améliorer avec les emojis
-
- 'base': 'stations',
- 
- 'main': {'temp': 295.33,                         FAIT
-          'feels_like': 295.12,                   FAIT
-          'temp_min': 291.47,                     FAIT
-          'temp_max': 296.61,                     FAIT
-          'pressure': 1023,                       FAIT
-          'humidity': 58,                         FAIT
-          'sea_level': 1023,
-          'grnd_level': 984},
- 
- 'visibility': 10000,                             FAIT
- 
- 'wind': {'speed': 2.54,                          -> à améliorer avec les emojis
-          'deg': 325,                             -> à faire en donnant E, O, N, S
-          'gust': 3.71},                          FAIT
-
- 'clouds': {'all': 100},                          -> à améliorer avec les emojis
- 
- 'dt': 1664730576,                                FAIT
- 
- 'sys': {'type': 1,
-         'id': 6519,
-         'country': 'FR',                         -> à améliorer (avec emoji ou data.gouv.fr)
-         'sunrise': 1664689553,                   FAIT
-         'sunset': 1664731685},                   FAIT
-
- 'timezone': 7200,                                FAIT
- 
- 'id': 3032832,
- 
- 'name': 'Béziers',                               FAIT
-
- 'cod': 200}                                      FAIT
-
-
-+ SNOW ET RAIN BIEN SÛR !!!                       FAIT
-'''
-
+    
+    
+    '''
+    EXEMPLE DE DONNEES RECUPEREES
+    
+    
+    {'coord': {'lon': 3.0833,
+               'lat': 43.5},
+     
+     'weather': [{'id': 804,                          -> à améliorer avec les emojis
+                  'main': 'Clouds',
+                  'description': 'couvert',           FAIT
+                  'icon': '04d'}],                    -> à améliorer avec les emojis
+    
+     'base': 'stations',
+     
+     'main': {'temp': 295.33,                         FAIT
+              'feels_like': 295.12,                   FAIT
+              'temp_min': 291.47,                     FAIT
+              'temp_max': 296.61,                     FAIT
+              'pressure': 1023,                       FAIT
+              'humidity': 58,                         FAIT
+              'sea_level': 1023,
+              'grnd_level': 984},
+     
+     'visibility': 10000,                             FAIT
+     
+     'wind': {'speed': 2.54,                          -> à améliorer avec les emojis
+              'deg': 325,                             -> à faire en donnant E, O, N, S
+              'gust': 3.71},                          FAIT
+    
+     'clouds': {'all': 100},                          -> à améliorer avec les emojis
+     
+     'dt': 1664730576,                                 FAIT
+     
+     'sys': {'type': 1,
+             'id': 6519,
+             'country': 'FR',                          -> à améliorer (avec emoji ou data.gouv.fr)
+             'sunrise': 1664689553,                    FAIT
+             'sunset': 1664731685},                    FAIT
+    
+     'timezone': 7200,                                 FAIT
+     
+     'id': 3032832,
+     
+     'name': 'Béziers',                                FAIT
+    
+     'cod': 200}                                       FAIT
+    
+    
+    + SNOW ET RAIN BIEN SÛR !!!                        FAIT
+    
+    '''
+    
 
 
 
@@ -252,18 +306,15 @@ def test_connexion() :
     assert trys != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
         
     
+    
+def direction(degré) :
+    dirs = ['Nord', 'Nord-Est', 'Est', 'Sud-Est', 'Sud', 'Sud-Ouest', 'Ouest', 'Nord-Ouest']
+    ix = round(degré / (360 / len(dirs)))
+    return dirs[ix % len(dirs)]
 
 
 
 
-
-'''
-
-dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
-ix = round(d / (360. / len(dirs)))
-return dirs[ix % len(dirs)]
-
-'''
 
 
 '''
