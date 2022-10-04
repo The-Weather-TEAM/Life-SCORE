@@ -35,7 +35,7 @@ def data(researches) :
     while temp == 0 :
         
             if researches >= 1 :
-                new = 'nouvelle '                      # pour changer le texte en recherchant plus d'une fois
+                new = 'nouvelle '                      # pour changer le texte en recherchant
             
             ville = input(f'Veillez rentrer le nom de la {new}ville : ')
             #ville = 'Béziers'                         # test plus rapide
@@ -161,17 +161,17 @@ EXEMPLE DE DONNEES RECUPEREES
 
  'clouds': {'all': 100},                          -> à améliorer avec les emojis
  
- 'dt': 1664730576,
+ 'dt': 1664730576,                                 FAIT
  
  'sys': {'type': 1,
          'id': 6519,
-         'country': 'FR',
+         'country': 'FR',                          -> à faire (+emojis)
          'sunrise': 1664689553,                    FAIT
          'sunset': 1664731685},                    FAIT
 
  'timezone': 7200,                                 FAIT
  
- 'id': 3032832,                                    FAIT
+ 'id': 3032832,
  
  'name': 'Béziers',                                FAIT
 
