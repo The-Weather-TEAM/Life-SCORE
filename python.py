@@ -37,7 +37,7 @@ def data(researches) :
             if researches >= 1 :
                 new = 'nouvelle '                      # pour changer le texte en recherchant
             
-            ville = input(f'Veillez rentrer le nom de la {new}ville : ')
+            ville = input(f'Veuillez rentrer le nom de la {new}ville : ')
             #ville = 'Béziers'                         # test plus rapide
             #ville = ville.replace(' ','')             -> pas possible (contre-exemple : New York)
             
@@ -78,6 +78,8 @@ def data(researches) :
     coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%Mm%Ss')
 
     wind  = round(data['wind']['speed'] * 3.6, 1)
+
+    
     cloud = data['clouds']['all']
     
     pays  = data['sys']['country']
@@ -91,9 +93,8 @@ def data(researches) :
     else :
         str_UTC = str(UTC)
         
-    
+        
 
-    
     
     
     '''
@@ -127,6 +128,15 @@ def data(researches) :
         snow = data['snow']['1h']
         print(f"  - Neige :                {snow}mm/h")
     
+    if ('gust' in data['wind']) :
+        wind_max  = round(data['wind']['gust'] * 3.6, 1)
+        print(f"  - Rafales :              {wind_max}km/h")
+
+    
+    
+    
+    
+    
 
     print("\n")          # retour à la ligne
     
@@ -159,8 +169,8 @@ EXEMPLE DE DONNEES RECUPEREES
  'visibility': 10000,                             FAIT
  
  'wind': {'speed': 2.54,                          -> à améliorer avec les emojis
-          'deg': 325,
-          'gust': 3.71},
+          'deg': 325,                             -> à faire en donnant E, O, N, S
+          'gust': 3.71},                          FAIT
 
  'clouds': {'all': 100},                          -> à améliorer avec les emojis
  
@@ -181,9 +191,9 @@ EXEMPLE DE DONNEES RECUPEREES
  'cod': 200}                                       FAIT
 
 
-+ SNOW ET RAIN BIEN SÛR !!!
-
++ SNOW ET RAIN BIEN SÛR !!!                        FAIT
 '''
+
 
 
 
@@ -243,6 +253,17 @@ def test_connexion() :
         
     
 
+
+
+
+
+'''
+
+dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
+ix = round(d / (360. / len(dirs)))
+return dirs[ix % len(dirs)]
+
+'''
 
 
 '''
