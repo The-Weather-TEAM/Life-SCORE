@@ -8,7 +8,7 @@ affiche les données météorologiques de la ville souhaitée.
                      Nathan BOSY
 
 
-                       v0.3.1
+                       v0.4.0
 '''
 
 
@@ -18,22 +18,57 @@ from requests.exceptions import ConnectionError
 from datetime import datetime
 from time import sleep
 
+import pandas as p
 
-researches = 0
 
 
-def data(researches) :
+
+
+'''
+Fonction qui permet de vérifier si on est connecté à internet.
+'''
+
+def test_connexion() :
+
+    temp, essais = 0, 0
+    
+    while temp == 0 and essais < 3 :
+        try :
+            requests.get("https://google.com", timeout=5)
+            temp = 1
+            
+            
+        except ConnectionError :    
+            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+            sleep(10)
+            essais += 1
+            
+    assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+
+
+
+
+
+nbr_recherches = 0 #
+
+test_connexion()                                                                                      # vérification d'accès à internet
+data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
+
+
+
+
+def data(nbr_recherches) :
 
     
 
     '''
-    Ici on a un programme qui demande ET vérifie si la ville qui est entrée existe,
-    puis après on récupère toutes ses données
+    Programme qui demande et vérifie si la ville qui est entrée existe,
+    puis après on récupère toutes ses données dans un variable.
     '''
 
-    new = ''
+    nouvelle_recherche = ''
     
-    if researches == 0 :
+    if nbr_recherches == 0 :
         print('\n                    LOGICIEL MÉTÉO',
               '\nAffiche les données météorologiques de la ville souhaitée.'       # message de bienvenue (:
               '\n              (entrer \"q\" pour quitter)')   
@@ -41,10 +76,10 @@ def data(researches) :
     temp = 0
     while temp == 0 :
         
-            if researches >= 1 :
-                new = 'nouvelle '                                                  # pour changer le texte en recherchant
+            if nbr_recherches >= 1 :
+                nouvelle_recherche = 'nouvelle '                                   # pour changer le texte en recherchant
             
-            ville = input(f'Veuillez entrer le nom de la {new}ville : ')
+            ville = input(f'\nVeuillez entrer le nom de la {nouvelle_recherche}ville : ')
              
             assert ville != 'q', ('\nMerci d\'avoir utilisé nos services !')       # pour quitter le programme
             
@@ -72,64 +107,62 @@ def data(researches) :
 
 
     '''
-    Récupération de toutes les données puis conversion avec les bonnes unités
+    Récupération de toutes les données puis conversion avec les bonnes unités.
     '''  
     
     
-    
-    pays        = data['sys']['country']                             # -> à améliorer avec un fichier CSV des pays
-    desc        = data['weather'][0]['description']  
-    logo        = data['weather'][0]['icon']
-    t           = round(data['main']['temp'] - 273.15, 1)            # convertion kelvin en degrés celsus
-    time        = datetime.utcfromtimestamp(data['dt'] + data['timezone']).strftime('%Hh%M')
-    
+    pays               = nom_pays(data['sys']['country'], data_pays)               # exemple : convertion "FR" en "France"
+    description        = data['weather'][0]['description']  
+    emoji              = data['weather'][0]['icon']
+    temperature        = round(data['main']['temp'] - 273.15, 1)                   # convertion kelvin en degrés celsus
+    temps              = datetime.utcfromtimestamp(data['dt'] + data['timezone']).strftime('%Hh%M')
     
     
-    UTC =   round(data['timezone']/3600)                             # diviser par le nombre de sec dans une heure
+    
+    UTC                = round(data['timezone']/3600)                              # diviser par le nombre de sec dans une heure
     
     if UTC >= 0 :
-        str_UTC = '+'+str(UTC)                                       # rajouter "+" si l'UTC est positif
+        UTC_texte = '+'+str(UTC)                                                   # rajouter "+" si l'UTC est positif
     else :
-        str_UTC = str(UTC)
+        UTC_texte = str(UTC)
     
     
     
-    t_min       = round(data['main']['temp_min'] - 273.15, 1)        
-    t_max       = round(data['main']['temp_max'] - 273.15, 1)     
-    res         = round(data['main']['feels_like'] - 273.15, 1)
+    temperature_min    = round(data['main']['temp_min'] - 273.15, 1)        
+    temperature_max    = round(data['main']['temp_max'] - 273.15, 1)     
+    ressenti           = round(data['main']['feels_like'] - 273.15, 1)
     
-    hum         = data['main']['humidity']
-    pres        = round(data['main']['pressure']/1013.25, 3)         # convertion hP en ATM
+    humidite           = data['main']['humidity']
+    pression           = round(data['main']['pressure']/1013.25, 3)                # convertion hP en ATM
     
 
-    cloud       = data['clouds']['all']
-    vis         = round(data['visibility']/1000, 1)                  # convertion m en degrés km
+    nuages             = data['clouds']['all']
+    visibilite         = round(data['visibility']/1000, 1)                         # convertion m en degrés km
     
-    wind        = round(data['wind']['speed'] * 3.6, 1)
-    orientation = direction(data['wind']['deg'])                     # pour calculer la direction du vent
+    vent               = round(data['wind']['speed'] * 3.6, 1)
+    orientation_vent   = direction(data['wind']['deg'])                            # pour calculer la direction du vent
 
-    lever = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%M') 
-    coucher=datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%M')
+    lever_soleil       = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%M') 
+    coucher_soleil     =datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%M')
 
 
     
 
  
     '''
-    Affichage (pour l'instant que dans la console) des données extraites avec la convertion
+    Affichage dans la console des données extraites avec les convertions.
     '''   
-    
     
     
     print(f'\n\n\n\nDONNÉES DE LA VILLE DE {ville.upper()}, {pays.upper()}',
           
-        f'\n\n{desc.capitalize()}  - ', image(logo, data), f' -  {t}°C',
-        f'\nil est {time} (UTC{str_UTC})',
+        f'\n\n{description.capitalize()}  - ', code_emoji(emoji), f' -  {temperature}°C',
+        f'\ndonnées de {temps} (UTC{UTC_texte})',
            
          '\n\n\nTEMPÉRATURES',
-        f'\n  • Minimum :       {t_min}°C',
-        f'\n  • Maximum :       {t_max}°C',
-        f'\n  • Ressenti :      {res}°C',
+        f'\n  • Minimum :       {temperature_min}°C',
+        f'\n  • Maximum :       {temperature_max}°C',
+        f'\n  • Ressenti :      {ressenti}°C',
 
 
          '\n\nPRÉCIPITATIONS')
@@ -137,53 +170,51 @@ def data(researches) :
 
 
     if ('rain' in data) :
-        rain = data['rain']['1h']
-        print(f'  • Pluie :         {rain}mm/h')
+        pluie = data['rain']['1h']
+        print(f'  • Pluie :         {pluie}mm/h')
         
     if ('snow' in data) :
-        snow = data['snow']['1h']
-        print(f'  • Neige :         {snow}mm/h')
+        neige = data['snow']['1h']
+        print(f'  • Neige :         {neige}mm/h')
     
     
     
-    print(f'  • Humidité :      {hum}%',
-        f'\n  • Pression :      {pres} ATM'   
+    print(f'  • Humidité :      {humidite}%',
+        f'\n  • Pression :      {pression} ATM'   
           
           
          '\n\nTEMPS',
-        f'\n  • Nuages :        {cloud}%',
-        f'\n  • Visibilité :    {vis}km' 
+        f'\n  • Nuages :        {nuages}%',
+        f'\n  • Visibilité :    {visibilite}km' 
           
           
          '\n\nVENT',
-        f'\n  • Moyenne :       {wind}km/h')
+        f'\n  • Moyenne :       {vent}km/h')
     
     
 
     if ('gust' in data['wind']) :
-        wind_max  = round(data['wind']['gust'] * 3.6, 1)
-        print(f'  • Rafales :       {wind_max}km/h')
+        rafales  = round(data['wind']['gust'] * 3.6, 1)
+        print(f'  • Rafales :       {rafales}km/h')
     
               
 
-    print(f'  • Orientation :   {orientation}', 
+    print(f'  • Orientation :   {orientation_vent}', 
     
     
          '\n\nSOLEIL',
-        f'\n  • Lever :         {lever}',
-        f'\n  • Coucher :       {coucher}\n\n\n')
+        f'\n  • Lever :         {lever_soleil}',
+        f'\n  • Coucher :       {coucher_soleil}\n\n\n')
     
     
     
     
     
 '''
-    Convertion du code de la météo en émoji
-    
-    A AMELIORER EN FONCTION DES PRECIPITATIONS / NUAGES (ou le code de la météo c'est sympa aussi)
-    à voir si on préfère les images
+Fonction qui convertit un code donné par un emoji.
 '''
-def image(code, data) : # data pour calculer ensuite les % des nuages (non utilis pour l'instant)
+
+def code_emoji(code) :
     
     if   code == '01d' :
         return "🌞"
@@ -217,85 +248,91 @@ def image(code, data) : # data pour calculer ensuite les % des nuages (non utili
 
 
 '''
-Fonction qui permet de vérifier si on est connecté à internet
-'''
-def test_connexion() :
-
-    temp, trys = 0, 0
-    while temp == 0 and trys < 3 :
-        try :
-            requests.get("https://google.com", timeout=5)
-            temp = 1
-        except ConnectionError :    
-            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
-            sleep(10)
-            trys += 1
-    assert trys != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
-        
-    
-    
-    
-    
-'''
-Fonction qui permet de convertir un angle en orientation
+Fonction qui permet de convertir un angle donné en orientation.
 '''  
+
 def direction(degré) :
-    dirs = ['Nord', 'Nord-Est', 'Est', 'Sud-Est', 'Sud', 'Sud-Ouest', 'Ouest', 'Nord-Ouest']
-    ix = round(degré / (360 / len(dirs)))
-    return dirs[ix % len(dirs)]
-
+    
+    orientation = ['Nord',
+                   'Nord-Est',
+                   'Est',
+                   'Sud-Est',
+                   'Sud',
+                   'Sud-Ouest',
+                   'Ouest',
+                   'Nord-Ouest']
+    
+    x = round(degré / (360 / len(orientation)))    # divise l'angle par 8
+    
+    return orientation[x % len(orientation)]       # retourne la bonne orientation en prenant le reste une division euclidienne (entre 0 et 7)
 
 
 
 
 
 '''
-PROGRAMME DE TEST
+Fonction qui permet de convertir un code ISO-3611 de type Alpha 2 en nom
+'''  
+
+def nom_pays(code, data) :
+    
+    ligne = data[data[" Code alpha2"] == code]     # retient seulement la ligne du pays ("FR")
+                  
+    return ligne.values[0][3]                      # retourne le nom associé au code ("France")
+
+
+
+
+
 '''
+Boucle pour lancer le programme en boucle jusqu'à ce que l'utilisateur quitte.
+'''
+
 while True :
-    data(researches)
-    researches += 1 
+    data(nbr_recherches)
+    nbr_recherches += 1 
     
     
 
 
 
 '''
-    EXEMPLE DE DONNEES RECUPEREES
+Exemple de données qui arrvient après la demande :
     
+    //////////
     
     {'coord': {'lon': 3.0833,
                'lat': 43.5},
      
-     'weather': [{'id': 804,                          -> à améliorer avec les emojis
-                  'main': 'Clouds',
-                  'description': 'couvert',           FAIT
-                  'icon': '04d'}],                    -> à améliorer avec les emojis
+     'weather': [{'id': 804,                          
+                  'main': 'Clouds', 
+                  'description': 'couvert',            FAIT
+                  'icon': '04d'}],                     FAIT
     
      'base': 'stations',
      
-     'main': {'temp': 295.33,                         FAIT
-              'feels_like': 295.12,                   FAIT
-              'temp_min': 291.47,                     FAIT
-              'temp_max': 296.61,                     FAIT
-              'pressure': 1023,                       FAIT
-              'humidity': 58,                         FAIT
+     'main': {'temp': 295.33,                          FAIT
+              'feels_like': 295.12,                    FAIT
+              'temp_min': 291.47,                      FAIT
+              'temp_max': 296.61,                      FAIT
+              'pressure': 1023,                        FAIT
+              'humidity': 58,                          FAIT
               'sea_level': 1023,
               'grnd_level': 984},
      
-     'visibility': 10000,                             FAIT
+     'visibility': 10000,                              FAIT
      
-     'wind': {'speed': 2.54,                          -> à améliorer avec les emojis
-              'deg': 325,                             -> à faire en donnant E, O, N, S
-              'gust': 3.71},                          FAIT
+     'wind': {'speed': 2.54,                           FAIT
+              'deg': 325,                              FAIT
+              'gust': 3.71},                           FAIT
     
-     'clouds': {'all': 100},                          -> à améliorer avec les emojis
+     'clouds': {'all': 100},                           FAIT
      
      'dt': 1664730576,                                 FAIT
      
      'sys': {'type': 1,
              'id': 6519,
-             'country': 'FR',                          -> à améliorer (avec emoji ou data.gouv.fr)
+             'country': 'FR',                          FAIT
              'sunrise': 1664689553,                    FAIT
              'sunset': 1664731685},                    FAIT
     
@@ -307,7 +344,8 @@ while True :
     
      'cod': 200}                                       FAIT
     
+    //////////
     
-    + SNOW ET RAIN BIEN SÛR !!!                        FAIT
+    + 'snow' et 'rain'                                 FAIT
     
     '''
