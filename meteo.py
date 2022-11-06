@@ -49,7 +49,7 @@ def test_connexion() :
 
 
 
-nbr_recherches = 0 #
+nbr_recherches = 0 
 
 test_connexion()                                                                                      # vérification d'accès à internet
 data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
