@@ -143,7 +143,7 @@ def data(nbr_recherches) :
     orientation_vent   = direction(data['wind']['deg'])                            # pour calculer la direction du vent
 
     lever_soleil       = datetime.utcfromtimestamp(data['sys']['sunrise'] + data['timezone']).strftime('%Hh%M') 
-    coucher_soleil     =datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%M')
+    coucher_soleil     = datetime.utcfromtimestamp(data['sys']['sunset']  + data['timezone']).strftime('%Hh%M')
 
 
     
