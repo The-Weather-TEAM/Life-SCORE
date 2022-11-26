@@ -1,5 +1,5 @@
 '''
-                    LOGICIEL MÉTÉO
+              LOGICIEL MÉTÉO (sans interface)
 affiche les données météorologiques de la ville souhaitée.
 
                        créé par 
