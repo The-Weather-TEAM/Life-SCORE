@@ -33,7 +33,11 @@ Jeudi 8 Décembre
 >- Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
 >- Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé
 >- Première répartition du travail : 
+
 >Raphaël et Noémie -> Interface graphique
+
 >Frédéric -> Traitement de données des API pour la météo et le climat
+
 >Thor -> Programmation des coefficients entre le formulaire et la notation
+
 >Nathan -> Traitement de bases de données / Graphisme
