@@ -5,7 +5,7 @@ Idées :
 - Une note sur 100
 - Suggérer un autre endroit
 - Note :
-- - Pollution, CO2, Pluie, Agriculture, Ville fleur ?, Beauté, Usines ?, Bonnheur des citoyens, niveau sopclaire (université ? prépa ?)
+- - Pollution, CO2, Pluie, Agriculture, Ville fleur ?, Beauté, Usines ?, Bonheur des citoyens, niveau scholaire (université ? prépa ?)
 
 
 
