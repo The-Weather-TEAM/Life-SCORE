@@ -5,18 +5,33 @@ réferences :
     - Les boutons s'écrivent btn_NOM
     - Les fenêtres s'écrivent windowNOM
     - Les textes (classe Message) s'écrivent msg_NOM
+    - Les listes s'écrivent list_NOM
     - d'autres à venir
 
 modif précédente : 08/12/2022 15:48
-dernière modif : 10/12/2022 19:11
+dernière modif : 10/12/2022 19:25
 """
 from tkinter import *
 from urllib.request import urlopen
 #from PIL import ImageTk, Image
 
 global msg_principal #on pose les questions a travers lui
-
-
+global list_Questions #Les valeurs de ce tableau sont les questions 
+global list_reponses #tableau de 0 et 1 pour thor (0 sera souvent un vieu/calme/fermier,...)
+global n #pour faire list_Questions[n]
+n = 0
+list_Questions = ['Vous êtes plutôt ?\nCalme                    Actif',           #Reproduire les questions dans le même style que la première
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '']
+list_reponses = []
+print(list_Questions[0])
 
 #fonctions
 #premiere page
@@ -55,11 +70,35 @@ def question1(fenetre,boutton):
     Passe à la question 1 et ouvre le qcm ajoute les deux boutons <-- et -->
     """
     boutton.destroy() #supprime ce bouton
-    btn_gauche = Button(width=20, height=3, command=lambda: print(), bg='#70add7', text="<---")
-    btn_droite = Button(width=20, height=3, command=lambda: print(), bg='#70add7', text="--->")
+    btn_gauche = Button(width=20, height=3, command=lambda: plus0(), bg='#70add7', text="<---")
+    btn_droite = Button(width=20, height=3, command=lambda: plus1(), bg='#70add7', text="--->")
     btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
     btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
-    msg_principal.config(text ="Vous êtes plutôt ?\nCalme                    Actif") #change le texte du msg principal
+    msg_principal.config(text =f'{list_Questions[n]}') #change le texte du msg principal
+
+def plus0():
+    """ajoute 0 au tableau de reponses (<---)"""
+    global list_Questions
+    global n
+    global list_reponses
+    global msg_principal
+
+    list_reponses.append(0)
+    n += 1
+    msg_principal.config(text = list_Questions[n])
+
+def plus1():
+    """ajoute 1 au tableau de reponses (--->)"""
+    global list_Questions
+    global n
+    global list_reponses
+    global msg_principal
+
+    list_reponses.append(1)
+    n += 1
+    msg_principal.config(text = list_Questions[n])
+
+
 
 
 
@@ -103,4 +142,4 @@ u.close()
 # appel de la fonction de la première page
 w_qcm()
 
-
+print(n,list_reponses,msg_principal)
