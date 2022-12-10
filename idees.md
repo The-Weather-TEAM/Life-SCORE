@@ -16,6 +16,8 @@ Idées :
 
 Tâches à réaliser :
 - TkInter (comment mettre en place ? à quoi la fenêtre devrait ressembler ?)
+- Pour tkinter QCM : Une liste qui recupère toutes les questions plûtot que d'appeler une par une (il me faut donc toutes les questions (10 Seraient pas mal)
+    Je récupère dans un tableau sous forme de 0 et de 1 les attirances (Thor faut qu'on se concerte sur comment tu vas réutiliser ces données)   
 
 
 
