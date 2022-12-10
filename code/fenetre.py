@@ -7,7 +7,7 @@ dernière modif : 10/12/2022 19:00
 """
 from tkinter import *
 from urllib.request import urlopen
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 
 #fonctions
 """fonction pour ouvrir la fenetre d'accueil"""
@@ -16,7 +16,19 @@ def w_qcm(): #w pour window
     """
     affiche la premiere page qui contient donc le qcm
     """
-    pass
+    #fenêtre
+    windowQCM = Tk() #fenetre de tkinter
+    windowQCM.title('Accueil - QCU')
+    #window.tk.call('tk::PlaceWindow', window)
+    windowQCM.minsize(width=1020, height=768)
+    windowQCM.resizable(False,False) #Taille non modifiable
+    #Plusieurs Bouttons 
+    #affiche la photo
+    #label = Label(windowQCM, image = photo)
+    #label.place(x=10,y=0)
+
+
+    windowQCM.mainloop() #pour fermer la fenetre
 
 
 def w_question():
@@ -47,23 +59,14 @@ u.close()
 
 
 
-#fenêtre
-windowQCM = Tk() #fenetre de tkinter
-windowQCM.title('Accueil - QCU')
-#window.tk.call('tk::PlaceWindow', window)
-windowQCM.minsize(width=1020, height=768)
-windowQCM.resizable(False,False) #Taille non modifiable
+
 
 # Create an object of tkinter ImageTk
-photo = ImageTk.PhotoImage(data=raw_data) # <-----
+# photo = ImageTk.PhotoImage(data=raw_data) # <-----
 
 
 
-"""appel de la fonction pour la première"""
+# appel de la fonction de la première page
+w_qcm()
 
-#Plusieurs Bouttons 
-#affiche la photo
-label = Label(windowQCM, image = photo)
-label.place(x=10,y=0)
 
-windowQCM.mainloop() #pour fermer la fenetre
