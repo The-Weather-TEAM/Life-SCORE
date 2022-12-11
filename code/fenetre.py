@@ -6,40 +6,44 @@ réferences :
     - Les fenêtres s'écrivent windowNOM
     - Les textes (classe Message) s'écrivent msg_NOM
     - Les listes s'écrivent list_NOM
+    - Les dictionnaires s'écrivent dico_NOM
     - d'autres à venir
 
-modif précédente : 08/12/2022 15:48
-dernière modif : 10/12/2022 19:25
+modif précédente : 10/12/2022 19:25
+dernière modif : 11/12/2022 19:31
 """
 from tkinter import *
-from urllib.request import urlopen
+from urllib.request import urlopen #pour les photos (peut etre enlever)
 #from PIL import ImageTk, Image
 
 global msg_principal #on pose les questions a travers lui
 global list_Questions #Les valeurs de ce tableau sont les questions 
-global list_reponses #tableau de 0 et 1 pour thor (0 sera souvent un vieu/calme/fermier,...)
+global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
+global btn_ok
 n = 0
-list_Questions = ['Vous êtes plutôt ?\nCalme                    Actif',           #Reproduire les questions dans le même style que la première
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '']
-list_reponses = []
+list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activité'),           #Reproduire les questions dans le même style que la première
+                ('Q2','Theme2'),
+                ('Q3','Theme3'),
+                ('Q4','Theme4'),
+                ('Q5','Theme5'),
+                ('Q6','Theme6'),
+                ('Q7','Theme7'),
+                ('Q8','Theme8'),
+                ('Q9','Theme9'),
+                ('Q10','Theme10')]
+dico_Reponses = {}
 print(list_Questions[0])
 
 #fonctions
 #premiere page
 def w_qcm(): #w pour window
     global msg_principal
+    global btn_ok
     """
     affiche la premiere page qui contient donc le qcm
     """
+    x = 0 #pour le boutton ok qu'on va reutiliser
     #fenêtre
     windowQCM = Tk() #fenetre de tkinter
     windowQCM.title('Accueil - QCU')
@@ -53,7 +57,7 @@ def w_qcm(): #w pour window
     """entree = Entry(windowQCM,width=30, font=('Bold',18))
     entree.place(relx=0.5, rely= 0.45, anchor=CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y """
     #bouton ok
-    btn_ok = Button(width=20, height=3, command=lambda: question1(windowQCM,btn_ok), bg='#70add7', text="OK") #appele la fonction question1
+    btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM), bg='#70add7', text="OK") #appele la fonction question1
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER)
     
     #affiche la photo
@@ -64,41 +68,69 @@ def w_qcm(): #w pour window
 
     windowQCM.mainloop() #pour fermer la fenetre
 
-def question1(fenetre,boutton):
+def avancer(fenetre):
     global msg_principal
+    global btn_ok
+    global n
     """
     Passe à la question 1 et ouvre le qcm ajoute les deux boutons <-- et -->
+    
+    Sinon, ouvre la seconde page
     """
-    boutton.destroy() #supprime ce bouton
-    btn_gauche = Button(width=20, height=3, command=lambda: plus0(), bg='#70add7', text="<---")
-    btn_droite = Button(width=20, height=3, command=lambda: plus1(), bg='#70add7', text="--->")
-    btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
-    btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
-    msg_principal.config(text =f'{list_Questions[n]}') #change le texte du msg principal
+    if n < len(list_Questions):
+        btn_ok.place_forget() #Cache ce bouton
+        btn_gauche = Button(width=20, height=3, command=lambda: plus0(btn_gauche,btn_droite), bg='#70add7', text="<---")
+        btn_droite = Button(width=20, height=3, command=lambda: plus1(btn_gauche,btn_droite), bg='#70add7', text="--->")
+        btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
+        btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
+        msg_principal.config(text =f'{list_Questions[n][0]}') #change le texte du msg principal
+    else:
+        fenetre.destroy()
+        w_question() #Ouvre la seconde fenêtre : Fin de la première
 
-def plus0():
+def plus0(b1,b2):
     """ajoute 0 au tableau de reponses (<---)"""
     global list_Questions
     global n
-    global list_reponses
+    global dico_Reponses
     global msg_principal
 
-    list_reponses.append(0)
     n += 1
-    msg_principal.config(text = list_Questions[n])
+    if not est_termine(b1,b2):
+        dico_Reponses[list_Questions[n-1][1]] = 0
+        msg_principal.config(text = list_Questions[n][0])
+    else:
+        b1.destroy()
+        b2.destroy()
 
-def plus1():
+
+def plus1(b1,b2):
     """ajoute 1 au tableau de reponses (--->)"""
     global list_Questions
     global n
-    global list_reponses
+    global dico_Reponses
     global msg_principal
-
-    list_reponses.append(1)
+    
     n += 1
-    msg_principal.config(text = list_Questions[n])
+    if not est_termine(b1,b2):
+        dico_Reponses[list_Questions[n-1][1]] = 0
+        msg_principal.config(text = list_Questions[n][0])
+    else:
+        b1.destroy()
+        b2.destroy()
 
-
+def est_termine(btn_1,btn_2):
+    global msg_principal
+    global btn_ok
+    """
+    Verifie si le QCM est terminé (dernière question répondue). Si c'est le cas, On affiche un message puis retour bouton ok 
+    """
+    if n >= len(list_Questions):
+        btn_1.destroy()
+        btn_2.destroy()
+        btn_ok.place(relx=0.5,rely=0.5,anchor =CENTER)
+        msg_principal.config(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
+        return True
 
 
 
@@ -107,7 +139,11 @@ def w_question():
     """
     affiche la seconde page qui contient la requête de la ville
     """
-    pass
+    windowQuestion = Tk() #fenetre de tkinter
+    windowQuestion.title('Seconde page - requête de la ville')
+    #window.tk.call('tk::PlaceWindow', window)
+    windowQuestion.minsize(width=1020, height=768)
+    windowQuestion.resizable(False,False) #Taille non modifiable
 
 
 #troisieme page
@@ -142,4 +178,4 @@ u.close()
 # appel de la fonction de la première page
 w_qcm()
 
-print(n,list_reponses,msg_principal)
+print(n,dico_Reponses,msg_principal)
