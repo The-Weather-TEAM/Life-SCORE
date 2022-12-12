@@ -8,9 +8,8 @@ réferences :
     - Les listes s'écrivent list_NOM
     - Les dictionnaires s'écrivent dico_NOM
     - d'autres à venir
-
-modif précédente : 10/12/2022 19:25
-dernière modif : 11/12/2022 19:31
+modif précédente : 11/12/2022 19:31
+dernière modif : 12/12/2022 19:28
 """
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
@@ -48,8 +47,8 @@ def w_qcm(): #w pour window
     windowQCM = Tk() #fenetre de tkinter
     windowQCM.title('Accueil - QCU')
     #window.tk.call('tk::PlaceWindow', window)
-    windowQCM.minsize(width=1020, height=768)
-    windowQCM.resizable(False,False) #Taille non modifiable
+    windowQCM.minsize(width=1020, height=768) #768
+    #windowQCM.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     #widgets
     msg_principal =  Message(text="Bienvenue, nous allons commencer avec un petit test", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
@@ -59,7 +58,9 @@ def w_qcm(): #w pour window
     #bouton ok
     btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM), bg='#70add7', text="OK") #appele la fonction question1
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER)
-    
+    #bouton_explication
+    btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide), bg = '#f44336', text="AIDE") #Boutton d'aide
+    btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #affiche la photo
     #label = Label(windowQCM, image = photo)
     #label.place(x=10,y=0)
@@ -132,7 +133,39 @@ def est_termine(btn_1,btn_2):
         msg_principal.config(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
         return True
 
+def aide(btn):
 
+    """
+    Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
+    """
+    texte_aide="""
+    Bonjour ! Voilà notre protoype de CityScore où vous pourrez regarder le score de villes.
+
+Pour commencer, nous réalisons un QCM de 10 questions pour voir vos préférences.
+
+
+Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui est de base 1. 
+Le plus de critères sont réunis afin d'avoir le plus de précision possible. Ils sont répartis en 4 catégories :
+
+Le climat (pluie en un an / pollution de l'air / températures / vent / ...)
+La qualité de vie (activités / patrimoine / ville fleurie / ...)
+Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
+La sécurité (taux d'accidents / vols / risques / ...)
+"""
+    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION
+    windowAide = Tk() #fenetre de tkinter
+    windowAide.title('Page 1bis - Aide')
+    #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
+    windowAide.minsize(width=int(510*4/3), height=384) #768
+    windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
+    print(texte_aide)
+    msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
+    msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
+    btn_compris = Button(windowAide, width=20, height=3, command=windowAide.destroy, bg='#B9F7D0', text="Compris !")
+    btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+
+    windowAide.mainloop()
+    return windowAide
 
 #seconde page
 def w_question():
@@ -144,6 +177,10 @@ def w_question():
     #window.tk.call('tk::PlaceWindow', window)
     windowQuestion.minsize(width=1020, height=768)
     windowQuestion.resizable(False,False) #Taille non modifiable
+
+
+    windowQuestion.mainloop()
+
 
 
 #troisieme page
