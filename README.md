@@ -30,13 +30,13 @@ fait par Frédéric MARQUET & Nathan BOSY
 
 ## Journal de bord
 8 Décembre 2022
->- Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
->- Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé
->- Première répartition du travail : 
-> Raphaël et Noémie -> Interface graphique /
-> Frédéric -> Traitement de données des API pour la météo et le climat /
-> Thor -> Programmation des coefficients entre le formulaire et la notation /
-> Nathan -> Traitement de bases de données + Graphisme
+> Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
+> Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé
+> Première répartition du travail : 
+>-  Raphaël et Noémie -> Interface graphique /
+>-  Frédéric -> Traitement de données des API pour la météo et le climat /
+>-  Thor -> Programmation des coefficients entre le formulaire et la notation /
+>-  Nathan -> Traitement de bases de données + Graphisme
 
 10 Décembre 2022
 > Interface : première page créée avec la fonction pour le QCM à réponse binaire (0,1 mais vue par l'utilisateur comme un adjectif/nom)
