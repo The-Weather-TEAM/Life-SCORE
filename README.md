@@ -28,8 +28,8 @@ fait par Frédéric MARQUET & Nathan BOSY
  - Fonctionne uniquement avec un terminal Python
  - Aucun fonction de notation ou de personnalisation : c'est juste le prototype de notre application.
 
-## Journal de bord (travail en groupe)
-Jeudi 8 Décembre
+## Journal de bord
+8 Décembre 2022
 >- Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
 >- Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé
 >- Première répartition du travail : 
@@ -37,3 +37,11 @@ Jeudi 8 Décembre
 > Frédéric -> Traitement de données des API pour la météo et le climat /
 > Thor -> Programmation des coefficients entre le formulaire et la notation /
 > Nathan -> Traitement de bases de données + Graphisme
+
+10 Décembre 2022
+> Raf : première page créée avec la fonction pour le QCM à réponse binaire (0,1 mais vue par l'utilisateur comme un adjectif/nom)
+> Il faut trouver les questions (je suis parti sur une base de 10 Questions ca me semble pas mal). N'hésitez pas a jeter un coup d'oeil au code fréquemment pour comprendre les ajouts et me demander s'il y a des soucis
+
+11 Décembre 2022
+> Raf : Fin de la première page au niveau fonctionnel (on pose les questions et ensuite on envoie sur la seconde page) et création de la seconde page(vide pour l'instant)
+> Même chose, chercher les questions mais maintenant c'est que l'aspect esthétique de la page et ses questions à trouver (Thor si le dico ne te vas pas dis le moi)
