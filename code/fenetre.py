@@ -20,6 +20,7 @@ global list_Questions #Les valeurs de ce tableau sont les questions
 global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
 global btn_ok
+
 n = 0
 list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
                 ('Quel âge avez vous ?\nMoins de 30 ans               Plus de 30 ans','Age'),
@@ -39,6 +40,7 @@ print(list_Questions[0])
 def w_qcm(): #w pour window
     global msg_principal
     global btn_ok
+
     """
     affiche la premiere page qui contient donc le qcm
     """
@@ -46,8 +48,9 @@ def w_qcm(): #w pour window
     #fenêtre
     windowQCM = Tk() #fenetre de tkinter
     windowQCM.title('Accueil - QCU')
-    #window.tk.call('tk::PlaceWindow', window)
-    windowQCM.minsize(width=1020, height=768) #768
+    windowQCM.minsize(width=768, height=500) #768
+    windowQCM.state('zoomed')
+
     #windowQCM.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     #widgets
     msg_principal =  Message(text="Bienvenue, nous allons commencer avec un petit test", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
@@ -167,11 +170,23 @@ def w_question():
     """
     affiche la seconde page qui contient la requête de la ville
     """
+
+    
+
     windowQuestion = Tk() #fenetre de tkinter
     windowQuestion.title('Seconde page - requête de la ville')
-    #window.tk.call('tk::PlaceWindow', window)
-    windowQuestion.minsize(width=1020, height=768)
-    windowQuestion.resizable(False,False) #Taille non modifiable
+    windowQuestion.minsize(width=768, height=500)
+    windowQuestion.state('zoomed') #Plein écran
+
+    #windowQuestion.resizable(False,False) #Taille non modifiable
+    #input
+    entree = Entry(windowQuestion,cursor = 'Pencil', font = ('Bold',18))
+    entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
+
+    #message
+    msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+    msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+
 
 
     windowQuestion.mainloop()
@@ -183,7 +198,26 @@ def w_score():
     """
     affiche la dernière page qui contient le score et le bouton pour revenir
     """
-    pass
+    windowScore = Tk() #fenetre de tkinter
+    windowScore.title('Dernière page - Note de la ville')
+    windowScore.minsize(width=768, height=500)
+    windowScore.state('zoomed') #Plein écran
+
+    #Bouton retour
+    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore) bg='#B9F7D0', text= "Noter une autre ville")
+
+
+
+
+    windowScore.mainloop()
+
+def retour_p2(fenetre):
+    """
+    Retourne à la page n2 (pour redemander une ville)
+    """
+    fenetre.destroy()
+    w_question()
+
 
 
 """
@@ -208,6 +242,6 @@ u.close()
 
 
 # appel de la fonction de la première page
-w_qcm()
-
+w_qcm() #ligne  à lancer a la fin
+#w_question()
 print(n,dico_Reponses,msg_principal)
