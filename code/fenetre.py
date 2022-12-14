@@ -21,12 +21,12 @@ global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,
 global n #pour faire list_Questions[n]
 global btn_ok
 n = 0
-list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activité'),           #Reproduire les questions dans le même style que la première
-                ('Q2','Theme2'),
-                ('Q3','Theme3'),
-                ('Q4','Theme4'),
-                ('Q5','Theme5'),
-                ('Q6','Theme6'),
+list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
+                ('Quel âge avez vous ?\nMoins de 30 ans               Plus de 30 ans','Age'),
+                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Emploi"),
+                ('Etes vous etudiants ?\nNon                    Oui','Scolarite'),
+                ('Avez vous des enfants ?\nNon                   Oui','Famille'),
+                ('La culture a-t-elle une place importante pour vous ?\nNon                    Oui','Culture'),
                 ('Q7','Theme7'),
                 ('Q8','Theme8'),
                 ('Q9','Theme9'),
@@ -114,7 +114,7 @@ def plus1(b1,b2):
     
     n += 1
     if not est_termine(b1,b2):
-        dico_Reponses[list_Questions[n-1][1]] = 0
+        dico_Reponses[list_Questions[n-1][1]] = 1
         msg_principal.config(text = list_Questions[n][0])
     else:
         b1.destroy()
@@ -140,13 +140,9 @@ def aide(btn):
     """
     texte_aide="""
     Bonjour ! Voilà notre protoype de CityScore où vous pourrez regarder le score de villes.
-
 Pour commencer, nous réalisons un QCM de 10 questions pour voir vos préférences.
-
-
 Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui est de base 1. 
 Le plus de critères sont réunis afin d'avoir le plus de précision possible. Ils sont répartis en 4 catégories :
-
 Le climat (pluie en un an / pollution de l'air / températures / vent / ...)
 La qualité de vie (activités / patrimoine / ville fleurie / ...)
 Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
@@ -158,7 +154,6 @@ La sécurité (taux d'accidents / vols / risques / ...)
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowAide.minsize(width=int(510*4/3), height=384) #768
     windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
-    print(texte_aide)
     msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
     btn_compris = Button(windowAide, width=20, height=3, command=windowAide.destroy, bg='#B9F7D0', text="Compris !")
