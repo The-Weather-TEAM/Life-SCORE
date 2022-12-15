@@ -45,3 +45,9 @@ fait par Frédéric MARQUET & Nathan BOSY
 11 Décembre 2022
 > Interface : Fin de la première page au niveau fonctionnel (on pose les questions et ensuite on envoie sur la seconde page) et création de la seconde page(vide pour l'instant)
 > Même chose, chercher les questions mais maintenant c'est que l'aspect esthétique de la page et ses questions à trouver (Thor si le dico ne te vas pas dis le moi)
+
+14 Décembre 2022
+> Ajout de quelques questions (+5)
+> Agrandissement automatique (plein écran) et essais avec la fenêtre de l'utilisateur
+> Création de la seconde Page avec une entrée (Il faut créer le bouton)
+> Création de la 3 ème page et tentative de bouton de retour (nous renvoie à la seconde page)
