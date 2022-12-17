@@ -166,6 +166,7 @@ La sécurité (taux d'accidents / vols / risques / ...)
     windowAide.mainloop()
     return windowAide
 
+
 #seconde page
 def w_question():
     """
