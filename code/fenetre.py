@@ -8,11 +8,12 @@ réferences :
     - Les listes s'écrivent list_NOM
     - Les dictionnaires s'écrivent dico_NOM
     - d'autres à venir
-modif précédente : 11/12/2022 19:31
-dernière modif : 12/12/2022 19:28
+modif précédente : 12/12/2022 19:28
+dernière modif : 17/12/2022 12:36
 """
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
+from recup_meteo_classe import *
 #from PIL import ImageTk, Image
 
 global msg_principal #on pose les questions a travers lui
@@ -33,7 +34,7 @@ list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activ
                 ('Q9','Theme9'),
                 ('Q10','Theme10')]
 dico_Reponses = {}
-print(list_Questions[0])
+
 
 #fonctions
 #premiere page
@@ -182,14 +183,36 @@ def w_question():
     #input
     entree = Entry(windowQuestion,cursor = 'Pencil', font = ('Bold',18))
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
-
+    
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
+    #Boutton
+    btn_entree = Button(windowQuestion,width=20, height=3, command=lambda: ville(entree,msg_ville,windowQuestion), bg='#B9F7D0', text="Recherche")
+    btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
 
 
     windowQuestion.mainloop()
+
+
+def ville(entree,msg,fenetre):
+    """
+    Récupère l'entrée, vérifie si la ville existe bien:
+        -Si oui, continue vers la page 3
+        -Si non, affiche un message d'erreur
+    """
+    ville = entree.get()
+    print(ville)
+    Donnees_ville = Donnees(ville)
+    if Donnees_ville.ville_existe():
+        print('aa')
+        fenetre.destroy()
+        w_score()
+    else:
+        msg.config(text = "Erreur : La ville choisie n'existe pas")
+
+
 
 
 
@@ -204,7 +227,7 @@ def w_score():
     windowScore.state('zoomed') #Plein écran
 
     #Bouton retour
-    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore) bg='#B9F7D0', text= "Noter une autre ville")
+    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore), bg='#B9F7D0', text= "Noter une autre ville")
 
 
 
