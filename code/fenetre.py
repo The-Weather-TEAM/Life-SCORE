@@ -9,7 +9,7 @@ réferences :
     - Les dictionnaires s'écrivent dico_NOM
     - d'autres à venir
 modif précédente : 11/12/2022 19:31
-dernière modif : 12/12/2022 19:28 AAAAAAAAAA test
+dernière modif : 12/12/2022 19:28 
 """
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
