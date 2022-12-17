@@ -51,3 +51,9 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Agrandissement automatique (plein écran) et essais avec la fenêtre de l'utilisateur
 > Création de la seconde Page avec une entrée (Il faut créer le bouton)
 > Création de la 3 ème page et tentative de bouton de retour (nous renvoie à la seconde page)
+
+17 Décembre 2022
+> Creation du fichier recup_meteo_classe qui utilise le même fonctionnement que l'autre mais sous forme de classe (plus facile à appeler)
+> Juste ajout de "la ville existe ?"
+> Fonction qui le vérifie ajoutée dans le code de fenetre
+> Il faut désormais vérifier qu'elle soit en France
