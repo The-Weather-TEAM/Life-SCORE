@@ -56,3 +56,4 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Creation du fichier recup_meteo_classe qui utilise le même fonctionnement que l'autre mais sous forme de classe (plus facile à appeler)
 > Ajout de "la ville existe ?" : Fonction qui vérifie mis dans 'fenetre.py'
 > Il faut désormais vérifier qu'elle soit en France
+> Protoype de la fonction de couleur
