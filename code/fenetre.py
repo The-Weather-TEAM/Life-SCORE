@@ -108,7 +108,6 @@ def plus0(b1,b2):
         b1.destroy()
         b2.destroy()
 
-
 def plus1(b1,b2):
     """ajoute 1 au tableau de reponses (--->)"""
     global list_Questions
@@ -167,14 +166,14 @@ La sécurité (taux d'accidents / vols / risques / ...)
     return windowAide
 
 
+
+
+
 #seconde page
 def w_question():
     """
     affiche la seconde page qui contient la requête de la ville
     """
-
-    
-
     windowQuestion = Tk() #fenetre de tkinter
     windowQuestion.title('Seconde page - requête de la ville')
     windowQuestion.minsize(width=768, height=500)
@@ -193,6 +192,8 @@ def w_question():
     btn_entree = Button(windowQuestion,width=20, height=3, command=lambda: ville(entree,msg_ville,windowQuestion), bg='#B9F7D0', text="Recherche")
     btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
 
+    #windowQuestion.bind('KP_Return',ville(entree,msg_ville,windowQuestion)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
+
 
     windowQuestion.mainloop()
 
@@ -207,7 +208,9 @@ def ville(entree,msg,fenetre):
     print(ville)
     Donnees_ville = Donnees(ville)
     if Donnees_ville.ville_existe():
-        print('aa')
+        msg.config(text = "Veuillez patienter ...")
+        #FAIRE TOUS LES CALCULS ICI :
+        #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
         fenetre.destroy()
         w_score()
     else:
@@ -227,6 +230,19 @@ def w_score():
     windowScore.minsize(width=768, height=500)
     windowScore.state('zoomed') #Plein écran
 
+    #Donnees
+    score = 50 #Provisoire
+
+
+
+    couleur= couleur_score(score)
+    score = str(score)
+
+    #Textes :
+    msg_note = Message(windowScore, text=score, width = 1000,fg =couleur, font =('Gorga',40), justify=CENTER)
+    msg_note.place(relx=0.95,rely=0.1, anchor=NE)#Nord Est
+
+
     #Bouton retour
     btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore), bg='#B9F7D0', text= "Noter une autre ville")
 
@@ -242,6 +258,29 @@ def retour_p2(fenetre):
     fenetre.destroy()
     w_question()
 
+
+def couleur_score(n):
+    """
+    Choisit une couleur en fonction du chiffre obtenu (de 0 à 100) et la retourne en RGB
+    """
+    #A RETRAVAILLER PEUT ETRE METTRE UN PEU DE BLEU
+    couleur = (255,0,127)
+    rouge = 255 - int(n*255/100)
+    vert = 0 + int(n*255/100)
+    print(rouge,vert)
+    couleur = (rouge,vert,100)
+
+    rgb = '#' + ''.join(f'{i:02X}' for i in couleur)
+
+
+
+
+    return rgb
+
+
+couleur_score(0)
+couleur_score(50)
+couleur_score(100)
 
 
 """
@@ -266,6 +305,7 @@ u.close()
 
 
 # appel de la fonction de la première page
-w_qcm() #ligne  à lancer a la fin
+#w_qcm() #ligne  à lancer a la fin
 #w_question()
+w_score()
 print(n,dico_Reponses,msg_principal)
