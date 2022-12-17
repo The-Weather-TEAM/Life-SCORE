@@ -54,6 +54,5 @@ fait par Frédéric MARQUET & Nathan BOSY
 
 17 Décembre 2022
 > Creation du fichier recup_meteo_classe qui utilise le même fonctionnement que l'autre mais sous forme de classe (plus facile à appeler)
-> Juste ajout de "la ville existe ?"
-> Fonction qui le vérifie ajoutée dans le code de fenetre
+> Ajout de "la ville existe ?" : Fonction qui vérifie mis dans 'fenetre.py'
 > Il faut désormais vérifier qu'elle soit en France
