@@ -7,6 +7,7 @@
 import requests
 from requests.exceptions import ConnectionError
 
+from tkinter import *
 from datetime import datetime
 from time import sleep #Optionel
 
@@ -18,23 +19,23 @@ import pandas as p #Pour les csv ?
 Fonction qui permet de vérifier si on est connecté à internet.
 '''
 
-def test_connexion() :
+def test_connexion(msg) :
 
     temp, essais = 0, 0
     
     while temp == 0 and essais < 3 :
         try :
-            requests.get("https://google.com", timeout=5)
+            requests.get("https://api.openweathermap.org", timeout=5) #ça ou google.com ?
             temp = 1
             
             
         except ConnectionError :    
-            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+            msg.config(text = 'Problème réseau.\nTentative de reconnexion en cours...')
             sleep(10)
-            essais += 1
-            
+            essais += 1            
     assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
 
+    msg.config(text = 'Veuillez saisir la ville recherchée')
 
 class Donnees:
     def __init__(self,ville) :

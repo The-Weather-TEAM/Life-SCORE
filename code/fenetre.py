@@ -187,6 +187,7 @@ def w_question():
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
     #Boutton
     btn_entree = Button(windowQuestion,width=20, height=3, command=lambda: ville(entree,msg_ville,windowQuestion), bg='#B9F7D0', text="Recherche")
@@ -306,6 +307,6 @@ u.close()
 
 # appel de la fonction de la première page
 #w_qcm() #ligne  à lancer a la fin
-#w_question()
-w_score()
+w_question()
+#w_score()
 print(n,dico_Reponses,msg_principal)
