@@ -1,6 +1,6 @@
 
 
-def main(globalmeteo, localmeteo, coefs):
+def calculeCoefficients(globalmeteo, localmeteo, coefs):
     """
     Calcule coefficients de tout les differents moyenns pour ensuite en deduire une note du ville
     """
