@@ -213,7 +213,7 @@ def ville(entree,msg,fenetre):
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
         fenetre.destroy()
-        w_score()
+        w_score(ville)
     else:
         msg.config(text = "Erreur : La ville choisie n'existe pas")
 
@@ -222,18 +222,30 @@ def ville(entree,msg,fenetre):
 
 
 #troisieme page
-def w_score():
+def w_score(ville):
     """
     affiche la dernière page qui contient le score et le bouton pour revenir
     """
     windowScore = Tk() #fenetre de tkinter
     windowScore.title('Dernière page - Note de la ville')
-    windowScore.minsize(width=768, height=500)
+    windowScore.minsize(width=1000, height=600)
     windowScore.state('zoomed') #Plein écran
 
-    #Donnees
+    #Donnees PROVISOIRES
+    dico = {'ville fleurie':9,'polution':10,'Animation':5,'th4':7,'th5':-2,'th6':4,'Culture':-1,'th8':-2,'Education':-1,'th10':-1} #Exemple
     score = 50 #Provisoire
+    bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
+
+
+
+
+
+    #Transfo des données en texte
+    msg_ville = Message(windowScore,text=ville, width = 1000, font =('Bold',30), justify=CENTER)
+    msg_ville.place(relx=0.5,rely=0.1,anchor=N)
+    plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
+    print(plus,moins)
 
 
     couleur= couleur_score(score)
@@ -242,10 +254,15 @@ def w_score():
     #Textes :
     msg_note = Message(windowScore, text=score, width = 1000,fg =couleur, font =('Gorga',40), justify=CENTER)
     msg_note.place(relx=0.95,rely=0.1, anchor=NE)#Nord Est
+    msg_bonus = Message(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+    msg_malus = Message(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+    msg_bonus.place(relx = 0, rely = 0.5)
+    msg_malus.place(relx=0.7,rely=0.5)
 
 
     #Bouton retour
-    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore), bg='#B9F7D0', text= "Noter une autre ville")
+    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore), bg='#B9F7D0', text= "Noter une autre ville", font=('Bold',20))
+    btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
 
 
@@ -259,6 +276,52 @@ def retour_p2(fenetre):
     fenetre.destroy()
     w_question()
 
+def trouve_bonus(dic):
+    """
+    Prend les 5 meilleurs aspects de la ville pour mettre des plus à y habiter
+    """
+    
+    bonus_list= []
+    for i in range(5):
+        maxi = 0
+        for cle in dic.keys():
+            if dic[cle] > maxi:
+                maxi = dic[cle]
+                cle_maxi = cle
+        bonus_list.append(cle_maxi)
+        dic.pop(cle_maxi,None)
+
+    return bonus_list
+
+
+def trouve_malus(dic):
+    """
+    Prend les 5 pires aspects de la ville pour mettre des inconvénients à y habiter
+    """
+ 
+    malus_list= []
+    for i in range(5):
+        mini = 0 # REQUIERT QUE LES MALUS SOIENT EN NEGATIF !!!
+        for cle in dic.keys():
+            if dic[cle] < mini:
+                mini = dic[cle]
+                cle_mini = cle
+        malus_list.append(cle_mini)
+        dic.pop(cle_mini,None)
+
+    return malus_list
+
+def plus_et_moins(pl,mal):
+    """
+    Fonction qui transforme en Str formaté les plus et les moins
+    """
+    plus, moins = "Les Avantages : ", "Les Inconvénients :" #texte a retourner
+    for val_plus in pl:
+        plus += f"\n - {val_plus} "
+    for val_moins in mal:
+        moins += f"\n - {val_moins} "
+
+    return plus,moins
 
 def couleur_score(n):
     """
@@ -306,7 +369,7 @@ u.close()
 
 
 # appel de la fonction de la première page
-#w_qcm() #ligne  à lancer a la fin
-w_question()
-#w_score()
-print(n,dico_Reponses,msg_principal)
+w_qcm() #ligne  à lancer a la fin
+#w_question()
+#w_score('Beziers')
+#print(n,dico_Reponses,msg_principal)

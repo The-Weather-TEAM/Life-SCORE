@@ -33,7 +33,7 @@ def test_connexion(msg) :
             msg.config(text = 'Problème réseau.\nTentative de reconnexion en cours...')
             sleep(10)
             essais += 1            
-    assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+    #assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
 
     msg.config(text = 'Veuillez saisir la ville recherchée')
 
