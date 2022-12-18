@@ -57,3 +57,8 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Ajout de "la ville existe ?" : Fonction qui vérifie mis dans 'fenetre.py'
 > Il faut désormais vérifier qu'elle soit en France
 > Protoype de la fonction de couleur
+
+18 Décembre 2022
+> Mise en place de la page finale 
+> Ajout de la liste des 5 avantages/inconvénients (5 meilleurees et pires note dans le dico)
+> tentative de test_connection (pas ouf empeche le lancement du programme si il n'y a pas de connexion
