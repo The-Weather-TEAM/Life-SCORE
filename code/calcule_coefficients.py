@@ -37,4 +37,4 @@ if __name__ == "__main__":
         "pluie": 1
     }
     
-    print(main(globaldico, localdico, coeffsdico))
+    print(calculeCoefficients(globaldico, localdico, coeffsdico))
