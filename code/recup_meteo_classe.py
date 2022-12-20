@@ -76,4 +76,4 @@ class Donnees:
             return True 
 
 ddd = Donnees('Beziers')
-print(ddd.is_commune_france('code/donnees_csv/villes_france.csv'))
+print(ddd.is_commune_france('code/CSV/villes_france.csv'))
