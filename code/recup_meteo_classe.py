@@ -1,5 +1,7 @@
 """         Tentative de reproduction de 'recup_meteo.py'
                 Mais avec des classes
+
+            Sers aussi pour regarder les fichiers csv
                 
                         V 0.1
 """
@@ -11,6 +13,7 @@ from tkinter import *
 from datetime import datetime
 from time import sleep #Optionel
 
+import csv 
 import pandas as p #Pour les csv ?
 
 
@@ -41,6 +44,7 @@ class Donnees:
     def __init__(self,ville) :
         self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
         self.data =  requests.get(self.url).json()
+        self.ville = ville
         #Il reste d'autres choses a mettre pour l'instant je m'occupe que du "la ville existe ?" -Raf
 
 
@@ -55,3 +59,21 @@ class Donnees:
             return True
                 
         else : return False
+
+    
+    def is_commune_france(self,fichier_csv):
+        fichier = open(fichier_csv,"r")
+        cr = p.read_csv( fichier,delimiter=",",encoding ='utf-8') #encoding pour pouvoir avoir les accents
+        liste = []
+        """for row in cr:
+            liste.append(row[2].lower())
+            liste.append(row[3].lower())
+            liste.append(row[4].lower())
+            liste.append(row[5].lower())"""
+        print(cr)
+        fichier.close()
+        if self.ville.lower() in liste:
+            return True 
+
+ddd = Donnees('Beziers')
+print(ddd.is_commune_france('code/donnees_csv/villes_france.csv'))
