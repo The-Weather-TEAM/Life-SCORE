@@ -62,18 +62,19 @@ class Donnees:
 
     
     def is_commune_france(self,fichier_csv):
+        """
+        Verifie si la commune est en france grâce à un fichier qui lui est donne
+        """
         fichier = open(fichier_csv,"r")
-        cr = p.read_csv( fichier,delimiter=",",encoding ='utf-8') #encoding pour pouvoir avoir les accents
-        liste = []
-        """for row in cr:
-            liste.append(row[2].lower())
-            liste.append(row[3].lower())
-            liste.append(row[4].lower())
-            liste.append(row[5].lower())"""
-        print(cr)
+        cr = p.read_csv( fichier,delimiter=",",encoding ='iso-8859-1',usecols=['Nom1','Nom2','Nom3']) #encoding pour pouvoir avoir les accents (ne marche pas)
         fichier.close()
-        if self.ville.lower() in liste:
-            return True 
+        for ind,col in cr.iteritems():
+            for nom in col:
+                if self.ville.lower() == nom.lower(): return True
+        return False
 
+#Code de test de la fonction
+"""
 ddd = Donnees('Beziers')
-print(ddd.is_commune_france('code/CSV/villes_france.csv'))
+print(ddd.is_commune_france('CSV/villes_france.csv'))
+"""
