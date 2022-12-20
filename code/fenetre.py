@@ -252,8 +252,8 @@ def w_score(ville):
     score = str(score)
 
     #Textes :
-    msg_note = Message(windowScore, text=score, width = 1000,fg =couleur, font =('Gorga',40), justify=CENTER)
-    msg_note.place(relx=0.95,rely=0.1, anchor=NE)#Nord Est
+    msg_note = Message(windowScore, text=f'Note : \n' +score +'  ' , width = 1000,fg =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+    msg_note.place(relx=0.95,rely=0.05, anchor=NE)#Nord Est
     msg_bonus = Message(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
     msg_malus = Message(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
     msg_bonus.place(relx = 0, rely = 0.5)
