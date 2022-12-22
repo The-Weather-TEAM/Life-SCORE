@@ -7,17 +7,46 @@ réferences :
     - Les textes (classe Message) s'écrivent msg_NOM
     - Les listes s'écrivent list_NOM
     - Les dictionnaires s'écrivent dico_NOM
-    - d'autres à venir
+    - Les url de csv ou d'API s'écrivent url_csv_NOM ou url_api_NOM
+
 modif précédente : 11/12/2022 19:31
-dernière modif : 12/12/2022 19:28 
+dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oublie de le changer mdr - Raf
 """
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
 from recup_meteo_classe import *
+
+import requests
+from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
+
+
+import csv
+
+'''
+FICHIERS CSV (importés d'internet à chaque appel du fichier) 
+'''
+
+url_csv_Communes = 'https://sql.sh/ressources/sql-villes-france/villes_france.csv'
+""" CODE DE TEST AUSSI POUR IMPMENTATION DU TECHARGEMENT (je sais pas quoi faire avec mdrr) - Raf
+with requests.get(url_csv_Communes, stream=True) as r:
+    lines = (line.decode('utf-8') for line in r.iter_lines())
+    for a in csv.reader(lines):
+
+        if 'Puissalicon' in a :
+            print('oui',type(a))
+"""
+
+""" CODE TEST SUJET A MODIFICATION
+with requests.Session() as s: #Importe les fichiers csv 
+    s.post(url, data=payload)
+    download = s.get('url that directly download a csv report')
+"""
+
 #from PIL import ImageTk, Image
 
 global msg_principal #on pose les questions a travers lui
 global list_Questions #Les valeurs de ce tableau sont les questions 
+global list_alternative #Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
 global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
 global btn_ok
@@ -25,14 +54,23 @@ global btn_ok
 n = 0
 list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
                 ('Quel âge avez vous ?\nMoins de 30 ans               Plus de 30 ans','Age'),
-                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Emploi"),
-                ('Etes vous etudiants ?\nNon                    Oui','Scolarite'),
-                ('Avez vous des enfants ?\nNon                   Oui','Famille'),
+                ('Etes vous etudiant ?\nNon                    Oui','Scolarite'), #Change pour  X si personne = vieille                
+                ('Avez vous\Vivez vous avec des enfants ?\nNon                   Oui','Famille'),
                 ('La culture a-t-elle une place importante pour vous ?\nNon                    Oui','Culture'),
-                ('Q7','Theme7'),
-                ('Q8','Theme8'),
-                ('Q9','Theme9'),
+                ('Que préférez vous ?\nLa campagne                   La ville','citadin'),                               #s 4 dernières questions sont a revoir ducoup
+                ('Avez vous un travail ?\nNon                    Oui','Travail'),
+                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi"),
+                ('Q9','Theme9'),                              #!!! Est-ce qu'on fait des questions adaptative ? (jeune?: oui > étudiant ?, non > retraité ?)
                 ('Q10','Theme10')]
+
+list_alternative = [('Q_remplace_1','theme_remplace_1'),#Sers comme questions mais en remplacement
+                    ('Bénéficiez vous du système de télétravail ?\nNon                    Oui','reseau'),#Pour les travailleurs
+                    ('Q_remplace_3','theme_remplace_3'),
+                    ('Q_remplace_4','theme_remplace_4'),
+                    ('Q_remplace_5','theme_remplace_5'),
+]
+
+
 dico_Reponses = {}
 
 
@@ -73,6 +111,26 @@ def w_qcm(): #w pour window
 
     windowQCM.mainloop() #pour fermer la fenetre
 
+def change_questions(arg):
+    """
+    Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
+    """
+    global list_Questions
+    global list_alternative
+    global dico_Reponses
+    if arg in dico_Reponses:
+        if arg == 'Age': 
+            if dico_Reponses[arg] == 1: #Si plus de 30 ans
+                list_Questions[2] = list_alternative[0] #Pas encore décidé
+
+        elif arg == "Travail":
+            if dico_Reponses[arg] == 1:
+                list_Questions[7] = list_alternative[1]
+
+
+
+
+
 def avancer(fenetre):
     global msg_principal
     global btn_ok
@@ -89,6 +147,7 @@ def avancer(fenetre):
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
         btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
         msg_principal.config(text =f'{list_Questions[n][0]}') #change le texte du msg principal
+
     else:
         fenetre.destroy()
         w_question() #Ouvre la seconde fenêtre : Fin de la première
@@ -100,10 +159,13 @@ def plus0(b1,b2):
     global dico_Reponses
     global msg_principal
 
+    
     n += 1
     if not est_termine(b1,b2):
+
         dico_Reponses[list_Questions[n-1][1]] = 0
         msg_principal.config(text = list_Questions[n][0])
+        change_questions(list_Questions[n-1][1])
     else:
         b1.destroy()
         b2.destroy()
@@ -119,6 +181,7 @@ def plus1(b1,b2):
     if not est_termine(b1,b2):
         dico_Reponses[list_Questions[n-1][1]] = 1
         msg_principal.config(text = list_Questions[n][0])
+        change_questions(list_Questions[n-1][1])
     else:
         b1.destroy()
         b2.destroy()
@@ -208,7 +271,7 @@ def ville(entree,msg,fenetre):
     ville = entree.get()
     print(ville)
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france('CSV/villes_france.csv'): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
+    if Donnees_ville.is_commune_france('code/CSV/villes_france.csv'): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.config(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
@@ -342,9 +405,9 @@ def couleur_score(n):
     return rgb
 
 
-couleur_score(0)
-couleur_score(50)
-couleur_score(100)
+#couleur_score(0)
+#couleur_score(50)
+#couleur_score(100)
 
 
 """

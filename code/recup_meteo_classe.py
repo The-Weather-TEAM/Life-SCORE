@@ -18,6 +18,10 @@ import pandas as p #Pour les csv ?
 
 
 
+
+
+
+
 '''
 Fonction qui permet de vérifier si on est connecté à internet.
 '''
@@ -68,13 +72,12 @@ class Donnees:
         fichier = open(fichier_csv,"r")
         cr = p.read_csv( fichier,delimiter=",",encoding ='iso-8859-1',usecols=['Nom1','Nom2','Nom3']) #encoding pour pouvoir avoir les accents (ne marche pas)
         fichier.close()
-        for ind,col in cr.iteritems():
+        for ind,col in cr.items():
             for nom in col:
                 if self.ville.lower() == nom.lower(): return True
         return False
 
-#Code de test de la fonction
-"""
+#Code de test de la Classe et des fonctions
+
 ddd = Donnees('Beziers')
-print(ddd.is_commune_france('CSV/villes_france.csv'))
-"""
+print(ddd.is_commune_france('code/CSV/villes_france.csv'))
