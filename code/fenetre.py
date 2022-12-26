@@ -271,7 +271,7 @@ def ville(entree,msg,fenetre):
     ville = entree.get()
     print(ville)
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france('code/CSV/villes_france.csv'): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
+    if Donnees_ville.is_commune_france('CSV/villes_france.csv'): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.config(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS

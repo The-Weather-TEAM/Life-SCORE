@@ -80,4 +80,4 @@ class Donnees:
 #Code de test de la Classe et des fonctions
 
 ddd = Donnees('Beziers')
-print(ddd.is_commune_france('code/CSV/villes_france.csv'))
+print(ddd.is_commune_france('CSV/villes_france.csv'))
