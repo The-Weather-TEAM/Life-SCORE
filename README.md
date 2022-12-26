@@ -62,3 +62,8 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Mise en place de la page finale 
 > Ajout de la liste des 5 avantages/inconvénients (5 meilleurees et pires note dans le dico)
 > tentative de test_connection (pas ouf empeche le lancement du programme si il n'y a pas de connexion
+
+26 Décembre 2022
+> Mise en place d'une classe qui récupère toutes les données météo de la ville demandée. On récupère tout ça sous un dictionnaire.
+> Mise à jour de la méthode pour savoir si la ville est Française. (sans passer par un autre CSV.)
+> Création d'un répertoire de fichiers CSV qui vont nous aider à mettre en place la note.
