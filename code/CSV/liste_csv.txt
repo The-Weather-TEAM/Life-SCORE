@@ -1,6 +1,9 @@
 lise des csv à utiliser pour le code.
-Est-ce qu'on le réchupère sur internet (et en créer un système de mises à jours auto)
+Est-ce qu'on le récupère sur internet (et en créer un système de mises à jours auto)
 ou on met tout dans un dossier mais ducoup c'est pas mis à jour ?
+
+Raf : On met tout dans un dossier, c'est pratique si par exmple on n'est pas connecté et on le maintiendra nous même à jour à intervalles de 2/3 mois (une ville va pas devenir inhabitable en si peu de temps et vice versa donc ça me semble pas mal). De plus les csv comme ça arrivent pas souvent (un tous les ans pour les donnees generales de l'état donc ça va)
+Après on pourrait faire un système d'update avec un code qui verifie si le csv de l'annee utilisée + 1 existe et si oui remplace celui deja existant mais ca c pour la fin plutot.
 
 https://www.data.gouv.fr/fr/datasets/communes-de-la-loi-montagne-au-code-officiel-geographique-cog-2020-2022/
 https://www.observatoire-des-territoires.gouv.fr/kiosque/zonage-les-zones-de-perimetre-de-massifs
