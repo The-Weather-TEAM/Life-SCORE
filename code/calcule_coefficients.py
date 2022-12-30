@@ -6,35 +6,52 @@ def calculeCoefficients(globalmeteo, localmeteo, coefs):
     """
 
     # calcule le rapport entre les donnes local est la moyenne global
+    listDeNotesCriteres = []
 
-    if globalmeteo["precipitation"]<localmeteo["precipitation"]: # pour assurer [-1 < note < 1] 
-        note = coefs["pluie"]-globalmeteo["precipitation"]/localmeteo["precipitation"] 
-    elif globalmeteo["precipitation"]>localmeteo["precipitation"]:
-        note = localmeteo["precipitation"]/globalmeteo["precipitation"]-coefs["pluie"]
-    else:
-        return 0.5
-
-    # print(taux)
-    note = 0.5 + (note/2) # pour avoir un note entre 0 et 1, tout en gardant la meme equivalence avec les note negative
+    for critere in ("visibilite", "temperature", "humidite"):
 
 
-    return round(note, 2) # renvoi la note 
+
+        # pour assurer [-1 < note < 1] 
+        if globalmeteo[critere]<localmeteo[critere]: 
+            note = coefs[critere]-globalmeteo[critere]/localmeteo[critere] 
+
+        elif globalmeteo[critere]>localmeteo[critere]:
+            note = localmeteo[critere]/globalmeteo[critere]-coefs[critere]
+
+        else:
+            note = 0 # sera neutre (note 0.5)
+
+        # print(taux)
+        note = 0.5 + (note/2) # pour avoir un note entre 0 et 1, tout en gardant la meme equivalence avec les note negative
+        print(critere,note)
+        listDeNotesCriteres.append(note) # ajoute chaque note au liste
+    
+    noteMoyenneDesCriteres = sum(listDeNotesCriteres)/len(listDeNotesCriteres) # calcule la note moyenne du ville
+
+    return round(noteMoyenneDesCriteres, 2) # renvoi la note 
 
 
-if __name__ == "__main__":
-  
-  
+if __name__ == "__main__": # pour tester le code
 
-    globaldico = { # info meteo de france
-        "precipitation": 0.6 # 0.25
+
+    import recup_meteo_classe as recupMeteo
+    class_ville = recupMeteo.Donnees("Paris")
+
+    dicoMeteoVille = class_ville.meteo()
+    print(dicoMeteoVille)
+
+    globalDico = { # info meteo ideal
+        "humidite": 60, # pourcent
+        "temperature": 27.5, # Celcius
+        "visibilite": 10 # km
     }
 
-    localdico = { # info meteo du ville
-        "precipitation": 0.25 # 0.6
-    }
-
-    coeffsdico = { # serait le dico de questions dans le future
-        "pluie": 1
+    
+    coeffsDico = { # 0: on veut moins que la moyenne global | 1: on veut plus que la moyenne global
+        "humidite": 0,
+        "temperature": 1,
+        "visibilite": 1
     }
     
-    print(calculeCoefficients(globaldico, localdico, coeffsdico))
+    print(calculeCoefficients(globalDico, dicoMeteoVille, coeffsDico))
