@@ -22,9 +22,8 @@ def calculeCoefficients(globalmeteo, localmeteo, coefs):
         else:
             note = 0 # sera neutre (note 0.5)
 
-        # print(taux)
         note = 0.5 + (note/2) # pour avoir un note entre 0 et 1, tout en gardant la meme equivalence avec les note negative
-        print(critere,note)
+        # print(critere,note)
         listDeNotesCriteres.append(note) # ajoute chaque note au liste
     
     noteMoyenneDesCriteres = sum(listDeNotesCriteres)/len(listDeNotesCriteres) # calcule la note moyenne du ville
@@ -39,7 +38,7 @@ if __name__ == "__main__": # pour tester le code
     class_ville = recupMeteo.Donnees("Paris")
 
     dicoMeteoVille = class_ville.meteo()
-    print(dicoMeteoVille)
+    # print(dicoMeteoVille)
 
     globalDico = { # info meteo ideal
         "humidite": 60, # pourcent
