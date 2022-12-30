@@ -16,8 +16,10 @@ from time import sleep #Optionel
 import csv 
 import pandas as p #Pour les csv ? yes
 
-
-
+# fix pour un erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi sa marche
+# https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 
@@ -191,7 +193,7 @@ class Donnees:
         r['temperature_max']    = round(self.data['main']['temp_max'] - 273.15, 1)     
         r['ressenti']           = round(self.data['main']['feels_like'] - 273.15, 1)
         
-        r['humidite']           = self.data['main']['humidity']
+        r['humidite']           = self.data['main']['humidity']                                  # en pourcent
         r['pression']           = round(self.data['main']['pressure']/1013.25, 3)                # convertion hP en ATM
         
 
@@ -215,8 +217,9 @@ class Donnees:
 
         return r
 
-#Code de test de la Classe et des fonctions
 
-ddd = Donnees('Béziers')
-print(ddd.is_commune_france())
-print(ddd.meteo())
+if __name__ == "__main__":
+    #Code de test de la Classe et des fonctions
+    ddd = Donnees('Béziers')
+    print(ddd.is_commune_france())
+    print(ddd.meteo())
