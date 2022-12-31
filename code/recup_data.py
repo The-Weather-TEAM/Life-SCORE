@@ -1,6 +1,9 @@
 '''
-Programme de téléchargement et de vérification (màj) des csv
-
+Programme de téléchargement des CSV
+- créer le dossier data avec tous les csv dedans
+- télécharge et installe les fichiers lors de la première utilisation
+- recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible
+- base de csv stockée ici
 '''
 
 import requests
@@ -9,6 +12,9 @@ import time
 import internet as i
 import csv
 import pandas as p
+import datetime
+import time
+
 
 
 #test de connexion internet sur le site data.gouv.fr
@@ -18,10 +24,11 @@ if connexion.connected() is True :
 
 
     #tous les csv ici
-    #          LA CEST L'ID                LA CEST LE CODE DE TELECHARGEMENT
-    urls = {'59593619a3a7291dd09c8238':'d22ba593-90a4-4725-977c-095d1f654d28'}
+    #         NOM      ID DES METADONNEES                 CODE DE TELECHARGEMENT
+    urls = {'gares':['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
+            'festivals':['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975']}
 
-# à remplir
+#                                          à remplir
 
 
 
@@ -35,20 +42,26 @@ if connexion.connected() is True :
         os.makedirs(rep)
 
 
-
+    #dictionnaire des nouvelles version installées
     infos = {}
-    if_file = 0 
+    
+    #variables boléennes
+    if_file, modified = False, False
     
 
-    
+    #pour savoir si le fichier existait
     if os.path.isfile(rep+'/'+'versions.csv') :
-        #pour récuperer les infos qu'on ajoute à chaque fois
-        recup_infos = p.read_csv(rep+'/versions.csv')
-        if_file = 1
+        if_file = True
+    
     
     #créer le fichier des infos s'il existe pas
-    if not os.path.isfile(rep+'/'+'versions.csv') :
+    else :
         nom_fichier_infos = os.path.join(rep, 'versions.csv')
+        csv.writer(open(rep+'/'+'versions.csv', "w")).writerow(['NOM', 'VERSION']) 
+        
+        
+    #lecture du fichier csv
+    recup_infos = p.read_csv(rep+'/versions.csv')
 
 
 
@@ -56,62 +69,77 @@ if connexion.connected() is True :
 
     for url in urls :
         
-        '''
-        A FAIRE : recuperer les infos du fichier et le temps d'aujourd'hui pour voir si ça fait longtemps qu'on a pas cherché 
-        à faire une vise à jour
-        
-
-        MARCHR PAS faut directement metre le titre dans le dictionzire de base sinon ça rajoute 
-        trop de latence
-
-        if if_file == 1 :
+        #si le fichier csv n'existe pas ou si son téléchargement a plus de un mois
+        if not os.path.isfile(rep+'/'+url+'.csv') or time.time() - os.path.getctime(rep+'/'+url+'.csv') > 2592000 :
             
-            for row in recup_infos :
-                if row.values[0][1] == url :
-                    titre = row.values[0][1]
-                    print(titre)
+            #données modifiées
+            modified = True 
+            
+            #récupère les données du csv
+            #https://help.opendatasoft.com/apis/ods-explore-v2/
+            metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+urls[url][0]).json()
 
-        '''
+            
+            #conversion de la date donnée par data.gouv.fr en unix directement
+            version = metadonnees['last_modified']
+            version = version.split('T')
+            version = version[0].split('-') + version[1].split(':')
+            
+            #transforme str en int dans version
+            nbr = 0
+            for i in version :
+                version[nbr] = int(i)
+                nbr += 1
         
-        #récupère les données du csv
-        metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+url).json()
-        
-        lien = 'https://www.data.gouv.fr/fr/datasets/r/'+urls[url]
-        
-        #à modifier en convertissant ça en unix directement
-        version = metadonnees['last_modified']
-        
-        
-        titre = metadonnees['slug']
-        
-        infos[url] = [titre,version]
-        
-        
-        
-        
-        #contrôle si le fichier existe et si il a plus de un mois
-        if not os.path.isfile(rep+'/'+titre+'.csv') or time.time() - os.path.getctime(rep+'/'+titre+'.csv') > 2592000 :
+            #conversion en unix
+            date_time = datetime.datetime(version[0], version[1], version[2], version[3], version[4], version[5])
+            version = time.mktime(date_time.timetuple())
+                        
+                        
+            
+            #remplissage du dictionnaire
+            infos[url] = version
+            
+            
+            
+            #on récupère la version téléchargée initialement
+            if if_file and os.path.isfile(rep+'/'+url+'.csv'):
+                ligne = recup_infos[recup_infos["NOM"] == url]     # retient seulement la ligne du fichier csv
+                recup_version = ligne.values[0][1]                 # retourne la version du fichier
+
+            else : recup_version = 0
                 
-            #on récupère le fichier csv
-            r = requests.get(lien, allow_redirects=True)
             
-            #on le sauvegarde avec le bon nom et l'extention
-            nom_du_fichier = os.path.join(rep, titre+'.csv')
-            open(nom_du_fichier, 'wb').write(r.content)
+                
+            #téléchargement si data n'existait pas ou si la version du csv était différente
+            if not if_file or recup_version != version :
+                
+                #données modifiées
+                modified = True
+                            
+                lien = 'https://www.data.gouv.fr/fr/datasets/r/'+urls[url][1]
+                
+                
+                #on récupère le fichier csv
+                r = requests.get(lien, allow_redirects=True)
+                
+                #on le sauvegarde avec le bon nom et l'extention
+                nom_du_fichier = os.path.join(rep, url+'.csv')
+                open(nom_du_fichier, 'wb').write(r.content)
+                
+
+                #provisoire
+                print ("Fichier téléchargé")
             
-
+               #provisoire
+        else : print("Fichier csv à jour")
             
-            print ("téléchargé")
-        
-        else :
-           print("à jour")
-           
-           
-
-
-w = csv.writer(open(rep+'/'+'versions.csv', "w"))
-for key, val in infos.items():
-    w.writerow([key, val[0], val[1]])       
+            
+#rajout des csv téléchargés
+if modified :
+    w = csv.writer(open(rep+'/'+'versions.csv', "a")) #le "a" c'est pour le append
+    for key, val in infos.items():
+        w.writerow([key, val])       
     
     
     
@@ -119,10 +147,9 @@ for key, val in infos.items():
     
 '''
 
-
-
-
-
+EXEMPLE DE METADONNEES QU'ON RECOIT
+DE LA PART DE DATA.GOUV.FR
+POUR UN CSV
 
 
 {"id":"59593619a3a7291dd09c8238",
@@ -142,17 +169,5 @@ for key, val in infos.items():
 "frequency":"unknown",
 "frequency_date":null,
 "extras":{"transport:url":"https:\/\/transport.data.gouv.fr\/datasets\/liste-des-gares"},"metrics":{"discussions":3,"reuses":2,"followers":1,"views":507},"organization":{"name":"SNCF","acronym":null,"uri":"https:\/\/www.data.gouv.fr\/api\/1\/organizations\/sncf\/","slug":"sncf","page":"https:\/\/www.data.gouv.fr\/fr\/organizations\/sncf\/","logo":"https:\/\/static.data.gouv.fr\/avatars\/f3\/0b8ad932f74086a6ab3f291ee9243f-original.png","logo_thumbnail":"https:\/\/static.data.gouv.fr\/avatars\/f3\/0b8ad932f74086a6ab3f291ee9243f-100.png","badges":[{"kind":"public-service"},{"kind":"certified"}],"id":"534fffb0a3a7292c64a78115","class":"Organization"},"owner":null,"temporal_coverage":null,"spatial":null,"license":"odc-odbl","uri":"https:\/\/www.data.gouv.fr\/api\/1\/datasets\/liste-des-gares\/","page":"https:\/\/www.data.gouv.fr\/fr\/datasets\/liste-des-gares\/","last_update":"2022-03-24T10:25:26","archived":null,"quality":{"license":true,"temporal_coverage":false,"spatial":false,"update_frequency":false,"dataset_description_quality":true,"has_resources":true,"has_open_format":true,"all_resources_available":true,"resources_documentation":true,"score":0.5555555556},"harvest":{"backend":"OpenDataSoft","modified_at":"2022-03-24T10:25:26","source_id":"563dd01f88ee386a21e72046","remote_id":"liste-des-gares","domain":"ressources.data.sncf.com","last_update":"2022-12-30T05:00:40.406000","remote_url":"https:\/\/ressources.data.sncf.com\/explore\/dataset\/liste-des-gares\/","ods_url":"https:\/\/ressources.data.sncf.com\/explore\/dataset\/liste-des-gares\/","ods_has_records":true,"ods_geo":true}}
-
-
-
-
-
-
-
-en gros il faudrait que quand on le télécharge, on enregistre le 'last_modified', et chaque mois genre on regarde si c'est le même et si c'est pas
-le cas on retélécharge le csv, ça prend 10x moins de temps c'est génial
-
-
-
 
 '''
