@@ -31,9 +31,10 @@ if connexion.connected() :
 
 
     #tous les csv ici
-    #         NOM      ID DES METADONNEES                 CODE DE TELECHARGEMENT
-    urls = {'gares':['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
-            'festivals':['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975']}
+    #         NOM                     ID DES METADONNEES                 CODE DE TELECHARGEMENT
+    urls = {'gares':               ['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
+            'festivals':           ['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975'],
+            'carburants':          ['54101458a3a72937cb2c703c','64e02cff-9e53-4cb2-adfd-5fcc88b2dc09']}
 
 #                                          à remplir
 
@@ -93,6 +94,9 @@ if connexion.connected() :
             #transforme str en int dans version
             nbr = 0
             for i in version :
+                #si ce n'est pas des secondes rondes 
+                i = i.split('.', 1)[0]
+                
                 version[nbr] = int(i)
                 nbr += 1
         

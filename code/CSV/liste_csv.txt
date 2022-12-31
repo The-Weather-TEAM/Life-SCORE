@@ -14,10 +14,9 @@ https://inpn.mnhn.fr/telechargement/cartes-et-information-geographique/ep/pnr
 https://inpn.mnhn.fr/telechargement/cartes-et-information-geographique/ep/pn
 https://www.data.gouv.fr/fr/datasets/zones-urbaines-sensibles-zus/
 https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage/
-https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france-flux-instantane/
-https://www.data.gouv.fr/fr/datasets/prix-des-controles-techniques/
-https://www.data.gouv.fr/fr/datasets/liste-des-gares/
-https://www.data.gouv.fr/fr/datasets/aeroports-francais-coordonnees-geographiques/
+vvv https://www.data.gouv.fr/fr/datasets/prix-des-carburants-en-france-flux-instantane/
+vvv https://www.data.gouv.fr/fr/datasets/prix-des-controles-techniques/
+vvv https://www.data.gouv.fr/fr/datasets/aeroports-francais-coordonnees-geographiques/
 https://www.data.gouv.fr/fr/datasets/connaitre-le-potentiel-radon-de-ma-commune/
 https://www.georisques.gouv.fr/donnees/bases-de-donnees
 https://www.data.gouv.fr/fr/datasets/donnees-temps-reel-de-mesure-des-concentrations-de-polluants-atmospheriques-reglementes-1/
@@ -31,7 +30,6 @@ https://www.data.gouv.fr/fr/datasets/le-marche-du-haut-et-tres-haut-debit-fixe-d
 https://www.data.gouv.fr/fr/datasets/adresse-et-geolocalisation-des-etablissements-denseignement-du-premier-et-second-degres-1/
 https://www.data.gouv.fr/fr/datasets/liste-des-services-de-police-accueillant-du-public-avec-geolocalisation/
 https://www.data.gouv.fr/fr/datasets/liste-et-localisation-des-musees-de-france/
-https://www.data.gouv.fr/fr/datasets/liste-des-festivals-en-france/
 https://www.data.gouv.fr/fr/datasets/datatourisme-la-base-nationale-des-donnees-publiques-dinformation-touristique-en-open-data/
 https://www.data.gouv.fr/fr/datasets/recensement-des-equipements-sportifs-espaces-et-sites-de-pratiques/
 https://www.data.gouv.fr/fr/datasets/resultats-nationaux-des-observatoires-locaux-des-loyers/
