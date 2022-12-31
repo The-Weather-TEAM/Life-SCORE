@@ -25,7 +25,9 @@ class Internet :
                 sleep(10)
                 essais += 1
                 
-        assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+                if essais >= 3 :
+                    print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+                    return False
         
         return True
 

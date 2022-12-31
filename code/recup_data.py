@@ -4,6 +4,7 @@ Programme de téléchargement des CSV
 - télécharge et installe les fichiers lors de la première utilisation
 - recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible
 - base de csv stockée ici
+- pas indispensable pour le programme ducoup on skip s'il data.gouv.fr marche pas
 '''
 
 import requests
@@ -17,9 +18,15 @@ import time
 
 
 
+
+#variables boléennes
+if_file, modified = False, False
+
+
+
 #test de connexion internet sur le site data.gouv.fr
 connexion = i.Internet('https://www.data.gouv.fr')
-if connexion.connected() is True :
+if connexion.connected() :
 
 
 
@@ -44,9 +51,7 @@ if connexion.connected() is True :
 
     #dictionnaire des nouvelles version installées
     infos = {}
-    
-    #variables boléennes
-    if_file, modified = False, False
+
     
 
     #pour savoir si le fichier existait
@@ -128,22 +133,27 @@ if connexion.connected() is True :
                 open(nom_du_fichier, 'wb').write(r.content)
                 
 
-                #provisoire
+                #message sur le terminal (provisoire)
                 print ("Fichier téléchargé")
             
-               #provisoire
+               #message sur le terminal (provisoire)
         else : print("Fichier csv à jour")
+     
+     
             
-            
+else :
+    #message sur le terminal (provisoire)
+    print("\n\n\nRecherche de mises à jours annulée")
+    
+    
+    
 #rajout des csv téléchargés
 if modified :
     w = csv.writer(open(rep+'/'+'versions.csv', "a")) #le "a" c'est pour le append
     for key, val in infos.items():
         w.writerow([key, val])       
     
-    
-    
-    
+
     
 '''
 
