@@ -56,7 +56,9 @@ if connexion.connected() :
 
 #                                          à remplir
 
-
+    nbr_csv = len(urls)
+    csv_courant = 0
+    csv_maj = 0
 
 
     #chemin relatif vers le dossier data
@@ -90,8 +92,9 @@ if connexion.connected() :
 
 
 
-
     for url in urls :
+        
+        csv_courant += 1
         
         #si le fichier csv n'existe pas ou si son téléchargement a plus de un mois
         if not os.path.isfile(rep+'/'+url+'.csv') or time.time() - os.path.getctime(rep+'/'+url+'.csv') > 2592000 :
@@ -154,14 +157,15 @@ if connexion.connected() :
                 nom_du_fichier = os.path.join(rep, url+'.csv')
                 open(nom_du_fichier, 'wb').write(r.content)
                 
+                csv_maj += 1
 
                 #message sur le terminal (provisoire)
-                print (url, "-> Fichier téléchargé")
+                print (int(csv_courant/nbr_csv*100),"%  -  ", url, "-> Fichier téléchargé")
             
                #message sur le terminal (provisoire)
-        else : print(url, "-> Fichier à jour")
+        else : print(int(csv_courant/nbr_csv*100), "%  -  ",url, "-> Fichier à jour")
     
-    print("\nRecherche de mises à jours terminée !")     
+    print("\nRecherche de mises à jours terminée !", csv_maj, "fichier(s) téléchargé(s)")     
      
             
 else :
