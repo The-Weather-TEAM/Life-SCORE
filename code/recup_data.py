@@ -37,14 +37,14 @@ if connexion.connected() is True :
 
 
     infos = {}
-    temp = 0
+    if_file = 0 
     
 
     
     if os.path.isfile(rep+'/'+'versions.csv') :
         #pour récuperer les infos qu'on ajoute à chaque fois
         recup_infos = p.read_csv(rep+'/versions.csv')
-        temp = 1
+        if_file = 1
     
     #créer le fichier des infos s'il existe pas
     if not os.path.isfile(rep+'/'+'versions.csv') :
@@ -60,12 +60,19 @@ if connexion.connected() is True :
         A FAIRE : recuperer les infos du fichier et le temps d'aujourd'hui pour voir si ça fait longtemps qu'on a pas cherché 
         à faire une vise à jour
         
-        
-        if temp == 1 :
-            ligne = recup_infos[0] == url     # retient seulement la ligne du pays ("FR")
-                        
-            return ligne.values[0][3]                      # retourne le nom associé au code ("France")
+
+        MARCHR PAS faut directement metre le titre dans le dictionzire de base sinon ça rajoute 
+        trop de latence
+
+        if if_file == 1 :
+            
+            for row in recup_infos :
+                if row.values[0][1] == url :
+                    titre = row.values[0][1]
+                    print(titre)
+
         '''
+        
         #récupère les données du csv
         metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+url).json()
         
@@ -77,7 +84,7 @@ if connexion.connected() is True :
         
         titre = metadonnees['slug']
         
-        infos[titre] = version
+        infos[url] = [titre,version]
         
         
         
@@ -104,7 +111,7 @@ if connexion.connected() is True :
 
 w = csv.writer(open(rep+'/'+'versions.csv', "w"))
 for key, val in infos.items():
-    w.writerow([key, val])       
+    w.writerow([key, val[0], val[1]])       
     
     
     
