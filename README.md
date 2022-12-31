@@ -75,4 +75,5 @@ fait par Frédéric MARQUET & Nathan BOSY
 >- recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible /
 >- avec la base de csv stockée dessus. /
 > J'ai renommé les fichiers notamment 'recup_meteo_classe' en 'recup_meteo', c'est plus simple et j'ai modifié les codes qui les utilisent comme ça pas de souci.
+
 > Création d'un code avec une classe qui vérifie si le site marche (internet.py), comme ça on peut faire le test avec data.gouv.fr ou un autre site d'api, c'est plus simple et efficace.
