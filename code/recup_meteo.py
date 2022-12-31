@@ -194,17 +194,55 @@ class Donnees:
 
     def note_sport(self):
         """
-        Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 20 /!\ Experimentale /!\
+        Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 100 /!\ Experimentale /!\
         """
         data_sport = p.read_csv('code/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
-        print(data_sport)
+        print(data_sport.values[2][1])
 
-        rangee = data_sport[(data_sport['ComInsee'] == str(self.code_insee))]
-        if rangee:
-            nb = int(rangee.values[0][2])
-            note = nb*100/400
-            return note
+        rangee = data_sport[(data_sport['ComInsee'] == self.code_insee)]
+        #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
+        nb = rangee.values[0][1]
+        note = nb*100/400
+        return note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def note_finale(self):
+        """
+        Récupère kla ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
+        """
+        #IL FAUDRAIT UN CODE POUR RECUPERER TOUS LES ATTRIBUTS (pour l'instant on fait un par un :(  )
+        tableau = []
+        #qqchose style for attr in self : tableau .append(attr)
+        tableau.append(int(self.note_sport))
+        print(tableau)
+        note_finale = 0
+        for note in tableau :
+            note_finale += int(note)
+        return int(note_finale / len(tableau))
+
+
+
             
+
+
+
+
+
+
+
+
 
 
 
@@ -263,9 +301,10 @@ class Donnees:
 if __name__ == "__main__":
     #Code de test de la Classe et des fonctions
     ddd = Donnees('Servian')
-    print(ddd.is_commune_france())
+    #print(ddd.is_commune_france())
     #print(ddd.meteo())
     ddd.is_commune_france_v2()
     print(type(ddd.code_insee))
     print(ddd.note_sport())
+    ddd.note_finale()
 

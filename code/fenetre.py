@@ -50,6 +50,7 @@ global list_alternative #Les valeurs de ce tableau sont les questions alternativ
 global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
 global btn_ok
+global Donnees_ville
 
 n = 0
 list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
@@ -268,10 +269,11 @@ def ville(entree,msg,fenetre):
         -Si oui, continue vers la page 3
         -Si non, affiche un message d'erreur
     """
+    global Donnees_ville
     ville = entree.get()
     print(ville)
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france('CSV/villes_france.csv'): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
+    if Donnees_ville.is_commune_france_v2(): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.config(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
@@ -296,7 +298,7 @@ def w_score(ville):
 
     #Donnees PROVISOIRES
     dico = {'ville fleurie':9,'polution':10,'Animation':5,'th4':7,'th5':-2,'th6':4,'Culture':-1,'th8':-2,'Education':-1,'th10':-1} #Exemple
-    score = 50 #Provisoire
+    score = int(Donnees_ville.note_finale()) #Provisoire
     bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
 
