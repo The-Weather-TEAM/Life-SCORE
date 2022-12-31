@@ -14,7 +14,7 @@ dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oubl
 """
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
-from recup_meteo_classe import *
+from recup_meteo import *
 
 import requests
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là

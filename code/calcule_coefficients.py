@@ -34,7 +34,7 @@ def calculeCoefficients(globalmeteo, localmeteo, coefs):
 if __name__ == "__main__": # pour tester le code
 
 
-    import recup_meteo_classe as recupMeteo
+    import recup_meteo as recupMeteo
     class_ville = recupMeteo.Donnees("Paris")
 
     dicoMeteoVille = class_ville.meteo()

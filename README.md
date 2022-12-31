@@ -67,3 +67,8 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Mise en place d'une classe qui récupère toutes les données météo de la ville demandée. On récupère tout ça sous un dictionnaire.
 > Mise à jour de la méthode pour savoir si la ville est Française. (sans passer par un autre CSV.)
 > Création d'un répertoire de fichiers CSV qui vont nous aider à mettre en place la note.
+
+31 Décembre 2022
+> Création d'un code qui télécharge et vérifie les csv pour tout mettre à jour tous les mois et télécharger si ce n'est pas déjà fait
+> J'ai renommé les fichiers notamment 'recup_meteo_classe' en 'recup_meteo', c'est plus simple et j'ai modifié les codes qui les utilisent
+> Création d'un code avec une classe qui vérifie si le site marche (internet.py), comme ça on peut faire le test avec data.gouv.fr ou un autre site d'api...
