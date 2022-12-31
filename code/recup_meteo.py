@@ -143,7 +143,7 @@ class Donnees:
     def __init__(self,ville) :
         self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
         self.data =  requests.get(self.url).json()
-        self.ville = ville
+        self.ville = str(ville)
         #Il reste d'autres choses a mettre pour l'instant je m'occupe que du "la ville existe ?" -Raf
 
 
@@ -166,6 +166,48 @@ class Donnees:
             return True
         
         else : return False
+
+    def is_commune_france_v2(self):
+        """
+        Verifie si la commune est en france grâce à un fichier et redonne son code insee
+        """
+        fichier = open('code/CSV/villes_france.csv',"r")
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
+
+        fichier.close()
+        """
+        for ind,col in cr.iteritems():
+            for nom in col:
+                if self.ville.lower() == nom.lower(): """
+        #recup ligne de ville pour code insee  /!\BESOIN DE CORRECTION POUR EVITER LA REDONDANCE/!\
+        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
+        if row.values[0][3]:
+            self.code_insee = row.values[0][3]
+            return True
+        else: return False
+
+        
+
+
+
+
+
+    def note_sport(self):
+        """
+        Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 20 /!\ Experimentale /!\
+        """
+        data_sport = p.read_csv('code/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
+        print(data_sport)
+
+        rangee = data_sport[(data_sport['ComInsee'] == str(self.code_insee))]
+        if rangee:
+            nb = int(rangee.values[0][2])
+            note = nb*100/400
+            return note
+            
+
+
+
 
 
     def meteo(self):
@@ -220,6 +262,10 @@ class Donnees:
 
 if __name__ == "__main__":
     #Code de test de la Classe et des fonctions
-    ddd = Donnees('Béziers')
+    ddd = Donnees('Servian')
     print(ddd.is_commune_france())
-    print(ddd.meteo())
+    #print(ddd.meteo())
+    ddd.is_commune_france_v2()
+    print(type(ddd.code_insee))
+    print(ddd.note_sport())
+
