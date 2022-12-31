@@ -34,7 +34,25 @@ if connexion.connected() :
     #         NOM                     ID DES METADONNEES                 CODE DE TELECHARGEMENT
     urls = {'gares':               ['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
             'festivals':           ['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975'],
-            'carburants':          ['54101458a3a72937cb2c703c','64e02cff-9e53-4cb2-adfd-5fcc88b2dc09']}
+            'carburants':          ['54101458a3a72937cb2c703c','64e02cff-9e53-4cb2-adfd-5fcc88b2dc09'],
+            'loi_montagne' :       ['600a90b60961636713297c87','87bc6d48-f1ed-4924-be55-0142660033de'],
+            'ZUS' :                ['5a67414888ee385f0ca521eb','0ba9346e-bc8a-4e68-9e07-73b70bcd1023'],
+            'potentiel_radon' :    ['53834c53a3a72906c7ec5c4c','817114f8-9b61-48fa-b7a4-0e3c1331a44c'],
+            'polluants' :          ['5b98b648634f415309d52a50','157ceed4-ce03-4c7d-9cd7-ae60ea07417b'],
+            #'pesticides_eaux' :    ['594c298ec751df76726294d9','X'],
+            'temp_quot_region' :   ['5a5ddc1ab5950825e3ecba32','50b3f76f-b20c-4095-b3f1-96f5e26cbac6'],
+            'observ_stat_meteo' :  ['5369932ca3a729239d204103','66f4cfd9-240d-4c6e-8c0b-532d26c2c1dc'],
+            'prix_m2_2017' :       ['5d6e64428b4c4179b3e88042','58b6b75e-4f15-4efb-adb5-3f7b939fb2d1'],
+            #'reseau_mobile' :      ['58c98b1888ee38770950152b','X'],
+            #'connexion_internet' : ['5e836644ca07c8558d91a6fc','X'],
+            #'haut_débit' :         ['547d8d7ac751df405d090fcb','X'],
+            'etablissements_scol': ['5889d042a3a72974cbf0d5b8','b3b26ad1-a143-4651-afd6-dde3908196fc'],
+            'services_police' :    ['53ba5222a3a729219b7beade','2cb2f356-42b2-4195-a35c-d4e4d986c62b'],
+            #'musees' :             ['53699934a3a729239d2051a1','X']
+            'info_tourisitques' :  ['5b598be088ee387c0c353714','d6240a80-6c2c-44c1-9f13-66ffdf0b8231'],
+            #'espaces_sportifs' :   ['53699ebba3a729239d205f4f','X'],
+            'type_loyers' :        ['56fd8e8788ee387079c352f7','2ae4fb01-c69d-4a4d-bd09-f02c1b02882e'],
+            'eco_quartiers_2016' : ['588fb50dc751df5c03ae0a65','2b9cb88b-c05d-4c9e-a7dd-d71e6fd8ebb6']}
 
 #                                          à remplir
 
@@ -138,11 +156,12 @@ if connexion.connected() :
                 
 
                 #message sur le terminal (provisoire)
-                print ("Fichier téléchargé")
+                print (url, "-> Fichier téléchargé")
             
                #message sur le terminal (provisoire)
-        else : print("Fichier csv à jour")
-     
+        else : print(url, "-> Fichier à jour")
+    
+    print("\nRecherche de mises à jours terminée !")     
      
             
 else :
