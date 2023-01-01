@@ -7,6 +7,7 @@ Programme de téléchargement des CSV
 - pas indispensable pour le programme ducoup on skip s'il data.gouv.fr marche pas
 '''
 
+#bibliothèques et code internet
 import requests
 import os
 import time
@@ -56,6 +57,7 @@ if connexion.connected() :
 
 #                                          à remplir
 
+    #valeurs pour le calcul du pourcentage
     nbr_csv = len(urls)
     csv_courant = 0
     csv_maj = 0
@@ -137,6 +139,7 @@ if connexion.connected() :
                 ligne = recup_infos[recup_infos["NOM"] == url]     # retient seulement la ligne du fichier csv
                 recup_version = ligne.values[0][1]                 # retourne la version du fichier
 
+            #pour éviter une erreur, comme ça on télécharge le csv
             else : recup_version = 0
                 
             
@@ -157,20 +160,26 @@ if connexion.connected() :
                 nom_du_fichier = os.path.join(rep, url+'.csv')
                 open(nom_du_fichier, 'wb').write(r.content)
                 
+                #calcul pourcentage et rajout du nnombre de fichiers téléchargés
                 csv_maj += 1
-
+                pourcentage = str(int(csv_courant/nbr_csv*100))+'%'
+                
                 #message sur le terminal (provisoire)
-                print (int(csv_courant/nbr_csv*100),"%  -  ", url, "-> Fichier téléchargé")
+                print (pourcentage," -  ", url, "-> Fichier téléchargé")
             
-               #message sur le terminal (provisoire)
-        else : print(int(csv_courant/nbr_csv*100), "%  -  ",url, "-> Fichier à jour")
+            
+        #message sur le terminal (provisoire)
+        else : 
+            pourcentage = str(int(csv_courant/nbr_csv*100))+'%'
+            print(pourcentage," -  ",url, "-> Fichier à jour")
     
-    print("\nRecherche de mises à jours terminée !", csv_maj, "fichier(s) téléchargé(s)")     
+    #message provisoire pour dire le nombre de fichiers téléchargés
+    print("\nRecherche de mises à jour terminée !", csv_maj, "fichier(s) téléchargé(s)")     
      
             
 else :
     #message sur le terminal (provisoire)
-    print("\n\n\nRecherche de mises à jours annulée")
+    print("\n\n\nRecherche de mises à jour annulée")
     
     
     
