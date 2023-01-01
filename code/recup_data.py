@@ -11,7 +11,7 @@ Programme de téléchargement des CSV
 import requests
 import os
 import time
-import internet as i
+import classes as i
 import csv
 import pandas as p
 import datetime
@@ -27,7 +27,7 @@ if_file, modified = False, False
 
 #test de connexion internet sur le site data.gouv.fr
 connexion = i.Internet('https://www.data.gouv.fr')
-if connexion.connected() :
+if connexion.is_connected() :
 
 
 
@@ -162,20 +162,33 @@ if connexion.connected() :
                 
                 #calcul pourcentage et rajout du nnombre de fichiers téléchargés
                 csv_maj += 1
-                pourcentage = str(int(csv_courant/nbr_csv*100))+'%'
+                pourcentage = int(csv_courant/nbr_csv*100)
                 
                 #message sur le terminal (provisoire)
-                print (pourcentage," -  ", url, "-> Fichier téléchargé")
+                if pourcentage < 10 :
+                    print (pourcentage,"%   -  ", url, "-> Fichier téléchargé")
+                elif pourcentage < 100 :
+                    print (pourcentage,"%  -  ", url, "-> Fichier téléchargé")
+                else :
+                    print (pourcentage,"% -  ", url, "-> Fichier téléchargé")
+                    
             
             
         #message sur le terminal (provisoire)
         else : 
-            pourcentage = str(int(csv_courant/nbr_csv*100))+'%'
-            print(pourcentage," -  ",url, "-> Fichier à jour")
+            pourcentage = int(csv_courant/nbr_csv*100)
+            if pourcentage < 10 :
+                print (pourcentage,"%   -  ", url, "-> Fichier à jour")
+            elif pourcentage < 100 :
+                print (pourcentage,"%  -  ", url, "-> Fichier à jour")
+            else :
+                print (pourcentage,"% -  ", url, "-> Fichier à jour")
     
     #message provisoire pour dire le nombre de fichiers téléchargés
-    print("\nRecherche de mises à jour terminée !", csv_maj, "fichier(s) téléchargé(s)")     
-     
+    if csv_maj < 2 :
+        print("\nRecherche de mises à jour terminée !", csv_maj, "fichier téléchargé")    
+    else :
+        print("\nRecherche de mises à jour terminée !", csv_maj, "fichiers téléchargés")    
             
 else :
     #message sur le terminal (provisoire)
