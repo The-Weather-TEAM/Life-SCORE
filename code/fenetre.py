@@ -63,13 +63,13 @@ list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activ
                 ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi"),
                 ('Q9','Theme9'),                              #!!! Est-ce qu'on fait des questions adaptative ? (jeune?: oui > étudiant ?, non > retraité ?)
                 ('Q10','Theme10')]
-
+"""
 list_alternative = [('Q_remplace_1','theme_remplace_1'),#Sers comme questions mais en remplacement
                     ('Bénéficiez vous du système de télétravail ?\nNon                    Oui','reseau'),#Pour les travailleurs
                     ('Q_remplace_3','theme_remplace_3'),
                     ('Q_remplace_4','theme_remplace_4'),
                     ('Q_remplace_5','theme_remplace_5'),
-]
+]"""
 
 
 dico_Reponses = {}
@@ -111,11 +111,11 @@ def w_qcm(): #w pour window
 
 
     windowQCM.mainloop() #pour fermer la fenetre
-
+"""
 def change_questions(arg):
-    """
-    Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
-    """
+    
+    #Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
+    
     global list_Questions
     global list_alternative
     global dico_Reponses
@@ -127,7 +127,7 @@ def change_questions(arg):
         elif arg == "Travail":
             if dico_Reponses[arg] == 1:
                 list_Questions[7] = list_alternative[1]
-
+"""
 
 
 
