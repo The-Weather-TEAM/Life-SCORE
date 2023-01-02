@@ -18,8 +18,8 @@ def calculCoefficients(globalmeteo, localmeteo, coefs):
 
         if noteSurCent < 0: noteSurCent = 0 # ex: quand temperature est sous 0, souvent la note est sous 0.
 
-        print(f"Global: {globalmeteo[critere]}; Local: {localmeteo[critere]}") # affiche les valeurs pour les tests
-        print(critere, distanceDesValeurs, noteSurCent)
+#         print(f"Global: {globalmeteo[critere]}; Local: {localmeteo[critere]}") # affiche les valeurs pour les tests
+#         print(critere, distanceDesValeurs, noteSurCent)
 
         listDeNotesCriteres.append(noteSurCent) # ajoute le note au list de notes des criteres
 
