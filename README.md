@@ -115,3 +115,8 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Bonne année ! Modification de l'organisation des fichiers : toutes les classes sont dans le fichier classes.py. J'ai modifié les codes pour qu'ils marchent avec cette nouvelle organisation.
 
 > Finitions du récup_data.py : ajout d'un pourcentage, gestion du singulier/pluriel qui sera utile après pour afficher les messages sur tkinter. Ajout des csv qui n'ont pas besoin de modifications (data.gouv.fr)
+
+
+
+2 Janvier 2023
+> J'ai renommé récup_data.py en update.py, et rajouté des commentaires pour que le code soit plus compréhensible

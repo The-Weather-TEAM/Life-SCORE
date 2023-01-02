@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Code Tkinter ne pas oublier quand on crée des variable de les commenter (bon nom + fonction)
 réferences : 
@@ -11,7 +10,11 @@ réferences :
 
 modif précédente : 11/12/2022 19:31
 dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oublie de le changer mdr - Raf
+                                   #Nathan : franchement pas besoin mdrr c'est déjà sur github
 """
+
+
+
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
 from classes import *
@@ -63,13 +66,13 @@ list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activ
                 ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi"),
                 ('Q9','Theme9'),                              #!!! Est-ce qu'on fait des questions adaptative ? (jeune?: oui > étudiant ?, non > retraité ?)
                 ('Q10','Theme10')]
-
+"""
 list_alternative = [('Q_remplace_1','theme_remplace_1'),#Sers comme questions mais en remplacement
                     ('Bénéficiez vous du système de télétravail ?\nNon                    Oui','reseau'),#Pour les travailleurs
                     ('Q_remplace_3','theme_remplace_3'),
                     ('Q_remplace_4','theme_remplace_4'),
                     ('Q_remplace_5','theme_remplace_5'),
-]
+]"""
 
 
 dico_Reponses = {}
@@ -111,11 +114,11 @@ def w_qcm(): #w pour window
 
 
     windowQCM.mainloop() #pour fermer la fenetre
-
+"""
 def change_questions(arg):
-    """
-    Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
-    """
+    
+    #Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
+    
     global list_Questions
     global list_alternative
     global dico_Reponses
@@ -127,7 +130,7 @@ def change_questions(arg):
         elif arg == "Travail":
             if dico_Reponses[arg] == 1:
                 list_Questions[7] = list_alternative[1]
-
+"""
 
 
 
@@ -251,7 +254,14 @@ def w_question():
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
-    test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
+    
+    
+    
+    
+    
+    
+    
+    #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
 
     '''
@@ -265,6 +275,10 @@ def w_question():
     #ça retourne une valeur booléenne ducoup ça bloque plus le programme si t'es pas co c'est à toi de décider
 
     '''
+
+
+
+
 
 
     #Boutton

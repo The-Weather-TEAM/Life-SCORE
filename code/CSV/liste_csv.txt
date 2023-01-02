@@ -34,3 +34,30 @@ vvv https://www.data.gouv.fr/fr/datasets/datatourisme-la-base-nationale-des-donn
 vv https://www.data.gouv.fr/fr/datasets/recensement-des-equipements-sportifs-espaces-et-sites-de-pratiques/
 vvv https://www.data.gouv.fr/fr/datasets/resultats-nationaux-des-observatoires-locaux-des-loyers/
 vvv https://www.data.gouv.fr/fr/datasets/base-des-ecoquartiers/
+
+
+https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2022/
+https://www.data.gouv.fr/fr/datasets/nombre-de-fonctions-medicales-et-paramedicales-par-commune-ou-arrondissement-base-permanente-des-idf/
+https://www.data.gouv.fr/fr/datasets/arretes-de-catastrophe-naturelle-en-france-metropolitaine-2/
+https://www.data.gouv.fr/fr/datasets/diagnostic-dacces-aux-soins-urgents/
+https://www.data.gouv.fr/fr/datasets/liste-des-casinos-de-france/
+https://www.data.gouv.fr/fr/datasets/frequentation-des-musees-de-france-1/
+https://www.data.gouv.fr/fr/datasets/liste-des-musees-de-france/
+https://www.data.gouv.fr/fr/datasets/liste-des-jardins-remarquables/
+https://www.data.gouv.fr/fr/datasets/liste-des-communes-desservies-par-le-reseau-de-gaz/
+https://www.data.gouv.fr/fr/datasets/etat-de-la-base-adresse-nationale-par-commune/
+https://www.data.gouv.fr/fr/datasets/jo-2024-communes-labellisees-terres-de-jeux-2024/
+https://www.data.gouv.fr/fr/datasets/recensements-agricoles-par-communes-cors/
+https://www.data.gouv.fr/fr/datasets/liste-des-sites-patrimoniaux-remarquables-spr/
+https://www.data.gouv.fr/fr/datasets/connaitre-le-potentiel-radon-de-ma-commune/
+https://www.data.gouv.fr/fr/datasets/ma-connexion-internet/
+https://www.data.gouv.fr/fr/datasets/balances-comptables-des-communes-en-2021/
+https://www.data.gouv.fr/fr/datasets/monuments-historiques-liste-des-immeubles-proteges-au-titre-des-monuments-historiques/
+
+
+
+
+
+
+
+

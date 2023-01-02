@@ -1,21 +1,26 @@
-"""         
-            CLASSES DE LIFESCORE
+'''
+                        [CLASSES.PY]
+                         
+         Programme qui répertorie toutes nos classes
 
+
+
+LISTE DES CLASSES :
 - "Donnees" : traitement ddes données pour le programmme
 - "Internet" : pour savoir si on est connecté à internet
 
+'''
 
-"""
 
 import requests
 from requests.exceptions import ConnectionError
 
 from tkinter import *
 from datetime import datetime
-from time import sleep #Optionel
+from time import sleep
 
 import csv 
-import pandas as p #pour le csv
+import pandas as p # Pour la lecture des CSV
 
 # fix pour un erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi ça marche
 # https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
@@ -27,7 +32,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 '''
 Fonction qui permet de vérifier si on est connecté à internet.
-REMPLACE PAR UNE CLASSE
+REMPLACE PAR UNE CLASSE, je le laisse pour les messages pour tkinter - Nathan
 
 
 def test_connexion(msg) :
@@ -87,8 +92,6 @@ def code_emoji(code) :
 
 
 
-
-
 '''
 Fonction qui permet de convertir un angle donné en orientation.
 '''  
@@ -110,8 +113,6 @@ def direction(degré) :
 
 
 
-
-
 '''
 Fonction qui permet de convertir un code ISO-3611 de type Alpha 2 en nom
 '''  
@@ -126,11 +127,7 @@ def nom_pays(code, data) :
 
 
 
-
-
-
-
-#test_connexion()                                                                                      # vérification d'accès à internet
+#test_connexion()                                                                                     # vérification d'accès à internet
 data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
 
 
@@ -138,8 +135,8 @@ data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-418
 
 
 '''
-CLASSE 
-PRINCIPALE
+CLASSE DONNEES
+
 '''  
 
 class Donnees:
@@ -162,8 +159,6 @@ class Donnees:
 
     
     
-    
-    
     def is_commune_france(self):
         """
         Verifie si la commune est en France
@@ -172,7 +167,6 @@ class Donnees:
             return True
         
         else : return False
-
 
 
 
@@ -197,10 +191,6 @@ class Donnees:
 
         
 
-
-
-
-
     def note_sport(self):
         """
         Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 100 /!\ Experimentale /!\
@@ -216,17 +206,6 @@ class Donnees:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     def note_finale(self):
         """
         Récupère kla ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
@@ -234,26 +213,12 @@ class Donnees:
         #IL FAUDRAIT UN CODE POUR RECUPERER TOUS LES ATTRIBUTS (pour l'instant on fait un par un :(  )
         tableau = []
         #qqchose style for attr in self : tableau .append(attr)
-        tableau.append(int(self.note_sport))
+        tableau.append(self.note_sport())
         print(tableau)
         note_finale = 0
         for note in tableau :
             note_finale += int(note)
         return int(note_finale / len(tableau))
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -307,6 +272,9 @@ class Donnees:
         return r
 
 
+
+
+
 if __name__ == "__main__":
     #Code de test de la Classe et des fonctions
     ddd = Donnees('Servian')
@@ -327,15 +295,14 @@ if __name__ == "__main__":
 
 
 '''
-Classe pourr savoir si il y a une connexion
+Classe pour savoir si il y a une connexion
 '''
-
-
-
 
 class Internet :
     def __init__(self, url) :
         self.url = url
+    
+    
     
     def is_connected(self) :
         temp, essais = 0, 0
@@ -356,7 +323,3 @@ class Internet :
                     return False
         
         return True
-
-
-
-    
