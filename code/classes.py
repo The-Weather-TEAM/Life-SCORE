@@ -26,6 +26,7 @@ import pandas as p # Pour la lecture des CSV
 # https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
+import os #Pour les paths
 
 
 
@@ -144,6 +145,8 @@ class Donnees:
         self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
         self.data =  requests.get(self.url).json()
         self.ville = str(ville)
+        self.repertoire = os.path.dirname(__file__) # Pour récupérer le chemin relatif vers le dossier data
+
         #Il reste d'autres choses a mettre pour l'instant je m'occupe que du "la ville existe ?" -Raf
 
 
@@ -170,11 +173,11 @@ class Donnees:
 
 
 
-    def is_commune_france_v2(self):
+    def is_commune_france_v2(self,msg):
         """
         Verifie si la commune est en france grâce à un fichier et redonne son code insee
         """
-        fichier = open('code/CSV/villes_france.csv',"r")
+        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est a modifier pour les arrondissements
         cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
 
         fichier.close()
@@ -182,12 +185,18 @@ class Donnees:
         for ind,col in cr.iteritems():
             for nom in col:
                 if self.ville.lower() == nom.lower(): """
-        #recup ligne de ville pour code insee  /!\BESOIN DE CORRECTION POUR EVITER LA REDONDANCE/!\
+        #recup ligne de ville pour code insee  
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
         if row.values[0][3]:
+            print(row.values[0][3])
+            """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
+                self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
             self.code_insee = row.values[0][3]
+            print(self.code_insee)
             return True
-        else: return False
+        else: 
+            msg.confing(text = "Ville incorrecte veuillez réessayer")
+            return False
 
         
 
@@ -195,13 +204,14 @@ class Donnees:
         """
         Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 100 /!\ Experimentale /!\
         """
-        data_sport = p.read_csv('code/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
+        
+        data_sport = p.read_csv(self.repertoire + '/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
         print(data_sport.values[2][1])
 
         rangee = data_sport[(data_sport['ComInsee'] == self.code_insee)]
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
         nb = rangee.values[0][1]
-        note = nb*100/400
+        note = nb*100/555
         return note
 
 

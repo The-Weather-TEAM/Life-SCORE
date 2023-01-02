@@ -8,9 +8,7 @@ réferences :
     - Les dictionnaires s'écrivent dico_NOM
     - Les url de csv ou d'API s'écrivent url_csv_NOM ou url_api_NOM
 
-modif précédente : 11/12/2022 19:31
-dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oublie de le changer mdr - Raf
-                                   #Nathan : franchement pas besoin mdrr c'est déjà sur github
+
 """
 
 
@@ -49,7 +47,7 @@ with requests.Session() as s: #Importe les fichiers csv
 
 global msg_principal #on pose les questions a travers lui
 global list_Questions #Les valeurs de ce tableau sont les questions 
-global list_alternative #Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
+#global list_alternative #Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
 global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
 global btn_ok
@@ -169,7 +167,7 @@ def plus0(b1,b2):
 
         dico_Reponses[list_Questions[n-1][1]] = 0
         msg_principal.config(text = list_Questions[n][0])
-        change_questions(list_Questions[n-1][1])
+        #change_questions(list_Questions[n-1][1]) #peut etre a supprimer
     else:
         b1.destroy()
         b2.destroy()
@@ -185,7 +183,7 @@ def plus1(b1,b2):
     if not est_termine(b1,b2):
         dico_Reponses[list_Questions[n-1][1]] = 1
         msg_principal.config(text = list_Questions[n][0])
-        change_questions(list_Questions[n-1][1])
+        #change_questions(list_Questions[n-1][1]) #peut etre a supprimer
     else:
         b1.destroy()
         b2.destroy()
@@ -254,6 +252,9 @@ def w_question():
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+
+    btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(btn_arrondissement), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+    btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
     
     
     
@@ -291,6 +292,30 @@ def w_question():
     windowQuestion.mainloop()
 
 
+def arrondissement(btn):
+
+    """
+    Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
+    """
+    texte_aide="""
+    Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :
+    - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
+    - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
+    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION
+    windowAide = Tk() #fenetre de tkinter
+    windowAide.title('Page 2bis - Aide')
+    #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
+    windowAide.minsize(width=int(690*4/3), height=384) #768
+    #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
+    msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
+    msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
+    btn_compris = Button(windowAide, width=20, height=3, command=windowAide.destroy, bg='#B9F7D0', text="Compris !")
+    btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+
+    windowAide.mainloop()
+    return windowAide
+
+
 def ville(entree,msg,fenetre):
     """
     Récupère l'entrée, vérifie si la ville existe bien:
@@ -301,7 +326,7 @@ def ville(entree,msg,fenetre):
     ville = entree.get()
     print(ville)
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france_v2(): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
+    if Donnees_ville.is_commune_france_v2(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.config(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
@@ -325,7 +350,7 @@ def w_score(ville):
     windowScore.state('zoomed') #Plein écran
 
     #Donnees PROVISOIRES
-    dico = {'ville fleurie':9,'polution':10,'Animation':5,'th4':7,'th5':-2,'th6':4,'Culture':-1,'th8':-2,'Education':-1,'th10':-1} #Exemple
+    dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant (':-1} #Exemple
     score = int(Donnees_ville.note_finale()) #Provisoire
     bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
