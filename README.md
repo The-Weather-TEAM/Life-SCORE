@@ -120,3 +120,5 @@ fait par Frédéric MARQUET & Nathan BOSY
 
 2 Janvier 2023
 > J'ai renommé récup_data.py en update.py, et rajouté des commentaires pour que le code soit plus compréhensible
+
+> Mis a jour du system pour noter les villes. Il note maintenant par rapport au distance du valeurs desiré au lieux d'un taux calculé. Il reste encore des choses a regler (ex: contourner un erreur de division par 0 quand la valeur desiré est 0)
