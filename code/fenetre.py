@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Code Tkinter ne pas oublier quand on crée des variable de les commenter (bon nom + fonction)
 réferences : 
@@ -11,10 +10,14 @@ réferences :
 
 modif précédente : 11/12/2022 19:31
 dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oublie de le changer mdr - Raf
+                                   #Nathan : franchement pas besoin mdrr c'est déjà sur github
 """
+
+
+
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
-from recup_meteo import *
+from classes import *
 
 import requests
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
@@ -251,7 +254,32 @@ def w_question():
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    
+    
+    
+    
+    
+    
+    
     test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
+
+
+    '''
+    #Nathan : le test_connexion c'est la fonction pour tester si il y a internet ? Si oui tu peux utiliser :
+
+    import classes as i
+    connexion = i.Internet('https://www.data.gouv.fr') #ou un autre site
+    if connexion.is_connected() :
+        #blabla
+        
+    #ça retourne une valeur booléenne ducoup ça bloque plus le programme si t'es pas co c'est à toi de décider
+
+    '''
+
+
+
+
+
 
     #Boutton
     btn_entree = Button(windowQuestion,width=20, height=3, command=lambda: ville(entree,msg_ville,windowQuestion), bg='#B9F7D0', text="Recherche")
