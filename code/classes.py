@@ -213,7 +213,7 @@ class Donnees:
         #IL FAUDRAIT UN CODE POUR RECUPERER TOUS LES ATTRIBUTS (pour l'instant on fait un par un :(  )
         tableau = []
         #qqchose style for attr in self : tableau .append(attr)
-        tableau.append(int(self.note_sport))
+        tableau.append(self.note_sport())
         print(tableau)
         note_finale = 0
         for note in tableau :
