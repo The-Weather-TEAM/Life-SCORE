@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Code Tkinter ne pas oublier quand on crée des variable de les commenter (bon nom + fonction)
 réferences : 
@@ -11,7 +10,11 @@ réferences :
 
 modif précédente : 11/12/2022 19:31
 dernière modif : 12/12/2022 19:28  #Est-ce qu'on le garde ça ? meme moi j'oublie de le changer mdr - Raf
+                                   #Nathan : franchement pas besoin mdrr c'est déjà sur github
 """
+
+
+
 from tkinter import *
 from urllib.request import urlopen #pour les photos (peut etre enlever)
 from classes import *
@@ -251,6 +254,13 @@ def w_question():
     #message
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    
+    
+    
+    
+    
+    
+    
     test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
 
@@ -265,6 +275,10 @@ def w_question():
     #ça retourne une valeur booléenne ducoup ça bloque plus le programme si t'es pas co c'est à toi de décider
 
     '''
+
+
+
+
 
 
     #Boutton

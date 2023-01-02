@@ -1,6 +1,6 @@
 
 
-def calculeCoefficients(globalmeteo, localmeteo, coefs):
+def calculCoefficients(globalmeteo, localmeteo, coefs):
     """
     Calcule coefficients de tout les differents moyenns pour ensuite en deduire une note du ville
     """
@@ -32,7 +32,7 @@ def calculeCoefficients(globalmeteo, localmeteo, coefs):
 
 def note_finale(ville):
     """
-    Récupère kla ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
+    Récupère la ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
     """
     print(ville.__dict__.values())
 
@@ -58,4 +58,4 @@ if __name__ == "__main__": # pour tester le code
         "visibilite": 1
     }
     
-    print(calculeCoefficients(globalDico, dicoMeteoVille, coeffsDico))
+    print(calculCoefficients(globalDico, dicoMeteoVille, coeffsDico))
