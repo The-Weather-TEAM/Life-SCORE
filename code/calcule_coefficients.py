@@ -8,23 +8,21 @@ def calculeCoefficients(globalmeteo, localmeteo, coefs):
     # calcule le rapport entre les donnes local est la moyenne global
     listDeNotesCriteres = []
 
-    for critere in ("visibilite", "temperature", "humidite"):
+    for critere in globalmeteo.keys(): # pour chaque critere dont on a un valeur desiré
 
 
+    
+        distanceDesValeurs = abs(globalmeteo[critere] - localmeteo[critere]) # calcule la difference entre les valeurs local et global
 
-        # pour assurer [-1 < note < 1] 
-        if globalmeteo[critere]<localmeteo[critere]: 
-            note = coefs[critere]-globalmeteo[critere]/localmeteo[critere] 
+        noteSurCent = 1 - (distanceDesValeurs/globalmeteo[critere]) # evalue un note par rapport a cette distance
 
-        elif globalmeteo[critere]>localmeteo[critere]:
-            note = localmeteo[critere]/globalmeteo[critere]-coefs[critere]
+        if noteSurCent < 0: noteSurCent = 0 # ex: quand temperature est sous 0, souvent la note est sous 0.
 
-        else:
-            note = 0 # sera neutre (note 0.5)
+        print(f"Global: {globalmeteo[critere]}; Local: {localmeteo[critere]}") # affiche les valeurs pour les tests
+        print(critere, distanceDesValeurs, noteSurCent)
 
-        note = 0.5 + (note/2) # pour avoir un note entre 0 et 1, tout en gardant la meme equivalence avec les note negative
-        # print(critere,note)
-        listDeNotesCriteres.append(note) # ajoute chaque note au liste
+        listDeNotesCriteres.append(noteSurCent) # ajoute le note au list de notes des criteres
+
     
     noteMoyenneDesCriteres = sum(listDeNotesCriteres)/len(listDeNotesCriteres) # calcule la note moyenne du ville
 
@@ -36,23 +34,28 @@ def note_finale(ville):
     """
     print(ville.__dict__.values())
 
-if __name__ == "__main__": # pour tester le code
+if __name__ == "__main__": # pour tester le code et demontrer comment l'appliquer
 
 
     import classes as recupMeteo
-    class_ville = recupMeteo.Donnees("Paris")
+    class_ville = recupMeteo.Donnees("oslo")
 
     dicoMeteoVille = class_ville.meteo()
-    # print(dicoMeteoVille)
+    print(dicoMeteoVille)
 
+
+    # les criters qui doivent etre 0 ont encore des bugs. Just utiliser 1/1000 ne marche pas vraiment
     globalDico = { # info meteo ideal
-        "humidite": 60, # pourcent
-        "temperature": 27.5, # Celcius
-        "visibilite": 10 # km
+        "humidite": 60, # en %
+        "temperature": 27.5, # en Celcius
+        "visibilite": 10, # en km | 10 a l'aire d'etre le max avec l'api, donc on veut le max
+        "nuages": 1/1000, # en % | on veut mettre 0%, mais on met 0.001 ici pour eviter ZeroDivisionError
+        "pression": 1.013, # en hPa | L'ideal est le pression au niveau de mer, donc 1.013 hPa
+        "vent": 1/1000, # en m/s | on veut le plus bas possible
     }
 
-    
-    coeffsDico = { # 0: on veut moins que la moyenne global | 1: on veut plus que la moyenne global
+    # ceci cera remplacé par les resultats du quiz, il faut just chercher comment l'apliquer.
+    coeffsDico = {
         "humidite": 0,
         "temperature": 1,
         "visibilite": 1
