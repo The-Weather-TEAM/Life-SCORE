@@ -261,7 +261,7 @@ def w_question():
     
     
     
-    test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
+    #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
 
     '''
