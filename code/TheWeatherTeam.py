@@ -14,44 +14,21 @@ réferences :
 
 
 from tkinter import *
-from urllib.request import urlopen #pour les photos (peut etre enlever)
-from classes import *
+#from urllib.request import urlopen #pour les photos (peut etre enlever)
+from classes import * #Import de nos classes créées
 
 import requests
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
-
-import csv
-
-'''
-FICHIERS CSV (importés d'internet à chaque appel du fichier) 
-'''
-
-url_csv_Communes = 'https://sql.sh/ressources/sql-villes-france/villes_france.csv'
-""" CODE DE TEST AUSSI POUR IMPMENTATION DU TECHARGEMENT (je sais pas quoi faire avec mdrr) - Raf
-with requests.get(url_csv_Communes, stream=True) as r:
-    lines = (line.decode('utf-8') for line in r.iter_lines())
-    for a in csv.reader(lines):
-
-        if 'Puissalicon' in a :
-            print('oui',type(a))
-"""
-
-""" CODE TEST SUJET A MODIFICATION
-with requests.Session() as s: #Importe les fichiers csv 
-    s.post(url, data=payload)
-    download = s.get('url that directly download a csv report')
-"""
-
-#from PIL import ImageTk, Image
+#from PIL import ImageTk, Image #Pour l'esthétique
 
 global msg_principal #on pose les questions a travers lui
 global list_Questions #Les valeurs de ce tableau sont les questions 
 #global list_alternative #Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
 global dico_Reponses #dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
 global n #pour faire list_Questions[n]
-global btn_ok
-global Donnees_ville
+global btn_ok #Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
+global Donnees_ville #Ce que l'on va traiter grâce aux autres fichiers
 
 n = 0
 list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
@@ -61,22 +38,15 @@ list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activ
                 ('La culture a-t-elle une place importante pour vous ?\nNon                    Oui','Culture'),
                 ('Que préférez vous ?\nLa campagne                   La ville','citadin'),                               #s 4 dernières questions sont a revoir ducoup
                 ('Avez vous un travail ?\nNon                    Oui','Travail'),
-                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi"),
-                ('Q9','Theme9'),                              #!!! Est-ce qu'on fait des questions adaptative ? (jeune?: oui > étudiant ?, non > retraité ?)
-                ('Q10','Theme10')]
-"""
-list_alternative = [('Q_remplace_1','theme_remplace_1'),#Sers comme questions mais en remplacement
-                    ('Bénéficiez vous du système de télétravail ?\nNon                    Oui','reseau'),#Pour les travailleurs
-                    ('Q_remplace_3','theme_remplace_3'),
-                    ('Q_remplace_4','theme_remplace_4'),
-                    ('Q_remplace_5','theme_remplace_5'),
-]"""
+                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi")]
+
+dico_Reponses = {} #Traité dans coefficients.py
 
 
-dico_Reponses = {}
+'''
+fonctions
+'''
 
-
-#fonctions
 #premiere page
 def w_qcm(): #w pour window
     global msg_principal
@@ -89,58 +59,38 @@ def w_qcm(): #w pour window
     #fenêtre
     windowQCM = Tk() #fenetre de tkinter
     windowQCM.title('Accueil - QCU')
-    windowQCM.minsize(width=768, height=500) #768
+    windowQCM.minsize(width=768, height=500) #768 = taille minimum de la fenetre
     windowQCM.state('zoomed')
 
-    #windowQCM.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     #widgets
     msg_principal =  Message(text="Bienvenue, nous allons commencer avec un petit test", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
-    #entree a utiliser peut etre ailleurs
-    """entree = Entry(windowQCM,width=30, font=('Bold',18))
-    entree.place(relx=0.5, rely= 0.45, anchor=CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y """
-    #bouton ok
+    
+    #boutons 
+    
+    #bouton ok Qui continue après le premier message
     btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM), bg='#70add7', text="OK") #appele la fonction question1
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER)
+    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
     #bouton_explication
-    btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide), bg = '#f44336', text="AIDE") #Boutton d'aide
+    btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide), bg = '#f44336', text="AIDE") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
+    
     #affiche la photo
     #label = Label(windowQCM, image = photo)
     #label.place(x=10,y=0)
 
-
-
     windowQCM.mainloop() #pour fermer la fenetre
-"""
-def change_questions(arg):
-    
-    #Fonction qui modifie notre liste de questions en fonction des réponses (bonne chance pour gérer les résultats)
-    
-    global list_Questions
-    global list_alternative
-    global dico_Reponses
-    if arg in dico_Reponses:
-        if arg == 'Age': 
-            if dico_Reponses[arg] == 1: #Si plus de 30 ans
-                list_Questions[2] = list_alternative[0] #Pas encore décidé
-
-        elif arg == "Travail":
-            if dico_Reponses[arg] == 1:
-                list_Questions[7] = list_alternative[1]
-"""
-
 
 
 
 def avancer(fenetre):
     global msg_principal
     global btn_ok
-    global n
+    global n #n prend +1 a chaque questions
     """
     Passe à la question 1 et ouvre le qcm ajoute les deux boutons <-- et -->
     
-    Sinon, ouvre la seconde page
+    Si le qcm est terminé, ouvre la seconde page
     """
     if n < len(list_Questions):
         btn_ok.place_forget() #Cache ce bouton
@@ -148,14 +98,14 @@ def avancer(fenetre):
         btn_droite = Button(width=20, height=3, command=lambda: plus1(btn_gauche,btn_droite), bg='#70add7', text="--->")
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
         btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
-        msg_principal.config(text =f'{list_Questions[n][0]}') #change le texte du msg principal
+        msg_principal.config(text =f'{list_Questions[n][0]}') #change le texte du msg principal pour la question suivante
 
     else:
-        fenetre.destroy()
+        fenetre.destroy() #ferme la fenetre
         w_question() #Ouvre la seconde fenêtre : Fin de la première
 
 def plus0(b1,b2):
-    """ajoute 0 au tableau de reponses (<---)"""
+    """ajoute 0 au dico de reponses (<---)"""
     global list_Questions
     global n
     global dico_Reponses
@@ -164,16 +114,14 @@ def plus0(b1,b2):
     
     n += 1
     if not est_termine(b1,b2):
-
         dico_Reponses[list_Questions[n-1][1]] = 0
         msg_principal.config(text = list_Questions[n][0])
-        #change_questions(list_Questions[n-1][1]) #peut etre a supprimer
     else:
         b1.destroy()
         b2.destroy()
 
 def plus1(b1,b2):
-    """ajoute 1 au tableau de reponses (--->)"""
+    """ajoute 1 au dico de reponses (--->)"""
     global list_Questions
     global n
     global dico_Reponses
@@ -183,7 +131,6 @@ def plus1(b1,b2):
     if not est_termine(b1,b2):
         dico_Reponses[list_Questions[n-1][1]] = 1
         msg_principal.config(text = list_Questions[n][0])
-        #change_questions(list_Questions[n-1][1]) #peut etre a supprimer
     else:
         b1.destroy()
         b2.destroy()
@@ -216,7 +163,7 @@ La qualité de vie (activités / patrimoine / ville fleurie / ...)
 Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
 La sécurité (taux d'accidents / vols / risques / ...)
 """
-    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION
+    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION (une fonction qui regarde si d'autres fenetres sont deja ouvertes)
     windowAide = Tk() #fenetre de tkinter
     windowAide.title('Page 1bis - Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -244,23 +191,16 @@ def w_question():
     windowQuestion.minsize(width=768, height=500)
     windowQuestion.state('zoomed') #Plein écran
 
-    #windowQuestion.resizable(False,False) #Taille non modifiable
     #input
     entree = Entry(windowQuestion,cursor = 'Pencil', font = ('Bold',18))
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
     
     #message
-    msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+    msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
     btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(btn_arrondissement), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
     btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
-    
-    
-    
-    
-    
-    
     
     #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
@@ -349,13 +289,10 @@ def w_score(ville):
     windowScore.minsize(width=1000, height=600)
     windowScore.state('zoomed') #Plein écran
 
-    #Donnees PROVISOIRES
+    #Donnees PROVISOIRES !!!
     dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant (':-1} #Exemple
     score = int(Donnees_ville.note_finale()) #Provisoire
     bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
-
-
-
 
 
 
@@ -445,7 +382,7 @@ def couleur_score(n):
     """
     Choisit une couleur en fonction du chiffre obtenu (de 0 à 100) et la retourne en RGB
     """
-    #A RETRAVAILLER PEUT ETRE METTRE UN PEU DE BLEU
+    #A RETRAVAILLER PEUT ETRE METTRE UN PEU PLUS DE BLEU
     couleur = (255,0,127)
     rouge = 255 - int(n*255/100)
     vert = 0 + int(n*255/100)
@@ -460,22 +397,13 @@ def couleur_score(n):
     return rgb
 
 
-#couleur_score(0)
-#couleur_score(50)
-#couleur_score(100)
-
-
 """
-#Image en url bitmap ?
+#Image en url bitmap ? TEST D'IMAGE 
 URL = "https://avatars.githubusercontent.com/u/119951824?s=200&v=4"
 u = urlopen(URL)
 raw_data = u.read()
 u.close()
 """
-
-
-
-
 
 
 
@@ -488,6 +416,8 @@ u.close()
 
 # appel de la fonction de la première page
 w_qcm() #ligne  à lancer a la fin
-#w_question()
+
+#Lignes pour accéder à différentes page directement
+#w_question() 
 #w_score('Beziers')
 #print(n,dico_Reponses,msg_principal)
