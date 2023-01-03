@@ -122,3 +122,10 @@ fait par Frédéric MARQUET & Nathan BOSY
 > J'ai renommé récup_data.py en update.py, et rajouté des commentaires pour que le code soit plus compréhensible
 
 > Mis a jour du system pour noter les villes. Il note maintenant par rapport au distance du valeurs desiré au lieux d'un taux calculé. Il reste encore des choses a regler (ex: contourner un erreur de division par 0 quand la valeur desiré est 0)
+
+
+
+3 Janvier 2023
+> Correction du big de update.py : si c'est la première utilisation et qu'il y a pas accès à internet, on active une variable erreur (utilisable pour stopper un tkinter)
+
+> Tous les messages sont maintenant des variables pour tkinter dans update.py
