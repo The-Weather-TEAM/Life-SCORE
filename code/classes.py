@@ -155,10 +155,8 @@ class Donnees:
         """
         Verifie si la ville rentrée existe puis si elle est en France
         """
-        if self.data['cod'] == 200 :                                                # code signifiant que la ville existe
-            return True
-                
-        else : return False
+        return self.data['cod'] == 200                                                # code signifiant que la ville existe
+
 
     
     
@@ -166,10 +164,7 @@ class Donnees:
         """
         Verifie si la commune est en France
         """
-        if self.data['sys']['country'] ==  'FR' :
-            return True
-        
-        else : return False
+        return self.data['sys']['country'] ==  'FR'
 
 
 
