@@ -68,12 +68,12 @@ def w_qcm(): #w pour window
     
     #boutons 
     
-    #bouton ok Qui continue après le premier message
-    btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM), bg='#70add7', text="OK") #appele la fonction question1
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
     #bouton_explication
-    btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide), bg = '#f44336', text="AIDE") #Bouton d'aide
+    btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide,windowQCM), bg = '#f44336', text="AIDE") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
+    #bouton ok Qui continue après le premier message
+    btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM,btn_aide), bg='#70add7', text="OK") #appele la fonction question1
+    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
     
     #affiche la photo
     #label = Label(windowQCM, image = photo)
@@ -83,7 +83,7 @@ def w_qcm(): #w pour window
 
 
 
-def avancer(fenetre):
+def avancer(fenetre,bouton): # bouton est le bouton d'aide qui disparait après le premier passage
     global msg_principal
     global btn_ok
     global n #n prend +1 a chaque questions
@@ -92,6 +92,8 @@ def avancer(fenetre):
     
     Si le qcm est terminé, ouvre la seconde page
     """
+    if n == 0:
+        bouton.destroy()
     if n < len(list_Questions):
         btn_ok.place_forget() #Cache ce bouton
         btn_gauche = Button(width=20, height=3, command=lambda: plus0(btn_gauche,btn_droite), bg='#70add7', text="<---")
@@ -148,7 +150,7 @@ def est_termine(btn_1,btn_2):
         msg_principal.config(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
         return True
 
-def aide(btn):
+def aide(btn,fenetre):
 
     """
     Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
@@ -163,7 +165,7 @@ La qualité de vie (activités / patrimoine / ville fleurie / ...)
 Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
 La sécurité (taux d'accidents / vols / risques / ...)
 """
-    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION (une fonction qui regarde si d'autres fenetres sont deja ouvertes)
+    fenetre.destroy()
     windowAide = Tk() #fenetre de tkinter
     windowAide.title('Page 1bis - Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -171,12 +173,24 @@ La sécurité (taux d'accidents / vols / risques / ...)
     windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-    btn_compris = Button(windowAide, width=20, height=3, command=windowAide.destroy, bg='#B9F7D0', text="Compris !")
+    btn_compris = Button(windowAide, width=20, height=3, command=lambda:retour_pages(windowAide,"page1"), bg='#B9F7D0', text="Compris !")
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
     windowAide.mainloop()
     return windowAide
 
+
+def retour_pages(window,string):
+    """
+    Fonction qui passe de la page actielle à la page N°x
+    """
+    global dico_Reponses #Au cas où que quelquechose soit dedans on va le reset
+    window.destroy()
+    if string == "page1" : #si on veut accéder à la page 1
+        dico_Reponses = {}
+        w_qcm()
+    elif string == "page2" :
+        w_question()
 
 
 
@@ -199,7 +213,7 @@ def w_question():
     msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-    btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(btn_arrondissement), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+    btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(windowQuestion), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
     btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
     
     #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
@@ -232,7 +246,7 @@ def w_question():
     windowQuestion.mainloop()
 
 
-def arrondissement(btn):
+def arrondissement(window):
 
     """
     Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
@@ -241,7 +255,7 @@ def arrondissement(btn):
     Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :
     - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
     - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
-    btn.destroy() #TROUVER UNE MEILLEURE SOLUTION
+    window.destroy()
     windowAide = Tk() #fenetre de tkinter
     windowAide.title('Page 2bis - Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -249,7 +263,7 @@ def arrondissement(btn):
     #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-    btn_compris = Button(windowAide, width=20, height=3, command=windowAide.destroy, bg='#B9F7D0', text="Compris !")
+    btn_compris = Button(windowAide, width=20, height=3, command=lambda :retour_pages(windowAide,"page2"), bg='#B9F7D0', text="Compris !")
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
     windowAide.mainloop()
@@ -297,7 +311,7 @@ def w_score(ville):
 
 
     #Transfo des données en texte
-    msg_ville = Message(windowScore,text=ville, width = 1000, font =('Bold',30), justify=CENTER)
+    msg_ville = Message(windowScore,text=ville.capitalize(), width = 1000, font =('Bold',30), justify=CENTER)
     msg_ville.place(relx=0.5,rely=0.1,anchor=N)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     print(plus,moins)
@@ -316,7 +330,7 @@ def w_score(ville):
 
 
     #Bouton retour
-    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_p2(windowScore), bg='#B9F7D0', text= "Noter une autre ville", font=('Bold',20))
+    btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_pages(windowScore,"page2"), bg='#B9F7D0', text= "Noter une autre ville", font=('Bold',20))
     btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
 
@@ -324,12 +338,6 @@ def w_score(ville):
 
     windowScore.mainloop()
 
-def retour_p2(fenetre):
-    """
-    Retourne à la page n2 (pour redemander une ville)
-    """
-    fenetre.destroy()
-    w_question()
 
 def trouve_bonus(dic):
     """
@@ -415,9 +423,9 @@ u.close()
 
 
 # appel de la fonction de la première page
-w_qcm() #ligne  à lancer a la fin
+#w_qcm() #ligne  à lancer a la fin
 
 #Lignes pour accéder à différentes page directement
-#w_question() 
-#w_score('Beziers')
+w_question() 
+#w_score('Paris')
 #print(n,dico_Reponses,msg_principal)
