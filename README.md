@@ -129,3 +129,5 @@ fait par Frédéric MARQUET & Nathan BOSY
 > Correction du big de update.py : si c'est la première utilisation et qu'il y a pas accès à internet, on active une variable erreur (utilisable pour stopper un tkinter)
 
 > Tous les messages sont maintenant des variables pour tkinter dans update.py
+> Changement du nom du fichier principal fenetre.py -> TheWeatherTeam.py
+> amélioration du système de pages d'aides et de retour aux pages précédentes (possibilité de suppression de certaines pages en remettant à zéro
