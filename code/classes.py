@@ -7,7 +7,14 @@
 
 LISTE DES CLASSES :
 - "Donnees" : traitement ddes données pour le programmme
-- "Internet" : pour savoir si on est connecté à internet
+
+
+LISTE DES FONCTIONS :
+- "is_connected" : vérifie si l'utilisateur a accès à internet / au site demandé
+- "meteo_code_emoji" : convertit un code donné par un emoji
+- "meteo_direction"  : permet de convertir un angle donné en orientation
+- "meteo_nom_pays "  : permet de convertir un code ISO-3611 de type Alpha 2 en nom
+
 
 
 /!\ DESACTIVATION TEMPORAIRE DES CLASSES QUI UTILISENT INTERNET
@@ -66,34 +73,27 @@ def test_connexion(msg) :
 
 
 
-
 '''
-Classe pour savoir si il y a une connexion
+Fonction pour savoir si il y a une connexion
 '''
 
-class Internet :
-    def __init__(self, url) :
-        self.url = url
-    
-    
-    
-    def is_connected(self) :
-        temp, essais = 0, 0
-    
-        while temp == 0 and essais < 3 :
-            try :
-                requests.get(self.url, timeout=5)
-                temp = 1
+def is_connected(url) :
+    temp, essais = 0, 0
+
+    while temp == 0 and essais < 3 :
+        try :
+            requests.get(url, timeout=5)
+            temp = 1
+              
                 
+        except ConnectionError :    
+            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+            sleep(5)
+            essais += 1
                 
-            except ConnectionError :    
-                print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
-                sleep(5)
-                essais += 1
-                
-                if essais >= 3 :
-                    print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
-                    return False
+            if essais >= 3 :
+                print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+                return False
         
         return True
 
@@ -101,13 +101,11 @@ class Internet :
 
 
 
-
-   
 '''
-Fonction qui convertit un code donné par un emoji.
+Fonction qui convertit un code donné par un emoji
 '''
 
-def code_emoji(code) :
+def meteo_code_emoji(code) :
     
     if   code == '01d' :
         return "🌞"
@@ -139,10 +137,10 @@ def code_emoji(code) :
 
 
 '''
-Fonction qui permet de convertir un angle donné en orientation.
+Fonction qui permet de convertir un angle donné en orientation
 '''  
 
-def direction(degré) :
+def meteo_direction(degré) :
     
     orientation = ['Nord',
                    'Nord-Est',
@@ -163,7 +161,7 @@ def direction(degré) :
 Fonction qui permet de convertir un code ISO-3611 de type Alpha 2 en nom
 '''  
 
-def nom_pays(code, data) :
+def meteo_nom_pays(code, data) :
     
     ligne = data[data[" Code alpha2"] == code]     # retient seulement la ligne du pays ("FR")
                   
@@ -172,19 +170,18 @@ def nom_pays(code, data) :
 
 
 '''
-test_connexion = Internet('https://www.data.gouv.fr')
-is_connexion = test_connexion.is_connected()
-#test_connexion()     # vérification d'accès à internet
-    
-if is_connexion :                                                                                
+test_if_connected = is_connected('https://www.data.gouv.fr')
+if test_if_connected :                                                                                
     data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
 
 '''
 
 
 
+
+
 '''
-CLASSE DONNEES
+[CLASSE PRINCIPALE]
 
 '''  
 
@@ -192,7 +189,7 @@ class Donnees:
     def __init__(self,ville) :
         
         '''
-        if is_connexion :
+        if test_if_connected :
             self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
             self.data =  requests.get(self.url).json()
         '''
@@ -205,7 +202,6 @@ class Donnees:
 
 
     '''
-
     def ville_existe(self):
         """
         Verifie si la ville rentrée existe puis si elle est en France
@@ -220,8 +216,6 @@ class Donnees:
         Verifie si la commune est en France
         """
         return self.data['sys']['country'] ==  'FR'
-
-
     '''
 
 
