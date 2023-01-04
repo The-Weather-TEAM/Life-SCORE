@@ -24,12 +24,7 @@ def calculCoefficients(globalmeteo, localmeteo, coefs):
     
         distanceDesValeurs = abs(globalmeteo[critere] - localmeteo[critere]) # calcule la difference entre les valeurs local et global
 
-        if distanceDesValeurs == 0: # si c'est la valeur exact, c'est 100% ce qu'on veut
-            noteSurCent = 1
-        # elif globalmeteo[critere] == 0: # pour les valeurs ou on veut etre le plus pres de 0 que possible
-        #     noteSurCent = (1/distanceDesValeurs)
-        else:
-            noteSurCent = 1 - (distanceDesValeurs/globalmeteo[critere]) # evalue un note par rapport a cette distance
+        noteSurCent = 1 - (distanceDesValeurs/globalmeteo[critere]) # evalue un note par rapport a cette distance
 
         # if noteSurCent < 0: noteSurCent = 0 # ex: quand temperature est sous 0, souvent la note est sous 0.
 
@@ -66,14 +61,14 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
     print(dicoMeteoVille)
 
 
-    # les criters qui doivent etre 0 ont encore des bugs. Just utiliser 1/1000 ne marche pas vraiment
+
     globalDico = { # info meteo ideal
         "humidite": 60, # en %
         "temperature": 27.5, # en Celcius
         "visibilite": 10, # en km | 10 a l'aire d'etre le max avec l'api, donc on veut le max
-        "nuages": 20, # en % | on veut mettre 0%, mais on met 0.001 ici pour eviter ZeroDivisionError
+        "nuages": 20, # en %
         "pression": 1.013, # en hPa | L'ideal est le pression au niveau de mer, donc 1.013 hPa
-        "vent": 20, # en m/s | on veut le plus bas possible
+        "vent": 20, # en m/s
     }
 
 
