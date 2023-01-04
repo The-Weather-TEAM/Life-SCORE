@@ -57,6 +57,45 @@ def test_connexion(msg) :
 '''
 
 
+
+
+
+
+'''
+Classe pour savoir si il y a une connexion
+'''
+
+class Internet :
+    def __init__(self, url) :
+        self.url = url
+    
+    
+    
+    def is_connected(self) :
+        temp, essais = 0, 0
+    
+        while temp == 0 and essais < 3 :
+            try :
+                requests.get(self.url, timeout=5)
+                temp = 1
+                
+                
+            except ConnectionError :    
+                print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+                sleep(5)
+                essais += 1
+                
+                if essais >= 3 :
+                    print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
+                    return False
+        
+        return True
+
+
+
+
+
+
    
 '''
 Fonction qui convertit un code donné par un emoji.
@@ -126,12 +165,15 @@ def nom_pays(code, data) :
 
 
 
+'''
+test_connexion = Internet('https://www.data.gouv.fr')
+is_connexion = test_connexion.is_connected()
+#test_connexion()     # vérification d'accès à internet
+    
+if is_connexion :                                                                                
+    data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
 
-
-#test_connexion()                                                                                     # vérification d'accès à internet
-data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
-
-
+'''
 
 
 
@@ -142,14 +184,21 @@ CLASSE DONNEES
 
 class Donnees:
     def __init__(self,ville) :
-        self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
-        self.data =  requests.get(self.url).json()
+        
+        '''
+        if is_connexion :
+            self.url = 'https://api.openweathermap.org/data/2.5/weather?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
+            self.data =  requests.get(self.url).json()
+        '''
+        
+        
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__) # Pour récupérer le chemin relatif vers le dossier data
 
         #Il reste d'autres choses a mettre pour l'instant je m'occupe que du "la ville existe ?" -Raf
 
 
+    '''
 
     def ville_existe(self):
         """
@@ -165,6 +214,9 @@ class Donnees:
         Verifie si la commune est en France
         """
         return self.data['sys']['country'] ==  'FR'
+
+
+    '''
 
 
 
@@ -226,7 +278,7 @@ class Donnees:
         return int(note_finale / len(tableau))
 
 
-
+    '''
     def meteo(self):
         
         r = {}   
@@ -275,7 +327,7 @@ class Donnees:
             r['rafales']  = round(self.data['wind']['gust'] * 3.6, 1)
 
         return r
-
+    '''
 
 
 
@@ -289,42 +341,3 @@ if __name__ == "__main__":
     print(type(ddd.code_insee))
     print(ddd.note_sport())
     ddd.note_finale()
-
-
-
-
-
-
-
-
-
-
-'''
-Classe pour savoir si il y a une connexion
-'''
-
-class Internet :
-    def __init__(self, url) :
-        self.url = url
-    
-    
-    
-    def is_connected(self) :
-        temp, essais = 0, 0
-    
-        while temp == 0 and essais < 3 :
-            try :
-                requests.get(self.url, timeout=5)
-                temp = 1
-                
-                
-            except ConnectionError :    
-                print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
-                sleep(10)
-                essais += 1
-                
-                if essais >= 3 :
-                    print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
-                    return False
-        
-        return True
