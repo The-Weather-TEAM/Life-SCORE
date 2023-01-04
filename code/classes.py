@@ -235,15 +235,17 @@ class Donnees:
                 if self.ville.lower() == nom.lower(): """
         #recup ligne de ville pour code insee  
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
-        if row.values[0][3]:
+        if not row.empty:
             #print(row.values[0][3])
             """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
                 self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
             self.code_insee = row.values[0][3]
             #print(self.code_insee)
             return True
-        else: 
-            msg.confing(text = "Ville incorrecte veuillez réessayer")
+        else:
+            msg.config(text = "Ville incorrecte veuillez réessayer")
+            if random.randint(0,100000) == 14924:
+                msg.config(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
             return False
         
         
