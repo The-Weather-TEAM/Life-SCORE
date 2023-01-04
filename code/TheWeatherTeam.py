@@ -31,14 +31,14 @@ global btn_ok #Boutton qui continue (est utilisé plusieurs fois d'où la variab
 global Donnees_ville #Ce que l'on va traiter grâce aux autres fichiers
 
 n = 0
-list_Questions = [('Vous êtes plutôt ?\nCalme                    Actif','Activite'),           #Reproduire les questions dans le même style que la première
-                ('Quel âge avez vous ?\nMoins de 30 ans               Plus de 30 ans','Age'),
-                ('Etes vous etudiant ?\nNon                    Oui','Scolarite'), #Change pour  X si personne = vieille                
-                ('Avez vous\Vivez vous avec des enfants ?\nNon                   Oui','Famille'),
-                ('La culture a-t-elle une place importante pour vous ?\nNon                    Oui','Culture'),
-                ('Que préférez vous ?\nLa campagne                   La ville','citadin'),                               #s 4 dernières questions sont a revoir ducoup
-                ('Avez vous un travail ?\nNon                    Oui','Travail'),
-                ("Etes vous en recherche d'emploi ?\nNon                    Oui","Cherche_Emploi")]
+list_Questions = [('Aimez vous sortir en ville ?','Activite'),           #Reproduire les questions dans le même style que la première
+                ('Avez vous moins de 30 ans ?','Age'),
+                ('Etes vous etudiant ?','Scolarite'), #Change pour  X si personne = vieille                
+                ('Avez vous\Vivez vous avec des enfants ?','Famille'),
+                ('La culture a-t-elle une place importante pour vous ?','Culture'),
+                ('préférez vous la campagne à la ville ?','citadin'),                               # 4 dernières questions sont a revoir ducoup
+                ('Avez vous un travail ?','Travail'),
+                ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
 
 dico_Reponses = {} #Traité dans coefficients.py
 
@@ -88,7 +88,7 @@ def avancer(fenetre,bouton): # bouton est le bouton d'aide qui disparait après 
     global btn_ok
     global n #n prend +1 a chaque questions
     """
-    Passe à la question 1 et ouvre le qcm ajoute les deux boutons <-- et -->
+    Passe à la question 1 et ouvre le qcm ajoute les deux boutons Non et Oui
     
     Si le qcm est terminé, ouvre la seconde page
     """
@@ -96,8 +96,8 @@ def avancer(fenetre,bouton): # bouton est le bouton d'aide qui disparait après 
         bouton.destroy()
     if n < len(list_Questions):
         btn_ok.place_forget() #Cache ce bouton
-        btn_gauche = Button(width=20, height=3, command=lambda: plus0(btn_gauche,btn_droite), bg='#70add7', text="<---")
-        btn_droite = Button(width=20, height=3, command=lambda: plus1(btn_gauche,btn_droite), bg='#70add7', text="--->")
+        btn_gauche = Button(width=20, height=3, command=lambda: plus0(btn_gauche,btn_droite), bg='#70add7', text="Non")
+        btn_droite = Button(width=20, height=3, command=lambda: plus1(btn_gauche,btn_droite), bg='#70add7', text="Oui")
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
         btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
         msg_principal.config(text =f'{list_Questions[n][0]}') #change le texte du msg principal pour la question suivante
@@ -107,7 +107,7 @@ def avancer(fenetre,bouton): # bouton est le bouton d'aide qui disparait après 
         w_question() #Ouvre la seconde fenêtre : Fin de la première
 
 def plus0(b1,b2):
-    """ajoute 0 au dico de reponses (<---)"""
+    """ajoute 0 au dico de reponses (Non)"""
     global list_Questions
     global n
     global dico_Reponses
@@ -123,7 +123,7 @@ def plus0(b1,b2):
         b2.destroy()
 
 def plus1(b1,b2):
-    """ajoute 1 au dico de reponses (--->)"""
+    """ajoute 1 au dico de reponses (Oui)"""
     global list_Questions
     global n
     global dico_Reponses
