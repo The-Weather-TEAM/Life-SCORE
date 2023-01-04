@@ -61,7 +61,7 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 - time
 - csv
 - pandas
-- datatime
+- datetime
 - time
 - tkinter
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
