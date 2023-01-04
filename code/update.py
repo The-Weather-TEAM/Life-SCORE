@@ -60,8 +60,8 @@ def executer():
 
 
     # Test de connexion internet sur le site data.gouv.fr
-    test_connexion = i.Internet('https://www.data.gouv.fr')
-    if test_connexion.is_connected() :
+    test_connexion = i.is_connected('https://www.data.gouv.fr')
+    if test_connexion :
 
 
 
