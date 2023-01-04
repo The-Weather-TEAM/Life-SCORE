@@ -1,8 +1,13 @@
 # Life SCORE
-Life score est une application pensée et conçu par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des dizaines de critères, de partout en France.
+Life score est une application pensée et conçu par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des centaines de critères, de partout en France.
 
-## Le projet
+
+
+
+
+# Le projet
 Le logiciel est reparti en 2 sections : la première est le test afin de connaître au maximum les attentes de l'utilisateur. Le deuxième permet de choisir une ville et défini le résultat (avec détails) du niveau de compatibilité par rapport à la demande.
+
 
 
 ### La notation
@@ -18,21 +23,47 @@ Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui e
 Chaque utilisateur va devoir remplir un formulaire de quelques minutes. Chaque réponse impactera le coefficient de plusieurs critères, pouvant devenir nul à très important. La note sera donc en fonction de l'utilisateur qui utilise notre application !
 
 
-## Interface moderne
-Source vers la bibliothèque :
-https://github.com/TomSchimansky/CustomTkinter
+### La gestion d'erreurs
+Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nous faisons tout le possible pour, quoi qu'il arrive, trouver une alternative face à un problème tout en anticipant les erreurs possibles :
+- Système de l'utilisateur pas aux normes
+- Connexion internet
+- Corruption et mise à jour des fichiers...
 
 
 
-## Version actuelle : v0.4
 
-> Affiche les données météorologiques de la ville souhaitée
 
-fait par Frédéric MARQUET & Nathan BOSY
+# Version actuelle : v0.5
 
- - Sans interface graphique
- - Fonctionne uniquement avec un terminal Python
- - Aucun fonction de notation ou de personnalisation : c'est juste le prototype de notre application.
+> Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
+
+Lien vers la liste des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
+
+
+Réalisé par :
+- Frédéric M.
+- Nathan B.
+- Raphël F.
+- Thor N.
+- Noémie L.
+
+
+
+# Bibliothèques utilisées :
+- requests
+- os
+- ssl 
+- time
+- csv
+- pandas
+- datatime
+- time
+- tkinter
+- customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
+
+
+
+
 
 ## Journal de bord
 
