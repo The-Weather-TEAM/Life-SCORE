@@ -294,6 +294,9 @@ class Donnees:
         note = int(note)
         if note > 100 :
             note = 100
+            
+        if note < 100 :
+            note = 0
         
         '''
         print(nbr_etab_sportifs)
