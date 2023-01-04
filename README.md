@@ -56,7 +56,7 @@ Réalisé par :
 - time
 - csv
 - pandas
-- datatime
+- datetime
 - time
 - tkinter
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
