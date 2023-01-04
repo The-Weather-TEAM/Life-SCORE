@@ -308,7 +308,7 @@ if not erreur_maj :
         """
         global Donnees_ville
         ville = entree.get()
-        print(ville)
+        #print(ville)
         Donnees_ville = Donnees(ville)
         if Donnees_ville.is_commune_france_v2(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
             msg.config(text = "Veuillez patienter ...")
@@ -334,7 +334,7 @@ if not erreur_maj :
         windowScore.state('zoomed') #Plein écran
 
         #Donnees PROVISOIRES !!!
-        dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant (':-1} #Exemple
+        dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant 5':-1} #Exemple
         score = int(Donnees_ville.note_finale()) #Provisoire
         bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
@@ -344,7 +344,7 @@ if not erreur_maj :
         msg_ville = Message(windowScore,text=ville.capitalize(), width = 1000, font =('Bold',30), justify=CENTER)
         msg_ville.place(relx=0.5,rely=0.1,anchor=N)
         plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
-        print(plus,moins)
+        #print(plus,moins)
 
 
         couleur= couleur_score(score)
@@ -424,7 +424,7 @@ if not erreur_maj :
         couleur = (255,0,127)
         rouge = 255 - int(n*255/100)
         vert = 0 + int(n*255/100)
-        print(rouge,vert)
+        #print(rouge,vert)
         couleur = (rouge,vert,100)
 
         rgb = '#' + ''.join(f'{i:02X}' for i in couleur)

@@ -225,7 +225,7 @@ class Donnees:
         """
         Verifie si la commune est en france grâce à un fichier et redonne son code insee
         """
-        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est a modifier pour les arrondissements
+        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
         cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
 
         fichier.close()
@@ -236,17 +236,40 @@ class Donnees:
         #recup ligne de ville pour code insee  
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
         if row.values[0][3]:
-            print(row.values[0][3])
+            #print(row.values[0][3])
             """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
                 self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
             self.code_insee = row.values[0][3]
-            print(self.code_insee)
+            #print(self.code_insee)
             return True
         else: 
             msg.confing(text = "Ville incorrecte veuillez réessayer")
             return False
-
         
+        
+        
+    def nombre_habitants(self) :
+        """
+        Retourne le nombre d'habitants de la commune
+        
+        A METTRE A JOUR AVEC VERSION PLUS RECENTE DE LA POPULATION !
+        
+        """
+        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Pop 2012']) #encoding pour pouvoir avoir les accents (ne marche pas)
+
+        fichier.close()
+        #recup ligne de ville pour nombre habitants
+        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
+        if row.values[0][3]:
+            #print(row.values[0][3])
+            """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
+                self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
+            self.population = row.values[0][3]
+            #print(self.population)
+            return int(self.population)
+        
+
 
     def note_sport(self):
         """
@@ -254,25 +277,48 @@ class Donnees:
         """
         
         data_sport = p.read_csv(self.repertoire + '/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
-        print(data_sport.values[2][1])
+        #print(data_sport.values[2][1])
 
         rangee = data_sport[(data_sport['ComInsee'] == self.code_insee)]
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
-        nb = rangee.values[0][1]
-        note = nb*100/555
+            
+        nbr_etab_sportifs = rangee.values[0][1]
+        
+        # Calcul établiseements par habitants
+        etab_sport_par_hab = nbr_etab_sportifs / self.nombre_habitants()
+        
+        # Calcul réalisé avec les données Françaises
+        note = 16071.4*etab_sport_par_hab - 3.57143
+        
+        # Pour les petites villes avec plus de 0.006 étab / habitants
+        note = int(note)
+        if note > 100 :
+            note = 100
+        
+        '''
+        print(nbr_etab_sportifs)
+        print(self.nombre_habitants())
+        print(etab_sport_par_hab)
+        print(note)
+        '''
+        # MOYENNE NATIONALE : 311000/67500000 habitants (envioron 4/1000) ->  note de 50/100
+        # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
+        # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143
+        # A REVOIR EN FONCTION DES PETITES VILLES ET PEUT ETRE ETRE PLUS SEVERE
+        
         return note
 
 
 
     def note_finale(self):
         """
-        Récupère kla ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
+        Récupère la ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
         """
         #IL FAUDRAIT UN CODE POUR RECUPERER TOUS LES ATTRIBUTS (pour l'instant on fait un par un :(  )
         tableau = []
         #qqchose style for attr in self : tableau .append(attr)
         tableau.append(self.note_sport())
-        print(tableau)
+        #print(tableau)
         note_finale = 0
         for note in tableau :
             note_finale += int(note)
@@ -339,6 +385,6 @@ if __name__ == "__main__":
     #print(ddd.is_commune_france())
     #print(ddd.meteo())
     ddd.is_commune_france_v2()
-    print(type(ddd.code_insee))
-    print(ddd.note_sport())
+    #print(type(ddd.code_insee))
+    #print(ddd.note_sport())
     ddd.note_finale()

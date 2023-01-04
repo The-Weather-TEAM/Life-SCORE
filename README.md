@@ -198,3 +198,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Renomage du code principal pour LifeSCORE.py.
 
 >Création du document requirements.txt qui permet de télécharger toutes les bibliothèques d'un coup
+
+>Modifictation de la note principale : prend en compte le nombre d'habitants
+
+>J'ai mis tous les print() en commentaires sauf pour update.py et calcul_coefficients.py
