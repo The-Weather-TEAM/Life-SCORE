@@ -3,7 +3,8 @@
                          
     Programme de téléchargement et mises à jour des données
 
-        développé par Frédéric Marquet & Nathan Bosy
+                  développé par Nathan Bosy
+        base de données par Frédéric Marquet & Nathan Bosy
 
 
 
@@ -14,13 +15,19 @@
 - Internet pas indispensable pour le programme ducoup on passe si data.gouv.fr ne marche pas
 - Bloque le programme si il n'y a pas intenret lors de la première utilisation
 - Messages sous variables pour une compabilité efficace avec Tkinter
+- Code dans une fonction pour return sur le code principal une variable d'erreur
 
 '''
 
 
 
+# Tout le code est dans une fonction pour return s'il y a une erreur ou non
 
 def executer():
+
+
+
+
 
     # Bibliothèques et importation des classes
     import requests
@@ -289,9 +296,17 @@ def executer():
         
     
     
+    # Envoie sur le programme principal s'il y a une erreur ou non
     return erreur_internet
-    
 
+
+    
+    
+    
+    
+    
+    
+    
     
 '''
 

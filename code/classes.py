@@ -9,6 +9,12 @@ LISTE DES CLASSES :
 - "Donnees" : traitement ddes données pour le programmme
 - "Internet" : pour savoir si on est connecté à internet
 
+
+/!\ DESACTIVATION TEMPORAIRE DES CLASSES QUI UTILISENT INTERNET
+- Tout ce qui utilise l'API OpenWeather
+Car on ne s'en sert pas pour l'instant et si on a pas internet ça plante le programmme
+
+
 '''
 
 

@@ -1,4 +1,10 @@
-"""
+'''
+
+                      [THEWEATHERTEAM.PY]
+                 CODE PRINCIPAL DE LIFE-SCORE
+
+
+
 Code Tkinter ne pas oublier quand on crée des variable de les commenter (bon nom + fonction)
 réferences : 
     - Les boutons s'écrivent btn_NOM
@@ -9,7 +15,7 @@ réferences :
     - Les url de csv ou d'API s'écrivent url_csv_NOM ou url_api_NOM
 
 
-"""
+'''
 
 
 
@@ -25,16 +31,26 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
 
 
+
+'''
+LANCEMENT DU PROGRAMME 
+     [UPDATE.PY]
+      (Nathan)
+
+'''
 import update
 
+# erreur_maj = True si et seulement si il n'y a pas de données sur l'ordinateur et
+#                   si il n'y a pas d'accès à internet
 erreur_maj = update.executer()
 
-
-
-
-
-
+# Si erreur_maj = False, on lance le programme
+# Nathan : il foudrait après faire un else avec tkinter pour informer que le code ne se lance pas
 if not erreur_maj :
+
+
+
+
 
     global msg_principal #on pose les questions a travers lui
     global list_Questions #Les valeurs de ce tableau sont les questions 
