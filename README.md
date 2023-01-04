@@ -18,6 +18,12 @@ Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui e
 Chaque utilisateur va devoir remplir un formulaire de quelques minutes. Chaque réponse impactera le coefficient de plusieurs critères, pouvant devenir nul à très important. La note sera donc en fonction de l'utilisateur qui utilise notre application !
 
 
+## Interface moderne
+Source vers la bibliothèque :
+https://github.com/TomSchimansky/CustomTkinter
+
+
+
 ## Version actuelle : v0.4
 
 > Affiche les données météorologiques de la ville souhaitée
