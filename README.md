@@ -1,6 +1,13 @@
 # Life SCORE
 Life score est une application pensée et conçu par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des centaines de critères, de partout en France.
 
+Réalisé par :
+- Frédéric M.
+- Nathan B.
+- Raphël F.
+- Thor N.
+- Noémie L.
+
 
 
 
@@ -37,15 +44,13 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 > Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
 
-Lien vers la liste des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
+Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
 
-Réalisé par :
-- Frédéric M.
-- Nathan B.
-- Raphël F.
-- Thor N.
-- Noémie L.
+- LifeSCORE.py : *Code principal avec l'interface graphique et utilise tous les programmes. Réalise le QCM et affiche la note et les données.*
+- classes.py : *Répertorie la classes Donnees (calcule les données), ainsi que toutes les fonctions comme is_connected*
+- update.py : *Programme de téléchargement et mises à jour des données*
+- calcul_coefficients.py : *Cacul de l'importance des notations en fonction des résultats du QCM*
 
 
 
@@ -66,15 +71,17 @@ Réalisé par :
 ## Configuration recommandée :
 - Windows 10 / 11
 - Python 3.11.1
-- Bibliothèques
+- Bibliothèques utilisés (téléchargeables avec requirements.txt) :
+>Pour tout télécharger, il faut ouvrir un terminal sur le dossier racine et executer :
 
+>*pip install -r requirements.txt*
 
 
 
 
 
 # Journal de bord
-
+Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
 
 8 Décembre 2022
 > Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
@@ -82,9 +89,9 @@ Réalisé par :
 > Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé.
 
 > Première répartition du travail : 
->-  Raphaël et Noémie -> Interface graphique /
->-  Frédéric -> Traitement de données des API pour la météo et le climat /
->-  Thor -> Programmation des coefficients entre le formulaire et la notation /
+>-  Raphaël et Noémie -> Interface graphique
+>-  Frédéric -> Traitement de données des API pour la météo et le climat
+>-  Thor -> Programmation des coefficients entre le formulaire et la notation 
 >-  Nathan -> Traitement de bases de données + Graphisme
 
 
@@ -145,9 +152,9 @@ Réalisé par :
 
 31 Décembre 2022
 > Création d'un code "recup_data.py" qui sert à plusieurs choses : 
->- créer le dossier data avec tous les csv dedans /
->- télécharge et installe les fichiers lors de la première utilisation /
->- recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible /
+>- créer le dossier data avec tous les csv dedans
+>- télécharge et installe les fichiers lors de la première utilisation
+>- recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible
 >- avec la base de csv stockée dessus.
 
 > J'ai renommé les fichiers notamment 'recup_meteo_classe' en 'recup_meteo', c'est plus simple et j'ai modifié les codes qui les utilisent comme ça pas de souci.
@@ -187,3 +194,7 @@ Réalisé par :
 > Intégration des mises à jour et du gestionnaire de téléchargements sur le code principal.
 
 > Désactivation temporaire des classes qui utilisent internet (OpenWeatherAPI) car on ne l'utlise pas encore et ça plante si on a pas internet.
+
+>Renomage du code principal pour LifeSCORE.py.
+
+>Création du document requirements.txt qui permet de télécharger toutes les bibliothèques d'un coup
