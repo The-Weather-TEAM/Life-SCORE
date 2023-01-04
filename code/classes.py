@@ -2,26 +2,16 @@
                         [CLASSES.PY]
                          
          Programme qui répertorie toutes nos classes
-
-
-
 LISTE DES CLASSES :
 - "Donnees" : traitement ddes données pour le programmme
-
-
 LISTE DES FONCTIONS :
 - "is_connected" : vérifie si l'utilisateur a accès à internet / au site demandé
 - "meteo_code_emoji" : convertit un code donné par un emoji
 - "meteo_direction"  : permet de convertir un angle donné en orientation
 - "meteo_nom_pays "  : permet de convertir un code ISO-3611 de type Alpha 2 en nom
-
-
-
 /!\ DESACTIVATION TEMPORAIRE DES CLASSES QUI UTILISENT INTERNET
 - Tout ce qui utilise l'API OpenWeather
 Car on ne s'en sert pas pour l'instant et si on a pas internet ça plante le programmme
-
-
 '''
 
 
@@ -47,10 +37,7 @@ import os #Pour les paths
 '''
 Fonction qui permet de vérifier si on est connecté à internet.
 REMPLACE PAR UNE CLASSE, je le laisse pour les messages pour tkinter - Nathan
-
-
 def test_connexion(msg) :
-
     temp, essais = 0, 0
     
     while temp == 0 and essais < 3 :
@@ -64,9 +51,7 @@ def test_connexion(msg) :
             sleep(10)
             essais += 1            
     #assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
-
     #msg.config(text = 'Veuillez saisir la ville recherchée')
-
 '''
 
 
@@ -173,7 +158,6 @@ def meteo_nom_pays(code, data) :
 test_if_connected = is_connected('https://www.data.gouv.fr')
 if test_if_connected :                                                                                
     data_pays = p.read_csv('https://www.data.gouv.fr/fr/datasets/r/4cafbbf6-9f90-4184-b7e3-d23d6509e77b') # récupère le fichier csv data.gouv.fr
-
 '''
 
 
@@ -182,7 +166,6 @@ if test_if_connected :
 
 '''
 [CLASSE PRINCIPALE]
-
 '''  
 
 class Donnees:
@@ -207,8 +190,6 @@ class Donnees:
         Verifie si la ville rentrée existe puis si elle est en France
         """
         return self.data['cod'] == 200                                                # code signifiant que la ville existe
-
-
     
     
     def is_commune_france(self):
@@ -299,7 +280,6 @@ class Donnees:
             r['UTC_texte'] = str(r['UTC'])
         
         
-
         r['temperature_min']    = round(self.data['main']['temp_min'] - 273.15, 1)        
         r['temperature_max']    = round(self.data['main']['temp_max'] - 273.15, 1)     
         r['ressenti']           = round(self.data['main']['feels_like'] - 273.15, 1)
@@ -307,29 +287,66 @@ class Donnees:
         r['humidite']           = self.data['main']['humidity']                                  # en pourcent
         r['pression']           = round(self.data['main']['pressure']/1013.25, 3)                # convertion hP en ATM
         
-
         r['nuages']             = self.data['clouds']['all']
         r['visibilite']         = round(self.data['visibility']/1000, 1)                         # convertion m en degrés km
         
         r['vent']               = round(self.data['wind']['speed'] * 3.6, 1)
         r['orientation_vent']   = direction(self.data['wind']['deg'])                            # pour calculer la direction du vent
-
         r['lever_soleil']       = datetime.utcfromtimestamp(self.data['sys']['sunrise'] + self.data['timezone']).strftime('%Hh%M') 
         r['coucher_soleil']     = datetime.utcfromtimestamp(self.data['sys']['sunset']  + self.data['timezone']).strftime('%Hh%M')
         
         if ('rain' in self.data) :
             r['pluie'] = self.data['rain']['1h']
-
         if ('snow' in self.data) :
             r['neige'] = self.data['snow']['1h']
-
         if ('gust' in self.data['wind']) :
             r['rafales']  = round(self.data['wind']['gust'] * 3.6, 1)
-
         return r
     '''
 
+'''
+CLASSE 
+SECONDAIRE
+'''  
 
+'''
+class DonneesPrévisions:
+    def __init__(self,ville) :
+        self.url = 'https://api.openweathermap.org/data/2.5/forecast?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
+        self.data = requests.get(self.url).json()
+        self.ville = ville
+        
+    def PrévisionsMéteo(self):
+        x = 0
+        prévisions_data = self.data["list"]
+        dico = {}
+        for prévisions in prévisions_data:
+            liste = []
+            température = prévisions['main']['temp'] - 273.15
+            température_min = prévisions['main']['temp_min'] - 273.15
+            température_max = prévisions['main']['temp_max'] - 273.15
+            liste.append(température)
+            liste.append(température_min)
+            liste.append(température_max)
+            dico[x] = liste
+            x+=1
+            
+        analyse = []
+        for i in range (8):
+            analyse.append((dico[i][0],dico[i][1],dico[i][2]))
+        température,température_min,température_max = 0,0,0
+        for val in analyse :
+            température += val[0]
+            température_min += val[1]
+            température_max += val[2]
+            
+                
+        température /= len(analyse)
+        température_min /= len(analyse)
+        température_max /= max(analyse)
+        
+
+        return température,température_min,température_max'''
 
 
 if __name__ == "__main__":
