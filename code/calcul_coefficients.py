@@ -1,3 +1,13 @@
+'''
+                  [CALCUL_COEFFICIENTS.PY]
+                         
+             Cacul de l'importance des notations 
+              en fonction des résultats du QCM
+
+'''
+
+
+
 
 
 def calculCoefficients(globalmeteo, localmeteo, coefs):
