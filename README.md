@@ -49,7 +49,7 @@ Réalisé par :
 
 
 
-# Bibliothèques utilisées :
+## Bibliothèques utilisées :
 - requests
 - os
 - ssl 
@@ -63,9 +63,17 @@ Réalisé par :
 
 
 
+## Configuration recommandée :
+- Windows 10 / 11
+- Python 3.11.1
+- Bibliothèques
 
 
-## Journal de bord
+
+
+
+
+# Journal de bord
 
 
 8 Décembre 2022
