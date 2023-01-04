@@ -41,7 +41,7 @@ import pandas as p # Pour la lecture des CSV
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os #Pour les paths
-
+import random #Pour un easter egg
 
 
 
