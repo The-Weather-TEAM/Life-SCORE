@@ -44,6 +44,8 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 > Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
 
+> Ne prend en compte que le nombre d'établissements sportifs par nombre d'habitants dans la ville
+
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
 
