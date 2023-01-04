@@ -1,6 +1,6 @@
 '''
 
-                      [THEWEATHERTEAM.PY]
+                      [LIFESCORE.PY]
                  CODE PRINCIPAL DE LIFE-SCORE
 
 
