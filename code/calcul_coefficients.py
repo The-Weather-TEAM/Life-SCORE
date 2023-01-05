@@ -38,11 +38,6 @@ def calculCoefficients(globalmeteo, localmeteo, coefs):
 
     return round(noteMoyenneDesCriteres, 2) # renvoi la note 
 
-def note_finale(ville):
-    """
-    Récupère la ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
-    """
-    print(ville.__dict__.values())
 
 if __name__ == "__main__": # pour tester le code et demontrer comment l'appliquer
 
