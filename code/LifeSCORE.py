@@ -122,8 +122,6 @@ if not erreur_maj :
         
         Si le qcm est terminé, ouvre la seconde page
         """
-        if n == 0:
-            bouton.destroy()
         if n < len(list_Questions):
             btn_ok.place_forget() #Cache ce bouton
             btn_gauche = Button(width=20, height=3, command=lambda: plus0(btn_gauche,btn_droite), bg='#70add7', text="Non")
@@ -195,7 +193,7 @@ if not erreur_maj :
     Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
     La sécurité (taux d'accidents / vols / risques / ...)
     """
-        fenetre.destroy()
+        btn['status'] = 'disabled'
         windowAide = Tk() #fenetre de tkinter
         windowAide.title('Page 1bis - Aide')
         #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -203,24 +201,19 @@ if not erreur_maj :
         windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-        btn_compris = Button(windowAide, width=20, height=3, command=lambda:retour_pages(windowAide,"page1"), bg='#B9F7D0', text="Compris !")
+        btn_compris = Button(windowAide, width=20, height=3, command=retour_pages(windowAide,btn_compris), bg='#B9F7D0', text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
         windowAide.mainloop()
         return windowAide
 
 
-    def retour_pages(window,string):
+    def retour_pages(window,btn):
         """
-        Fonction qui passe de la page actielle à la page N°x
+        Fonction qui passe de la page actuelle à la page N°x
         """
-        global dico_Reponses #Au cas où que quelquechose soit dedans on va le reset
         window.destroy()
-        if string == "page1" : #si on veut accéder à la page 1
-            dico_Reponses = {}
-            w_qcm()
-        elif string == "page2" :
-            w_question()
+        btn['status'] = 'enable'
 
 
 
@@ -243,7 +236,7 @@ if not erreur_maj :
         msg_ville= Message(text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
         msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-        btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(windowQuestion), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+        btn_arrondissement = Button(width=20, height=3,command=lambda: arrondissement(windowQuestion,btn_arrondissement), bg = '#f44336', text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
         btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
         
         #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
@@ -276,11 +269,12 @@ if not erreur_maj :
         windowQuestion.mainloop()
 
 
-    def arrondissement(window):
+    def arrondissement(window,btn):
 
         """
         Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
         """
+        btn['status'] = 'disabled'
         texte_aide="""
         Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :
         - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
@@ -293,7 +287,7 @@ if not erreur_maj :
         #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-        btn_compris = Button(windowAide, width=20, height=3, command=lambda :retour_pages(windowAide,"page2"), bg='#B9F7D0', text="Compris !")
+        btn_compris = Button(windowAide, width=20, height=3, command=lambda :retour_pages(windowAide,btn), bg='#B9F7D0', text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
         windowAide.mainloop()
