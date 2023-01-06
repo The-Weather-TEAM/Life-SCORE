@@ -191,11 +191,11 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 4 Janvier 2023
-> Changement de update.py en une énorme fonction pour l'utiliser dans d'autres codes.
+>Changement de update.py en une énorme fonction pour l'utiliser dans d'autres codes.
 
-> Intégration des mises à jour et du gestionnaire de téléchargements sur le code principal.
+>Intégration des mises à jour et du gestionnaire de téléchargements sur le code principal.
 
-> Désactivation temporaire des classes qui utilisent internet (OpenWeatherAPI) car on ne l'utlise pas encore et ça plante si on a pas internet.
+>Désactivation temporaire des classes qui utilisent internet (OpenWeatherAPI) car on ne l'utlise pas encore et ça plante si on a pas internet.
 
 >Renomage du code principal pour LifeSCORE.py.
 
@@ -209,4 +209,11 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 5 Janvier 2023 :
 
-**Première présentation de notre logiciel à la classe d'informatique.**
+>**Première présentation de notre logiciel à la classe d'informatique.**
+
+
+
+6 Janvier 2023 :
+> Publication de la 2ème version de UPDATE.PY : fonctionne à 100% et la nouvelle version est plus rapide. Correction des bugs (crtiqiues) :
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/43
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/40
