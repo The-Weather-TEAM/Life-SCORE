@@ -204,3 +204,8 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Modifictation de la note principale : prend en compte le nombre d'habitants
 
 >J'ai mis tous les print() en commentaires sauf pour update.py et calcul_coefficients.py
+
+
+
+5 Janvier 2023 :
+**Première présentation de notre logiciel à la classe d'informatique.**
