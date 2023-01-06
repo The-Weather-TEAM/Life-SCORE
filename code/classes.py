@@ -225,6 +225,9 @@ class Donnees:
         """
         Verifie si la commune est en france grâce à un fichier et redonne son code insee
         """
+        if str(self.ville) == '':
+            msg.config(text = "Il faut saisir une ville")
+            return False
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
         cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
 

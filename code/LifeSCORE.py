@@ -193,7 +193,7 @@ if not erreur_maj :
     Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
     La sécurité (taux d'accidents / vols / risques / ...)
     """
-        btn['status'] = 'disabled'
+        change_etat_btn(btn)
         windowAide = Tk() #fenetre de tkinter
         windowAide.title('Page 1bis - Aide')
         #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -201,7 +201,7 @@ if not erreur_maj :
         windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         msg_aide = Message(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-        btn_compris = Button(windowAide, width=20, height=3, command=retour_pages(windowAide,btn_compris), bg='#B9F7D0', text="Compris !")
+        btn_compris = Button(windowAide, width=20, height=3, command=lambda:retour_pages(windowAide,btn), bg='#B9F7D0', text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
         windowAide.mainloop()
@@ -212,11 +212,18 @@ if not erreur_maj :
         """
         Fonction qui passe de la page actuelle à la page N°x
         """
+        change_etat_btn(btn)
         window.destroy()
-        btn['status'] = 'enable'
+        
 
-
-
+    def change_etat_btn(bouton):
+        """
+        Fonction qui change l'état du bouton utilisé
+        """
+        if bouton['state'] == NORMAL:
+            bouton['state'] = DISABLED
+        else:
+            bouton['state'] = NORMAL
 
     #seconde page
     def w_question():
@@ -274,12 +281,12 @@ if not erreur_maj :
         """
         Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
         """
-        btn['status'] = 'disabled'
+        change_etat_btn(btn) # bouton devient inactif grâce à l'autre fonction pour ne pas qu'on appuye dessus plusieurs fois
         texte_aide="""
         Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :
         - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
         - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
-        window.destroy()
+
         windowAide = Tk() #fenetre de tkinter
         windowAide.title('Page 2bis - Aide')
         #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
@@ -310,8 +317,7 @@ if not erreur_maj :
             #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
             fenetre.destroy()
             w_score(ville)
-        else:
-            msg.config(text = "Erreur : La ville choisie n'est pas dans notre base de donnée")
+
 
 
 
@@ -441,8 +447,8 @@ if not erreur_maj :
 
 
 
-    # Create an object of tkinter ImageTk
-    # photo = ImageTk.PhotoImage(data=raw_data) # <-----
+    # Objet image de tkinter 
+    # photo = ImageTk.PhotoImage(data=raw_data)
 
 
 
@@ -453,3 +459,24 @@ if not erreur_maj :
     #w_question() 
     #w_score('Paris')
     #print(n,dico_Reponses,msg_principal)
+
+else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on a pas internet
+    #fenêtre
+    windowError = Tk() #fenetre de tkinter
+    windowError.title('Erreur - ')
+    windowError.minsize(width=768, height=500) #768 = taille minimum de la fenetre
+    windowError.state('zoomed')
+
+    #Variables
+    str_erreur = "Vous n'êtes pas connecté à internet et nous n'avons pas pu récupérer les fichiers (endommagés ou inexistants)\n programme ne peut pas se lancer dans ces conditions"
+
+    #widgets
+    msg_principal =  Message(text=str_erreur, width = 500, font =('Bold',32), justify=CENTER) #font = taille + police justify comme sur word
+    msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    
+    #boutons 
+
+    #bouton ok Qui Ferme la page et termine le programme
+    btn_ok = Button(width=20, height=3, command=windowError.destroy(), bg='#70add7', text="OK") #apelle la fonction question1
+    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
+    
