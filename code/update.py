@@ -8,6 +8,9 @@
 
 
 
+POUR L'INSTANT TELECHARGE TOUS LES FICHIERS UN PAR UN,
+AMELIORATION A FAIRE : TELECHARGEMENT D'UN PACKAGE
+
 - Créé le dossier "data" avec tous les CSV dedans
 - Télécharge et installe les fichiers lors de la première utilisation
 - Recherche de mises à jour tous les mois et retéléchargement des csv si nouvelle version disponible
@@ -21,8 +24,16 @@
 
 
 
-# Tout le code est dans une fonction pour return s'il y a une erreur ou non
+# Temps en secondes entre les vérifications de mises à jour
+temps_maj = 0
+#exemple : 2592000 = nombre de sec dans un mois
 
+
+
+
+
+
+# Tout le code est dans une fonction pour return s'il y a une erreur ou non
 def executer():
 
 
@@ -52,8 +63,7 @@ def executer():
 
 
     # Pour savoir si le fichier existait avant le programme
-    if os.path.isfile(repertoire+'/'+'versions.csv') :
-        is_file = True
+    is_file = os.path.isfile(repertoire+'/'+'versions.csv')
 
 
 
@@ -72,8 +82,8 @@ def executer():
                                                 à compléter
         '''
         
-        #         NOM                     ID DES METADONNEES                 CODE DE TELECHARGEMENT
-        liste_csv = {'gares':               ['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
+        #              NOM                     ID DES METADONNEES                 CODE DE TELECHARGEMENT
+        liste_csv = {'gares':              ['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
                     'festivals':           ['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975'],
                     'carburants':          ['54101458a3a72937cb2c703c','64e02cff-9e53-4cb2-adfd-5fcc88b2dc09'],
                     'loi_montagne' :       ['600a90b60961636713297c87','87bc6d48-f1ed-4924-be55-0142660033de'],
@@ -122,13 +132,13 @@ def executer():
         
         # Création le fichier des infos s'il existe pas
         if not is_file :
-            nom_fichier_infos = os.path.join(repertoire, 'versions.csv')
-            csv.writer(open(repertoire+'/'+'versions.csv', "w")).writerow(['NOM', 'VERSION']) 
-        
+            os.path.join(repertoire, 'versions.csv')
+            csv.writer(open(repertoire+'/'+'versions.csv', "w")).writerow(['NOM', 'VERSION'])
+
     
             
         # Lecture du fichier CSV des versions
-        recup_versions = p.read_csv(repertoire+'/versions.csv')
+        lire_versions = p.read_csv(repertoire+'/versions.csv')
 
 
 
@@ -138,15 +148,18 @@ def executer():
         for id in liste_csv :
             
             
-            # Comptage du fichier courant
+            is_courant_modified = False
+            
+            
+            # Comptage du fichier courant + Si le fichier existait déjà
             csv_courant += 1
+            if os.path.isfile(repertoire+'/'+id+'.csv') :
+                is_courant_csv = True
+            else : is_courant_csv = False
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de un mois
-            if not os.path.isfile(repertoire+'/'+id+'.csv') or time.time() - os.path.getctime(repertoire+'/'+id+'.csv') > 2592000 : #2592000 = nombre de sec dans un mois
-                
-                # Données modifiées
-                is_modified = True 
+            if not is_courant_csv or time.time() - os.path.getctime(repertoire+'/'+id+'.csv') > temps_maj : 
                 
                 
                 # On récupère les données du CSV :
@@ -176,6 +189,7 @@ def executer():
                 # Conversion du tableau version en UNIX
                 date_temps = datetime.datetime(version[0], version[1], version[2], version[3], version[4], version[5])
                 version = time.mktime(date_temps.timetuple())
+                print(version)
                             
                             
                 
@@ -187,9 +201,13 @@ def executer():
                 
                 
                 # On récupère la version téléchargée initialement si le fichier existait déjà
-                if is_file and os.path.isfile(repertoire+'/'+id+'.csv'):
-                    ligne = recup_versions[recup_versions["NOM"] == id]      # Retient seulement la ligne du fichier csv
-                    recup_version = ligne.values[0][1]                 # Retourne la version du fichier
+                if is_file and is_courant_csv:
+                    #print(lire_versions)
+                    ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
+                    #print('test')
+                    #print(ligne)
+                    #print('fin test')
+                    recup_version = ligne.values[0][1]                       # Retourne la version du fichier
 
 
                 # Pour éviter une erreur, comme ça on télécharge le CSV même si on récupère pas la version
@@ -202,8 +220,13 @@ def executer():
                 # Téléchargement si data n'existait pas ou si la version du csv était différente
                 if not is_file or recup_version != version :
                     
+                    if is_file :
+                        # Supprime la version actuelle
+                        os.remove(repertoire+'/'+id+'.csv')
+                    
+                    
                     # Données modifiées
-                    is_modified = True
+                    is_courant_modified, is_modified = True, True
                                 
                     lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
                     
@@ -232,9 +255,9 @@ def executer():
         pour l'instant sur le terminal
                     
                     '''
-                    
+                if is_courant_modified:
                     # Message sur le terminal (provisoire, à modifier pour du Tkinter)
-                    # avec gestion du nombre de caractères pour avoir du texte homogène
+                     # avec gestion du nombre de caractères pour avoir du texte homogène
                     if pourcentage < 10 :
                         msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier téléchargé"
                     elif pourcentage < 100 :
@@ -244,7 +267,18 @@ def executer():
                         
                     print (msg_csv_courant)
                         
-                
+                else :
+                    pourcentage = int(csv_courant/nombre_total_csv*100)
+                    
+                    if pourcentage < 10 :
+                        msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
+                    elif pourcentage < 100 :
+                        msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
+                    else :
+                        msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
+                            
+                    print (msg_csv_courant)
+                        
             # Message sur le terminal (provisoire, à modifier pour du Tkinter)
             # avec gestion du nombre de caractères pour avoir du texte homogène
             else : 
@@ -288,14 +322,29 @@ def executer():
         
         
         
+        
+        
     # Rajout des csv téléchargés sur le fichier versions.csv
     if is_modified :
-        ecriture = csv.writer(open(repertoire+'/'+'versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux
-        for cle, val in nouvelles_informations.items():
-            ecriture.writerow([cle, val])       
         
-    
-    
+        rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux
+        
+        for cle, val in nouvelles_informations.items():
+            
+            # Si le fichier n'était pas là avant le lancement
+            if not is_courant_csv :
+                rajout_donnee.writerow([cle, val])  
+                
+            # Si le fichier a été mis à jour
+            elif is_courant_csv and is_courant_csv :
+                print(val)
+                lire_versions.loc[lire_versions["NOM"] == id, "VERSION"] = val
+                lire_versions.to_csv(repertoire+'/'+'versions.csv')
+                
+                #problème ici
+                
+        
+        
     # Envoie sur le programme principal s'il y a une erreur ou non
     return erreur_internet
 
@@ -401,3 +450,8 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
                        "ods_has_records":true,
                        "ods_geo":true}}
 '''
+
+
+
+#PROGRAMME DE TEST :
+executer()
