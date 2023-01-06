@@ -1,5 +1,5 @@
 # Life SCORE
-Life score est une application pensée et conçu par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des centaines de critères, de partout en France.
+Life score est une application pensée et conçue par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des centaines de critères, de partout en France.
 
 Réalisé par :
 - Frédéric M.
