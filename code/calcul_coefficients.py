@@ -10,25 +10,33 @@
 
 
 
-def calculCoefficients(globalmeteo, localmeteo, coefs):
+def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict, coefs: dict) -> float:
     """
-    Calcule coefficients de tout les differents moyenns pour ensuite en deduire une note du ville
+    Calcule coefficients de tout les differents valeurs pour ensuite en deduire une note
+    
+    - `valeursIdeals` et `valeursSaisit` doivent avoir les memes noms de clefs.
+
     """
+
+    for dictionary in (valeursIdeals, valeursSaisit): # verifie que les valeurs des dictionaires sont numerique
+        toutInt = [type(valeur) == int or type(valeur) == float for valeur in dictionary.values()]
+        assert set(toutInt) == {True}, "Les dictionares d'entré doivent contenir des int/float en valeurs"
+
 
     # calcule le rapport entre les donnes local est la moyenne global
     listDeNotesCriteres = []
 
-    for critere in globalmeteo.keys(): # pour chaque critere dont on a un valeur desiré
+    for critere in valeursIdeals.keys(): # pour chaque critere dont on a un valeur desiré
 
 
     
-        distanceDesValeurs = abs(globalmeteo[critere] - localmeteo[critere]) # calcule la difference entre les valeurs local et global
+        distanceDesValeurs = abs(valeursIdeals[critere] - valeursSaisit[critere]) # calcule la difference entre les valeurs local et global
 
-        noteSurCent = 1 - (distanceDesValeurs/globalmeteo[critere]) # evalue un note par rapport a cette distance
+        noteSurCent = 1 - (distanceDesValeurs/valeursIdeals[critere]) # evalue un note par rapport a cette distance
 
         # if noteSurCent < 0: noteSurCent = 0 # ex: quand temperature est sous 0, souvent la note est sous 0.
 
-        print(f"Global: {globalmeteo[critere]}; Local: {localmeteo[critere]}") # affiche les valeurs pour les tests
+        print(f"Global: {valeursIdeals[critere]}; Local: {valeursSaisit[critere]}") # affiche les valeurs pour les tests
         print(critere, distanceDesValeurs, noteSurCent)
 
         listDeNotesCriteres.append(noteSurCent) # ajoute le note au list de notes des criteres
@@ -57,7 +65,7 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
 
 
 
-    globalDico = { # info meteo ideal
+    valeursIdeals = { # info meteo ideal
         "humidite": 60, # en %
         "temperature": 27.5, # en Celcius
         "visibilite": 10, # en km | 10 a l'aire d'etre le max avec l'api, donc on veut le max
@@ -74,4 +82,4 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
         "visibilite": 1
     }
     
-    print(calculCoefficients(globalDico, dicoMeteoVille, coeffsDico))
+    print(calculCoefficients(valeursIdeals, dicoMeteoVille, coeffsDico))
