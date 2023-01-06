@@ -339,7 +339,7 @@ def executer():
             elif is_courant_csv and is_courant_csv :
                 print(val)
                 lire_versions.loc[lire_versions["NOM"] == id, "VERSION"] = val
-                lire_versions.to_csv(repertoire+'/'+'versions.csv')
+                lire_versions.to_csv(repertoire+'/'+'versions.csv', Index = False)
                 
                 #problème ici
                 
