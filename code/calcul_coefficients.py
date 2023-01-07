@@ -10,7 +10,7 @@
 
 
 
-def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict, coefs: dict) -> float:
+def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
     """
     Calcule coefficients de tout les differents valeurs pour ensuite en deduire une note
     
@@ -85,13 +85,5 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
         "pression": (0.967, 1, 1.035), # en atm | (les plus haut est bas pressions en france par: https://en.wikipedia.org/wiki/List_of_atmospheric_pressure_records_in_Europe#France)
         "vent": (0, 7, 17.5) # en m/s | (0, table 1 pieton, moyenne table 2) du source: https://cppwind.com/outdoor-comfort-criteria/
     }
-
-
-    # ceci cera remplacé par les resultats du quiz, il faut just chercher comment l'apliquer.
-    coeffsDico = {
-        "humidite": 0,
-        "temperature": 1,
-        "visibilite": 1
-    }
     
-    print(calculCoefficients(valeursIdeals, dicoMeteoVille, coeffsDico))
+    print(calculCoefficients(valeursIdeals, dicoMeteoVille))
