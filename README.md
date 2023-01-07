@@ -234,5 +234,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 > Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
 mbre de pi
+
 > Nouveau système pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.
+
 > Transformation des pages de Tkinter vers CustomTkinter qui permet une approche plus "graphique", corrections de quelques bugs graphiques, adaptation du nombre de pixels,...
