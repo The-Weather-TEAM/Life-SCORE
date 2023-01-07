@@ -52,10 +52,10 @@ def executer():
     import pandas as p
     import datetime
     import time
-    from shutil import rmtree as delete_data
+    from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
     from classes import is_connected as connexion
     
-    # Pour éviter erreurs Internet
+    # Pour éviter erreurs de coupures :
     from requests.exceptions import ConnectionError, ChunkedEncodingError
     from urllib3.exceptions import ProtocolError
     from http.client import IncompleteRead
