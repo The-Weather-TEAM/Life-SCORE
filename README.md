@@ -40,7 +40,7 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v0.5
+# Version actuelle : v0.5.1
 
 > Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
 
@@ -53,6 +53,15 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 - classes.py : *Répertorie la classes Donnees (calcule les données), ainsi que toutes les fonctions comme is_connected*
 - update.py : *Programme de téléchargement et mises à jour des données*
 - calcul_coefficients.py : *Cacul de l'importance des notations en fonction des résultats du QCM*
+
+
+Changements :
+>- UPDATE.PY : passe en version 3, il corrige des bugs critiques et ajoute de nouvelles fonctionnalités. Le téléchargement / la mise à jour fonctionne quoi qu'il arrive (pas internet / coupure en plein processus). Il est maintenant plus rapide. 
+>- CLASSES.PY : Correction de la notation, maintenant les villes sont correctement notés sur les établissements sportifs.
+>- CALCUL_COEFFICIENTS.PY : Nouveau système plus précis pour la notation de la météo, avec des sources nationales (comme référence) 
+>- LIFESCORE.PY : Nouvelle interface plus moderne et résolution de certains bugs qui rendait les boutons inutilisables. Création d'une fenêtre paramètres (non utilisable pour l'instant)
+
+
 
 
 
