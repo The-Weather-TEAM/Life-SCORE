@@ -230,3 +230,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
 
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
+
+> Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
