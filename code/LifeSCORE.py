@@ -20,6 +20,7 @@ réferences :
 
 
 from tkinter import *
+import tkinter.font
 #from urllib.request import urlopen #pour les photos (peut etre enlever)
 from classes import * #Import de nos classes créées
 
@@ -27,7 +28,7 @@ import requests
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
 #from PIL import ImageTk, Image #Pour l'esthétique
-
+import customtkinter as customtk
 
 
 
@@ -98,13 +99,16 @@ if not erreur_maj :
         
         #boutons 
         
-        #bouton_explication
-        btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide,windowQCM), bg = '#f44336', text="AIDE") #Bouton d'aide
+        #bouton_explication/aide
+        btn_aide  = Button(width=20, height=3,command=lambda: aide(btn_aide), bg = '#f44336', text="AIDE") #Bouton d'aide
         btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
         #bouton ok Qui continue après le premier message
         btn_ok = Button(width=20, height=3, command=lambda: avancer(windowQCM,btn_aide), bg='#70add7', text="OK") #appele la fonction question1
         btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
-        
+        #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
+        btn_parametre = Button(width=20, height=3,command=lambda : parametres(btn_parametre), bg = '#f44336', text="PARAMETRES")
+        btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
+
         #affiche la photo
         #label = Label(windowQCM, image = photo)
         #label.place(x=10,y=0)
@@ -178,7 +182,7 @@ if not erreur_maj :
             msg_principal.config(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
             return True
 
-    def aide(btn,fenetre):
+    def aide(btn):
 
         """
         Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
@@ -206,6 +210,29 @@ if not erreur_maj :
 
         windowAide.mainloop()
         return windowAide
+
+
+    def parametres(bouton):
+        """
+        Fonction qui ouvre la page de paramètres avec dessus :
+            -Crédits
+            -Option pour modifier la fréquence de mises à jour
+            -Un bouton pour fermer la page
+        """
+        change_etat_btn(bouton)
+        windowParam = Tk()
+        windowParam.title('Page 1ter - Parametres')
+        windowParam.minsize(width=int(510*4/3), height=384) #768
+        #windowParam.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
+        btn_compris = customtk.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  command=lambda:retour_pages(windowParam,bouton), fg_color=("black", "lightgray"), text="Compris !")
+        btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+
+
+
+
+
+        windowParam.mainloop()
+
 
 
     def retour_pages(window,btn,cle=0):
