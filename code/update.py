@@ -54,6 +54,7 @@ def executer():
     import datetime
     import time
     from requests.exceptions import ConnectionError
+    from requests.exceptions import ChunkedEncodingError
 
 
     # Variables boléennes (qui servent pour des conditions) :
@@ -75,7 +76,11 @@ def executer():
 
 
     # Test de connexion internet sur le site data.gouv.fr :
-    test_connexion = connexion('https://www.data.gouv.fr')
+    if connexion('https://www.data.gouv.fr') :
+        test_connexion = True
+    else : test_connexion = False
+    
+    
     if test_connexion :
 
 
@@ -176,7 +181,7 @@ def executer():
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
                     
-                except ConnectionError : 
+                except ConnectionError or ChunkedEncodingError : 
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -185,13 +190,16 @@ def executer():
                         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                         print (msg_erreur)
+                        
+                        # Tout supprimer pour refaire une installation propore
+                        os.remove(repertoire)
                             
                         erreur_internet = True
                         return erreur_internet
                     
                     
                     # Si il y a pas de connexion mais on a déjà le fichier :
-                    else :
+                    elif not test_connexion :
                         
                         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
@@ -276,7 +284,8 @@ def executer():
                     # On récupère le fichier .csv sur internet :
                     try :
                         recup_csv_internet = requests.get(lien, allow_redirects=True)
-                    except ConnectionError : 
+                        
+                    except ConnectionError or ChunkedEncodingError : 
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -286,12 +295,15 @@ def executer():
                             msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                             print (msg_erreur)
                             
+                            # Tout supprimer pour refaire une installation propore
+                            os.remove(repertoire)
+                            
                             erreur_internet = True
                             return erreur_internet
                         
                         
                         # Si il y a pas de connexion mais on a déjà le fichier :
-                        else :
+                        elif not test_connexion :
                             
                             # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                             msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
@@ -413,7 +425,7 @@ def executer():
         print (msg_pas_internet)
     
 
-    else :
+    elif not test_connexion and not is_file :
         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
         erreur_internet = True
@@ -541,4 +553,4 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
 
 
 #PROGRAMME DE TEST (lancement individuel) :
-#print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner
+print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner

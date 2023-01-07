@@ -90,12 +90,16 @@ def is_connected(url) :
         except ConnectionError :    
             print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
             sleep(5)
-            essais += 1
+            #essais += 1
                 
+            return False 
+        
+            '''
             if essais >= 3 :
                 print('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
                 return False
-        
+            '''
+            
         return True
 
 
