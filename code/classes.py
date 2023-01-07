@@ -300,15 +300,15 @@ class Donnees:
         if note > 100 :
             note = 100
             
-        if note < 100 :
+        if note < 0 :
             note = 0
         
-        '''
+        
         print(nbr_etab_sportifs)
         print(self.nombre_habitants())
         print(etab_sport_par_hab)
         print(note)
-        '''
+        
         # MOYENNE NATIONALE : 311000/67500000 habitants (envioron 4/1000) ->  note de 50/100
         # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
         # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143

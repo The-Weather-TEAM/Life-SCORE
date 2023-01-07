@@ -219,11 +219,15 @@ if not erreur_maj :
     def change_etat_btn(bouton):
         """
         Fonction qui change l'état du bouton utilisé
+        
+        NE MARCHE PAS !!!!!!!!!!
         """
-        if bouton['state'] == NORMAL:
+        
+        if (bouton['state'] == NORMAL) :
             bouton['state'] = DISABLED
         else:
             bouton['state'] = NORMAL
+
 
     #seconde page
     def w_question():
