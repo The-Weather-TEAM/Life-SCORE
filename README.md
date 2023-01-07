@@ -225,12 +225,13 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 7 Janvier 2023 :
-> Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement :
+> Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement (ça passe en V3) :
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/30
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
+> - https://github.com/The-Weather-TEAM/Life-SCORE/issues/51 (bug que Twitter et Mozilla avait, pour vous dire)
 
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
 
 > Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
 
-> Nouveau system pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.
+> Nouveau système pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.

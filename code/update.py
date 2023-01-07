@@ -48,13 +48,14 @@ def executer():
     import requests
     import os
     import time
-    from classes import is_connected as connexion
     import csv
     import pandas as p
     import datetime
     import time
+    from shutil import rmtree as delete_data
+    from classes import is_connected as connexion
     
-    # Pour les erreurs Internet
+    # Pour éviter erreurs Internet
     from requests.exceptions import ConnectionError, ChunkedEncodingError
     from urllib3.exceptions import ProtocolError
     from http.client import IncompleteRead
@@ -180,7 +181,7 @@ def executer():
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
                     
-                except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
+                except ConnectionError : 
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -190,6 +191,9 @@ def executer():
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                         print (msg_erreur)
                         
+                        '''
+                        !!!! - A CRROIGER PARCE QUE CA PEUT PLANTER
+                        '''
                         # Tout supprimer pour refaire une installation propore
                         #os.remove(repertoire)
                         #NE MARCHE PAS POUR L'INSTANT
@@ -283,7 +287,7 @@ def executer():
                     
                     # On récupère le fichier .csv sur internet :
                     try :
-                        recup_csv_internet = requests.get(lien, allow_redirects=True)
+                        recup_csv_internet = requests.get(lien, allow_redirects=True, stream=True) # Stream enregistre avant que le fichier soit téléchargé (pour ChunkedEncodingError)
                         
                     except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
                         test_connexion = connexion('https://www.data.gouv.fr')
@@ -295,9 +299,8 @@ def executer():
                             msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                             print (msg_erreur)
                             
-                            # Tout supprimer pour refaire une installation propore
-                            #os.remove(repertoire)
-                            #NE MARCHE PAS POUR L'INSTANT
+                            # Tout supprimer pour refaire une installation propore :
+                            delete_data(repertoire)
                             
                             erreur_internet = True
                             return erreur_internet
@@ -439,7 +442,12 @@ def executer():
         
     # Rajout des .csv téléchargés sur le fichier versions.csv :
     if is_modified and not mise_a_jour :
-        rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
+        
+        if not is_file :
+            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
+        else :
+            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) 
+            
         for cle, val in nouvelles_informations.items():
             rajout_donnee.writerow([cle, val])  
                         
@@ -554,4 +562,4 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
 
 
 #PROGRAMME DE TEST (lancement individuel) :
-print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner
+#print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner
