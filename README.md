@@ -228,4 +228,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement :
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/30
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
+
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
