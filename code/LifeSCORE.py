@@ -40,12 +40,12 @@ LANCEMENT DU PROGRAMME
       (Nathan)
 
 '''
-import update
+#import update
 
 # erreur_maj = True si et seulement si il n'y a pas de données sur l'ordinateur et
 #                   si il n'y a pas d'accès à internet
-erreur_maj = update.executer()
-
+#erreur_maj = update.executer()
+erreur_maj = True
 # Si erreur_maj = False, on lance le programme
 # Nathan : il foudrait après faire un else avec tkinter pour informer que le code ne se lance pas
 if not erreur_maj :
@@ -500,18 +500,20 @@ else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on 
     windowError = customtk.CTk() #fenetre de tkinter
     windowError.title('Erreur - ')
     windowError.minsize(width=768, height=500) #768 = taille minimum de la fenetre
-    windowError.state('zoomed')
+
 
     #Variables
     str_erreur = "Vous n'êtes pas connecté à internet et nous n'avons pas pu récupérer les fichiers (endommagés ou inexistants)\n programme ne peut pas se lancer dans ces conditions"
 
     #widgets
-    msg_principal =  customtk.CTkLabel(windowError, text=str_erreur, width = 500, font =('Bold',32), justify=CENTER) #font = taille + police justify comme sur word
+    msg_principal =  customtk.CTkLabel(windowError, text=str_erreur, width = 500, font =('Bold',16), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     
     #boutons 
 
     #bouton ok Qui Ferme la page et termine le programme
-    btn_ok = customtkinter.CTkButton(windowError,height =int(windowError.winfo_screenheight()/15), command=windowError.destroy(),text="OK") #apelle la fonction question1
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
+    btn_ok = customtk.CTkButton(windowError,height =int(windowError.winfo_screenheight()/15), command=windowError.destroy(),text="OK") 
+    #btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
+
+    windowError.mainloop()
     
