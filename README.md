@@ -66,6 +66,9 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 - datetime
 - time
 - tkinter
+- shutil
+- urllib3
+- http
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
 
 
