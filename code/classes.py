@@ -386,6 +386,58 @@ class Donnees:
 
 
 
+'''
+CLASSE 
+PREVISIONS METEO (à fusionner avec la classe principale)
+'''  
+
+'''
+class DonneesPrévisions:
+    def __init__(self,ville) :
+        self.url = 'https://api.openweathermap.org/data/2.5/forecast?appid=25bb72e551083279e1ba6b21ad77cc88&lang=fr&q=' + str(ville)
+        self.data = requests.get(self.url).json()
+        self.ville = ville
+        
+    def PrévisionsMéteo(self):
+        x = 0
+        prévisions_data = self.data["list"]
+        dico = {}
+        for prévisions in prévisions_data:
+            liste = []
+            température = prévisions['main']['temp'] - 273.15
+            température_min = prévisions['main']['temp_min'] - 273.15
+            température_max = prévisions['main']['temp_max'] - 273.15
+            liste.append(température)
+            liste.append(température_min)
+            liste.append(température_max)
+            dico[x] = liste
+            x+=1
+            
+        analyse = []
+        for i in range (8):
+            analyse.append((dico[i][0],dico[i][1],dico[i][2]))
+        température,température_min,température_max = 0,0,0
+        for val in analyse :
+            température += val[0]
+            température_min += val[1]
+            température_max += val[2]
+            
+                
+        température /= len(analyse)
+        température_min /= len(analyse)
+        température_max /= max(analyse)
+        
+        return température,température_min,température_max
+        
+'''
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     #Code de test de la Classe et des fonctions
