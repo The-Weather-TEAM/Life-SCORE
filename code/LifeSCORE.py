@@ -240,8 +240,8 @@ if not erreur_maj :
         Fonction qui passe de la page actuelle à la page N°x
         """
         if cle==0 : #Si on a juste une page d'aide
-            change_etat_btn(btn)
             window.destroy()
+            change_etat_btn(btn)
         else:
             window.destroy()
             w_question()
