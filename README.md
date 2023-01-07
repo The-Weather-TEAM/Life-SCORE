@@ -232,3 +232,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
 
 > Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
+
+> Nouveau system pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.
