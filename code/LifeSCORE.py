@@ -208,19 +208,23 @@ if not erreur_maj :
         return windowAide
 
 
-    def retour_pages(window,btn):
+    def retour_pages(window,btn,cle=0):
         """
         Fonction qui passe de la page actuelle à la page N°x
         """
-        change_etat_btn(btn)
-        window.destroy()
-        
+        if cle==0 : #Si on a juste une page d'aide
+            change_etat_btn(btn)
+            window.destroy()
+        else:
+            window.destroy()
+            w_question()
+
 
     def change_etat_btn(bouton):
         """
         Fonction qui change l'état du bouton utilisé
         
-        NE MARCHE PAS !!!!!!!!!!
+        NE MARCHE PAS !!!!!!!!!! Raf :Ca marche pas ? pourtant le bouton se grise quannd on la lance et vice-versa 
         """
         
         if (bouton['state'] == NORMAL) :
@@ -364,7 +368,7 @@ if not erreur_maj :
 
 
         #Bouton retour
-        btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_pages(windowScore,"page2"), bg='#B9F7D0', text= "Noter une autre ville", font=('Bold',20))
+        btn_Retour = Button(windowScore, width=20, height=3, command=lambda:retour_pages(windowScore,None,"page2"), bg='#B9F7D0', text= "Noter une autre ville", font=('Bold',20))
         btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
 
