@@ -40,12 +40,12 @@ LANCEMENT DU PROGRAMME
       (Nathan)
 
 '''
-#import update
+import update
 
 # erreur_maj = True si et seulement si il n'y a pas de données sur l'ordinateur et
 #                   si il n'y a pas d'accès à internet
-#erreur_maj = update.executer()
-erreur_maj = True
+erreur_maj = update.executer()
+#erreur_maj = True
 # Si erreur_maj = False, on lance le programme
 # Nathan : il foudrait après faire un else avec tkinter pour informer que le code ne se lance pas
 if not erreur_maj :
@@ -271,7 +271,7 @@ if not erreur_maj :
         windowQuestion.state('zoomed') #Plein écran
 
         #input
-        entree = Entry(windowQuestion,cursor = 'Pencil', font = ('Bold',18))
+        entree = customtk.CTkEntry(windowQuestion,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
         entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
         
         #message
@@ -376,8 +376,8 @@ if not erreur_maj :
 
 
         #Transfo des données en texte
-        msg_ville = customtk.CTkLabel(windowScore,text=ville.capitalize(), width = 1000, font =('Bold',30), justify=CENTER)
-        msg_ville.place(relx=0.5,rely=0.1,anchor=N)
+        msg_ville = customtk.CTkLabel(windowScore,text=ville.capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
+        msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
         plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
         #print(plus,moins)
 
@@ -386,12 +386,12 @@ if not erreur_maj :
         score = str(score)
 
         #Textes :
-        msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' , width = 1000,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
-        msg_note.place(relx=0.95,rely=0.05, anchor=NE)#Nord Est
+        msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+        msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
         msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_bonus.place(relx = 0, rely = 0.5)
-        msg_malus.place(relx=0.7,rely=0.5)
+        msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
+        msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
 
 
         #Bouton retour
@@ -512,7 +512,7 @@ else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on 
     #boutons 
 
     #bouton ok Qui Ferme la page et termine le programme
-    btn_ok = customtk.CTkButton(windowError,height =int(windowError.winfo_screenheight()/15), command=windowError.destroy(),text="OK") 
+    #btn_ok = customtk.CTkButton(windowError,height =int(windowError.winfo_screenheight()/15), command=windowError.destroy(),text="OK") 
     #btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
 
     windowError.mainloop()
