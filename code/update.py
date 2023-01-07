@@ -1,6 +1,6 @@
 '''
                         [UPDATE.PY]
-                            V.2
+                            V.3
                          
     Programme de téléchargement et mises à jour des données
 
@@ -53,8 +53,12 @@ def executer():
     import pandas as p
     import datetime
     import time
-    from requests.exceptions import ConnectionError
-    from requests.exceptions import ChunkedEncodingError
+    
+    # Pour les erreurs Internet
+    from requests.exceptions import ConnectionError, ChunkedEncodingError
+    from urllib3.exceptions import ProtocolError
+    from http.client import IncompleteRead
+
 
 
     # Variables boléennes (qui servent pour des conditions) :
@@ -76,11 +80,8 @@ def executer():
 
 
     # Test de connexion internet sur le site data.gouv.fr :
-    if connexion('https://www.data.gouv.fr') :
-        test_connexion = True
-    else : test_connexion = False
-    
-    
+    test_connexion = connexion('https://www.data.gouv.fr')
+
     if test_connexion :
 
 
@@ -164,9 +165,7 @@ def executer():
             
             # Comptage du fichier courant + variable boolnéenne pour savoir si le fichier existait déjà
             csv_courant += 1
-            if os.path.isfile(repertoire+'/'+id+'.csv') :
-                is_courant_csv = True
-            else : is_courant_csv = False
+            is_courant_csv = os.path.isfile(repertoire+'/'+id+'.csv')
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de tant de secondes :
@@ -181,7 +180,7 @@ def executer():
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
                     
-                except ConnectionError or ChunkedEncodingError : 
+                except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -192,14 +191,15 @@ def executer():
                         print (msg_erreur)
                         
                         # Tout supprimer pour refaire une installation propore
-                        os.remove(repertoire)
+                        #os.remove(repertoire)
+                        #NE MARCHE PAS POUR L'INSTANT
                             
                         erreur_internet = True
                         return erreur_internet
                     
                     
                     # Si il y a pas de connexion mais on a déjà le fichier :
-                    elif not test_connexion :
+                    else :
                         
                         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
@@ -285,7 +285,7 @@ def executer():
                     try :
                         recup_csv_internet = requests.get(lien, allow_redirects=True)
                         
-                    except ConnectionError or ChunkedEncodingError : 
+                    except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -296,14 +296,15 @@ def executer():
                             print (msg_erreur)
                             
                             # Tout supprimer pour refaire une installation propore
-                            os.remove(repertoire)
+                            #os.remove(repertoire)
+                            #NE MARCHE PAS POUR L'INSTANT
                             
                             erreur_internet = True
                             return erreur_internet
                         
                         
                         # Si il y a pas de connexion mais on a déjà le fichier :
-                        elif not test_connexion :
+                        else :
                             
                             # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                             msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
@@ -425,7 +426,7 @@ def executer():
         print (msg_pas_internet)
     
 
-    elif not test_connexion and not is_file :
+    else :
         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
         erreur_internet = True
