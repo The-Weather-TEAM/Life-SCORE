@@ -214,6 +214,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 6 Janvier 2023 :
-> Publication de la 2ème version de UPDATE.PY : fonctionne à 100% et la nouvelle version est plus rapide. Correction des bugs (crtiqiues) :
+> Publication de la 2ème version de UPDATE.PY : fonctionne à 100% et la nouvelle version est plus rapide. Correction des bugs (certains crtitiques) :
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/43
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/40
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/39

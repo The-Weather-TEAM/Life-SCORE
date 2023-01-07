@@ -298,7 +298,7 @@ def executer():
                     
 
                           
-                # Message sur le terminal (provisoire, à modifier pour du Tkinter)
+                # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
                 # avec gestion du nombre de caractères pour avoir du texte homogène          
                 else :
                     pourcentage = int(csv_courant/nombre_total_csv*100)
@@ -313,7 +313,7 @@ def executer():
                     print (msg_csv_courant)
                         
                         
-            # Message sur le terminal (provisoire, à modifier pour du Tkinter)
+            # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
             # avec gestion du nombre de caractères pour avoir du texte homogène
             else : 
                 pourcentage = int(csv_courant/nombre_total_csv*100)
@@ -329,7 +329,7 @@ def executer():
         
         
         
-        # Message provisoire pour dire le nombre de fichiers téléchargés
+        # Message provisoire pour dire le nombre de fichiers téléchargés :
         # avec gestion du singulier / pluriel
         
             msg_reussite = "\nRecherche de mises à jour terminée !\n"
@@ -346,14 +346,14 @@ def executer():
             
                 
     elif is_file :
-        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter)
+        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
         
         print (msg_pas_internet)
     
 
     else :
-        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter)
+        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
         erreur_internet = True
         
@@ -363,15 +363,15 @@ def executer():
         
         
         
-    # Rajout des .csv téléchargés sur le fichier versions.csv
+    # Rajout des .csv téléchargés sur le fichier versions.csv :
     if is_modified and not mise_a_jour :
-        rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux
+        rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
         for cle, val in nouvelles_informations.items():
             rajout_donnee.writerow([cle, val])  
                         
         
         
-    # Envoie sur le programme principal s'il y a une erreur ou non
+    # Envoie sur le programme principal s'il y a une erreur ou non :
     return erreur_internet
 
 
@@ -479,5 +479,5 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
 
 
 
-#PROGRAMME DE TEST (lancement individuel):
+#PROGRAMME DE TEST (lancement individuel) :
 #executer()
