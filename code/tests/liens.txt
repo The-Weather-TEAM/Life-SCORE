@@ -1,0 +1,10 @@
+FICHIER AVEC TOUS LES LIENS UTILES POUR LES RECHERCHES DU PROGRAMME
+
+
+La documentation de CustomTkinter pour mieux l'étudier :
+    https://github.com/TomSchimansky/CustomTkinter/wiki
+
+là où on récupère les données Csv:
+    https://www.data.gouv.fr/fr/
+
+

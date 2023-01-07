@@ -14,35 +14,47 @@ def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict, coefs: dict) ->
     """
     Calcule coefficients de tout les differents valeurs pour ensuite en deduire une note
     
-    - `valeursIdeals` et `valeursSaisit` doivent avoir les memes noms de clefs.
+    Le structure du dictionaire `valeursIdeals` doit etre: `{critere: (valeurMinimal, valeursIdeal, valeurMaximal)}`
 
+    Et le structure du dictionaire `valeursSaisit` doit etre: `{critere: valeur}`
+
+    - `valeursIdeals` et `valeursSaisit` doivent avoir les memes noms de clefs.
+    - Un critere de `valeursIdeals` ne peut pas avoir 3 valeurs identiques, mais il peut en avoir 2 si l'ideal est le maximum ou minimum.
     """
 
-    for dictionary in (valeursIdeals, valeursSaisit): # verifie que les valeurs des dictionaires sont numerique
-        toutInt = [type(valeur) == int or type(valeur) == float for valeur in dictionary.values()]
-        assert set(toutInt) == {True}, "Les dictionares d'entré doivent contenir des int/float en valeurs"
-
-
     # calcule le rapport entre les donnes local est la moyenne global
-    listDeNotesCriteres = []
+    listDeNotes = []
 
     for critere in valeursIdeals.keys(): # pour chaque critere dont on a un valeur desiré
+        valMin, valIdeal, valMax = valeursIdeals[critere]
+        valSaisit = valeursSaisit[critere]
 
+        assert len(set((valMin, valIdeal, valMax))) != 1, f"Les valeurs ideal de `{critere}` ne peuvent pas etre 3 valeurs identiques (Mais ils peuvent etre 2 identiques)."
+        assert valMin <= valIdeal <= valMax, f"Les valeurs ideal de `{critere}` ne sont pas en ordre croissant."
+        
+
+        if valSaisit == valIdeal: # si on a la valeur exact qu'on cherche
+            noteSurCent = 1
+
+        elif valMin <= valSaisit <= valMax: # si il inclus au limits données
+            # trouve a quel limite appartient la le valeur saisit
+            domainDuValeur = valMin if valSaisit <= valIdeal else valMax
+            # pour trouver la distance entre valIdeal est la domainDuValeur (on l'utilise pour calc du pourcentage)    
+            domainDuValeur = abs(valIdeal - domainDuValeur)
+
+            distanceDesValeurs = abs(valIdeal - valSaisit) # calcule la difference entre les valeurs Saisit et Ideal
+            noteSurCent = 1 - (distanceDesValeurs/domainDuValeur) # calcule un note par rapport a cette distance
+
+        else: # si la valeur est endehors des limits, on ne l'accept pas
+            noteSurCent = 0
+
+#         print(f"Global: {valeursIdeals[critere]}; Local: {valSaisit}") # affiche les valeurs pour les tests
+#         print(critere, noteSurCent)
+
+        listDeNotes.append(noteSurCent) # ajoute le note au list de notes des criteres
 
     
-        distanceDesValeurs = abs(valeursIdeals[critere] - valeursSaisit[critere]) # calcule la difference entre les valeurs local et global
-
-        noteSurCent = 1 - (distanceDesValeurs/valeursIdeals[critere]) # evalue un note par rapport a cette distance
-
-        # if noteSurCent < 0: noteSurCent = 0 # ex: quand temperature est sous 0, souvent la note est sous 0.
-
-        print(f"Global: {valeursIdeals[critere]}; Local: {valeursSaisit[critere]}") # affiche les valeurs pour les tests
-        print(critere, distanceDesValeurs, noteSurCent)
-
-        listDeNotesCriteres.append(noteSurCent) # ajoute le note au list de notes des criteres
-
-    
-    noteMoyenneDesCriteres = sum(listDeNotesCriteres)/len(listDeNotesCriteres) # calcule la note moyenne du ville
+    noteMoyenneDesCriteres = sum(listDeNotes)/len(listDeNotes) # calcule la note moyenne du ville
 
     return round(noteMoyenneDesCriteres, 2) # renvoi la note 
 
@@ -61,17 +73,17 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
         "pression": 1.013,
         "vent": 10
     }
-    print(dicoMeteoVille)
+    # print(dicoMeteoVille)
 
 
 
-    valeursIdeals = { # info meteo ideal
-        "humidite": 60, # en %
-        "temperature": 27.5, # en Celcius
-        "visibilite": 10, # en km | 10 a l'aire d'etre le max avec l'api, donc on veut le max
-        "nuages": 20, # en %
-        "pression": 1.013, # en hPa | L'ideal est le pression au niveau de mer, donc 1.013 hPa
-        "vent": 20, # en m/s
+    valeursIdeals = { # format (minimum, l'ideal, maximum)
+        "humidite": (0, 40, 100), # en % | moyenne de 30%-50% (https://humiditycheck.com/comfortable-humidity-level-outside)
+        "temperature": (0, 27.5, 46), # en Celcius | Le temperature maximum est le temperature record de France (https://fr.wikipedia.org/wiki/Records_de_temp%C3%A9rature_en_France_m%C3%A9tropolitaine)
+        "visibilite": (0, 10, 10), # en km | 10 a l'aire d'etre le max avec l'api, donc on veut le max
+        "nuages": (0, 20, 100), # en %
+        "pression": (0.967, 1, 1.035), # en atm | (les plus haut est bas pressions en france par: https://en.wikipedia.org/wiki/List_of_atmospheric_pressure_records_in_Europe#France)
+        "vent": (0, 7, 17.5) # en m/s | (0, table 1 pieton, moyenne table 2) du source: https://cppwind.com/outdoor-comfort-criteria/
     }
 
 

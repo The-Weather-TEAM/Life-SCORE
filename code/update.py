@@ -1,6 +1,6 @@
 '''
                         [UPDATE.PY]
-                            V.2
+                            V.3
                          
     Programme de téléchargement et mises à jour des données
 
@@ -53,7 +53,12 @@ def executer():
     import pandas as p
     import datetime
     import time
-    from requests.exceptions import ConnectionError
+    
+    # Pour les erreurs Internet
+    from requests.exceptions import ConnectionError, ChunkedEncodingError
+    from urllib3.exceptions import ProtocolError
+    from http.client import IncompleteRead
+
 
 
     # Variables boléennes (qui servent pour des conditions) :
@@ -76,6 +81,7 @@ def executer():
 
     # Test de connexion internet sur le site data.gouv.fr :
     test_connexion = connexion('https://www.data.gouv.fr')
+
     if test_connexion :
 
 
@@ -159,9 +165,7 @@ def executer():
             
             # Comptage du fichier courant + variable boolnéenne pour savoir si le fichier existait déjà
             csv_courant += 1
-            if os.path.isfile(repertoire+'/'+id+'.csv') :
-                is_courant_csv = True
-            else : is_courant_csv = False
+            is_courant_csv = os.path.isfile(repertoire+'/'+id+'.csv')
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de tant de secondes :
@@ -176,7 +180,7 @@ def executer():
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
                     
-                except ConnectionError : 
+                except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -185,6 +189,10 @@ def executer():
                         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                         print (msg_erreur)
+                        
+                        # Tout supprimer pour refaire une installation propore
+                        #os.remove(repertoire)
+                        #NE MARCHE PAS POUR L'INSTANT
                             
                         erreur_internet = True
                         return erreur_internet
@@ -276,7 +284,8 @@ def executer():
                     # On récupère le fichier .csv sur internet :
                     try :
                         recup_csv_internet = requests.get(lien, allow_redirects=True)
-                    except ConnectionError : 
+                        
+                    except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -285,6 +294,10 @@ def executer():
                             # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                             msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                             print (msg_erreur)
+                            
+                            # Tout supprimer pour refaire une installation propore
+                            #os.remove(repertoire)
+                            #NE MARCHE PAS POUR L'INSTANT
                             
                             erreur_internet = True
                             return erreur_internet
@@ -541,4 +554,4 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
 
 
 #PROGRAMME DE TEST (lancement individuel) :
-#print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner
+print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner
