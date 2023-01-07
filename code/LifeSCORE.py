@@ -44,8 +44,8 @@ import update
 
 # erreur_maj = True si et seulement si il n'y a pas de données sur l'ordinateur et
 #                   si il n'y a pas d'accès à internet
-#erreur_maj = update.executer()
-erreur_maj = False
+erreur_maj = update.executer()
+
 # Si erreur_maj = False, on lance le programme
 # Nathan : il foudrait après faire un else avec tkinter pour informer que le code ne se lance pas
 if not erreur_maj :
