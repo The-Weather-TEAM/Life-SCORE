@@ -32,6 +32,7 @@ from requests.exceptions import ConnectionError
 from tkinter import *
 from datetime import datetime
 from time import sleep
+import customtkinter
 
 import csv 
 import pandas as p # Pour la lecture des CSV
@@ -61,12 +62,12 @@ def test_connexion(msg) :
             
             
         except ConnectionError :    
-            #msg.config(text = 'Problème réseau.\nTentative de reconnexion en cours...')
+            #msg.configure(text = 'Problème réseau.\nTentative de reconnexion en cours...')
             sleep(10)
             essais += 1            
     #assert essais != 3, ('\nNous n\'avons pas pu se connecter à internet.\nVérifiez votre connexion et réessayez.')
 
-    #msg.config(text = 'Veuillez saisir la ville recherchée')
+    #msg.configure(text = 'Veuillez saisir la ville recherchée')
 
 '''
 
@@ -230,7 +231,7 @@ class Donnees:
         Verifie si la commune est en france grâce à un fichier et redonne son code insee
         """
         if str(self.ville) == '':
-            msg.config(text = "Il faut saisir une ville")
+            msg.configure(text = "Il faut saisir une ville")
             return False
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
         cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
@@ -250,9 +251,9 @@ class Donnees:
             #print(self.code_insee)
             return True
         else:
-            msg.config(text = "Ville incorrecte veuillez réessayer")
+            msg.configure(text = "Ville incorrecte veuillez réessayer")
             if random.randint(0,100000) == 14924:
-                msg.config(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
+                msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
             return False
         
         
