@@ -22,6 +22,7 @@
 - Bloque le programme si il n'y a pas intenret lors de la première utilisation
 - Messages sous variables pour une compabilité efficace avec Tkinter
 - Code dans une fonction pour return sur le code principal une variable d'erreur
+- Gestion si coupure d'internet en plein téléchargement
 
 '''
 
@@ -47,11 +48,12 @@ def executer():
     import requests
     import os
     import time
-    import classes as i
+    from classes import is_connected as connexion
     import csv
     import pandas as p
     import datetime
     import time
+    from requests.exceptions import ConnectionError
 
 
     # Variables boléennes (qui servent pour des conditions) :
@@ -73,7 +75,7 @@ def executer():
 
 
     # Test de connexion internet sur le site data.gouv.fr :
-    test_connexion = i.is_connected('https://www.data.gouv.fr')
+    test_connexion = connexion('https://www.data.gouv.fr')
     if test_connexion :
 
 
@@ -166,10 +168,39 @@ def executer():
             if not is_courant_csv or time.time() - os.path.getctime(repertoire+'/'+id+'.csv') > temps_maj : 
                 
                 
+                
+                
+                
                 # On récupère les données du CSV à l'aide d'un protocole :
                 #https://help.opendatasoft.com/apis/ods-explore-v2/
-                metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
-
+                try :
+                    metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
+                    
+                except ConnectionError : 
+                    test_connexion = connexion('https://www.data.gouv.fr')
+                    
+                    # Si il ,'y a pas de connexion et c'est le premier lancement :
+                    if not test_connexion and not is_file :
+                                             
+                        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                        msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
+                        print (msg_erreur)
+                            
+                        erreur_internet = True
+                        return erreur_internet
+                    
+                    
+                    # Si il y a pas de connexion mais on a déjà le fichier :
+                    else :
+                        
+                        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                        msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
+                        print (msg_pas_internet)
+                            
+                        erreur_internet = False
+                        return erreur_internet
+                    
+                
                 
                 
                 
@@ -239,8 +270,38 @@ def executer():
                     lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
                     
                     
+                    
+                    
+                    
                     # On récupère le fichier .csv sur internet :
-                    recup_csv_internet = requests.get(lien, allow_redirects=True)
+                    try :
+                        recup_csv_internet = requests.get(lien, allow_redirects=True)
+                    except ConnectionError : 
+                        test_connexion = connexion('https://www.data.gouv.fr')
+                        
+                        # Si il ,'y a pas de connexion et c'est le premier lancement :
+                        if not test_connexion and not is_file :
+                            
+                            # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                            msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
+                            print (msg_erreur)
+                            
+                            erreur_internet = True
+                            return erreur_internet
+                        
+                        
+                        # Si il y a pas de connexion mais on a déjà le fichier :
+                        else :
+                            
+                            # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                            msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
+                            print (msg_pas_internet)
+                            
+                            erreur_internet = False
+                            return erreur_internet
+                    
+                    
+                    
                     
                     
                     # On le sauvegarde avec le bon nom et l'extention :
@@ -480,4 +541,4 @@ DE LA PART DE DATA.GOUV.FR POUR UN CSV
 
 
 #PROGRAMME DE TEST (lancement individuel) :
-#executer()
+#print(executer()) # Retourne s'il y a une erreur qui empêche le programme de tourner

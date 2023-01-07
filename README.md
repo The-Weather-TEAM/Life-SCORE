@@ -218,3 +218,14 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/43
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/40
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/39
+
+> Ajout des prévisions météo dans CLASSE.PY.
+
+> Mise à jour de requirements.txt et calcul_coefficients.py.
+
+
+7 Janvier 2023 :
+> Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement :
+> - https://github.com/The-Weather-TEAM/Life-SCORE/issues/30
+> - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
+> Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
