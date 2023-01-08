@@ -259,3 +259,5 @@ mbre de pi
 > Transformation des pages d'aide de `CTk()` à `CTkTopLevel()`
 > Implémentation du fichier `style.txt` ( permet de changer le style de la page ) Que l'on accède grâce au volet d'options dans la page paramètre
 > Correction du bug qui ne trouvait pas de ville si l'on mettait des espaces (ex : 'Beziers  ')
+> Correction du bug qui ne faisait pas marcher les villes avec accents (ex : 'Béziers') en remplaçant les caractères spéciaux (é,û,à,...) par leurs lettres respectives (e,u,a,...) 
+> Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup)
