@@ -208,6 +208,7 @@ class Donnees:
 
 
     '''
+    QUESTION DE RAF: On supprime ses deux fonctions Nathan ou bien tu veux encore t'en servir ?
     def ville_existe(self):
         """
         Verifie si la ville rentrée existe puis si elle est en France
@@ -233,20 +234,18 @@ class Donnees:
         if str(self.ville) == '':
             msg.configure(text = "Il faut saisir une ville")
             return False
+
+        string_variables_fin = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKNOPQRSTUVWXYZ0123456789' #Tout ce par quoi une ville pourrait finir (les chiffres sont pour les arrondissements)
+        while self.ville[-1] not in string_variables_fin: #Si la ville finit par autre chose qu'une lettre 
+            self.ville= self.ville[:-1]
+
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
         cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
-
         fichier.close()
-        """
-        for ind,col in cr.iteritems():
-            for nom in col:
-                if self.ville.lower() == nom.lower(): """
+
         #recup ligne de ville pour code insee  
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
         if not row.empty:
-            #print(row.values[0][3])
-            """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
-                self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
             self.code_insee = row.values[0][3]
             #print(self.code_insee)
             return True
@@ -388,6 +387,11 @@ class Donnees:
 
         return r
     '''
+
+
+    def __str__(self) : #Pour redonner un str de la villes
+        if self.ville != '' :
+            return str(self.ville)
 
 
 

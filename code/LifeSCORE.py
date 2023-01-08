@@ -392,7 +392,7 @@ if not erreur_maj :
             #FAIRE TOUS LES CALCULS ICI :
             #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
             fenetre.destroy()
-            w_score(ville)
+            w_score(Donnees_ville)
 
 
 
@@ -403,6 +403,8 @@ if not erreur_maj :
     def w_score(ville):
         """
         affiche la dernière page qui contient le score et le bouton pour revenir
+
+        -    ville est un objet de la classe Donnees précédemment créé après avoirs appuyé sur recherche
         """
         windowScore = customtk.CTk() #fenetre de tkinter
         windowScore.title('Dernière page - Note de la ville')
@@ -417,7 +419,7 @@ if not erreur_maj :
 
 
         #Transfo des données en texte
-        msg_ville = customtk.CTkLabel(windowScore,text=ville.capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
+        msg_ville = customtk.CTkLabel(windowScore,text=str(ville).capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
         msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
         plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
         #print(plus,moins)
