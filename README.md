@@ -89,7 +89,9 @@ Changements :
 >Pour tout télécharger, il faut ouvrir un terminal sur le dossier racine et executer :
 
 >*pip install -r requirements.txt*
+
 Ou bien
+
 >*Python3 -m pip install -r requirements.txt*
 
 
