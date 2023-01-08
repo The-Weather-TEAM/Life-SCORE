@@ -29,8 +29,11 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
 #from PIL import ImageTk, Image #Pour l'esthétique
 import customtkinter as customtk
+import os
 
-customtk.set_appearance_mode("system")  # Modes: system (default), light, dark
+with open(os.path.dirname(__file__) +'/data/style.txt') as txt:
+    style = txt.read()
+customtk.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 customtk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
 
 
@@ -216,10 +219,11 @@ if not erreur_maj :
 
     def parametres(bouton,fenetre):
         """
-        Fonction qui ouvre la page de paramètres avec dessus :
-            -Crédits
-            -Option pour modifier la fréquence de mises à jour
-            -Un bouton pour fermer la page
+        Fonction qui ouvre la page de paramètres avec dessus : (X  = pas fait, A = à Améliorer, V = fait)
+            -Crédits                                                        X
+            -Option pour modifier la fréquence de mises à jour              X
+            -Volet pour changer le style de l'application                   V (placements à regarder)
+            -Un bouton pour fermer la page et appliquer les changements     A
         """
         #fenetre.wait_window()     # block until window is destroyed
         change_etat_btn(bouton)
@@ -227,11 +231,22 @@ if not erreur_maj :
         windowParam.title('Page 1ter - Parametres')
         windowParam.minsize(width=int(510*4/3), height=384) #768
         #windowParam.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
-        btn_compris = customtk.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  command=lambda:retour_pages(windowParam,bouton), fg_color=("black", "lightgray"), text="Compris !")
-        btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
-        switch_apparence = customtk.CTkOptionMenu(windowParam, values=["Light", "Dark", "System"],command=change_apparence_page)
+        frame_tk =customtk.CTkFrame(windowParam) #On va y mettre les crédits
 
-        windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))
+        message = customtk.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 100, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
+        message.place(relx=0.1,rely=0.5,anchor = CENTER)
+
+        """variable = customtk.StringVar()
+        variable.set("System")"""
+        switch_apparence = customtk.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
+        switch_apparence.place(relx = 0.1, rely = 0.8, anchor = CENTER)
+        btn_changements = customtk.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
+                                                                    command=lambda:retour_pages(windowParam,bouton), 
+                                                                    text="Appliquer les Changements")
+
+        btn_changements.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+
+        windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))#Meme effet que le bouton sauf que c'est si on ferme la page manuellement
 
 
         windowParam.mainloop()
@@ -249,13 +264,22 @@ if not erreur_maj :
 
 
 
-    def change_apparence_page():
-        pass
+    def change_apparence_page(choix):
+        if choix == "Système": choix = "System"
+        elif choix == "Sombre": choix = "Dark"
+        else:choix = "Light"
+
+        #print("Option choisie (en anglais):", choix)
+        with open(os.path.dirname(__file__) + '/data/style.txt', 'w') as txt:
+            txt.write(choix)
+        
+            
 
     def retour_pages(window,btn,cle=0):
         """
         Fonction qui passe de la page actuelle à la page N°x
         """
+        
         if cle==0 : #Si on a juste une page d'aide
             window.destroy()
             change_etat_btn(btn)
