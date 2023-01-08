@@ -88,11 +88,11 @@ Changements :
 - Bibliothèques utilisés (téléchargeables avec requirements.txt) :
 >Pour tout télécharger, il faut ouvrir un terminal sur le dossier racine et executer :
 
->*pip install -r requirements.txt*
+>`pip install -r requirements.txt`
 
 Ou bien
 
->*Python3 -m pip install -r requirements.txt*
+>`Python3 -m pip install -r requirements.txt`
 
 
 
