@@ -258,3 +258,4 @@ mbre de pi
 8 Janvier 2023 :
 > Transformation des pages d'aide de `CTk()` à `CTkTopLevel()`
 > Implémentation du fichier `style.txt` ( permet de changer le style de la page ) Que l'on accède grâce au volet d'options dans la page paramètre
+> Correction du bug qui ne trouvait pas de ville si l'on mettait des espaces (ex : 'Beziers  ')
