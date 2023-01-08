@@ -249,15 +249,18 @@ class Donnees:
 
         self.ville = ''.join(liste) #Redonne la ville sans accents
 
-        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
-        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Code_INSEE'],encoding='utf-8-sig',low_memory=False) #encoding pour pouvoir avoir les accents (ne marche pas)
+        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r",encoding='utf-8') # fichier est à modifier pour les arrondissements
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE','Pop 2012'],encoding='utf-8-sig',low_memory=False) #encoding pour pouvoir avoir les accents (ne marche pas)
         fichier.close()
 
         #recup ligne de ville pour code insee  
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
         #print(row)
         if not row.empty:
-            self.code_insee = row.values[0][2]
+            print(row.values[0][2],'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            self.code_insee = row.values[0][3]
+            self.ville = row.values[0][2]
+            self.population = row.values[0][4]
             #print(self.code_insee)
             return True
         else:
@@ -265,29 +268,28 @@ class Donnees:
             if random.randint(0,100000) == 14924:
                 msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
             return False
+    
         
         
         
-    def nombre_habitants(self) :
-        """
+    """def nombre_habitants(self) :
+        
         Retourne le nombre d'habitants de la commune
         
         A METTRE A JOUR AVEC VERSION PLUS RECENTE DE LA POPULATION !
         
-        """
+        
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
-        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Pop 2012'],encoding='Utf-8') #encoding pour pouvoir avoir les accents (ne marche pas)
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Pop 2012'],encoding='Utf-8') #encoding pour pouvoir avoir les accents (ne marche pas)
 
         fichier.close()
         #recup ligne de ville pour nombre habitants
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
-        if row.values[0][2]:
-            #print(row.values[0][2])
-            """if len(row.values[0][2]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
-                self.code_insee = (row.values[0][2])[:5] #s cinq premiers caractères"""
-            self.population = row.values[0][2]
+        if not row.empty:
+            #print(row.values[0][3])
+            self.population = row.values[0][3]
             #print(self.population)
-            return int(self.population)
+            return int(self.population)"""
         
 
 
@@ -306,7 +308,7 @@ class Donnees:
         nbr_etab_sportifs = rangee.values[0][1]
         
         # Calcul établiseements par habitants
-        etab_sport_par_hab = nbr_etab_sportifs / self.nombre_habitants()
+        etab_sport_par_hab = nbr_etab_sportifs / self.population #déja défini 
         
         # Calcul réalisé avec les données Françaises
         note = 16071.4*etab_sport_par_hab - 3.57143
