@@ -107,7 +107,7 @@ if not erreur_maj :
         btn_ok = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15), command=lambda: avancer(windowQCM,btn_aide), text="OK") #appele la fonction question1
         btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
         #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-        btn_parametre = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+        btn_parametre = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre,windowQCM), text="PARAMETRES")
         btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
         #affiche la photo
@@ -199,7 +199,7 @@ if not erreur_maj :
     La sécurité (taux d'accidents / vols / risques / ...)
     """
         change_etat_btn(btn)
-        windowAide = customtk.CTk() #fenetre de tkinter
+        windowAide = customtk.CTkToplevel() #fenetre de tkinter
         windowAide.title('Page 1bis - Aide')
         #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
         windowAide.minsize(width=int(510*4/3), height=384) #768
@@ -208,33 +208,49 @@ if not erreur_maj :
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
         btn_compris = customtkinter.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda:retour_pages(windowAide,btn), text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+        windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
 
         windowAide.mainloop()
         return windowAide
 
 
-    def parametres(bouton):
+    def parametres(bouton,fenetre):
         """
         Fonction qui ouvre la page de paramètres avec dessus :
             -Crédits
             -Option pour modifier la fréquence de mises à jour
             -Un bouton pour fermer la page
         """
+        #fenetre.wait_window()     # block until window is destroyed
         change_etat_btn(bouton)
-        windowParam = customtk.CTk()
+        windowParam = customtk.CTkToplevel()
         windowParam.title('Page 1ter - Parametres')
         windowParam.minsize(width=int(510*4/3), height=384) #768
         #windowParam.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         btn_compris = customtk.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  command=lambda:retour_pages(windowParam,bouton), fg_color=("black", "lightgray"), text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+        switch_apparence = customtk.CTkOptionMenu(windowParam, values=["Light", "Dark", "System"],command=change_apparence_page)
 
-
-
+        windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))
 
 
         windowParam.mainloop()
 
 
+    """def change_etat_page(*arg): #*arg nous laisse le choix de mettre n arguments 
+        
+        Fonction qui bloque tous les widgets d'une page tant qu'on est sur une autre (on ne peut pas bloquer une page entiere)
+        
+        for argument in arg:
+            if argument.cget("state") == NORMAL : #Récupère l'attribut et le change
+                argument.configure(state=DISABLED)
+            else:
+                argument.configure(state=NORMAL)"""
+
+
+
+    def change_apparence_page():
+        pass
 
     def retour_pages(window,btn,cle=0):
         """
@@ -322,7 +338,7 @@ if not erreur_maj :
         - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
         - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
 
-        windowAide = customtk.CTk() #fenetre de tkinter
+        windowAide = customtk.CTkToplevel() #fenetre de tkinter
         windowAide.title('Page 2bis - Aide')
         #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
         windowAide.minsize(width=int(690*4/3), height=384) #768
@@ -331,6 +347,7 @@ if not erreur_maj :
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
         btn_compris = customtkinter.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda :retour_pages(windowAide,btn), text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+        windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
 
         windowAide.mainloop()
         return windowAide
@@ -497,7 +514,7 @@ if not erreur_maj :
 
 else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on a pas internet
     #fenêtre
-    windowError = customtk.CTk() #fenetre de tkinter
+    windowError = customtk.CTkToplevel() #fenetre de tkinter
     windowError.title('Erreur - ')
     windowError.minsize(width=768, height=500) #768 = taille minimum de la fenetre
 

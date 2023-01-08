@@ -1,6 +1,16 @@
 #Import required library
 from tkinter import *
 from tkinter import font
+import time
+
+
+def bloque_ecran(window):
+   window.state('normal')
+   #window.iconify()
+
+   window.withdraw()
+   
+   
 #Create an instance of tkinter frame
 win = Tk()
 win.geometry("750x350")
@@ -25,5 +35,9 @@ scroll_y.pack(side="right", fill="y")
 canvas.pack(side="left", expand=1, fill="both")
 canvas.create_window((5,4), window=frame, anchor="n")
 frame.bind("<Configure>", lambda e, canvas=canvas: onFrameConfigure(canvas))
+btn = Button(win,text="test bloquage page",command=lambda:bloque_ecran(win))
+btn.place(x=100,y=200)
+
+
 fill_frame(frame)
 win.mainloop()
