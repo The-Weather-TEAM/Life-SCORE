@@ -43,12 +43,12 @@ LANCEMENT DU PROGRAMME
       (Nathan)
 
 '''
-import update
+#import update
 
 # erreur_maj = True si et seulement si il n'y a pas de données sur l'ordinateur et
 #                   si il n'y a pas d'accès à internet
-erreur_maj = update.executer()
-#erreur_maj = True
+#erreur_maj = update.executer()
+erreur_maj = False
 # Si erreur_maj = False, on lance le programme
 # Nathan : il foudrait après faire un else avec tkinter pour informer que le code ne se lance pas
 if not erreur_maj :
@@ -385,7 +385,7 @@ if not erreur_maj :
         """
         global Donnees_ville
         ville = entree.get()
-        #print(ville)
+        print(ville)
         Donnees_ville = Donnees(ville)
         if Donnees_ville.is_commune_france_v2(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
             msg.configure(text = "Veuillez patienter ...")
@@ -438,7 +438,7 @@ if not erreur_maj :
 
 
         #Bouton retour
-        btn_Retour = customtkinter.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,"page2"), text= "Noter une autre ville", font=('Bold',20))
+        btn_Retour = customtkinter.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,"page2"), text= "Noter une autre ", font=('Bold',20))
         btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
 

@@ -3,8 +3,8 @@ y = 20
 
 a = 15
 
-if a:== 5 or y:  #Si qqn voit cque je veux faire
-    print(a)
+#if a:== 5 or y:  #Si qqn voit cque je veux faire
+#    print(a)
 
 
 """OBJECTIF :
@@ -17,3 +17,9 @@ J'ai vu qqpart que ça existait mais je m'en rappelle plus
 
 
 """
+
+a = 'zjzeoifje'
+b = list(a)
+print(b)
+c=''.join(b)
+print(c)

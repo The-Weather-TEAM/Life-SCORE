@@ -235,18 +235,29 @@ class Donnees:
             msg.configure(text = "Il faut saisir une ville")
             return False
 
-        string_variables_fin = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKNOPQRSTUVWXYZ0123456789' #Tout ce par quoi une ville pourrait finir (les chiffres sont pour les arrondissements)
+        string_variables_fin = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKNOPQRSTUVWXYZ0123456789éèû' #Tout ce par quoi une ville pourrait finir (les chiffres sont pour les arrondissements)
         while self.ville[-1] not in string_variables_fin: #Si la ville finit par autre chose qu'une lettre 
             self.ville= self.ville[:-1]
+        
+        liste = list(self.ville)
+        dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
+                                "î":"i", "ô":"o"}
+        #remplacer les accents par leur lettres (pas ouf mais marche)
+        for i in range(len(liste)):
+            if liste[i] in dico_carac_spéciaux:
+                liste[i] = dico_carac_spéciaux[liste[i]]
+
+        self.ville = ''.join(liste) #Redonne la ville sans accents
 
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
-        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE']) #encoding pour pouvoir avoir les accents (ne marche pas)
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Code_INSEE'],encoding='utf-8-sig',low_memory=False) #encoding pour pouvoir avoir les accents (ne marche pas)
         fichier.close()
 
         #recup ligne de ville pour code insee  
-        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
+        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
+        #print(row)
         if not row.empty:
-            self.code_insee = row.values[0][3]
+            self.code_insee = row.values[0][2]
             #print(self.code_insee)
             return True
         else:
@@ -265,16 +276,16 @@ class Donnees:
         
         """
         fichier = open(self.repertoire + '/CSV/villes_france.csv',"r") # fichier est à modifier pour les arrondissements
-        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Pop 2012']) #encoding pour pouvoir avoir les accents (ne marche pas)
+        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Pop 2012'],encoding='Utf-8') #encoding pour pouvoir avoir les accents (ne marche pas)
 
         fichier.close()
         #recup ligne de ville pour nombre habitants
-        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower()) | (cr['Nom3'] == str(self.ville).lower())]
-        if row.values[0][3]:
-            #print(row.values[0][3])
-            """if len(row.values[0][3]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
-                self.code_insee = (row.values[0][3])[:5] #s cinq premiers caractères"""
-            self.population = row.values[0][3]
+        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
+        if row.values[0][2]:
+            #print(row.values[0][2])
+            """if len(row.values[0][2]) > 5 : #Si on rentre une grande ville, on prend le premier arrondissement
+                self.code_insee = (row.values[0][2])[:5] #s cinq premiers caractères"""
+            self.population = row.values[0][2]
             #print(self.population)
             return int(self.population)
         
@@ -285,10 +296,11 @@ class Donnees:
         Fonction qui récupère un certain Xlsx et sors une note de sport dessus sur 100 /!\ Experimentale /!\
         """
         
-        data_sport = p.read_csv(self.repertoire + '/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'])
-        #print(data_sport.values[2][1])
+        data_sport = p.read_csv(self.repertoire + '/CSV/2020_Communes_TypEq.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'],low_memory=False)
+        #print(data_sport,data_sport.values[2][1])
 
         rangee = data_sport[(data_sport['ComInsee'] == self.code_insee)]
+        #print(rangee)
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
             
         nbr_etab_sportifs = rangee.values[0][1]
@@ -308,10 +320,10 @@ class Donnees:
             note = 0
         
         
-        print(nbr_etab_sportifs)
-        print(self.nombre_habitants())
-        print(etab_sport_par_hab)
-        print(note)
+        #print(nbr_etab_sportifs)
+        #print(self.nombre_habitants())
+        #print(etab_sport_par_hab)
+        #print(note)
         
         # MOYENNE NATIONALE : 311000/67500000 habitants (envioron 4/1000) ->  note de 50/100
         # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
@@ -330,7 +342,7 @@ class Donnees:
         tableau = []
         #qqchose style for attr in self : tableau .append(attr)
         tableau.append(self.note_sport())
-        #print(tableau)
+        ##print(tableau)
         note_finale = 0
         for note in tableau :
             note_finale += int(note)
@@ -451,9 +463,9 @@ class DonneesPrévisions:
 if __name__ == "__main__":
     #Code de test de la Classe et des fonctions
     ddd = Donnees('Servian')
-    #print(ddd.is_commune_france())
-    #print(ddd.meteo())
+    ##print(ddd.is_commune_france())
+    ##print(ddd.meteo())
     ddd.is_commune_france_v2()
-    #print(type(ddd.code_insee))
-    #print(ddd.note_sport())
+    ##print(type(ddd.code_insee))
+    ##print(ddd.note_sport())
     ddd.note_finale()
