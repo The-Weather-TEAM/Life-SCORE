@@ -235,9 +235,12 @@ class Donnees:
             msg.configure(text = "Il faut saisir une ville")
             return False
 
-        string_variables_fin = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKNOPQRSTUVWXYZ0123456789éèû' #Tout ce par quoi une ville pourrait finir (les chiffres sont pour les arrondissements)
+        """string_variables_fin = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKNOPQRSTUVWXYZ0123456789éèû' #Tout ce par quoi une ville pourrait finir (les chiffres sont pour les arrondissements)
         while self.ville[-1] not in string_variables_fin: #Si la ville finit par autre chose qu'une lettre 
-            self.ville= self.ville[:-1]
+            self.ville= self.ville[:-1]"""
+
+        self.ville = self.ville.strip()
+        print(self.ville)
         
         liste = list(self.ville)
         dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
