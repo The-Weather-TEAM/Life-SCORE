@@ -30,6 +30,7 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 #from PIL import ImageTk, Image #Pour l'esthétique
 import customtkinter as customtk
 import os
+import pandas
 
 nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 
@@ -526,20 +527,33 @@ if not erreur_maj :
         os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
         #csv.writer(open(nom_du_repertoire+'/data/csv_dico.csv', "w")).writerow(['CLE', 'VALEUR']) #On le fait plus bas
         w_qcm() #ligne  à lancer a la fin
+        #ON POURRAIT PTETRE FAIRE UNE FONCTION POUR LIGNES SUIVANTES
+        tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
+        #print(tab_Reponses)
 
-    else:
-        w_qcm('Sans Qcm')    
-    tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
-    #print(tab_Reponses)
+        #ecriture du csv avec les valeurs du dico
 
-    #ecriture du csv avec les valeurs du dico
-    if len(tab_Reponses)==len(dico_Reponses):
         with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
             ecriture = csv.writer(f)
             ecriture.writerow(['CLE','VALEUR'])
             ecriture.writerows(tab_Reponses)
-    else: 
-        os.remove(nom_du_repertoire+'/data/csv_dico.csv') # Le supprime pour éviter qu'on le remplisse à moitié
+    else:
+        print(len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')),len(list_Questions))
+        if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
+            w_qcm('Sans Qcm')
+        else:
+            w_qcm() #Si on a pas un fichier complet
+            tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
+            #print(tab_Reponses)
+
+            #ecriture du csv avec les valeurs du dico
+
+            with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
+                ecriture = csv.writer(f)
+                ecriture.writerow(['CLE','VALEUR'])
+                ecriture.writerows(tab_Reponses)
+            
+    
 
     
     
