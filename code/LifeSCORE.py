@@ -31,10 +31,14 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 import customtkinter as customtk
 import os
 
-with open(os.path.dirname(__file__) +'/data/style.txt') as txt:
+nom_du_repertoire = os.path.dirname(__file__)  #Explicite
+
+with open(nom_du_repertoire +'/data/style.txt') as txt:
     style = txt.read()
+
 customtk.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 customtk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+
 
 
 '''
@@ -83,45 +87,48 @@ if not erreur_maj :
     '''
 
     #premiere page
-    def w_qcm(): #w pour window
+    def w_qcm(option = None): #w pour window
         global msg_principal
         global btn_ok
+        global list_Questions
+        global n
 
         """
         affiche la premiere page qui contient donc le qcm
         """
-        x = 0 #pour le boutton ok qu'on va reutiliser
+        n = len(list_Questions)
         #fenêtre
         windowQCM = customtk.CTk() #fenetre de tkinter
         windowQCM.title('Accueil - QCU')
         windowQCM.minsize(width=768, height=500) #768 = taille minimum de la fenetre
         windowQCM.state('zoomed')
 
-        #widgets
-        msg_principal =  customtk.CTkLabel(windowQCM, text="Bienvenue, nous allons commencer avec un petit test", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+        msg_principal =  customtk.CTkLabel(windowQCM, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
         msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
-        
         #boutons 
-        
         #bouton_explication/aide
         btn_aide  = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
         btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
-        #bouton ok Qui continue après le premier message
-        btn_ok = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15), command=lambda: avancer(windowQCM,btn_aide), text="OK") #appele la fonction question1
-        btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
         #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
         btn_parametre = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre,windowQCM), text="PARAMETRES")
         btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
-        #affiche la photo
-        #label = Label(windowQCM, image = photo)
-        #label.place(x=10,y=0)
+        #bouton ok Qui continue après le premier message
+        btn_ok = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15), command=lambda: avancer(windowQCM), text="OK") #appele la fonction question1
+        btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
+
+
+
+
+        if option == None :
+            msg_principal.configure(text = "Bienvenue, nous allons commencer par un petit QCM")
+            n = 0
 
         windowQCM.mainloop() #pour fermer la fenetre
 
 
 
-    def avancer(fenetre,bouton): # bouton est le bouton d'aide qui disparait après le premier passage
+    def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le premier passage
         global msg_principal
         global btn_ok
         global n #n prend +1 a chaque questions
@@ -154,9 +161,7 @@ if not erreur_maj :
         if not est_termine(b1,b2):
             dico_Reponses[list_Questions[n-1][1]] = 0
             msg_principal.configure(text = list_Questions[n][0])
-        else:
-            b1.destroy()
-            b2.destroy()
+
 
     def plus1(b1,b2):
         """ajoute 1 au dico de reponses (Oui)"""
@@ -169,9 +174,7 @@ if not erreur_maj :
         if not est_termine(b1,b2):
             dico_Reponses[list_Questions[n-1][1]] = 1
             msg_principal.configure(text = list_Questions[n][0])
-        else:
-            b1.destroy()
-            b2.destroy()
+
 
     def est_termine(btn_1,btn_2):
         global msg_principal
@@ -251,26 +254,13 @@ if not erreur_maj :
 
         windowParam.mainloop()
 
-
-    """def change_etat_page(*arg): #*arg nous laisse le choix de mettre n arguments 
-        
-        Fonction qui bloque tous les widgets d'une page tant qu'on est sur une autre (on ne peut pas bloquer une page entiere)
-        
-        for argument in arg:
-            if argument.cget("state") == NORMAL : #Récupère l'attribut et le change
-                argument.configure(state=DISABLED)
-            else:
-                argument.configure(state=NORMAL)"""
-
-
-
     def change_apparence_page(choix):
         if choix == "Système": choix = "System"
         elif choix == "Sombre": choix = "Dark"
         else:choix = "Light"
 
         #print("Option choisie (en anglais):", choix)
-        with open(os.path.dirname(__file__) + '/data/style.txt', 'w') as txt:
+        with open(nom_du_repertoire(__file__) + '/data/style.txt', 'w') as txt:
             txt.write(choix)
         
             
@@ -531,10 +521,34 @@ if not erreur_maj :
 
 
     # appel de la fonction de la première page
-    w_qcm() #ligne  à lancer a la fin
+    # Création le fichier du dico s'il existe pas :
+    if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
+        os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
+        #csv.writer(open(nom_du_repertoire+'/data/csv_dico.csv', "w")).writerow(['CLE', 'VALEUR']) #On le fait plus bas
+        w_qcm() #ligne  à lancer a la fin
 
-    #Lignes pour accéder à différentes page directement
-    #w_question() 
+    else:
+        w_qcm('Sans Qcm')    
+    tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
+    #print(tab_Reponses)
+
+    #ecriture du csv avec les valeurs du dico
+    if len(tab_Reponses)==len(dico_Reponses):
+        with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
+            ecriture = csv.writer(f)
+            ecriture.writerow(['CLE','VALEUR'])
+            ecriture.writerows(tab_Reponses)
+    else: 
+        os.remove(nom_du_repertoire+'/data/csv_dico.csv') # Le supprime pour éviter qu'on le remplisse à moitié
+
+    
+    
+
+
+    '''
+    Lignes pour accéder à différentes page directement
+    '''
+    # w_question() 
     #w_score('Paris')
     #print(n,dico_Reponses,msg_principal)
 

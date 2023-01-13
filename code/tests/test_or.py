@@ -23,3 +23,7 @@ b = list(a)
 print(b)
 c=''.join(b)
 print(c)
+
+
+dico = {1:23,3:434242,6:0.343}
+print(dico.keys(),'a',dico.__getitem__(),'a',dico.items(),'a',dico.values())
