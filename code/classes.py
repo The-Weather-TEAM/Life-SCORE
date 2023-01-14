@@ -260,7 +260,7 @@ class Donnees:
         row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
         #print(row)
         if not row.empty:
-            print(row.values[0][2],'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            print(row.values[0][2])
             self.code_insee = row.values[0][3]
             self.ville = row.values[0][2]
             self.population = row.values[0][4]
@@ -308,22 +308,26 @@ class Donnees:
         #print(rangee)
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
             
-        nbr_etab_sportifs = rangee.values[0][1]
+        try:
+            nbr_etab_sportifs = rangee.values[0][1]
         
-        # Calcul établiseements par habitants
-        etab_sport_par_hab = nbr_etab_sportifs / self.population #déja défini 
+            # Calcul établiseements par habitants
+            etab_sport_par_hab = nbr_etab_sportifs / self.population #déja défini 
+
+            # Calcul réalisé avec les données Françaises
+            note = 16071.4*etab_sport_par_hab - 3.57143
         
-        # Calcul réalisé avec les données Françaises
-        note = 16071.4*etab_sport_par_hab - 3.57143
+            # Pour les petites villes avec plus de 0.006 étab / habitants
+            note = int(note)
+            if note > 100 :
+                note = 100
+                
+            if note < 0 :
+                note = 0
         
-        # Pour les petites villes avec plus de 0.006 étab / habitants
-        note = int(note)
-        if note > 100 :
-            note = 100
+        except IndexError : #SI pas de données
+            return None
             
-        if note < 0 :
-            note = 0
-        
         
         #print(nbr_etab_sportifs)
         #print(self.nombre_habitants())
@@ -349,8 +353,14 @@ class Donnees:
         tableau.append(self.note_sport())
         ##print(tableau)
         note_finale = 0
-        for note in tableau :
-            note_finale += int(note)
+        for i in range(len(tableau)) :
+            if tableau[i] != None:
+                note_finale += int(tableau[i])
+            else:
+                tableau.pop(i) #Supprime tous les None
+        print(tableau,'adidjeidjzofjroef')
+        if len(tableau) == 0: #Si on n'a pas de données
+            return 'N/A'
         return int(note_finale / len(tableau))
 
 

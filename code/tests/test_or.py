@@ -26,4 +26,9 @@ print(c)
 
 
 dico = {1:23,3:434242,6:0.343}
-print(dico.keys(),'a',dico.__getitem__(),'a',dico.items(),'a',dico.values())
+print(dico.keys)
+
+t = []
+print(len(t))
+c = None
+print(type(c))

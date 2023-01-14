@@ -404,7 +404,7 @@ if not erreur_maj :
 
         #Donnees PROVISOIRES !!!
         dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant 5':-1} #Exemple
-        score = int(Donnees_ville.note_finale()) #Provisoire
+        score = Donnees_ville.note_finale() #Provisoire
         bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
 
@@ -422,10 +422,11 @@ if not erreur_maj :
         #Textes :
         msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
-        msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
-        msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+        if score != 'N/A':
+            msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+            msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+            msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
+            msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
 
 
         #Bouton retour
@@ -490,16 +491,16 @@ if not erreur_maj :
         Choisit une couleur en fonction du chiffre obtenu (de 0 à 100) et la retourne en RGB
         """
         #A RETRAVAILLER PEUT ETRE METTRE UN PEU PLUS DE BLEU
-        couleur = (255,0,127)
-        rouge = 255 - int(n*255/100)
-        vert = 0 + int(n*255/100)
-        #print(rouge,vert)
-        couleur = (rouge,vert,100)
+        try:
+            couleur = (255,0,127)
+            rouge = 255 - int(n*255/100)
+            vert = 0 + int(n*255/100)
+            #print(rouge,vert)
+            couleur = (rouge,vert,100)
 
-        rgb = '#' + ''.join(f'{i:02X}' for i in couleur)
-
-
-
+            rgb = '#' + ''.join(f'{i:02X}' for i in couleur) #Transforme les int base 10 en base 16
+        except TypeError: #Si on reçoit pas un int pour n (soit si on reçoit 'N/A')
+            return '#808080' #Renvoie du gris
 
         return rgb
 
