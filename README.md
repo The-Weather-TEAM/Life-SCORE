@@ -268,5 +268,6 @@ mbre de pi
 
 > Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup)
 
-
+13 Janvier 2023 : 
+> Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm)
 
