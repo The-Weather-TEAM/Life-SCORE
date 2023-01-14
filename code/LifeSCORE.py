@@ -213,7 +213,7 @@ if not erreur_maj :
         windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         msg_aide = customtk.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-        btn_compris = customtkinter.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda:retour_pages(windowAide,btn), text="Compris !")
+        btn_compris = customtk.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda:retour_pages(windowAide,btn), text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
         windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
 
@@ -261,17 +261,17 @@ if not erreur_maj :
         else:choix = "Light"
 
         #print("Option choisie (en anglais):", choix)
-        with open(nom_du_repertoire(__file__) + '/data/style.txt', 'w') as txt:
+        with open(nom_du_repertoire + '/data/style.txt', 'w') as txt:
             txt.write(choix)
         
             
 
-    def retour_pages(window,btn,cle=0):
+    def retour_pages(window,btn,cle=True):
         """
         Fonction qui passe de la page actuelle à la page N°x
         """
         
-        if cle==0 : #Si on a juste une page d'aide
+        if cle==True : #Si on a juste une page d'aide
             window.destroy()
             change_etat_btn(btn)
         else:
@@ -360,7 +360,7 @@ if not erreur_maj :
         #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
         msg_aide = customtk.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
         msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-        btn_compris = customtkinter.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda :retour_pages(windowAide,btn), text="Compris !")
+        btn_compris = customtk.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda :retour_pages(windowAide,btn), text="Compris !")
         btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
         windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
 
@@ -376,7 +376,7 @@ if not erreur_maj :
         """
         global Donnees_ville
         ville = entree.get()
-        print(ville)
+        #print(ville)
         Donnees_ville = Donnees(ville)
         if Donnees_ville.is_commune_france_v2(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
             msg.configure(text = "Veuillez patienter ...")
@@ -432,7 +432,7 @@ if not erreur_maj :
             msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
         #Bouton retour
-        btn_Retour = customtkinter.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,"page2"), text= "Noter une autre ", font=('Bold',20))
+        btn_Retour = customtk.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,False), text= "Noter une autre ", font=('Bold',20))
         btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
 
@@ -449,6 +449,7 @@ if not erreur_maj :
         bonus_list= []
         for i in range(5):
             maxi = 0
+            cle_maxi = "Valeur initiale"
             for cle in dic.keys():
                 if dic[cle] > maxi:
                     maxi = dic[cle]
@@ -465,6 +466,7 @@ if not erreur_maj :
         """
     
         malus_list= []
+        cle_mini = "Valeur initiale"
         for i in range(5):
             mini = 0 # REQUIERT QUE LES MALUS SOIENT EN NEGATIF !!!
             for cle in dic.keys():
@@ -541,7 +543,7 @@ if not erreur_maj :
             ecriture.writerow(['CLE','VALEUR'])
             ecriture.writerows(tab_Reponses)
     else:
-        print(len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')),len(list_Questions))
+        #print(len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')),len(list_Questions))
         if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
             w_qcm('Sans Qcm')
         else:

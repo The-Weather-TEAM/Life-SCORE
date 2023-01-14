@@ -240,7 +240,7 @@ class Donnees:
             self.ville= self.ville[:-1]"""
 
         self.ville = self.ville.strip()
-        print(self.ville)
+        #print(self.ville)
         
         liste = list(self.ville)
         dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
@@ -252,19 +252,26 @@ class Donnees:
 
         self.ville = ''.join(liste) #Redonne la ville sans accents
 
-        fichier = open(self.repertoire + '/CSV/villes_france.csv',"r",encoding='utf-8') # fichier est à modifier pour les arrondissements
-        cr = p.read_csv(fichier,delimiter=",",usecols=['Nom1','Nom2','Nom3','Code_INSEE','Pop 2012'],encoding='utf-8-sig',low_memory=False) #encoding pour pouvoir avoir les accents (ne marche pas)
+        fichier = open(self.repertoire + '/data/commune_modifiee.csv',"r",encoding='utf-8') # fichier est à modifier pour les arrondissements FAIT
+        cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) #encoding pour pouvoir avoir les accents 
+        #à voir pour un autre 
         fichier.close()
 
         #recup ligne de ville pour code insee  
-        row = cr[(cr['Nom1'] == str(self.ville).upper()) | (cr['Nom2'] == str(self.ville).lower())]
+        row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower()) | (cr['LIBELLE'] == str(self.ville).lower())]
         #print(row)
         if not row.empty:
             print(row.values[0][2])
             self.code_insee = row.values[0][3]
             self.ville = row.values[0][2]
-            self.population = row.values[0][4]
-            #print(self.code_insee)
+            with open(self.repertoire + '/CSV/population.csv',"r") as fichier : #à bouger
+                infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
+                rangee = infos[infos['com_code'] == self.code_insee]
+            if not rangee.empty :
+                self.population = rangee.values[0][1]
+            else:
+                msg.configure(text = "Nous n'avons pas de données sur cette ville")
+                return False
             return True
         else:
             msg.configure(text = "Ville incorrecte veuillez réessayer")
@@ -480,7 +487,6 @@ if __name__ == "__main__":
     ddd = Donnees('Servian')
     ##print(ddd.is_commune_france())
     ##print(ddd.meteo())
-    ddd.is_commune_france_v2()
     ##print(type(ddd.code_insee))
     ##print(ddd.note_sport())
     ddd.note_finale()
