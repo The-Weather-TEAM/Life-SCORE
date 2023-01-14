@@ -261,16 +261,18 @@ class Donnees:
         row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower()) | (cr['LIBELLE'] == str(self.ville).lower())]
         #print(row)
         if not row.empty:
-            print(row.values[0][2])
-            self.code_insee = row.values[0][3]
-            self.ville = row.values[0][2]
+            print(row.values)
+            self.code_insee = row.values[0][0]
+            self.ville = row.values[0][3]
             with open(self.repertoire + '/CSV/population.csv',"r") as fichier : #à bouger
                 infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                 rangee = infos[infos['com_code'] == self.code_insee]
+                print(infos)
+                print(rangee)
             if not rangee.empty :
-                self.population = rangee.values[0][1]
+                self.population = int(rangee.values[0][1])
             else:
-                msg.configure(text = "Nous n'avons pas de données sur cette ville")
+                msg.configure(text = "Nous n'avons pas de données sur cette ville ")
                 return False
             return True
         else:
