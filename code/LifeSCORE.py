@@ -427,7 +427,9 @@ if not erreur_maj :
             msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
             msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
             msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
-
+        else:
+            msg_NonAttribue = customtk.CTkLabel(windowScore,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
+            msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
         #Bouton retour
         btn_Retour = customtkinter.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,"page2"), text= "Noter une autre ", font=('Bold',20))
