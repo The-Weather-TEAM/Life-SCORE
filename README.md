@@ -271,3 +271,8 @@ mbre de pi
 13 Janvier 2023 : 
 > Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm)
 
+14 Janvier 2023 :
+> Réglage du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche
+
+> Messages d'erreurs plus "performants"
+
