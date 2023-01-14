@@ -108,10 +108,10 @@ if not erreur_maj :
         msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
         #boutons 
         #bouton_explication/aide
-        btn_aide  = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+        btn_aide  = customtk.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
         btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
         #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-        btn_parametre = customtkinter.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre,windowQCM), text="PARAMETRES")
+        btn_parametre = customtk.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
         btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
         #bouton ok Qui continue après le premier message
@@ -131,7 +131,7 @@ if not erreur_maj :
 
     def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le premier passage
         global msg_principal
-        global btn_ok
+        #global btn_ok
         global n #n prend +1 a chaque questions
         """
         Passe à la question 1 et ouvre le qcm ajoute les deux boutons Non et Oui
@@ -221,7 +221,7 @@ if not erreur_maj :
         return windowAide
 
 
-    def parametres(bouton,fenetre):
+    def parametres(bouton):
         """
         Fonction qui ouvre la page de paramètres avec dessus : (X  = pas fait, A = à Améliorer, V = fait)
             -Crédits                                                        X
@@ -285,7 +285,7 @@ if not erreur_maj :
         
         Ca marche désormais :) 
         """
-        if bouton.cget("state") == NORMAL : #Récupère l'attribut et le change
+        if bouton  and bouton.cget("state") == NORMAL : #Récupère l'attribut et le change
             bouton.configure(state=DISABLED)
         else:
             bouton.configure(state=NORMAL)
@@ -309,7 +309,7 @@ if not erreur_maj :
         msg_ville= customtk.CTkLabel(windowQuestion, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
         msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-        btn_arrondissement = customtkinter.CTkButton(windowQuestion, height=int(windowQuestion.winfo_screenheight()/15),command=lambda: arrondissement(windowQuestion,btn_arrondissement), text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+        btn_arrondissement = customtkinter.CTkButton(windowQuestion, height=int(windowQuestion.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
         btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
         
         #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
@@ -336,13 +336,13 @@ if not erreur_maj :
         btn_entree = customtkinter.CTkButton(windowQuestion,height=int(windowQuestion.winfo_screenheight()/15), command=lambda: ville(entree,msg_ville,windowQuestion),text="Recherche")
         btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
 
-        #windowQuestion.bind('KP_Return',ville(entree,msg_ville,windowQuestion)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
+        windowQuestion.bind('KP_Return',ville(entree,msg_ville,windowQuestion)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
 
 
         windowQuestion.mainloop()
 
 
-    def arrondissement(window,btn):
+    def arrondissement(btn):
 
         """
         Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
