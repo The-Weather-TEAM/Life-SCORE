@@ -1,4 +1,4 @@
-com_code,com_annee,com_type,popleg_annee,popleg_mun,popleg_a_part,popleg_tot,popleg_date_maj
+"com_code","com_annee","com_type","popleg_annee","popleg_mun","popleg_a_part","popleg_tot","popleg_date_maj"
 "01001","2022","COM","2020","806","15","821","2023-01-02"
 "01002","2022","COM","2020","262","6","268","2023-01-02"
 "01004","2022","COM","2020","14288","374","14662","2023-01-02"
