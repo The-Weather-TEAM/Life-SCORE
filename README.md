@@ -306,4 +306,6 @@ mbre de pi
 
 >Correction de l'erreur qui plantait le programme si notre connexion était trop lente : https://github.com/The-Weather-TEAM/Life-SCORE/issues/57
 
->Code nettoyé et restructuré pour ajoût de nouvelles fonctionnalités
+>Code nettoyé et restructuré pour ajoût de nouvelles fonctionnalités.
+
+>Modification de la gestion de la couleur du score (avant ça tendait vers le rose, plus maintenant).

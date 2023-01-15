@@ -77,6 +77,17 @@ erreur_maj = update.executer()
 
 
 
+'''
+VARIABLES GLOBALES
+
+'''
+global msg_principal # On pose les questions a travers lui
+global list_Questions # Les valeurs de ce tableau sont les questions 
+# global list_alternative # Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
+global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
+global n # Pour faire list_Questions[n]
+global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
+global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
 
 
 
@@ -570,23 +581,15 @@ def plus_et_moins(pl,mal):
 
 
 
-def couleur_score(n):
-    """
-    Choisit une couleur en fonction du chiffre obtenu (de 0 à 100) et la retourne en RGB
-    """
-    #A RETRAVAILLER PEUT ETRE METTRE UN PEU PLUS DE BLEU
-    try:
-        couleur = (255,0,127)
-        rouge = 255 - int(n*255/100)
-        vert = 0 + int(n*255/100)
-        #print(rouge,vert)
-        couleur = (rouge,vert,100)
-
-        rgb = '#' + ''.join(f'{i:02X}' for i in couleur) #Transforme les int base 10 en base 16
-    except TypeError: #Si on reçoit pas un int pour n (soit si on reçoit 'N/A')
-        return '#808080' #Renvoie du gris
-
-    return rgb
+def couleur_score(note):
+    '''
+    Fonction qui renvoie la note en une couleur hexadécmal. Rouge -> Vert
+    '''
+    r = int(255 * (100 - note) / 100)
+    g = int(255 * note / 100)
+    b = 0
+    
+    return '#{:02x}{:02x}{:02x}'.format(r, g, b)
 
 
 
@@ -606,15 +609,6 @@ if not erreur_maj :
 
 
 
-
-
-    global msg_principal # On pose les questions a travers lui
-    global list_Questions # Les valeurs de ce tableau sont les questions 
-    # global list_alternative # Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
-    global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
-    global n # Pour faire list_Questions[n]
-    global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
-    global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
 
 
     n = 0
