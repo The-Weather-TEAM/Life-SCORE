@@ -310,4 +310,4 @@ mbre de pi
 
 >Modification de la gestion de la couleur du score (avant ça tendait vers le rose, plus maintenant) : Rouge foncé -> Rouge -> Orange/Jaune -> Vert Pastel -> Vert. Les couleurs ne sont pas trop claires et sont donc compatibles pour une interface claire comme foncée.
 
->Ajout d'un logo provisoire pour la dernière fenêtre.
+>Ajout d'un logo provisoire pour la dernière fenêtre et la précédente.
