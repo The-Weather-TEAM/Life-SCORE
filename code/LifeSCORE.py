@@ -345,6 +345,9 @@ def w_question():
     windowQuestion.minsize(width=768, height=500)
     windowQuestion.state('zoomed') #Plein écran
 
+    p1 = PhotoImage(file = nom_du_repertoire+'\icon2.png')
+    windowQuestion.iconphoto(False, p1)
+
     #input
     entree = customtk.CTkEntry(windowQuestion,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
