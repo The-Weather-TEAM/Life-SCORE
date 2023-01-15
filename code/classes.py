@@ -208,7 +208,7 @@ class Donnees:
 
 
     '''
-    QUESTION DE RAF: On supprime ses deux fonctions Nathan ou bien tu veux encore t'en servir ?
+    QUESTION DE RAF: On supprime ses deux fonctions Nathan ou bien tu veux encore t'en servir ? C'est ok pour suppr je pense
     def ville_existe(self):
         """
         Verifie si la ville rentrée existe puis si elle est en France
@@ -224,6 +224,8 @@ class Donnees:
         """
         return self.data['sys']['country'] ==  'FR'
     '''
+
+
 
 
 
@@ -261,14 +263,14 @@ class Donnees:
         row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower()) | (cr['LIBELLE'] == str(self.ville).lower())]
         #print(row)
         if not row.empty:
-            print(row.values)
+            #print(row.values)
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
             with open(self.repertoire + '/CSV/population.csv',"r") as fichier : #à bouger
                 infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                 rangee = infos[infos['com_code'] == self.code_insee]
-                print(infos)
-                print(rangee)
+                #print(infos)
+                #print(rangee)
             if not rangee.empty :
                 self.population = int(rangee.values[0][1])
             else:
@@ -281,6 +283,7 @@ class Donnees:
                 msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
             return False
     
+        
         
         
         
@@ -303,6 +306,8 @@ class Donnees:
             #print(self.population)
             return int(self.population)"""
         
+
+
 
 
     def note_sport(self):
@@ -352,6 +357,8 @@ class Donnees:
 
 
 
+
+
     def note_finale(self):
         """
         Récupère la ville sous forme de classe et appelle toutes ses fonctions de note pour faire la note finale
@@ -367,10 +374,55 @@ class Donnees:
                 note_finale += int(tableau[i])
             else:
                 tableau.pop(i) #Supprime tous les None
-        print(tableau,'adidjeidjzofjroef')
+        #print(tableau,'adidjeidjzofjroef')
         if len(tableau) == 0: #Si on n'a pas de données
             return 'N/A'
         return int(note_finale / len(tableau))
+
+
+
+
+
+    def recup_donnees_auto(self, infos_csv) :
+        
+        lien_fichier = os.path.join(os.path.dirname(__file__),'data')+'/'+infos_csv['nom_csv']+'.csv'
+        
+        fichier = p.read_csv(lien_fichier,
+                            delimiter=infos_csv['delimiteur'],
+                            usecols=[infos_csv['colonne_ville'],
+                                    infos_csv['colonne_donnee']],
+                            encoding='utf-8',
+                            low_memory=False)
+        
+        rangee = fichier[fichier[infos_csv['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        #print(rangee)
+        
+        try:
+                return rangee.values[0][1]
+            
+        except IndexError : #SI pas de données
+            return None
+
+
+    '''
+    EXEMPLE DE METADONNES A RAJOUTER POUR CHAQUE CSV DANS DATA (ou sur un fichier json) :
+    
+    potentiel_radon_avec_nom_ville = {'insee' : False,
+                                  'ville_maj' : True,
+                                  'colonne_ville' : 'insee_com',
+                                  'colonne_donnee' : 'nom_comm',
+                                  'delimiteur' : ';',
+                                  'nom_csv' : 'potentiel_radon'}
+
+    potentiel_radon = {'insee' : True,
+                   'colonne_ville' : 'insee_com',
+                   'colonne_donnee' : 'classe_potentiel',
+                   'delimiteur' : ';',
+                   'nom_csv' : 'potentiel_radon'}
+    '''
+
+
+
 
 
     '''

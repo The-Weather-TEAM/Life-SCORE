@@ -268,11 +268,21 @@ mbre de pi
 
 > Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup)
 
+
+
 13 Janvier 2023 : 
 > Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm)
+
+
 
 14 Janvier 2023 :
 > Réglage du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche
 
 > Messages d'erreurs plus "performants"
+
+> Création d'une méthode qui recupère toutes les données de tous les csv en fonction des ses métadonnées (colonnes, délimiteur, INSEE ou nom de ville, ...)
+
+> Essais pour faire une animation afin d'afficher la note finale, mais ne marche pas (bugs à corriger)
+
+> Modifications du CSV pour le nom des villes et les habitants, les nouveaux sont compatibles avec UPDATE.PY !
 

@@ -29,8 +29,8 @@
 
 
 # Temps en secondes entre les vérifications de mises à jour :
-temps_maj = 0
-#temps_maj =2592000         # Nombre de secondes dans un mois (30 jours)
+temps_maj = 2592000  
+#temps_maj = 0        # Nombre de secondes dans un mois (30 jours)
 
 
 
@@ -119,6 +119,29 @@ def executer():
                     #'musees' :             ['53699934a3a729239d2051a1','X'],
                     #'espaces_sportifs' :   ['53699ebba3a729239d205f4f','X']
                     }
+        
+        
+        '''
+        A MODIFIER SUR UN FICHIER JSON !!!! AVEC DES NOUVELLES DONNEES :
+        
+        potentiel_radon = {'insee' : True,
+                   'colonne_ville' : 'insee_com',
+                   'colonne_donnee' : 'classe_potentiel',
+                   'delimiteur' : ';',
+                   'nom_csv' : 'potentiel_radon'}
+
+
+        potentiel_radon_avec_nom_ville = {'insee' : False,
+                                        'ville_maj' : True,
+                                        'colonne_ville' : 'insee_com',
+                                        'colonne_donnee' : 'nom_comm',
+                                        'delimiteur' : ';',
+                                        'nom_csv' : 'potentiel_radon'}
+                                        
+                                        
+                       + LA FONCTION AFFINE POUR LA NOTATION  !!!!!!!!!!!!                 
+                                        
+        '''
 
 
 

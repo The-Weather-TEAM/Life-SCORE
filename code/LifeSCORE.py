@@ -419,6 +419,60 @@ if not erreur_maj :
         couleur= couleur_score(score)
         score = str(score)
 
+
+
+
+
+
+        '''
+
+
+
+        couleur= couleur_score(score)
+        score_total_animation = score
+        score = str(score)
+        
+        
+      
+
+        
+        # ANIMATION DU SCORE 
+        # problème lol : c'est sympa mon idée mais enfait ça fait juste freeze le temps que l'animation marche ducoup c'est nul mdrr, si vous 
+        # avez une solution c'est avec grand plaisir ptdrr - Nathan
+        
+        if score != 'N/A':
+            
+            for i in range(score_total_animation+1) :
+            
+                #Textes :
+                msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' + str(i) +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+                msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
+                
+                
+                msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+                msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+                msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
+                msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+
+                sleep(0.001)
+        
+        
+        else:
+            
+            #Textes :
+            msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+            msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
+            msg_NonAttribue = customtk.CTkLabel(windowScore,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
+            msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
+
+
+        '''
+
+
+
+
+
+
         #Textes :
         msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
