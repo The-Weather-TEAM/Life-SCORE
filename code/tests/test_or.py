@@ -32,3 +32,7 @@ t = []
 print(len(t))
 c = None
 print(type(c))
+
+d = "    sneis  eie c jd"
+d=d.strip()
+print(d)

@@ -55,6 +55,12 @@ RECUPERATION REPERTOIRE COURANT
 
 nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 
+#NE MARCHE PAS SI LE FICHIER N'EXISTE PAS NATHAN TU PEUX AIDER ?
+if not os.path.isfile(nom_du_repertoire+'/data/style.txt'):
+    a = os.path.join(nom_du_repertoire, '/data/style.txt')
+    with open(a,"w") as fichier:
+        fichier.write("System")
+
 with open(nom_du_repertoire +'/data/style.txt') as txt:
     style = txt.read()
 
@@ -616,7 +622,35 @@ def couleur_score(note):
     else :
         return '#808080'
 
+#Page d'erreur 
 
+def w_erreur(): # w pour window
+    """
+    Affiche la page d'erreur qui signale le problème
+    """
+    
+    #fenêtre
+    windowERR = customtk.CTk() #fenetre de tkinter
+    windowERR.title('Erreur - Echec du lancement')
+    windowERR.minsize(width=768, height=500) #768 = taille minimum de la fenetre
+    windowERR.state('zoomed')
+
+    msg_principal =  customtk.CTkLabel(windowERR, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
+        width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+    msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    #boutons 
+    #bouton_explication/aide
+    btn_aide  = customtk.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+    btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
+    #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
+    btn_parametre = customtk.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+    btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
+
+    #bouton ok Qui continue après le premier message
+    btn_ok = customtkinter.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15), command=windowERR.destroy, text="OK") #Ferme la page
+    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
+
+    windowERR.mainloop() 
 
 
 
@@ -676,7 +710,8 @@ if not erreur_maj :
     if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
         os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
         #csv.writer(open(nom_du_repertoire+'/data/csv_dico.csv', "w")).writerow(['CLE', 'VALEUR']) #On le fait plus bas
-        w_qcm() #ligne  à lancer a la fin
+        w_qcm() 
+
         #ON POURRAIT PTETRE FAIRE UNE FONCTION POUR LIGNES SUIVANTES
         tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
         #print(tab_Reponses)
@@ -718,23 +753,4 @@ if not erreur_maj :
 
 
 else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on a pas internet
-    #fenêtre
-    windowError = customtk.CTkToplevel() #fenetre de tkinter
-    windowError.title('Erreur - ')
-    windowError.minsize(width=768, height=500) #768 = taille minimum de la fenetre
-
-
-    #Variables
-    str_erreur = "Vous n'êtes pas connecté à internet et nous n'avons pas pu récupérer les fichiers (endommagés ou inexistants)\n programme ne peut pas se lancer dans ces conditions"
-
-    #widgets
-    msg_principal =  customtk.CTkLabel(windowError, text=str_erreur, width = 500, font =('Bold',16), justify=CENTER) #font = taille + police justify comme sur word
-    msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
-    
-    #boutons 
-
-    #bouton ok Qui Ferme la page et termine le programme
-    #btn_ok = customtk.CTkButton(windowError,height =int(windowError.winfo_screenheight()/15), command=windowError.destroy(),text="OK") 
-    #btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place
-
-    windowError.mainloop()
+    w_erreur()

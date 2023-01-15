@@ -150,10 +150,11 @@ class Donnees:
         fichier.close()
 
         # Recup ligne de ville pour code insee  
-        row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower()) | (cr['LIBELLE'] == str(self.ville).lower())]
+        row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower().capitalize()) | (cr['LIBELLE'] == str(self.ville).lower().capitalize())]
         #print(row)
         if not row.empty:
-            #print(row.values)
+            print(row.values)
+            print(self.ville)
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
             
