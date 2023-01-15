@@ -303,3 +303,5 @@ mbre de pi
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/56
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/45
 >- https://github.com/The-Weather-TEAM/Life-SCORE/issues/28
+
+>Correction de l'erreur qui plantait le programme si notre connexion était trop lente : https://github.com/The-Weather-TEAM/Life-SCORE/issues/57

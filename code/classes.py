@@ -27,7 +27,7 @@ Car on ne s'en sert pas pour l'instant et si on a pas internet ça plante le pro
 
 
 import requests
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, ReadTimeout
 
 from tkinter import *
 from datetime import datetime
@@ -93,11 +93,11 @@ def is_connected(url) :
 
     while temp == 0 and essais < 3 :
         try :
-            requests.get(url, timeout=5)
+            requests.get(url, timeout=10)
             temp = 1
               
                 
-        except ConnectionError :    
+        except ConnectionError or ReadTimeout or TimeoutError :    
             print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
             sleep(5)
             #essais += 1

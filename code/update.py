@@ -57,8 +57,8 @@ def executer():
     from classes import is_connected as connexion
     
     # Pour éviter erreurs de coupures :
-    from requests.exceptions import ConnectionError, ChunkedEncodingError
-    from urllib3.exceptions import ProtocolError
+    from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeout
+    from urllib3.exceptions import ProtocolError, ReadTimeoutError
     from http.client import IncompleteRead
 
 
@@ -210,7 +210,7 @@ def executer():
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
                     
-                except ConnectionError : 
+                except ConnectionError or ReadTimeoutError or ReadTimeout or TimeoutError : 
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -318,7 +318,7 @@ def executer():
                     try :
                         recup_csv_internet = requests.get(lien, allow_redirects=True, stream=True) # Stream enregistre avant que le fichier soit téléchargé (pour ChunkedEncodingError)
                         
-                    except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead : 
+                    except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead or ReadTimeoutError or ReadTimeout : 
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
