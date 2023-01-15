@@ -1,0 +1,11 @@
+{
+    "population":
+    ["5e1465ef634f413f2cc19e8d","7edb9963-1cd5-425e-a1e4-7491d15e1be5", { "insee" : 1,
+                                                                          "delimiteur" : ",",
+                                                                          "colonne_ville" : "com_code",
+                                                                          "colonne_donnee" : "popleg_tot"
+                                                                
+
+    }]
+
+}

@@ -37,12 +37,21 @@ import customtkinter
 import csv 
 import pandas as p # Pour la lecture des CSV
 
+
+
 # fix pour un erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi ça marche
 # https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os #Pour les paths
 import random #Pour un easter egg
+
+
+
+import json # Pour la lecture des données csv
+nom_du_repertoire = os.path.dirname(__file__)
+with open(nom_du_repertoire+"\database.json", "r") as fichier_json :
+    infos_csv = json.load(fichier_json)
 
 
 
@@ -229,6 +238,35 @@ class Donnees:
 
 
 
+    def recup_donnees_auto(self, csv) :
+        
+        lien_fichier = os.path.join(os.path.dirname(__file__),'data')+'/'+csv+'.csv'
+        
+        fichier = p.read_csv(lien_fichier,
+                            delimiter=infos_csv[csv][2]['delimiteur'],
+                            usecols=[infos_csv[csv][2]['colonne_ville'],
+                                    infos_csv[csv][2]['colonne_donnee']],
+                            encoding='utf-8',
+                            low_memory=False)
+        
+        rangee = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        #print(rangee)
+        
+        try:
+                return int(rangee.values[0][1])
+            
+        except IndexError : #SI pas de données
+            return None
+
+
+
+
+
+
+
+
+
+
     def is_commune_france_v2(self,msg):
         """
         Verifie si la commune est en france grâce à un fichier et redonne son code insee
@@ -266,7 +304,7 @@ class Donnees:
             #print(row.values)
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
-            with open(self.repertoire + '/CSV/population.csv',"r") as fichier : #à bouger
+            with open(self.repertoire + '/data/population.csv',"r") as fichier : #à bouger
                 infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                 rangee = infos[infos['com_code'] == self.code_insee]
                 #print(infos)
@@ -326,7 +364,7 @@ class Donnees:
             nbr_etab_sportifs = rangee.values[0][1]
         
             # Calcul établiseements par habitants
-            etab_sport_par_hab = nbr_etab_sportifs / self.population #déja défini 
+            etab_sport_par_hab = nbr_etab_sportifs / self.recup_donnees_auto('population') #déja défini 
 
             # Calcul réalisé avec les données Françaises
             note = 16071.4*etab_sport_par_hab - 3.57143
@@ -381,27 +419,6 @@ class Donnees:
 
 
 
-
-
-    def recup_donnees_auto(self, infos_csv) :
-        
-        lien_fichier = os.path.join(os.path.dirname(__file__),'data')+'/'+infos_csv['nom_csv']+'.csv'
-        
-        fichier = p.read_csv(lien_fichier,
-                            delimiter=infos_csv['delimiteur'],
-                            usecols=[infos_csv['colonne_ville'],
-                                    infos_csv['colonne_donnee']],
-                            encoding='utf-8',
-                            low_memory=False)
-        
-        rangee = fichier[fichier[infos_csv['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
-        #print(rangee)
-        
-        try:
-                return rangee.values[0][1]
-            
-        except IndexError : #SI pas de données
-            return None
 
 
     '''

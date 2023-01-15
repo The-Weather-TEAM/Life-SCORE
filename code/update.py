@@ -48,7 +48,8 @@ def executer():
     import requests
     import os
     import time
-    import csv
+    import csv  
+    import json
     import pandas as p
     import datetime
     import time
@@ -72,7 +73,6 @@ def executer():
     repertoire = os.path.join(nom_du_repertoire, 'data')
 
 
-
     # Pour savoir si le fichier existait avant le programme :
     is_file = os.path.isfile(repertoire+'/'+'versions.csv')
 
@@ -93,7 +93,7 @@ def executer():
                                             [BASE DE DONNEES DES CSV]
                                                 à compléter
         '''
-        
+        '''
         #              NOM                     ID DES METADONNEES                 CODE DE TELECHARGEMENT
         liste_csv ={'gares':               ['59593619a3a7291dd09c8238','d22ba593-90a4-4725-977c-095d1f654d28'],
                     'festivals':           ['62cf95993d99f22480f49334','47ac11c2-8a00-46a7-9fa8-9b802643f975'],
@@ -120,7 +120,13 @@ def executer():
                     #'espaces_sportifs' :   ['53699ebba3a729239d205f4f','X']
                     }
         
+        '''
         
+        with open(nom_du_repertoire+"\database.json", "r") as fichier_json :
+            liste_csv = json.load(fichier_json)
+        
+        
+
         '''
         A MODIFIER SUR UN FICHIER JSON !!!! AVEC DES NOUVELLES DONNEES :
         

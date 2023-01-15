@@ -286,3 +286,20 @@ mbre de pi
 
 > Modifications du CSV pour le nom des villes et les habitants, les nouveaux sont compatibles avec UPDATE.PY !
 
+
+
+15 Janvier 2023 :
+> Création d'un fichier `database.json` qui stocke :
+>- Toutes les données pour obtenir les métadonnées d'un csv ;
+>- Son code de téléchargement ;
+>- Ses données qu'on veut (colonnes, ect) ;
+>- Comment le fichier csv est délimité.
+
+> Modification du programme `UPDATE.PY` pour qu'il obtienne la base de données directement depuis la nouvelle.
+
+> Utilisation de la nouvelle méthode de récupération automatique de données pour obtenir le nombre d'habitant d'une commune.
+
+> Correction d'erreurs :
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/56
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/45
+>- https://github.com/The-Weather-TEAM/Life-SCORE/issues/28
