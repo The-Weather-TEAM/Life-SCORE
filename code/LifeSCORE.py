@@ -433,6 +433,10 @@ def w_score(ville):
     windowScore.title('Dernière page - Note de la ville')
     windowScore.minsize(width=1000, height=600)
     windowScore.state('zoomed') #Plein écran
+    
+    p1 = PhotoImage(file = nom_du_repertoire+'\icon.png')
+    windowScore.iconphoto(False, p1)
+        
 
     #Donnees PROVISOIRES !!!
     dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant 5':-1} #Exemple
@@ -640,6 +644,8 @@ if not erreur_maj :
 
 
 
+        
+        
 
     """
     #Image en url bitmap ? TEST D'IMAGE 
