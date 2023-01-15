@@ -171,7 +171,10 @@ class Donnees:
             return True
         
         else:
-            msg.configure(text = "Ville incorrecte veuillez réessayer")
+            if self.ville == "hello there" :
+                msg.configure(text = "GENERAL KENOBI !")
+            else :
+                msg.configure(text = "Ville incorrecte. Veuillez réessayer")
             
             # EASTER EGG
             if random.randint(0,100000) == 14924:
