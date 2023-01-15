@@ -308,4 +308,4 @@ mbre de pi
 
 >Code nettoyé et restructuré pour ajoût de nouvelles fonctionnalités.
 
->Modification de la gestion de la couleur du score (avant ça tendait vers le rose, plus maintenant).
+>Modification de la gestion de la couleur du score (avant ça tendait vers le rose, plus maintenant) : Rouge foncé -> Rouge -> Orange/Jaune -> Vert Pastel -> Vert. Les couleurs ne sont pas trop claires et sont donc compatibles pour une interface claire comme foncée.

@@ -585,10 +585,24 @@ def couleur_score(note):
     '''
     Fonction qui renvoie la note en une couleur hexadécmal. Rouge -> Vert
     '''
-    r = int(255 * (100 - note) / 100)
-    g = int(255 * note / 100)
-    b = 0
     
+    if note == 0 :
+        r,g,b = 100,0,0
+        
+    elif note <= 20:
+        r = int(110 * (note/20) + 100)
+        g, b = 0, 0
+        
+    elif note <= 60 :
+        r = 210
+        g = int(210 * (note-20)/40)
+        b = 0
+        
+    else :
+        r = int(210*(100-note)/40)
+        g = 210
+        b = int(210*(100-note)/40)
+        
     return '#{:02x}{:02x}{:02x}'.format(r, g, b)
 
 
