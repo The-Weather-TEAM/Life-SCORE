@@ -14,6 +14,7 @@
 - Messages sous variables pour une compabilité efficace avec Tkinter
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
+- Création du fichier options.csv qui permet de stocker des données pour l'application
 
 '''
 
@@ -59,7 +60,7 @@ def executer():
 
 
     # Variables boléennes (qui servent pour des conditions) :
-    is_file, is_modified, erreur_internet, mise_a_jour = False, False, False, False
+    is_file_versions, is_modified, erreur_internet, mise_a_jour = False, False, False, False
 
 
 
@@ -69,10 +70,20 @@ def executer():
 
 
     # Pour savoir si le fichier existait avant le programme :
-    is_file = os.path.isfile(repertoire+'/'+'versions.csv')
+    is_file_versions = os.path.isfile(repertoire+'/'+'versions.csv')
+    is_file_options = os.path.isfile(repertoire+'/'+'options.csv')
 
 
 
+    
+    # Création du fichier pour les options de l'application même si on a pas internet :
+    if os.path.exists(repertoire) and not is_file_options :
+            os.path.join(repertoire, 'options.csv')
+            csv.writer(open(repertoire+'/'+'options.csv', "w")).writerow(['OPTION', 'VALEUR'])
+            is_file_options = True
+    
+    
+    
 
 
     # Test de connexion internet sur le site data.gouv.fr :
@@ -106,6 +117,8 @@ def executer():
         if not os.path.exists(repertoire):
             os.makedirs(repertoire)
 
+        
+        # Création du fichier options.csv 
 
 
         # Création du dictionnaire des nouvelles version installées :
@@ -114,10 +127,17 @@ def executer():
 
         
         # Création le fichier des infos s'il existe pas :
-        if not is_file :
+        if not is_file_versions :
             os.path.join(repertoire, 'versions.csv')
             csv.writer(open(repertoire+'/'+'versions.csv', "w")).writerow(['NOM', 'VERSION'])
 
+
+        # Création du fichier pour les options de l'application :
+        if not is_file_versions :
+            os.path.join(repertoire, 'options.csv')
+            csv.writer(open(repertoire+'/'+'options.csv', "w")).writerow(['OPTION', 'VALEUR'])
+    
+    
     
             
         # Lecture du fichier CSV des versions :
@@ -164,7 +184,7 @@ def executer():
                     test_connexion = connexion('https://www.data.gouv.fr')
                     
                     # Si il n'y a pas de connexion et c'est le premier lancement :
-                    if not test_connexion and not is_file :
+                    if not test_connexion and not is_file_versions :
                                              
                         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
@@ -222,7 +242,7 @@ def executer():
                        
                        
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
-                if is_file and is_courant_csv:
+                if is_file_versions and is_courant_csv:
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
 
@@ -246,11 +266,11 @@ def executer():
                 
                 
                 # Téléchargement si data n'existait pas ou si la version du .csv était différente :
-                if not is_file or recup_version != version :
+                if not is_file_versions or recup_version != version :
                     
                     
                     # Supprime la version actuelle ssi il y avait le fichier .csv :
-                    if is_file and is_courant_csv :
+                    if is_file_versions and is_courant_csv :
                         os.remove(repertoire+'/'+id+'.csv')
                     
                     
@@ -278,7 +298,7 @@ def executer():
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
-                        if not test_connexion and not is_file :
+                        if not test_connexion and not is_file_versions :
                             
                             # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                             msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
@@ -404,7 +424,7 @@ def executer():
             
             
                 
-    elif is_file :
+    elif is_file_versions :
         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
         
@@ -429,7 +449,7 @@ def executer():
     
     if is_modified and not mise_a_jour :
         
-        if not is_file :
+        if not is_file_versions :
             rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
         else :
             rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) 
