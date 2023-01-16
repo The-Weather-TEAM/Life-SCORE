@@ -230,23 +230,21 @@ def aide(btn):
     """
     Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
     """
-    texte_aide="""
-    Bonjour ! Voilà notre protoype de CityScore où vous pourrez regarder le score de villes.
-Pour commencer, nous réalisons un QCM de 10 questions pour voir vos préférences.
-Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui est de base 1. 
-Le plus de critères sont réunis afin d'avoir le plus de précision possible. Ils sont répartis en 4 catégories :
-Le climat (pluie en un an / pollution de l'air / températures / vent / ...)
-La qualité de vie (activités / patrimoine / ville fleurie / ...)
-Le prix (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
-La sécurité (taux d'accidents / vols / risques / ...)
-"""
+    texte_aide="""Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes.
+Pour commencer, nous réalisons un QCM de 8 questions afin de déterminer vos préférences.
+Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient propre à lui même. 
+Le plus de critères sont réunis afin d'avoir le plus de précision possible. 
+Ils sont répartis en 4 catégories :
+            - Le climat (pluie en un an / pollution de l'air / températures / vent / ...)
+            - La qualité de vie (activités / patrimoine / ville fleurie / ...)
+            - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
+            - La sécurité (taux d'accidents / vols / risques / ...)"""
     change_etat_btn(btn)
     windowAide = customtk.CTkToplevel() #fenetre de tkinter
     windowAide.title('Page 1bis - Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowAide.minsize(width=int(510*4/3), height=384) #768
-    windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
-    msg_aide = customtk.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',10), justify=CENTER)
+    msg_aide = customtk.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',16), justify=LEFT)
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
     btn_compris = customtk.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda:retour_pages(windowAide,btn), text="Compris !")
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
@@ -275,13 +273,13 @@ def parametres(bouton):
     #windowParam.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     frame_tk =customtk.CTkFrame(windowParam) #On va y mettre les crédits
 
-    message = customtk.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 100, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
-    message.place(relx=0.1,rely=0.5,anchor = CENTER)
+    message = customtk.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
+    message.place(relx=0.5,rely=0.5,anchor = CENTER)
 
     """variable = customtk.StringVar()
     variable.set("System")"""
     switch_apparence = customtk.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.place(relx = 0.1, rely = 0.8, anchor = CENTER)
+    switch_apparence.place(relx = 0.2, rely = 0.8, anchor = CENTER)
     btn_changements = customtk.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
                                                                 text="Appliquer les Changements")
@@ -695,13 +693,24 @@ if not erreur_maj :
     raw_data = u.read()
     u.close()
     """
+    """
+    if os.path.isfile(nom_du_repertoire+'/data/options.csv'):
+        print('balablablab')
+        with open(nom_du_repertoire+'/data/options.csv','r+') as fichier:
+            cr = pandas.read_csv(fichier,delimiter=",",usecols=['OPTION','VALEUR'],encoding='utf-8-sig')
+            row = cr[cr['OPTION'] == "APPARENCE"]
+            print(row, "nlanla")
+            if not row.empty:
+                customtk.set_appearance_mode(str(row[0][0])) #recupère la donnee
 
-
-
-
-
-    # Objet image de tkinter 
-    # photo = ImageTk.PhotoImage(data=raw_data)
+            else:
+                liste_rangee = ["APPARENCE","System"]
+                cr.loc[len(cr)] = liste_rangee  #Cree la donnee 
+        with open(nom_du_repertoire+'/data/options.csv','w') as fichier:
+            fichier.write(str(cr))"""
+    
+    #Je n'ai pas réussi à faire fonctionner ceci : Raf
+    #En attendant je garde style.txt et au pire du pire on fait un fichier "fix" genre celui qui a effacé le fichier doit etre capable de le garder mdrr
 
 
 
@@ -739,6 +748,10 @@ if not erreur_maj :
                 ecriture.writerows(tab_Reponses)
             
     
+
+
+
+
 
     '''
     Lignes pour accéder à différentes page directement
