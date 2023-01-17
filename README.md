@@ -322,3 +322,10 @@ mbre de pi
 
 16 Janvier 2023 :
 > Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj)
+
+
+
+17 Janiver 2023 :
+> Mise en place du fichier options.csv, il manque plus que le code pour modifier les valeurs.
+
+> Correction du bug sur les icônes de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/issues/64
