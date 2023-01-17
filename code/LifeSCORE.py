@@ -709,6 +709,21 @@ if not erreur_maj :
         with open(nom_du_repertoire+'/data/options.csv','w') as fichier:
             fichier.write(str(cr))"""
     
+    
+    
+    '''
+    POUR RAPH : tu peux rajouter une condition genre "update_options" qui est a false et qui devient true si on modifie un paramètre ?
+                ensuite tu rajoutes un dictionnaire avec comme clé le nom du paramètre à modifier (genre STYLE) et sa clé (light, dark, system...)
+                
+                Après je m'occupe du reste c'est juste que je sais pas où c'est exactement dans ton code
+                mrc bg
+    
+    
+    
+    '''
+    
+    
+
     #Je n'ai pas réussi à faire fonctionner ceci : Raf
     #En attendant je garde style.txt et au pire du pire on fait un fichier "fix" genre celui qui a effacé le fichier doit etre capable de le garder mdrr
 
