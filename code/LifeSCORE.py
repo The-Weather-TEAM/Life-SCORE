@@ -349,8 +349,8 @@ def w_question():
     windowQuestion.minsize(width=768, height=500)
     windowQuestion.state('zoomed') #Plein écran
 
-    p1 = PhotoImage(file = nom_du_repertoire+'\icon2.png')
-    windowQuestion.iconphoto(False, p1)
+    icon_2 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon2.png')
+    windowQuestion.iconphoto(False, icon_2)
 
     #input
     entree = customtk.CTkEntry(windowQuestion,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
@@ -441,8 +441,8 @@ def w_score(ville):
     windowScore.minsize(width=1000, height=600)
     windowScore.state('zoomed') #Plein écran
     
-    p1 = PhotoImage(file = nom_du_repertoire+'\icon.png')
-    windowScore.iconphoto(False, p1)
+    icon_1 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon.png')
+    windowScore.iconphoto(False, icon_1)
         
 
     #Donnees PROVISOIRES !!!
