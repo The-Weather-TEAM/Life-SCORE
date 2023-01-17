@@ -317,3 +317,8 @@ mbre de pi
 >Corrections finales sur les arrondissements (on peut désormais mettre "Paris 7", "Paris7", et "Paris_7" :)
 
 >Tentative de reproduction de style.txt s'il n'existe pas (échec)
+
+
+
+16 Janvier 2023 :
+>- Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj)
