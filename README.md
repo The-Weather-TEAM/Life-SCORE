@@ -321,4 +321,4 @@ mbre de pi
 
 
 16 Janvier 2023 :
->- Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj)
+> Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj)
