@@ -40,7 +40,7 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v0.5.1
+# Version actuelle : v0.5.2
 
 > Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
 
@@ -56,11 +56,13 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 
 
 Changements :
->- UPDATE.PY : passe en version 3, il corrige des bugs critiques et ajoute de nouvelles fonctionnalités. Le téléchargement / la mise à jour fonctionne quoi qu'il arrive (pas internet / coupure en plein processus). Il est maintenant plus rapide. 
->- CLASSES.PY : Correction de la notation, maintenant les villes sont correctement notés sur les établissements sportifs.
->- CALCUL_COEFFICIENTS.PY : Nouveau système plus précis pour la notation de la météo, avec des sources nationales (comme référence) 
->- LIFESCORE.PY : Nouvelle interface plus moderne et résolution de certains bugs qui rendait les boutons inutilisables. Création d'une fenêtre paramètres (non utilisable pour l'instant)
-
+- Les demandes de villes s'adaptent, il n'y a plus d'erreur ;
+- Changement de style (clair / foncé) et sauvegarde des paramètres ;
+- Les arrondissements marchent ;
+- Nouvelle base de donnée et récupération automatique et plus rapide des données ;
+- Il n'y a plus de changement de fenêtres : les transitions sont plus fluides ;
+- Gestion automatique des bibliothèques et mises à jour ;
+- Animation de la note (avec fonction maths) et nouvelle police d'écriture.
 
 
 
@@ -79,20 +81,21 @@ Changements :
 - urllib3
 - http
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
+- pyglet
+- subprocess
+- sys
+- json
+- random
+- re
+
 
 
 
 ## Configuration recommandée :
 - Windows 10 / 11
-- Python 3.11.1
+- Python 3.11.x
 - Bibliothèques utilisés (téléchargeables avec requirements.txt) :
->Pour tout télécharger, il faut ouvrir un terminal sur le dossier racine et executer :
-
->`pip install -r requirements.txt`
-
-Ou bien
-
->`Python3 -m pip install -r requirements.txt`
+>Téléchargement automatique sur l'application depuis la v0.5.2.
 
 
 
@@ -206,7 +209,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 
-4 Janvier 2023
+4 Janvier 2023 : **Nouvelle version v0.5**
 >Changement de update.py en une énorme fonction pour l'utiliser dans d'autres codes.
 
 >Intégration des mises à jour et du gestionnaire de téléchargements sur le code principal.
@@ -240,7 +243,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Mise à jour de requirements.txt et calcul_coefficients.py.
 
 
-7 Janvier 2023 :
+7 Janvier 2023 : **Nouvelle version v0.5.1**
 > Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement (ça passe en V3) :
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/30
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
@@ -332,7 +335,7 @@ mbre de pi
 
 
 
-18 Janvier 2023 :
+18 Janvier 2023 : **Nouvelle version v0.5.2**
 >Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) 
 
 >Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout). C'est top : https://github.com/The-Weather-TEAM/Life-SCORE/issues/62
