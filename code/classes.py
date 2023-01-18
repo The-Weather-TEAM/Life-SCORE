@@ -209,8 +209,8 @@ class Donnees:
                     return False
                 return True
             else :
-                if self.ville == "hello there" :
-                    msg.configure(text = "GENERAL KENOBI !")
+                if self.ville == "Hello There" :
+                    msg.configure(text = "General Kenobi !")
                 else :
                     msg.configure(text = "Ville incorrecte. Veuillez réessayer")
                 
