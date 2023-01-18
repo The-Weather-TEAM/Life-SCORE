@@ -37,11 +37,18 @@ from classes import * #Import de nos classes créées
 
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
+# Il faudrait corriger ce doublon
+import customtkinter
 import customtkinter as customtk
+
 import os
 import pandas
-import sys
 import pyglet
+from time import sleep
+import csv
+
+
+
 
 
 '''
@@ -60,14 +67,17 @@ if not os.path.isfile(nom_du_repertoire+'/data/style.txt'):
 with open(nom_du_repertoire +'/data/style.txt') as txt:
     style = txt.read()
 
+
+
+
+
+'''
+RECUPERATION POLICES ET STYLE
+
+'''
 customtk.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 customtk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
 
-
-
-'''
-POLICES D'ECRITURE
-'''
 pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
 
 
@@ -101,13 +111,16 @@ global windowQCM #Globale pour la fenêtre principale
 
 
 
+
+
+
+
+
+
 '''
 FONCTIONS DU CODE PRINCIPAL
 
 '''
-
-
-
 
 
 # Fonction qui calcule le temps entre deux entiers pour le score total
@@ -197,6 +210,9 @@ def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le prem
         w_question(fenetre) #Ouvre la seconde fenêtre : Fin de la première
 
 
+
+
+
 def efface_fenetre(fenetre):
     """
     Fonction qui efface tout d'une fenêtre à l'autre pour pouvoir afficher d'autres choses
@@ -205,6 +221,9 @@ def efface_fenetre(fenetre):
         #rajouter condition si non bouton paramètres
         #print(widget)
         widget.destroy()
+
+
+
 
 
 def plus0(b1,b2):
@@ -489,16 +508,18 @@ def w_score(ville,win):
 
 
     '''
-    ANIMATION DU SCORE FINAL PAR NATHAN
+    ANIMATION DU SCORE FINAL
     
     '''
     
-    print(score)
+    #print(score)
     if score != 'N/A':
         
+        # Transformations
         score_total_animation = int(score)
         score = str(score)
         
+        # Mise en place du reste du texte, pour éviter une surcharge du nmbr d'elem à rafraichir
         msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
         msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
         msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
@@ -506,6 +527,7 @@ def w_score(ville,win):
         win.update()
         
         
+        # Pour chaque entier naturel jusqu'à notre note
         for i in range(score_total_animation+1) :
             
             if i > 0 :
@@ -517,15 +539,17 @@ def w_score(ville,win):
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
 
+            # Mise à jour de la page
             win.update()
             sleep(fonction_animation_score(i, score_total_animation)*0.1)
             
             
 
+    # Si on a pas de note
     else:
         
         #Textes :
-        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Poppins ExtraBold Italic',100), justify=CENTER)
+        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Poppins ExtraBold Italic',60), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
@@ -628,8 +652,11 @@ def couleur_score(note):
     else :
         return '#808080'
 
-#Page d'erreur 
 
+
+
+
+#Page d'erreur 
 def w_erreur(): # w pour window
     """
     Affiche la page d'erreur qui signale le problème
@@ -657,6 +684,8 @@ def w_erreur(): # w pour window
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
 
     windowERR.mainloop() 
+
+
 
 
 
@@ -717,18 +746,6 @@ if not erreur_maj :
         with open(nom_du_repertoire+'/data/options.csv','w') as fichier:
             fichier.write(str(cr))"""
     
-    
-    
-    '''
-    POUR RAPH : tu peux rajouter une condition genre "update_options" qui est a false et qui devient true si on modifie un paramètre ?
-                ensuite tu rajoutes un dictionnaire avec comme clé le nom du paramètre à modifier (genre STYLE) et sa clé (light, dark, system...)
-                
-                Après je m'occupe du reste c'est juste que je sais pas où c'est exactement dans ton code
-                mrc bg
-    
-    
-    
-    '''
     
     
 

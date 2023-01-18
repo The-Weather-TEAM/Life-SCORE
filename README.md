@@ -341,3 +341,6 @@ mbre de pi
 
 >Gestion des installations des bibliothèques sur `UPDATE.PY` : https://github.com/The-Weather-TEAM/Life-SCORE/issues/37
 
+>Le programme utilise maintenant des polices d'écriture personnalisées !
+
+>Nettoyage du code et rajout de commentaires.

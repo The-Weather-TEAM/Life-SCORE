@@ -1,10 +1,11 @@
 '''
                         [UPDATE.PY]
-                            V.4
+                            V.5
                          
     Programme de téléchargement et mises à jour des données
 
-                  développé par Nathan Bosy
+                  développé par Nathan
+                         & Thor
 
 
 - Créé le dossier "data" avec tous les CSV dedans ;
@@ -15,6 +16,7 @@
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
 - Création du fichier options.csv qui permet de stocker des données pour l'application
+- Gestion des bibliothèques (Thor)
 
 '''
 
@@ -23,20 +25,26 @@
 
 
 '''
-BIBLIOTHEQUES ET FONCTION INTERNET
+MODULE DE MISE A JOUR DES BIBLIOTHEQUES
  
 '''
+
+# Ce qu'on utilise pour mettre à jour (déjà dans python)
+from classes import is_connected as connexion
 import subprocess
 import sys
 import os
 
-'''def maj_modules_requirements():
-    """
-    Met a jour tout les modules dans requirements.txt ou les install si ils ne le sont pas deja.
-    """
-    nom_du_repertoire = os.path.dirname(__file__) # cherche path du repertoir courant
 
-    # on install tout les modules individuellement pour pouvoir les afficher un par un
+
+def maj_modules_requirements():
+    """
+    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
+    """
+    
+    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
+
+    # on installe tous les modules individuellement pour pouvoir les afficher un par un
     for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
         output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
 
@@ -47,17 +55,26 @@ import os
             print(module.split(">")[0], "-> est present")
 
 
-maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour eviter des erreurs de manque de modules (requests par exemple)
+if connexion('https://pypi.org/') : 
+    # Execute la fonction seulement si on a internet. A AMELIORER (fréquence maj)
+    maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour éviter des erreurs de manque de modules (requests par exemple)
+
+
+
+
+
 '''
-import requests
-import time
-import csv  
-import json
-import pandas as p
-import datetime
-import time
+AUTRES BIBLIOTHEQUES
+ 
+'''
+import requests # Demandes de connexion
+import csv # Lecture des CSV
+import json # Pour lire notre base de données
+import pandas as p # Lecture et écriture des CSV
+import datetime # Conversion UNIX + vérification des versions
+import time # Conversion UNIX
 from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
-from classes import is_connected as connexion
+
     
 # Pour éviter erreurs de coupure réseau :
 from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeout
@@ -74,7 +91,8 @@ def executer():
 
 
     # Temps en secondes entre les vérifications de mises à jour :
-    temps_maj = 2592000       # Nombre de secondes dans un mois (30 jours)
+    #temps_maj = 2592000       # Nombre de secondes dans un mois (30 jours)
+    temps_maj = 0
 
 
 
@@ -90,7 +108,7 @@ def executer():
     repertoire = os.path.join(nom_du_repertoire, 'data')
 
 
-    # Pour savoir si le fichier existait avant le programme :
+    # Pour savoir si les fichiers existait avant le programme :
     is_file_versions = os.path.isfile(repertoire+'/'+'versions.csv')
     is_file_options = os.path.isfile(repertoire+'/'+'options.csv')
 
@@ -138,8 +156,6 @@ def executer():
         if not os.path.exists(repertoire):
             os.makedirs(repertoire)
 
-        
-        # Création du fichier options.csv 
 
 
         # Création du dictionnaire des nouvelles version installées :
