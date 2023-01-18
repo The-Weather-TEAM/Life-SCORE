@@ -30,7 +30,7 @@ réferences :
 BIBLIOTHEQUES
  
 '''
-
+import update # import les fonctions et met a jours le modules en meme temps
 from tkinter import *
 import tkinter.font
 from classes import * #Import de nos classes créées
@@ -68,11 +68,10 @@ customtk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-bl
 
 
 '''
-LANCEMENT DU PROGRAMME 
+LANCEMENT DU PROGRAMME
      [UPDATE.PY]
 
 '''
-import update
 erreur_maj = update.executer()
 
 

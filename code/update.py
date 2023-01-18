@@ -26,7 +26,16 @@
 BIBLIOTHEQUES ET FONCTION INTERNET
  
 '''
-    
+def maj_modules_requirements():
+    """
+    Met a jour tout les modules dans requirements.txt ou les install si ils ne le sont pas deja.
+    """
+
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "../requirements.txt"])
+maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour eviter des erreurs de manque de modules (requests par exemple)
+
 import requests
 import os
 import time
