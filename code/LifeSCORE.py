@@ -99,6 +99,29 @@ FONCTIONS DU CODE PRINCIPAL
 
 '''
 
+
+
+
+
+# Fonction qui calcule le temps entre deux entiers pour le score total
+def fonction_animation_score(x, total) :
+    
+    # Remet le total sur 100 pour avoir un ralenti à la fin de la note
+    x = (x/total)*100
+    
+    # A REFAIRE car c'est pas fluide comme annimation !
+    if x < 50:
+        return 0.20 - (x/250)
+    elif x < 85:
+        return 0.10
+    else:
+        return 0.50 + ((x-85)/15)
+
+
+
+
+
+
 # Premiere page
 def w_qcm(option = None): # w pour window
     global msg_principal
@@ -458,73 +481,52 @@ def w_score(ville,win):
     #print(plus,moins)
 
 
-    couleur= couleur_score(score)
-    score = str(score)
-
-
 
     '''
-
-
-
-    couleur= couleur_score(score)
-    score_total_animation = score
-    score = str(score)
+    ANIMATION DU SCORE FINAL PAR NATHAN
     
+    '''
     
-    
-
-    
-    # ANIMATION DU SCORE 
-    # problème lol : c'est sympa mon idée mais enfait ça fait juste freeze le temps que l'animation marche ducoup c'est nul mdrr, si vous 
-    # avez une solution c'est avec grand plaisir ptdrr - Nathan
-    
+    print(score)
     if score != 'N/A':
+        
+        score_total_animation = int(score)
+        score = str(score)
+        
+        msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+        msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+        msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
+        msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+        win.update()
+        
         
         for i in range(score_total_animation+1) :
         
+            couleur= couleur_score(i)
             #Textes :
-            msg_note = customtk.CTkLabel(win, text=f'Note : \n' + str(i) +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+            msg_note = customtk.CTkLabel(win, text=str(i), text_color=couleur, font =('Franklin gothic medium',80), justify=CENTER)
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
-            
-            msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-            msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
-            msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
-            msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
 
-            sleep(0.001)
-    
-    
+            win.update()
+            sleep(fonction_animation_score(i, score_total_animation)*0.1)
+            
+            
+
     else:
         
         #Textes :
-        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Franklin gothic medium',60), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
 
-    '''
-
-
-    #Textes :
-    msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
-    msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
-    if score != 'N/A':
-        msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
-        msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
-    else:
-        msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
-        msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
     #Bouton retour
     btn_Retour = customtk.CTkButton(win,height=int(win.winfo_screenheight()/15), command=lambda:retour_pages(win,None,False), text= "Noter une autre ville", font=('Bold',20))
     btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
-
-
+    
 
 
 
@@ -610,7 +612,7 @@ def couleur_score(note):
         else :
             r = int(210*(100-note)/40)
             g = 210
-            b = int(210*(100-note)/40)
+            b = 0
             
         return '#{:02x}{:02x}{:02x}'.format(r, g, b)
 
