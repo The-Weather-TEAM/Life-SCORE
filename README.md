@@ -335,4 +335,9 @@ mbre de pi
 18 Janvier 2023 :
 >Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) 
 
->Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout).C'est top 
+>Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout). C'est top : https://github.com/The-Weather-TEAM/Life-SCORE/issues/62
+
+>Nouvelle animation de la note : c'est fluide et c'est beau, quoi demander de mieux : https://github.com/The-Weather-TEAM/Life-SCORE/issues/61
+
+>Gestion des installations des bibliothèques sur `UPDATE.PY` : https://github.com/The-Weather-TEAM/Life-SCORE/issues/37
+
