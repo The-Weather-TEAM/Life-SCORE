@@ -33,7 +33,18 @@ def maj_modules_requirements():
 
     import subprocess
     import sys
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "../requirements.txt"])
+
+    # on install tout les modules individuellement pour pouvoir les afficher un par un
+    for module in open("../requirements.txt", "r").readlines():
+        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
+
+        if "Collecting" in output:
+            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
+        
+        elif "already satisfied" in output:
+            print(module.split(">")[0], "-> est present")
+
+
 maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour eviter des erreurs de manque de modules (requests par exemple)
 
 import requests
