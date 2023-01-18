@@ -29,7 +29,8 @@ BIBLIOTHEQUES ET FONCTION INTERNET
 import subprocess
 import sys
 import os
-def maj_modules_requirements():
+
+'''def maj_modules_requirements():
     """
     Met a jour tout les modules dans requirements.txt ou les install si ils ne le sont pas deja.
     """
@@ -47,7 +48,7 @@ def maj_modules_requirements():
 
 
 maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour eviter des erreurs de manque de modules (requests par exemple)
-
+'''
 import requests
 import time
 import csv  

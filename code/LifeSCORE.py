@@ -41,7 +41,7 @@ import customtkinter as customtk
 import os
 import pandas
 import sys
-
+import pyglet
 
 
 '''
@@ -62,6 +62,13 @@ with open(nom_du_repertoire +'/data/style.txt') as txt:
 
 customtk.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 customtk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+
+
+
+'''
+POLICES D'ECRITURE
+'''
+pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
 
 
 
@@ -473,9 +480,8 @@ def w_score(ville,win):
     bonus,malus = trouve_bonus(dico), trouve_malus(dico) #Fonction non terminée (besoin du fichier qui fait les données)
 
 
-
     #Transfo des données en texte
-    msg_ville = customtk.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
+    msg_ville = customtk.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font =('Poppins ExtraBold Italic' ,100), justify=CENTER)
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
@@ -501,10 +507,13 @@ def w_score(ville,win):
         
         
         for i in range(score_total_animation+1) :
-        
+            
+            if i > 0 :
+                msg_note.destroy() # pour pas laisser de traces après ou sinon il y a superposition
+                
             couleur= couleur_score(i)
             #Textes :
-            msg_note = customtk.CTkLabel(win, text=str(i), text_color=couleur, font =('Franklin gothic medium',80), justify=CENTER)
+            msg_note = customtk.CTkLabel(win, text=str(i), text_color=couleur, font =('Poppins ExtraBold Italic', 100), justify=CENTER)
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
 
@@ -516,7 +525,7 @@ def w_score(ville,win):
     else:
         
         #Textes :
-        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Franklin gothic medium',60), justify=CENTER)
+        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Poppins ExtraBold Italic',100), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
