@@ -329,3 +329,8 @@ mbre de pi
 > Mise en place du fichier options.csv, il manque plus que le code pour modifier les valeurs.
 
 > Correction du bug sur les icônes de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/issues/64
+
+
+
+18 Janvier 2023 :
+>Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) 
