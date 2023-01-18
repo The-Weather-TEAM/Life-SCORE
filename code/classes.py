@@ -36,7 +36,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
 import random #Pour un easter egg
-
+import re
 
 
 
@@ -130,19 +130,23 @@ class Donnees:
             return False
 
 
-        self.ville = self.ville.strip()
+        self.ville = self.ville.strip() #Enlève les espaces en trop
         
-        
-        liste = list(self.ville)
-        dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
-                                "î":"i", "ô":"o"}
-        
-        # Remplacer les accents par leur lettres (pas ouf mais marche)
-        for i in range(len(liste)):
-            if liste[i] in dico_carac_spéciaux:
-                liste[i] = dico_carac_spéciaux[liste[i]]
 
-        self.ville = ''.join(liste) #Redonne la ville sans accents
+        print('i' in self.ville)
+        if "-" in self.ville or ' ' in self.ville:
+            liste_ville = re.split("-| ",self.ville)#sépare avec espace, - et '
+            print(liste_ville)
+            for i in range(len(liste_ville)): #
+                if liste_ville[i] not in ['lès','l','d','en','de','des','les','à']:
+                    if liste_ville[i][:2] in ["d'","l'"] : #si on a d'hérault
+                        print('vrai')
+                        liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
+                    else: 
+                        liste_ville[i] = liste_ville[i].capitalize()
+                    print(liste_ville[i])
+            self.ville = "-".join(liste_ville)
+        print(self.ville)
 
         fichier = open(self.repertoire + '/data/commune_modifiee.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
@@ -150,7 +154,7 @@ class Donnees:
         fichier.close()
 
         # Recup ligne de ville pour code insee  
-        row = cr[(cr['NCC'] == str(self.ville).upper()) | (cr['NCCENR'] == str(self.ville).lower().capitalize()) | (cr['LIBELLE'] == str(self.ville).lower().capitalize())]
+        row = cr[(cr['NCCENR'] == str(self.ville)) | (cr['LIBELLE'] == str(self.ville))]
         #print(row)
         if not row.empty:
             print(row.values)
@@ -172,17 +176,50 @@ class Donnees:
             return True
         
         else:
-            if self.ville == "hello there" :
-                msg.configure(text = "GENERAL KENOBI !")
-            else :
-                msg.configure(text = "Ville incorrecte. Veuillez réessayer")
-            
-            # EASTER EGG
-            if random.randint(0,100000) == 14924:
-                msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
+            print(self.ville)
+            self.ville = self.ville.strip('-')        
+            print(self.ville,'strip')
+            liste = list(self.ville)
+            dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
+                                    "î":"i", "ô":"o","-":" ","'":" "}
+            # Remplacer les accents par leur lettres (pas ouf mais marche)
+            for i in range(len(liste)):
+                if liste[i] in dico_carac_spéciaux:
+                    liste[i] = dico_carac_spéciaux[liste[i]]
+            print(liste)
+            self.ville = ''.join(liste) #Redonne la ville sans accents
+            row = cr[(cr['NCC'] == str(self.ville).upper())] 
+            print(self.ville)
+
+            if not row.empty:
+                print(row.values)
+                print(self.ville)
+                self.code_insee = row.values[0][0]
+                self.ville = row.values[0][3]
                 
-            return False
-    
+                with open(self.repertoire + '/data/population.csv',"r") as fichier : 
+                    infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
+                    rangee = infos[infos['com_code'] == self.code_insee]
+
+                if not rangee.empty :
+                    self.population = int(rangee.values[0][1])
+                    
+                else:
+                    msg.configure(text = "Nous n'avons pas de données sur cette ville ")
+                    return False
+                return True
+            else :
+                if self.ville == "hello there" :
+                    msg.configure(text = "GENERAL KENOBI !")
+                else :
+                    msg.configure(text = "Ville incorrecte. Veuillez réessayer")
+                
+                # EASTER EGG
+                if random.randint(0,100000) == 14924:
+                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
+                    
+                return False
+        
         
         
         
