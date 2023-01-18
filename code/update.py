@@ -26,16 +26,17 @@
 BIBLIOTHEQUES ET FONCTION INTERNET
  
 '''
+import subprocess
+import sys
+import os
 def maj_modules_requirements():
     """
     Met a jour tout les modules dans requirements.txt ou les install si ils ne le sont pas deja.
     """
-
-    import subprocess
-    import sys
+    nom_du_repertoire = os.path.dirname(__file__) # cherche path du repertoir courant
 
     # on install tout les modules individuellement pour pouvoir les afficher un par un
-    for module in open("../requirements.txt", "r").readlines():
+    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
         output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
 
         if "Collecting" in output:
@@ -48,7 +49,6 @@ def maj_modules_requirements():
 maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour eviter des erreurs de manque de modules (requests par exemple)
 
 import requests
-import os
 import time
 import csv  
 import json
