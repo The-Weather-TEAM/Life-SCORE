@@ -334,3 +334,5 @@ mbre de pi
 
 18 Janvier 2023 :
 >Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) 
+
+>Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout).C'est top 
