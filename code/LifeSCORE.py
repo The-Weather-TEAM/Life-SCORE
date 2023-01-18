@@ -33,19 +33,14 @@ BIBLIOTHEQUES
 
 from tkinter import *
 import tkinter.font
-#from urllib.request import urlopen #pour les photos (peut etre enlever)
 from classes import * #Import de nos classes créées
 
-import requests
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
-#from PIL import ImageTk, Image #Pour l'esthétique
 import customtkinter as customtk
 import os
 import pandas
-
-
-
+import sys
 
 
 
@@ -95,7 +90,7 @@ global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0
 global n # Pour faire list_Questions[n]
 global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
 global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
-
+global windowQCM #Globale pour la fenêtre principale
 
 
 
@@ -169,11 +164,18 @@ def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le prem
         msg_principal.configure(text =f'{list_Questions[n][0]}') #change le texte du msg principal pour la question suivante
 
     else:
-        fenetre.destroy() #ferme la fenetre
-        w_question() #Ouvre la seconde fenêtre : Fin de la première
+        efface_fenetre(fenetre)    
+        w_question(fenetre) #Ouvre la seconde fenêtre : Fin de la première
 
 
-
+def efface_fenetre(fenetre):
+    """
+    Fonction qui efface tout d'une fenêtre à l'autre pour pouvoir afficher d'autres choses
+    """
+    for widget in fenetre.winfo_children():
+        #rajouter condition si non bouton paramètres
+        #print(widget)
+        widget.destroy()
 
 
 def plus0(b1,b2):
@@ -318,8 +320,9 @@ def retour_pages(window,btn,cle=True):
         window.destroy()
         change_etat_btn(btn)
     else:
-        window.destroy()
-        w_question()
+        
+        efface_fenetre(window)
+        w_question(window)
 
 
 
@@ -341,40 +344,39 @@ def change_etat_btn(bouton):
 
 
 # Seconde page
-def w_question():
+def w_question(fenetre):
     """
     affiche la seconde page qui contient la requête de la ville
     """
-    windowQuestion = customtk.CTk() #fenetre de tkinter
+    """windowQuestion = customtk.CTk() #fenetre de tkinter
     windowQuestion.title('Seconde page - requête de la ville')
     windowQuestion.minsize(width=768, height=500)
-    windowQuestion.state('zoomed') #Plein écran
+    windowQuestion.state('zoomed') #Plein écran"""
 
     icon_2 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon2.png')
-    windowQuestion.iconphoto(False, icon_2)
+    fenetre.iconphoto(False, icon_2)
 
     #input
-    entree = customtk.CTkEntry(windowQuestion,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
+    entree = customtk.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
     
     #message
-    msg_ville= customtk.CTkLabel(windowQuestion, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
+    msg_ville= customtk.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-    btn_arrondissement = customtkinter.CTkButton(windowQuestion, height=int(windowQuestion.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+    btn_arrondissement = customtkinter.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
     btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
     
     #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
 
     # Boutton
-    btn_entree = customtkinter.CTkButton(windowQuestion,height=int(windowQuestion.winfo_screenheight()/15), command=lambda: ville(entree,msg_ville,windowQuestion),text="Recherche")
+    btn_entree = customtkinter.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/15), command=lambda: ville(entree,msg_ville,fenetre),text="Recherche")
     btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
 
-    windowQuestion.bind('KP_Return',ville(entree,msg_ville,windowQuestion)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
+    fenetre.bind('KP_Return',ville(entree,msg_ville,fenetre)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
 
 
-    windowQuestion.mainloop()
 
 
 
@@ -423,27 +425,24 @@ def ville(entree,msg,fenetre):
         msg.configure(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
-        fenetre.destroy()
-        w_score(Donnees_ville)
+        efface_fenetre(fenetre)
+        w_score(Donnees_ville,fenetre)
 
 
 
 
 
 #troisieme page
-def w_score(ville):
+def w_score(ville,win):
     """
     affiche la dernière page qui contient le score et le bouton pour revenir
 
     -    ville est un objet de la classe Donnees précédemment créé après avoirs appuyé sur recherche
     """
-    windowScore = customtk.CTk() #fenetre de tkinter
-    windowScore.title('Dernière page - Note de la ville')
-    windowScore.minsize(width=1000, height=600)
-    windowScore.state('zoomed') #Plein écran
+    
     
     icon_1 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon.png')
-    windowScore.iconphoto(False, icon_1)
+    win.iconphoto(False, icon_1)
         
 
     #Donnees PROVISOIRES !!!
@@ -454,7 +453,7 @@ def w_score(ville):
 
 
     #Transfo des données en texte
-    msg_ville = customtk.CTkLabel(windowScore,text=str(ville).capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
+    msg_ville = customtk.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font =('Bold',50), justify=CENTER)
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
@@ -486,12 +485,12 @@ def w_score(ville):
         for i in range(score_total_animation+1) :
         
             #Textes :
-            msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' + str(i) +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+            msg_note = customtk.CTkLabel(win, text=f'Note : \n' + str(i) +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
             
-            msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-            msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+            msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+            msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
             msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
             msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
 
@@ -501,9 +500,9 @@ def w_score(ville):
     else:
         
         #Textes :
-        msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+        msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
-        msg_NonAttribue = customtk.CTkLabel(windowScore,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
+        msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
 
@@ -511,23 +510,21 @@ def w_score(ville):
 
 
     #Textes :
-    msg_note = customtk.CTkLabel(windowScore, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
+    msg_note = customtk.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color =couleur, font =('Franklin gothic medium',40), justify=CENTER)
     msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
     if score != 'N/A':
-        msg_bonus = customtk.CTkLabel(windowScore,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_malus = customtk.CTkLabel(windowScore,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+        msg_bonus = customtk.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
+        msg_malus = customtk.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
         msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
         msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
     else:
-        msg_NonAttribue = customtk.CTkLabel(windowScore,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
+        msg_NonAttribue = customtk.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
 
     #Bouton retour
-    btn_Retour = customtk.CTkButton(windowScore,height=int(windowScore.winfo_screenheight()/15), command=lambda:retour_pages(windowScore,None,False), text= "Noter une autre ", font=('Bold',20))
+    btn_Retour = customtk.CTkButton(win,height=int(win.winfo_screenheight()/15), command=lambda:retour_pages(win,None,False), text= "Noter une autre ville", font=('Bold',20))
     btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
 
-
-    windowScore.mainloop()
 
 
 
