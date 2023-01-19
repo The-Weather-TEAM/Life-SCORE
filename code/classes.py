@@ -32,7 +32,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
 import random #Pour un easter egg
-import re
+import re # pour les splits
 
 
 
