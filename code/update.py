@@ -16,7 +16,6 @@
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
 - Création du fichier options.csv qui permet de stocker des données pour l'application
-- Gestion des bibliothèques (Thor)
 
 '''
 
@@ -25,48 +24,10 @@
 
 
 '''
-MODULE DE MISE A JOUR DES BIBLIOTHEQUES
+BIBLIOTHEQUES
  
 '''
-
-# Ce qu'on utilise pour mettre à jour (déjà dans python)
-from classes import is_connected as connexion
-import subprocess
-import sys
 import os
-
-
-
-def maj_modules_requirements():
-    """
-    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
-    """
-    
-    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
-
-    # on installe tous les modules individuellement pour pouvoir les afficher un par un
-    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
-        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
-
-        if "Collecting" in output:
-            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
-        
-        elif "already satisfied" in output:
-            print(module.split(">")[0], "-> est present")
-
-
-if connexion('https://pypi.org/') : 
-    # Execute la fonction seulement si on a internet. A AMELIORER (fréquence maj)
-    maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour éviter des erreurs de manque de modules (requests par exemple)
-
-
-
-
-
-'''
-AUTRES BIBLIOTHEQUES
- 
-'''
 import requests # Demandes de connexion
 import csv # Lecture des CSV
 import json # Pour lire notre base de données
@@ -74,6 +35,7 @@ import pandas as p # Lecture et écriture des CSV
 import datetime # Conversion UNIX + vérification des versions
 import time # Conversion UNIX
 from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
+from classes import is_connected as connexion
 
     
 # Pour éviter erreurs de coupure réseau :
@@ -487,7 +449,7 @@ def executer():
     if is_modified and not mise_a_jour :
         
         if not is_file_versions :
-            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
+            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a",)) # le "a" c'est l'équivalent de .append() pour les tableaux 
         else :
             rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) 
             

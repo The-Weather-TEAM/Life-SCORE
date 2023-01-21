@@ -21,9 +21,35 @@ réferences :
 
 
 
+import subprocess
+import sys
+import os
 
 
 
+'''
+MODULE DE MISE A JOUR DES BIBLIOTHEQUES
+ 
+'''
+def maj_modules_requirements():
+    """
+    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
+    """
+    
+    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
+
+    # on installe tous les modules individuellement pour pouvoir les afficher un par un
+    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
+        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
+
+        if "Collecting" in output:
+            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
+        
+        elif "already satisfied" in output:
+            print(module.split(">")[0], "-> est present")
+
+
+maj_modules_requirements()
 
 
 '''
