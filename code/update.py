@@ -1,6 +1,6 @@
 '''
                         [UPDATE.PY]
-                            V.5
+                            V.6
                          
     Programme de téléchargement et mises à jour des données
 
@@ -16,6 +16,7 @@
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
 - Création du fichier options.csv qui permet de stocker des données pour l'application
+- Implémentation de Tkinter
 
 '''
 
@@ -242,8 +243,17 @@ def executer():
                        
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
                 if is_file_versions and is_courant_csv:
+                    message.configure(text = "Verification de la présence du fichier "+id)
+                    print(id)
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
+                    pourcentage = csv_courant/nombre_total_csv
+                    print(pourcentage)
+                    barre_progres.configure(determinate_speed=pourcentage)
+                    barre_progres.step()
+                    barre_progres.set(pourcentage)
+                    
+                    fenetre.update()                  # Retourne la version du fichier
 
 
                 # Pour éviter une erreur, comme ça on télécharge le CSV même si on récupère pas la version :
@@ -279,7 +289,8 @@ def executer():
                                 
                     # Lien de téléchargement :    
                     lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
-                    
+                    message.configure(text = "Téléchargement du fichier "+id)
+                    fenetre.update()
                     
                     
                     
@@ -333,7 +344,11 @@ def executer():
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     nombre_csv_modifies += 1
                     pourcentage = int(csv_courant/nombre_total_csv*100)
-                    
+                    print(pourcentage)
+                    barre_progres.configure(determinate_speed=pourcentage)
+                    barre_progres.step()
+                    barre_progres.set(pourcentage)
+                    fenetre.update()
                     
                     
                     
