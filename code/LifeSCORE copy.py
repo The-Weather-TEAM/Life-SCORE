@@ -30,7 +30,7 @@ réferences :
 BIBLIOTHEQUES
  
 '''
-import update # import les fonctions et met a jours le modules en meme temps
+import update__copy # import les fonctions et met a jours le modules en meme temps
 from tkinter import *
 import tkinter.font
 from classes import * #Import de nos classes créées
@@ -85,10 +85,10 @@ pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
 
 '''
 LANCEMENT DU PROGRAMME
-     [UPDATE.PY]
+     [update__copy.PY]
 
 '''
-erreur_maj = update.executer()
+erreur_maj = update__copy.executer()
 
 
 
@@ -135,14 +135,25 @@ def fonction_animation_score(x, total) :
         return 0.50 + ((x-85)/15)
 
 
-#pour remplacer le lancement de update et afficher la barre de progression
-def telechargement(fenetre):
+#pour remplacer le lancement de update__copy et afficher la barre de progression
+def telechargement(bouton):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
     '''
-    efface_fenetre(fenetre)
-    progressbar = interface.CTkProgressBar(fenetre)
+    change_etat_btn(bouton)
+    
+    
+    windowDownload = interface.CTkToplevel() #fenetre de tkinter
+    windowDownload.title('Page de telechargement')
+    #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
+    windowDownload.minsize(width=int(510*4/3), height=384) #768
+    msg_aide = interface.CTkLabel(windowDownload, text="téléchargement en cours", width = 1000, font =('Bold',16), justify=LEFT)
+    msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
+    progressbar = interface.CTkProgressBar(windowDownload)
     progressbar.pack(relx=0.5,rely=0.6,anchor = CENTER)
+    windowDownload.mainloop()
+
+
 
 
 
@@ -697,7 +708,7 @@ fenetrePrincipale.minsize(width=768, height=500) #768 = taille minimum de la fen
 fenetrePrincipale.state('zoomed')
 
 #boutton de lancement
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(fenetrePrincipale), text="Lancer le téléchargement") #appele la fonction question1
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(btn_ok), text="Lancer le téléchargement") #appele la fonction question1
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 #message de lancement
