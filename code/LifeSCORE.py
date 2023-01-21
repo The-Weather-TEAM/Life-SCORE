@@ -81,6 +81,15 @@ pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
 
 
 
+'''
+CREATION DE La FENETRE PRINCIPALE
+
+'''
+#fenêtre
+fenetrePrincipale = interface.CTk() #fenetre de tkinter
+fenetrePrincipale.title('Accueil - QCU')
+fenetrePrincipale.minsize(width=768, height=500) #768 = taille minimum de la fenetre
+fenetrePrincipale.state('zoomed')
 
 
 '''
@@ -105,7 +114,7 @@ global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0
 global n # Pour faire list_Questions[n]
 global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
 global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
-global windowQCM #Globale pour la fenêtre principale
+#global Fenetre_CTk #Globale pour la fenêtre principale
 
 
 
@@ -142,7 +151,7 @@ def fonction_animation_score(x, total) :
 
 
 # Premiere page
-def w_qcm(option = None): # w pour window
+def w_qcm(win,option = None): # w pour window
     global msg_principal
     global btn_ok
     global list_Questions
@@ -154,24 +163,20 @@ def w_qcm(option = None): # w pour window
     Affiche la premiere page qui contient donc le qcm
     """
     n = len(list_Questions)
-    #fenêtre
-    windowQCM = interface.CTk() #fenetre de tkinter
-    windowQCM.title('Accueil - QCU')
-    windowQCM.minsize(width=768, height=500) #768 = taille minimum de la fenetre
-    windowQCM.state('zoomed')
+    
 
-    msg_principal =  interface.CTkLabel(windowQCM, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+    msg_principal =  interface.CTkLabel(win, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
-    btn_aide  = interface.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+    btn_aide  = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
-    btn_ok = interface.CTkButton(windowQCM, height=int(windowQCM.winfo_screenheight()/15), command=lambda: avancer(windowQCM), text="OK") #appele la fonction question1
+    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/15), command=lambda: avancer(win), text="OK") #appele la fonction question1
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 
@@ -181,7 +186,7 @@ def w_qcm(option = None): # w pour window
         msg_principal.configure(text = "Bienvenue, nous allons commencer par un petit QCM")
         n = 0
 
-    windowQCM.mainloop() #pour fermer la fenetre
+    win.mainloop() #pour fermer la fenetre
 
 
 
@@ -395,11 +400,8 @@ def w_question(fenetre):
     """
     affiche la seconde page qui contient la requête de la ville
     """
-    """windowQuestion = interface.CTk() #fenetre de tkinter
-    windowQuestion.title('Seconde page - requête de la ville')
-    windowQuestion.minsize(width=768, height=500)
-    windowQuestion.state('zoomed') #Plein écran"""
-
+    fenetre.title('Seconde page - requête de la ville')
+    
     icon_2 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon2.png')
     fenetre.iconphoto(False, icon_2)
 
@@ -490,6 +492,7 @@ def w_score(ville,win):
     
     icon_1 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon.png')
     win.iconphoto(False, icon_1)
+    win.title('Troisième page - Score de la ville')
         
 
     #Donnees PROVISOIRES !!!
@@ -656,33 +659,30 @@ def couleur_score(note):
 
 
 #Page d'erreur 
-def w_erreur(): # w pour window
+def w_erreur(fenetre): # w pour window
     """
     Affiche la page d'erreur qui signale le problème
     """
     
     #fenêtre
-    windowERR = interface.CTk() #fenetre de tkinter
-    windowERR.title('Erreur - Echec du lancement')
-    windowERR.minsize(width=768, height=500) #768 = taille minimum de la fenetre
-    windowERR.state('zoomed')
-
-    msg_principal =  interface.CTkLabel(windowERR, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
+    fenetre.title('Erreur - Echec du lancement')
+    
+    msg_principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
         width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
-    btn_aide  = interface.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+    btn_aide  = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
-    btn_ok = interface.CTkButton(windowERR, height=int(windowERR.winfo_screenheight()/15), command=windowERR.destroy, text="OK") #Ferme la page
+    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15), command=fenetre.destroy, text="OK") #Ferme la page
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
 
-    windowERR.mainloop() 
+    fenetre.mainloop() 
 
 
 
@@ -752,13 +752,12 @@ if not erreur_maj :
     #En attendant je garde style.txt et au pire du pire on fait un fichier "fix" genre celui qui a effacé le fichier doit etre capable de le garder mdrr
 
 
-
     # appel de la fonction de la première page
     # Création le fichier du dico s'il existe pas :
     if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
         os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
         #csv.writer(open(nom_du_repertoire+'/data/csv_dico.csv', "w")).writerow(['CLE', 'VALEUR']) #On le fait plus bas
-        w_qcm() 
+        w_qcm(win = fenetrePrincipale) 
 
         #ON POURRAIT PTETRE FAIRE UNE FONCTION POUR LIGNES SUIVANTES
         tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
@@ -773,9 +772,9 @@ if not erreur_maj :
     else:
         #print(len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')),len(list_Questions))
         if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
-            w_qcm('Sans Qcm')
+            w_qcm(option ='Sans Qcm',win = fenetrePrincipale)
         else:
-            w_qcm() #Si on a pas un fichier complet
+            w_qcm(win = fenetrePrincipale) #Si on a pas un fichier complet
             tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
             #print(tab_Reponses)
 
@@ -805,4 +804,4 @@ if not erreur_maj :
 
 
 else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on a pas internet
-    w_erreur()
+    w_erreur(fenetrePrincipale)
