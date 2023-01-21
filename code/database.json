@@ -6,6 +6,55 @@
                                                                           "colonne_donnee" : "popleg_tot"
                                                                 
 
-    }]
+    }],
+    "écoles":
+    ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_insee_de_la_commune",
+                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                
+
+    }],
+    "collèges":
+    ["63478da6e4e27dba6feacfa4","b63bd365-c589-48e4-b7d8-9e4f5db133c5", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_insee_de_la_commune",
+                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                
+
+    }],
+    "lycées":
+    ["63bce30c70d6d100b09dde9a","27d469ff-9908-4b7e-a2e0-9439bb38a395", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_insee_de_la_commune",
+                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                
+
+    }],
+    "police/gendarmerie":
+    ["5489cda0c751df35a24120e7","c53cd4d4-4623-4772-9b8c-bc72a9cdf4c2", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_commune",
+                                                                          "colonne_donnee" : "service"
+                                                                
+
+    }],
+    "festivals":
+    ["62cf95993d99f22480f49334","47ac11c2-8a00-46a7-9fa8-9b802643f975", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_insee_commune",
+                                                                          "colonne_donnee" : "nom_du_festival"
+                                                                
+
+    }],
+    "musées":
+    ["5e27c8e2dee7e70ed425e8d6","29406189-15e9-4f2f-9e9d-d18649762198", { "insee" : 0,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "commune",
+                                                                          "colonne_donnee" : "nom_officiel_du_musee"
+                                                                
+
+    }],
+    
 
 }
