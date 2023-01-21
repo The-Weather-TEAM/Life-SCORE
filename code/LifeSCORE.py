@@ -157,6 +157,8 @@ def w_qcm(win,option = None): # w pour window
     global list_Questions
     global n
 
+    efface_fenetre(win) #efface tout ce qui était déja présennt pour y rajouter les choses
+
 
 
     """
