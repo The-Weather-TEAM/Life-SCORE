@@ -20,7 +20,7 @@
 
 '''
 
-
+# Ce qu'on utilise pour mettre à jour (déjà dans python)
 
 
 
