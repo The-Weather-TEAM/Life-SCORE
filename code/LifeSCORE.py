@@ -16,7 +16,36 @@ réferences :
 
 
 '''
+import subprocess
+import sys
+import os
 
+
+
+'''
+MODULE DE MISE A JOUR DES BIBLIOTHEQUES
+ 
+'''
+def maj_modules_requirements():
+    """
+    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
+    """
+
+    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
+    print('Analyse des pip dans '+nom_du_repertoire+"\\requirements.txt")
+
+    # on installe tous les modules individuellement pour pouvoir les afficher un par un
+    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
+        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
+
+        if "Collecting" in output:
+            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
+
+        elif "already satisfied" in output:
+            print(module.split(">")[0], "-> est present")
+
+
+maj_modules_requirements()
 
 
 
@@ -37,10 +66,9 @@ from classes import * #Import de nos classes créées
 
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
-# Il faudrait corriger ce doublon
+
 import customtkinter as interface
 
-import os
 import pandas
 import pyglet
 from time import sleep
@@ -217,7 +245,7 @@ def w_qcm(win,option = None): # w pour window
     n = len(list_Questions)
     
 
-    msg_principal =  interface.CTkLabel(win, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
+    msg_principal = interface.CTkLabel(win, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER)
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
@@ -771,8 +799,8 @@ btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.win
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 #message de lancement
-message = interface.CTkLabel(fenetrePrincipale, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER)
-message.place(relx= 0.5, rely = 0.4,anchor = CENTER)
+msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers", width = 1000, font =('Bold',18), justify=CENTER)
+msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
 
