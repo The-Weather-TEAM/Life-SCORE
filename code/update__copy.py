@@ -1,6 +1,6 @@
 '''
                         [UPDATE.PY]
-                            V.6
+                            V.5
                          
     Programme de téléchargement et mises à jour des données
 
@@ -16,7 +16,7 @@
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
 - Création du fichier options.csv qui permet de stocker des données pour l'application
-- Implémentation de Tkinter
+- Gestion des bibliothèques (Thor)
 
 '''
 
@@ -25,10 +25,48 @@
 
 
 '''
-BIBLIOTHEQUES
+MODULE DE MISE A JOUR DES BIBLIOTHEQUES
  
 '''
+
+# Ce qu'on utilise pour mettre à jour (déjà dans python)
+from classes import is_connected as connexion
+import subprocess
+import sys
 import os
+
+
+
+def maj_modules_requirements():
+    """
+    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
+    """
+    
+    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
+
+    # on installe tous les modules individuellement pour pouvoir les afficher un par un
+    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
+        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
+
+        if "Collecting" in output:
+            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
+        
+        elif "already satisfied" in output:
+            print(module.split(">")[0], "-> est present")
+
+
+if connexion('https://pypi.org/') : 
+    # Execute la fonction seulement si on a internet. A AMELIORER (fréquence maj)
+    maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour éviter des erreurs de manque de modules (requests par exemple)
+
+
+
+
+
+'''
+AUTRES BIBLIOTHEQUES
+ 
+'''
 import requests # Demandes de connexion
 import csv # Lecture des CSV
 import json # Pour lire notre base de données
@@ -36,7 +74,6 @@ import pandas as p # Lecture et écriture des CSV
 import datetime # Conversion UNIX + vérification des versions
 import time # Conversion UNIX
 from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
-from classes import is_connected as connexion
 
     
 # Pour éviter erreurs de coupure réseau :
@@ -253,7 +290,8 @@ def executer(barre_progres,fenetre,message):
                     barre_progres.step()
                     barre_progres.set(pourcentage)
                     
-                    fenetre.update()                  # Retourne la version du fichier
+                    fenetre.update()
+                    
 
 
                 # Pour éviter une erreur, comme ça on télécharge le CSV même si on récupère pas la version :
@@ -262,7 +300,7 @@ def executer(barre_progres,fenetre,message):
                 
                 
                 
-                # On modifie mise_a_jour ssi le .csv exisatait et si la version de l'utilisateur est différente de la dernière disponible :
+                # On modifie mise_a_jour ssi le .csv existait et si la version de l'utilisateur est différente de la dernière disponible :
                 if is_courant_csv and recup_version != version :
                     mise_a_jour = True
                 
@@ -276,6 +314,7 @@ def executer(barre_progres,fenetre,message):
                 
                 # Téléchargement si data n'existait pas ou si la version du .csv était différente :
                 if not is_file_versions or recup_version != version :
+                    print("Téléchargement si data n'existait pas ou si la version du .csv était différente")
                     
                     
                     # Supprime la version actuelle ssi il y avait le fichier .csv :
@@ -291,6 +330,7 @@ def executer(barre_progres,fenetre,message):
                     lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
                     message.configure(text = "Téléchargement du fichier "+id)
                     fenetre.update()
+                    
                     
                     
                     
@@ -343,7 +383,7 @@ def executer(barre_progres,fenetre,message):
                     
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     nombre_csv_modifies += 1
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
+                    pourcentage = int(csv_courant/nombre_total_csv)
                     print(pourcentage)
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
@@ -353,9 +393,10 @@ def executer(barre_progres,fenetre,message):
                     
                     
                     
+                """   
                 '''  
                 INTERFACE SUR TERMINAL + VARIABLES POUR TKINTER
-                    
+                A RAJOUTER barre_progres    
                 '''
                 if is_courant_modified:
                     # Message sur le terminal (provisoire, à modifier pour du Tkinter)
@@ -386,26 +427,29 @@ def executer(barre_progres,fenetre,message):
                         del nouvelles_informations[id]
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
-                        mise_a_jour = False
-                    
-                    
-
-                          
-                # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
-                # avec gestion du nombre de caractères pour avoir du texte homogène          
+                        mise_a_jour = False"""
+                
+            # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
+            # avec gestion du nombre de caractères pour avoir du texte homogène          
+            else :
+                pourcentage = int(csv_courant/nombre_total_csv)
+                
+                if pourcentage < 10 :
+                    msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
+                elif pourcentage < 100 :
+                    msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
                 else :
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
-                    
-                    if pourcentage < 10 :
-                        msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
-                    elif pourcentage < 100 :
-                        msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
-                    else :
-                        msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
-                            
-                    print (msg_csv_courant)
+                    msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
                         
+                print (msg_csv_courant)
+                print(pourcentage)
+                
+                barre_progres.configure(determinate_speed=pourcentage)
+                barre_progres.step()
+                barre_progres.set(pourcentage)
+                fenetre.update()
                         
+            """            
             # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
             # avec gestion du nombre de caractères pour avoir du texte homogène
             else : 
@@ -418,7 +462,7 @@ def executer(barre_progres,fenetre,message):
                 else :
                     msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
                         
-                print (msg_csv_courant)
+                print (msg_csv_courant)"""
         
         
         
@@ -464,7 +508,7 @@ def executer(barre_progres,fenetre,message):
     if is_modified and not mise_a_jour :
         
         if not is_file_versions :
-            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a",)) # le "a" c'est l'équivalent de .append() pour les tableaux 
+            rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a", newline='')) # le "a" c'est l'équivalent de .append() pour les tableaux / newline pour éviter les sauts de lignes.
         else :
             rajout_donnee = csv.writer(open(repertoire+'/'+'versions.csv', "a")) 
             

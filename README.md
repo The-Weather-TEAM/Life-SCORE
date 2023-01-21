@@ -94,6 +94,7 @@ Changements :
 ## Configuration recommandée :
 - Windows 10 / 11
 - Python 3.11.x
+- subprocess / sys / os (Bibliothèques intégrées à Python)
 - Bibliothèques utilisés (téléchargeables avec requirements.txt) :
 >Téléchargement automatique sur l'application depuis la v0.5.2.
 
@@ -347,3 +348,14 @@ mbre de pi
 >Le programme utilise maintenant des polices d'écriture personnalisées !
 
 >Nettoyage du code et rajout de commentaires.
+
+
+
+21 Janvier 2023 :
+>Rajout d'une interface de téléchargements
+
+>Correction du bug de nouveaux csv dans la base de données : https://github.com/The-Weather-TEAM/Life-SCORE/issues/73
+
+>Ajout de csv dans la base de données
+
+>Correction du bug pour télécharger les bibliothèques : https://github.com/The-Weather-TEAM/Life-SCORE/issues/69
