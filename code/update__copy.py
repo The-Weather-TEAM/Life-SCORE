@@ -86,7 +86,7 @@ from http.client import IncompleteRead
 
 
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
-def executer():
+def executer(barre_progres,fenetre,message):
 
 
 
@@ -280,8 +280,18 @@ def executer():
                        
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
                 if is_file_versions and is_courant_csv:
+                    message.configure(text = "Verification de la présence du fichier "+id)
+                    print(id)
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
+                    pourcentage = csv_courant/nombre_total_csv
+                    print(pourcentage)
+                    barre_progres.configure(determinate_speed=pourcentage)
+                    barre_progres.step()
+                    barre_progres.set(pourcentage)
+                    
+                    fenetre.update()
+                    
 
 
                 # Pour éviter une erreur, comme ça on télécharge le CSV même si on récupère pas la version :
@@ -290,7 +300,7 @@ def executer():
                 
                 
                 
-                # On modifie mise_a_jour ssi le .csv exisatait et si la version de l'utilisateur est différente de la dernière disponible :
+                # On modifie mise_a_jour ssi le .csv existait et si la version de l'utilisateur est différente de la dernière disponible :
                 if is_courant_csv and recup_version != version :
                     mise_a_jour = True
                 
@@ -304,6 +314,7 @@ def executer():
                 
                 # Téléchargement si data n'existait pas ou si la version du .csv était différente :
                 if not is_file_versions or recup_version != version :
+                    print("Téléchargement si data n'existait pas ou si la version du .csv était différente")
                     
                     
                     # Supprime la version actuelle ssi il y avait le fichier .csv :
@@ -317,6 +328,8 @@ def executer():
                                 
                     # Lien de téléchargement :    
                     lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
+                    message.configure(text = "Téléchargement du fichier "+id)
+                    fenetre.update()
                     
                     
                     
@@ -370,15 +383,20 @@ def executer():
                     
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     nombre_csv_modifies += 1
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
+                    pourcentage = int(csv_courant/nombre_total_csv)
+                    print(pourcentage)
+                    barre_progres.configure(determinate_speed=pourcentage)
+                    barre_progres.step()
+                    barre_progres.set(pourcentage)
+                    fenetre.update()
                     
                     
                     
                     
-                    
+                """   
                 '''  
                 INTERFACE SUR TERMINAL + VARIABLES POUR TKINTER
-                    
+                A RAJOUTER barre_progres    
                 '''
                 if is_courant_modified:
                     # Message sur le terminal (provisoire, à modifier pour du Tkinter)
@@ -409,26 +427,29 @@ def executer():
                         del nouvelles_informations[id]
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
-                        mise_a_jour = False
-                    
-                    
-
-                          
-                # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
-                # avec gestion du nombre de caractères pour avoir du texte homogène          
+                        mise_a_jour = False"""
+                
+            # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
+            # avec gestion du nombre de caractères pour avoir du texte homogène          
+            else :
+                pourcentage = int(csv_courant/nombre_total_csv)
+                
+                if pourcentage < 10 :
+                    msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
+                elif pourcentage < 100 :
+                    msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
                 else :
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
-                    
-                    if pourcentage < 10 :
-                        msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
-                    elif pourcentage < 100 :
-                        msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
-                    else :
-                        msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
-                            
-                    print (msg_csv_courant)
+                    msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
                         
+                print (msg_csv_courant)
+                print(pourcentage)
+                
+                barre_progres.configure(determinate_speed=pourcentage)
+                barre_progres.step()
+                barre_progres.set(pourcentage)
+                fenetre.update()
                         
+            """            
             # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
             # avec gestion du nombre de caractères pour avoir du texte homogène
             else : 
@@ -441,7 +462,7 @@ def executer():
                 else :
                     msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
                         
-                print (msg_csv_courant)
+                print (msg_csv_courant)"""
         
         
         
