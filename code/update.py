@@ -49,7 +49,7 @@ from http.client import IncompleteRead
 
 
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
-def executer():
+def executer(barre_progres,fenetre,message):
 
 
 

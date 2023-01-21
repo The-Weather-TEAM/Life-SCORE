@@ -21,35 +21,9 @@ réferences :
 
 
 
-import subprocess
-import sys
-import os
 
 
 
-'''
-MODULE DE MISE A JOUR DES BIBLIOTHEQUES
- 
-'''
-def maj_modules_requirements():
-    """
-    Mets à jour tous les modules dans requirements.txt ou les installent si ils ne le sont pas deja.
-    """
-    
-    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
-
-    # on installe tous les modules individuellement pour pouvoir les afficher un par un
-    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
-        output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE).stdout.decode("utf-8")
-
-        if "Collecting" in output:
-            print(module.split(">")[0], "-> n'est pas present, en cours d'installation.")
-        
-        elif "already satisfied" in output:
-            print(module.split(">")[0], "-> est present")
-
-
-maj_modules_requirements()
 
 
 '''
@@ -109,12 +83,7 @@ pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
 
 
 
-'''
-LANCEMENT DU PROGRAMME
-     [UPDATE.PY]
 
-'''
-erreur_maj = update.executer()
 
 
 
@@ -129,6 +98,7 @@ global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0
 global n # Pour faire list_Questions[n]
 global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
 global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
+global erreur_maj
 #global Fenetre_CTk #Globale pour la fenêtre principale
 
 
@@ -162,13 +132,71 @@ def fonction_animation_score(x, total) :
 
 
 #pour remplacer le lancement de update et afficher la barre de progression
-def telechargement(fenetre):
+def telechargement(bouton,fenetre):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
     '''
-    efface_fenetre(fenetre)
-    progressbar = interface.CTkProgressBar(fenetre)
-    progressbar.pack(relx=0.5,rely=0.6,anchor = CENTER)
+    global erreur_maj
+    change_etat_btn(bouton)
+    
+    
+    windowDownload = interface.CTkToplevel() #fenetre de tkinter
+    windowDownload.title('Page de telechargement')
+    #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
+    windowDownload.minsize(width=int(510*4/3), height=384) #768
+    windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
+
+    msg_aide = interface.CTkLabel(windowDownload, text="téléchargement en cours", width = 1000, font =('Bold',16), justify=LEFT)
+    msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
+
+    progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate',)
+    progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
+    progressbar.set(0)
+    windowDownload.update()
+    
+    
+    erreur_maj = update.executer(progressbar,windowDownload,msg_aide)
+    print(erreur_maj)
+    if not erreur_maj:
+        retour_pages(windowDownload,bouton)
+        valeur_bol = creation_fichiers()
+        if valeur_bol == (True,True):
+            w_qcm(fenetre,option ="sans_qcm")
+        elif valeur_bol == (True,False):
+            w_qcm(fenetre)
+    else:
+        retour_pages(windowDownload,bouton)
+        w_erreur(fenetre)
+
+    windowDownload.mainloop()
+
+    #lancement de update.py
+    
+def creation_fichiers(arg = None):
+    '''
+    fonction qui cree ou complete le fichier csv_dico.csv
+    '''
+    if arg == None:
+        # Création le fichier du dico s'il existe pas :
+        if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
+            os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
+            return False, False
+        else:
+            #si qcm terminé
+            if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
+                return True,True
+            else:
+                #Si on a pas un fichier complet
+                
+                return True,False #fichier = true, complété = False
+        
+    tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
+    with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
+        ecriture = csv.writer(f)
+        ecriture.writerow(['CLE','VALEUR'])
+        ecriture.writerows(tab_Reponses)
+
+
 
 
 
@@ -710,7 +738,23 @@ def w_erreur(fenetre): # w pour window
 
 
 
+'''
+VARIABLE GLOBALES
 
+'''
+
+
+n = 0
+list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
+                ('Avez vous moins de 30 ans ?','Age'),
+                ('Etes vous etudiant ?','Scolarite'), # Change pour  X si personne = vieille                
+                ('Avez vous\Vivez vous avec des enfants ?','Famille'),
+                ('La culture a-t-elle une place importante pour vous ?','Culture'),
+                ('préférez vous la campagne à la ville ?','citadin'),
+                ('Avez vous un travail ?','Travail'),
+                ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
+
+dico_Reponses = {} # Traité dans coefficients.py
 
 '''
 CREATION DE La FENETRE PRINCIPALE
@@ -723,7 +767,7 @@ fenetrePrincipale.minsize(width=768, height=500) #768 = taille minimum de la fen
 fenetrePrincipale.state('zoomed')
 
 #boutton de lancement
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(fenetrePrincipale), text="Lancer le téléchargement") #appele la fonction question1
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Lancer le téléchargement") #appele la fonction question1
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 #message de lancement
@@ -732,115 +776,5 @@ message.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
 
-'''
-CODE PRINCIPAL
-
-'''
-
-if not erreur_maj :
 
 
-
-
-
-    n = 0
-    list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
-                    ('Avez vous moins de 30 ans ?','Age'),
-                    ('Etes vous etudiant ?','Scolarite'), # Change pour  X si personne = vieille                
-                    ('Avez vous\Vivez vous avec des enfants ?','Famille'),
-                    ('La culture a-t-elle une place importante pour vous ?','Culture'),
-                    ('préférez vous la campagne à la ville ?','citadin'),
-                    ('Avez vous un travail ?','Travail'),
-                    ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
-
-    dico_Reponses = {} # Traité dans coefficients.py
-
-
-
-
-        
-        
-
-    """
-    #Image en url bitmap ? TEST D'IMAGE 
-    URL = "https://avatars.githubusercontent.com/u/119951824?s=200&v=4"
-    u = urlopen(URL)
-    raw_data = u.read()
-    u.close()
-    """
-    """
-    if os.path.isfile(nom_du_repertoire+'/data/options.csv'):
-        print('balablablab')
-        with open(nom_du_repertoire+'/data/options.csv','r+') as fichier:
-            cr = pandas.read_csv(fichier,delimiter=",",usecols=['OPTION','VALEUR'],encoding='utf-8-sig')
-            row = cr[cr['OPTION'] == "APPARENCE"]
-            print(row, "nlanla")
-            if not row.empty:
-                interface.set_appearance_mode(str(row[0][0])) #recupère la donnee
-
-            else:
-                liste_rangee = ["APPARENCE","System"]
-                cr.loc[len(cr)] = liste_rangee  #Cree la donnee 
-        with open(nom_du_repertoire+'/data/options.csv','w') as fichier:
-            fichier.write(str(cr))"""
-    
-    
-    
-
-    #Je n'ai pas réussi à faire fonctionner ceci : Raf
-    #En attendant je garde style.txt et au pire du pire on fait un fichier "fix" genre celui qui a effacé le fichier doit etre capable de le garder mdrr
-
-
-    # appel de la fonction de la première page
-    # Création le fichier du dico s'il existe pas :
-    if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
-        os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
-        #csv.writer(open(nom_du_repertoire+'/data/csv_dico.csv', "w")).writerow(['CLE', 'VALEUR']) #On le fait plus bas
-        w_qcm(win = fenetrePrincipale) 
-
-        #ON POURRAIT PTETRE FAIRE UNE FONCTION POUR LIGNES SUIVANTES
-        tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
-        #print(tab_Reponses)
-
-        #ecriture du csv avec les valeurs du dico
-
-        with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
-            ecriture = csv.writer(f)
-            ecriture.writerow(['CLE','VALEUR'])
-            ecriture.writerows(tab_Reponses)
-    else:
-        #print(len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')),len(list_Questions))
-        if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
-            w_qcm(option ='Sans Qcm',win = fenetrePrincipale)
-        else:
-            w_qcm(win = fenetrePrincipale) #Si on a pas un fichier complet
-            tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
-            #print(tab_Reponses)
-
-            #ecriture du csv avec les valeurs du dico
-
-            with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
-                ecriture = csv.writer(f)
-                ecriture.writerow(['CLE','VALEUR'])
-                ecriture.writerows(tab_Reponses)
-            
-    
-
-
-
-
-
-    '''
-    Lignes pour accéder à différentes page directement
-    '''
-    # w_question() 
-    #w_score('Paris')
-    #print(n,dico_Reponses,msg_principal)
-
-
-
-
-
-
-else: #Il est impossible de traiter les fichiers qui sont inexistants puisqu'on a pas internet
-    w_erreur(fenetrePrincipale)
