@@ -45,7 +45,7 @@ def maj_modules_requirements():
             print(module.split(">")[0], "-> est present")
 
 
-maj_modules_requirements()
+#maj_modules_requirements() # A AMELIORER
 
 
 
@@ -67,14 +67,14 @@ from classes import * #Import de nos classes créées
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
 
-import customtkinter as interface
+
 
 import pandas
 import pyglet
+from pyglet.font import ttf
 from time import sleep
 import csv
-
-
+import customtkinter as interface
 
 
 
@@ -105,14 +105,12 @@ RECUPERATION POLICES ET STYLE
 interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 interface.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
 
-pyglet.font.add_file(nom_du_repertoire+'/Poppins.ttf')
-
-
-
-
-
-
-
+#BUGGGGGGGGGG NE MARCHE PAS 
+'''pyglet.font.add_file(nom_du_repertoire+'\\unbounded.ttf')
+nom_police=pyglet.font.ttf.TruetypeInfo(nom_du_repertoire+'\\unbounded.ttf').get_name('name')   
+nom_police_f=pyglet.font.ttf.TruetypeInfo(nom_du_repertoire+'\\unbounded.ttf').get_name('family')   
+print(nom_police)
+print(nom_police_f)'''
 
 
 '''
@@ -582,7 +580,7 @@ def w_score(ville,win):
 
 
     #Transfo des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font =('Poppins ExtraBold Italic' ,100), justify=CENTER)
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font=('Arial Black',100), justify=CENTER)
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
@@ -617,7 +615,7 @@ def w_score(ville,win):
                 
             couleur= couleur_score(i)
             #Textes :
-            msg_note = interface.CTkLabel(win, text=str(i), text_color=couleur, font =('Poppins ExtraBold Italic', 100), justify=CENTER)
+            msg_note = interface.CTkLabel(win, text=str(i), text_color=couleur, font=('Arial Black', 100), justify=CENTER)
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
 
@@ -631,7 +629,7 @@ def w_score(ville,win):
     else:
         
         #Textes :
-        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Poppins ExtraBold Italic',60), justify=CENTER)
+        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Arial Black',60), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_NonAttribue = interface.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
         msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
