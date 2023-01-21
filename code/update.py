@@ -20,7 +20,35 @@
 
 '''
 
+# Ce qu'on utilise pour mettre à jour (déjà dans python)
+import subprocess
+import sys
+import os
 
+def maj_modules_requirements():
+    """
+    Verifie si tout les modules dans requirements.txt sont present, sinon ils sont installés.
+    """
+    
+    nom_du_repertoire = os.path.dirname(__file__) # Cherche path du repertoir courant
+
+    #list des modules deja installé
+    pipList = subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=subprocess.PIPE).stdout.decode("utf-8")
+
+    # on installe tous les modules individuellement pour pouvoir les afficher un par un
+    for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines():
+        moduleSeul = module.split(">")[0] # car c'est en format module>=x.x.x
+
+        if moduleSeul + "==" in pipList:
+            print(moduleSeul, "-> est present")
+        else: 
+            print(moduleSeul, "-> n'est pas present, en cours d'installation.")
+            output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf-8")
+            
+            if output == "": # output == "" quand il y a un erreur d'installation
+                raise ConnectionError("Erreur de connection, verifiez votre connection d'internet!")
+
+maj_modules_requirements() # ceci tourne vraiment en TOUT premier, pour éviter des erreurs de manque de modules (requests par exemple)
 
 
 
