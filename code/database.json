@@ -60,6 +60,15 @@
                                                                           "colonne_donnee" : "nom_officiel_du_musee"
                                                                 
 
+    }],
+    
+    "hopitaux":
+    ["5f07458de03abf6e1e97bcf9","c41a1919-fbd7-4d19-a8df-1719bef8b14a", { "insee" : 0,
+                                                                          "delimiteur" : ",",
+                                                                          "colonne_ville" : "addr-city",
+                                                                          "colonne_donnee" : "name"
+                                                                
+
     }]
     
 
