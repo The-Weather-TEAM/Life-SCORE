@@ -581,7 +581,7 @@ def w_score(ville,win):
 
 
     #Transfo des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 1000, font=('Arial Black',100), justify=CENTER)
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
@@ -761,7 +761,14 @@ def w_erreur(fenetre): # w pour window
     btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15), command=fenetre.destroy, text="OK") #Ferme la page
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
 
-
+def taille_police(chaine):
+    '''
+    Fonction qui retourne une taille de police adéquate en fonction du nombre de caractères et d'une fonction f(x) = -mx+p
+    idée : Raf
+    '''
+    longueur = len(chaine)
+    taille = -1.5*longueur + 70 #a modifier peut etre faire une fonction inverse ?
+    return taille
 
 
 
