@@ -411,7 +411,7 @@ def parametres(bouton):
     """variable = interface.StringVar()
     variable.set("System")"""
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.set(str(style)) #affiche le style déja choisi (mais en anglais ducoup malheureusement)
+    switch_apparence.set('Styles') #affiche le style déja choisi (mais en anglais ducoup malheureusement) str(style) pour afficher le présent
     switch_apparence.place(relx = 0.2, rely = 0.8, anchor = CENTER)
     
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
