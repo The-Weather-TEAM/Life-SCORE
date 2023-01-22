@@ -89,7 +89,7 @@ nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 if not os.path.isfile(nom_du_repertoire+'/data/style.txt'):
     a = os.path.join(nom_du_repertoire, '/data/style.txt')
     with open(a,"w") as fichier:
-        fichier.write("System")
+        fichier.write("system")
 
 with open(nom_du_repertoire +'/data/style.txt') as txt:
     style = txt.read()
@@ -403,7 +403,6 @@ def parametres(bouton):
     windowParam = interface.CTkToplevel()
     windowParam.title('Page 1ter - Parametres')
     windowParam.minsize(width=int(510*4/3), height=384) #768
-    #windowParam.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
     message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
@@ -412,7 +411,9 @@ def parametres(bouton):
     """variable = interface.StringVar()
     variable.set("System")"""
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
+    switch_apparence.set(str(style)) #affiche le style déja choisi (mais en anglais ducoup malheureusement)
     switch_apparence.place(relx = 0.2, rely = 0.8, anchor = CENTER)
+    
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
                                                                 text="Appliquer les Changements")
