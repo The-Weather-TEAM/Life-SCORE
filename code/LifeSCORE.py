@@ -616,7 +616,7 @@ def w_score(ville,win):
                 
             couleur= couleur_score(i)
             #Textes :
-            msg_note = interface.CTkLabel(win, text=str(i), text_color=couleur, font=('Arial Black', 100), justify=CENTER)
+            msg_note = interface.CTkLabel(win, text='Note : \n' +str(i), text_color=couleur, font=('Arial Black', 50), justify=CENTER)
             msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
             
 
