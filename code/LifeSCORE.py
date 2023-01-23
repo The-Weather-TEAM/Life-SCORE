@@ -491,6 +491,7 @@ def w_question(fenetre):
     """
     affiche la seconde page qui contient la requête de la ville
     """
+    creation_fichiers("Rajout des lignes") #rajoute les lignes au dico csv dès qu'on quitte la page de QCM
     fenetre.title('Seconde page - requête de la ville')
     
     icon_2 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon2.png')
@@ -822,6 +823,6 @@ msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
 
-creation_fichiers("Rajout des lignes")
+
 
 
