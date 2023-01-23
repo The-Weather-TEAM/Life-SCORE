@@ -87,9 +87,9 @@ nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 
 #NE MARCHE PAS SI LE FICHIER N'EXISTE PAS NATHAN TU PEUX AIDER ?
 if not os.path.isfile(nom_du_repertoire+'/data/style.txt'):
-    a = os.path.join(nom_du_repertoire, '/data/style.txt')
-    with open(a,"w") as fichier:
-        fichier.write("system")
+    nom_fichier = nom_du_repertoire+'/data/style.txt'
+    with open(nom_fichier,"w") as fichier:
+        fichier.write("System")
 
 with open(nom_du_repertoire +'/data/style.txt') as txt:
     style = txt.read()
