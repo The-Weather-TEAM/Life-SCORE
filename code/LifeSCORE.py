@@ -184,13 +184,18 @@ def telechargement(bouton,fenetre):
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide)
     print(erreur_maj)
     if not erreur_maj:
-        retour_pages(windowDownload,bouton)
+        print('marche')
         valeur_bol = creation_fichiers()
+        print(valeur_bol)
+        retour_pages(windowDownload,bouton)
         if valeur_bol == (True,True):
+            print('true,true')
             w_qcm(fenetre,option ="sans_qcm")
-        elif valeur_bol == (True,False):
+        else: #Qcm non terminé
+            print('faire le qcm')
             w_qcm(fenetre)
     else:
+        print('suspicious ne marche pas')
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
 
@@ -205,16 +210,23 @@ def creation_fichiers(arg = None):
     if arg == None:
         # Création le fichier du dico s'il existe pas :
         if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
-            os.path.join(nom_du_repertoire, '/data/csv_dico.csv') #Ce csv prend les valeurs de Dico Global
+            print(os.path.join(nom_du_repertoire, '/data/csv_dico.csv')) #Ce csv prend les valeurs de Dico Global
+            file = open(nom_du_repertoire+'/data/csv_dico.csv','w')
+            ecriture = csv.writer(file)
+            ecriture.writerow(['CLE','VALEUR'])
+            file.close()
             return False, False
         else:
             #si qcm terminé
-            if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
-                return True,True
-            else:
-                #Si on a pas un fichier complet
-                
-                return True,False #fichier = true, complété = False
+            try :
+                if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
+                    return True,True
+                else:
+                    #Si on a pas un fichier complet
+                    
+                    return True,False #fichier = true, complété = False
+            except pandas.errors.EmptyDataError:
+                return False,False
         
     tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
     with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
