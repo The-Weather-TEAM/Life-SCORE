@@ -359,3 +359,19 @@ mbre de pi
 >Ajout de csv dans la base de données
 
 >Correction du bug pour télécharger les bibliothèques : https://github.com/The-Weather-TEAM/Life-SCORE/issues/69
+
+
+
+22 Janvier 2023 :
+>Amélioration de l'option menu qui affiche les styles, maintenant il affiche le style courant 
+
+>Amélioration de la taille de police avec une fonction qui calcule la taille en fonction de la longueur de la ville (sous forme mx +p)
+
+
+
+23 Janvier 2023 :
+>Réglage d'un problème qui faisait planter le programme si `csv_dico.csv` n'était pas présent (issues https://github.com/The-Weather-TEAM/Life-SCORE/issues/77 et https://github.com/The-Weather-TEAM/Life-SCORE/issues/78)
+
+>Réglage du problème avec `style.txt` (le programme n'était pas capable de recréer le fichier s'il n'existait pas mais il le peut désormais)
+
+
