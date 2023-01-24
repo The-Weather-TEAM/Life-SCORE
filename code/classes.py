@@ -86,6 +86,7 @@ class Donnees:
         
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__)
+        self.liste_notes = [] #La liste dans laquelle on rempli les notes 
 
 
 
@@ -226,6 +227,10 @@ class Donnees:
     
     '''
     def note_sport(self):
+        """
+        Methode qui renvoie la note de sport (peut etre tenter de le faire automatiquement avec un fichier en entree)
+        ajoute la valeur de la note a self.liste_notes et la retourne (si on veut l'afficher)
+        """
 
         
         data_sport = p.read_csv(self.repertoire + '/data/sport.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'],low_memory=False)
@@ -251,13 +256,14 @@ class Donnees:
                 note = 0
         
         except IndexError : # Si pas de données
+            self.liste_notes.append(None)
             return None
             
             
         # MOYENNE NATIONALE : 311000/67500000 habitants (envioron 4/1000) ->  note de 50/100
         # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
         # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143
-        
+        self.liste_notes.append(note)
         return note
 
 
@@ -270,23 +276,17 @@ class Donnees:
     '''
     def note_finale(self):
 
-        #IL FAUDRAIT UN CODE POUR RECUPERER TOUS LES ATTRIBUTS (pour l'instant on fait un par un :(  )
-        tableau = []
-        
-        #qqchose style for attr in self : tableau .append(attr)
-        tableau.append(self.note_sport())
-
         note_finale = 0
-        for i in range(len(tableau)) :
-            if tableau[i] != None:
-                note_finale += int(tableau[i])
+        for i in range(len(self.liste_notes)) :
+            if self.liste_notes[i] != None:
+                note_finale += int(self.liste_notes[i])
             else:
-                tableau.pop(i) #Supprime tous les None
+                self.tableau_note.pop(i) #Supprime tous les None
         #print(tableau,'adidjeidjzofjroef')
         
-        if len(tableau) == 0: #Si on n'a pas de données
+        if len(self.liste_notes) == 0: #Si on n'a pas de données
             return 'N/A'
-        return int(note_finale / len(tableau))
+        return int(note_finale / len(self.liste_notes))
 
 
 
