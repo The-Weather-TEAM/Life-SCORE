@@ -374,4 +374,13 @@ mbre de pi
 
 >Réglage du problème avec `style.txt` (le programme n'était pas capable de recréer le fichier s'il n'existait pas mais il le peut désormais)
 
+>Tests avec un camarade de classe permetant de trouvre des erreurs et imprévus
+
+
+24 Janvier 2023 :
+>Changement de la fonction `note_sport()` pour note_par_habitant() qui prend en parametres le nom du csv, le delimiteur, les colonnes utilisees et les coefficients m et p (mx+p) servant a calculer les notes
+
+>Correction de bugs apparu après l'implémentation de la dernière fonction (changements de variables mal effectués)
+
+>Correction du bug sur le fichier csv_dico.csv qui le réécrivait avec un csv vide (si le csv était déja rempli, il attendait un tableau de réponse qui n'est jamais venu :( Ainsi, il enlevait les données ce qui force la réutilisation du qcm au lancement suivant) 
 
