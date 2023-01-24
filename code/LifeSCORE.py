@@ -565,6 +565,7 @@ def ville(entree,msg,fenetre):
     if Donnees_ville.is_commune_france(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.configure(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
+        Donnees_ville.note_par_habitants('sport.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',')
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
         efface_fenetre(fenetre)
         w_score(Donnees_ville,fenetre)
@@ -822,7 +823,6 @@ msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeS
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
-
 
 
 
