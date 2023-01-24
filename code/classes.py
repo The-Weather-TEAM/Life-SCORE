@@ -226,26 +226,32 @@ class Donnees:
     TEMPORAIRE : NE MARCHE PAS AVEC LA BASE DE DONNEES
     
     '''
-    def note_sport(self):
+    def note_par_habitants(self,csv,colones,m_p,delim = ','):
         """
-        Methode qui renvoie la note de sport (peut etre tenter de le faire automatiquement avec un fichier en entree)
+        Methode qui renvoie une note en fonction des habitants
         ajoute la valeur de la note a self.liste_notes et la retourne (si on veut l'afficher)
+        
+        csv : str qui donne le nom du csv en question
+        colones : list les colones utilisées a voir si on peut pas l'automatiser ['ComInsee','Nombre_equipements']
+        m_p : list de int (mx+p) pour la fonction affine
+        delim : str le delimiteur, une virgule par défaut
         """
 
         
-        data_sport = p.read_csv(self.repertoire + '/data/sport.csv',delimiter=",",usecols=['ComInsee','Nombre_equipements'],low_memory=False)
+        data = p.read_csv(self.repertoire + '/data/' + csv ,delimiter=delim ,usecols=colones,low_memory=False)
 
-        rangee = data_sport[(data_sport['ComInsee'] == self.code_insee)]
+        rangee = data[(data[0]== self.code_insee)]
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
             
         try:
-            nbr_etab_sportifs = rangee.values[0][1]
+            nbr_etab = rangee.values[0][1]
         
             # Calcul établiseements par habitants
-            etab_sport_par_hab = nbr_etab_sportifs / self.recup_donnees_auto('population')
+            etab_par_hab = nbr_etab / self.recup_donnees_auto('population')
 
             # Calcul réalisé avec les données Françaises
-            note = 16071.4*etab_sport_par_hab - 3.57143
+            #16071.4*etab_sport_par_hab - 3.57143
+            note = m_p[0]*etab_par_hab - m_p[1]
         
             # Pour les petites villes avec plus de 0.006 étab / habitants
             note = int(note)
