@@ -287,8 +287,8 @@ class Donnees:
             if self.liste_notes[i] != None:
                 note_finale += int(self.liste_notes[i])
             else:
-                self.tableau_note.pop(i) #Supprime tous les None
-        #print(tableau,'adidjeidjzofjroef')
+                self.liste_notes.pop(i) #Supprime tous les None
+        #print(self.liste_notes,'adidjeidjzofjroef')
         
         if len(self.liste_notes) == 0: #Si on n'a pas de données
             return 'N/A'

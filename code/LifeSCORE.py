@@ -235,10 +235,11 @@ def creation_fichiers(arg = None):
                 return False,False
         
     tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
-    with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
-        ecriture = csv.writer(f)
-        ecriture.writerow(['CLE','VALEUR'])
-        ecriture.writerows(tab_Reponses)
+    if not len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
+        with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
+            ecriture = csv.writer(f)
+            ecriture.writerow(['CLE','VALEUR'])
+            ecriture.writerows(tab_Reponses)
 
 
 
