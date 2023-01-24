@@ -240,7 +240,7 @@ class Donnees:
         
         data = p.read_csv(self.repertoire + '/data/' + csv ,delimiter=delim ,usecols=colones,low_memory=False)
 
-        rangee = data[(data[0]== self.code_insee)]
+        rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
             
         try:
@@ -251,7 +251,7 @@ class Donnees:
 
             # Calcul réalisé avec les données Françaises
             #16071.4*etab_sport_par_hab - 3.57143
-            note = m_p[0]*etab_par_hab - m_p[1]
+            note = m_p[0]*etab_par_hab + m_p[1]
         
             # Pour les petites villes avec plus de 0.006 étab / habitants
             note = int(note)
