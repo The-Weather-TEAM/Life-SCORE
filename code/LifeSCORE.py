@@ -89,14 +89,26 @@ RECUPERATION REPERTOIRE COURANT
 
 nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 
-#NE MARCHE PAS SI LE FICHIER N'EXISTE PAS NATHAN TU PEUX AIDER ?
+'''
+A REMPLACER PAR LES CSV
+'''
+
+#Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
 if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/style.txt'):
     nom_fichier = nom_du_repertoire+'/donnees/utilisateur/style.txt'
     with open(nom_fichier,"w") as fichier:
         fichier.write("System")
 
+if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'):
+    nom_fichier = nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'
+    with open(nom_fichier,"w") as fichier:
+        fichier.write("blue")
+
 with open(nom_du_repertoire +'/donnees/utilisateur/style.txt') as txt:
     style = txt.read()
+
+with open(nom_du_repertoire +'/donnees/utilisateur/couleur_boutons.txt') as txt:
+    style_bouton = txt.read()
 
 
 
@@ -107,7 +119,7 @@ RECUPERATION POLICES ET STYLE
 
 '''
 interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
-interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
+interface.set_default_color_theme(str(style_bouton))  # Themes: blue (default), dark-blue, green
 
 
 
@@ -314,7 +326,6 @@ def efface_fenetre(fenetre):
     """
     for widget in fenetre.winfo_children():
 
-        print(str(widget),'aa')
         if not str(widget) == '.!ctkbutton3': #Pour garder le btn parametres
             widget.destroy()
         
@@ -426,8 +437,12 @@ def parametres(bouton):
     """variable = interface.StringVar()
     variable.set("System")"""
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.set('Styles') #affiche le style déja choisi (mais en anglais ducoup malheureusement) str(style) pour afficher le présent
+    switch_apparence.set('Styles')
     switch_apparence.place(relx = 0.2, rely = 0.8, anchor = CENTER)
+    #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
+    switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
+    switch_boutons.set('Couleur Boutons') 
+    switch_boutons.place(relx = 0.4, rely = 0.8, anchor = CENTER)
     
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
@@ -445,13 +460,23 @@ def parametres(bouton):
 
 
 def change_apparence_page(choix):
-    if choix == "Système": choix = "System"
-    elif choix == "Sombre": choix = "Dark"
-    else:choix = "Light"
 
-    #print("Option choisie (en anglais):", choix)
-    with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
-        txt.write(choix)
+    if choix in ["Système","Sombre","Light"] : #Si on veut changer les pages
+        if choix == "Système": choix = "System"
+        elif choix == "Sombre": choix = "Dark"
+        else:choix = "Light"
+
+        #print("Option choisie (en anglais):", choix)
+        with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
+            txt.write(choix)
+    else: #Si on veut changer les boutons
+        if choix == "Bleu": choix = "blue"
+        elif choix == "Bleu Foncé": choix = "dark-blue"
+        else:choix = "green"
+
+        #print("Option choisie (en anglais):", choix)
+        with open(nom_du_repertoire + '/donnees/utilisateur/couleur_boutons.txt', 'w') as txt:
+            txt.write(choix)
     
         
 
