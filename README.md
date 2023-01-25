@@ -219,11 +219,11 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 >Renomage du code principal pour LifeSCORE.py.
 
->Création du document requirements.txt qui permet de télécharger toutes les bibliothèques d'un coup
+>Création du document requirements.txt qui permet de télécharger toutes les bibliothèques d'un coup.
 
->Modifictation de la note principale : prend en compte le nombre d'habitants
+>Modifictation de la note principale : prend en compte le nombre d'habitants.
 
->J'ai mis tous les print() en commentaires sauf pour update.py et calcul_coefficients.py
+>J'ai mis tous les print() en commentaires sauf pour update.py et calcul_coefficients.py.
 
 
 
@@ -253,7 +253,6 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
 
 > Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
-mbre de pi
 
 > Nouveau système pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.
 
@@ -262,31 +261,31 @@ mbre de pi
 
 
 8 Janvier 2023 :
-> Transformation des pages d'aide de `CTk()` à `CTkTopLevel()`
+> Transformation des pages d'aide de `CTk()` à `CTkTopLevel()`.
 
-> Implémentation du fichier `style.txt` ( permet de changer le style de la page ) Que l'on accède grâce au volet d'options dans la page paramètre
+> Implémentation du fichier `style.txt` ( permet de changer le style de la page ) Que l'on accède grâce au volet d'options dans la page paramètre.
 
-> Correction du bug qui ne trouvait pas de ville si l'on mettait des espaces (ex : 'Beziers  ')
+> Correction du bug qui ne trouvait pas de ville si l'on mettait des espaces (ex : 'Beziers  ').
 
-> Correction du bug qui ne faisait pas marcher les villes avec accents (ex : 'Béziers') en remplaçant les caractères spéciaux (é,û,à,...) par leurs lettres respectives (e,u,a,...) 
+> Correction du bug qui ne faisait pas marcher les villes avec accents (ex : 'Béziers') en remplaçant les caractères spéciaux (é,û,à,...) par leurs lettres respectives (e,u,a,...).
 
-> Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup)
+> Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup).
 
 
 
 13 Janvier 2023 : 
-> Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm)
+> Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm).
 
 
 
 14 Janvier 2023 :
-> Réglage du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche
+> Réglage du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche.
 
-> Messages d'erreurs plus "performants"
+> Messages d'erreurs plus "performants".
 
-> Création d'une méthode qui recupère toutes les données de tous les csv en fonction des ses métadonnées (colonnes, délimiteur, INSEE ou nom de ville, ...)
+> Création d'une méthode qui recupère toutes les données de tous les csv en fonction des ses métadonnées (colonnes, délimiteur, INSEE ou nom de ville, ...).
 
-> Essais pour faire une animation afin d'afficher la note finale, mais ne marche pas (bugs à corriger)
+> Essais pour faire une animation afin d'afficher la note finale, mais ne marche pas (bugs à corriger).
 
 > Modifications du CSV pour le nom des villes et les habitants, les nouveaux sont compatibles avec UPDATE.PY !
 
@@ -316,16 +315,16 @@ mbre de pi
 
 >Ajout d'un logo provisoire pour la dernière fenêtre et la précédente.
 
->Ajout de la fenêtre d'erreur qui marche désormais
+>Ajout de la fenêtre d'erreur qui marche désormais.
 
 >Corrections finales sur les arrondissements (on peut désormais mettre "Paris 7", "Paris7", et "Paris_7" :)
 
->Tentative de reproduction de style.txt s'il n'existe pas (échec)
+>Tentative de reproduction de style.txt s'il n'existe pas (échec).
 
 
 
 16 Janvier 2023 :
-> Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj)
+> Création du fichier options.csv pour sauvegarder les options de l'application (interface, fréquence de màj).
 
 
 
@@ -337,7 +336,7 @@ mbre de pi
 
 
 18 Janvier 2023 : **Nouvelle version v0.5.2**
->Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) 
+>Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) .
 
 >Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout). C'est top : https://github.com/The-Weather-TEAM/Life-SCORE/issues/62
 
@@ -352,35 +351,49 @@ mbre de pi
 
 
 21 Janvier 2023 :
->Rajout d'une interface de téléchargements
+>Rajout d'une interface de téléchargements.
 
 >Correction du bug de nouveaux csv dans la base de données : https://github.com/The-Weather-TEAM/Life-SCORE/issues/73
 
->Ajout de csv dans la base de données
+>Ajout de csv dans la base de données.
 
 >Correction du bug pour télécharger les bibliothèques : https://github.com/The-Weather-TEAM/Life-SCORE/issues/69
 
 
 
 22 Janvier 2023 :
->Amélioration de l'option menu qui affiche les styles, maintenant il affiche le style courant 
+>Amélioration de l'option menu qui affiche les styles, maintenant il affiche le style courant .
 
->Amélioration de la taille de police avec une fonction qui calcule la taille en fonction de la longueur de la ville (sous forme mx +p)
+>Amélioration de la taille de police avec une fonction qui calcule la taille en fonction de la longueur de la ville (sous forme mx +p).
 
 
 
 23 Janvier 2023 :
 >Réglage d'un problème qui faisait planter le programme si `csv_dico.csv` n'était pas présent (issues https://github.com/The-Weather-TEAM/Life-SCORE/issues/77 et https://github.com/The-Weather-TEAM/Life-SCORE/issues/78)
 
->Réglage du problème avec `style.txt` (le programme n'était pas capable de recréer le fichier s'il n'existait pas mais il le peut désormais)
+>Réglage du problème avec `style.txt` (le programme n'était pas capable de recréer le fichier s'il n'existait pas mais il le peut désormais).
 
->Tests avec un camarade de classe permetant de trouvre des erreurs et imprévus
+>Tests avec un camarade de classe permetant de trouvre des erreurs et imprévus.
 
 
 24 Janvier 2023 :
->Changement de la fonction `note_sport()` pour note_par_habitant() qui prend en parametres le nom du csv, le delimiteur, les colonnes utilisees et les coefficients m et p (mx+p) servant a calculer les notes
+>Changement de la fonction `note_sport()` pour note_par_habitant() qui prend en parametres le nom du csv, le delimiteur, les colonnes utilisees et les coefficients m et p (mx+p) servant a calculer les notes.
 
->Correction de bugs apparu après l'implémentation de la dernière fonction (changements de variables mal effectués)
+>Correction de bugs apparu après l'implémentation de la dernière fonction (changements de variables mal effectués).
 
->Correction du bug sur le fichier csv_dico.csv qui le réécrivait avec un csv vide (si le csv était déja rempli, il attendait un tableau de réponse qui n'est jamais venu :( Ainsi, il enlevait les données ce qui force la réutilisation du qcm au lancement suivant) 
+>Correction du bug sur le fichier csv_dico.csv qui le réécrivait avec un csv vide (si le csv était déja rempli, il attendait un tableau de réponse qui n'est jamais venu :( Ainsi, il enlevait les données ce qui force la réutilisation du qcm au lancement suivant).
 
+
+
+25 Janvier 2023 :
+>Grosse réorganisation des fichiers :
+>- Toutes les données modifiables / supprimables / téléchargeables par l'utilisateur sont dans `\donnees\*` :
+>     - Les csv dans `\donnees\csv\*`;
+>     - Les options et données personnelles dans `\donnees\utilisateur\*`;
+>- Toutes les données que l'applciation utilise (seulement modifiables avec une mise-à-jour) dans `\systeme\*`.
+
+>Modification des titres : maintenant, le titre de la fenêtre donne toujours le nom de l'application, et elle est personnalisée en fonction de la commune.
+
+>Modification des textes affichés.
+
+>"Note" n'est plus affiché en couleur.
