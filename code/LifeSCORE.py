@@ -313,9 +313,11 @@ def efface_fenetre(fenetre):
     Fonction qui efface tout d'une fenêtre à l'autre pour pouvoir afficher d'autres choses
     """
     for widget in fenetre.winfo_children():
-        #rajouter condition si non bouton paramètres
-        #print(widget)
-        widget.destroy()
+
+        print(str(widget),'aa')
+        if not str(widget) == '.!ctkbutton3': #Pour garder le btn parametres
+            widget.destroy()
+        
 
 
 
@@ -622,21 +624,24 @@ def w_score(ville,win):
         msg_malus = interface.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
         msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
         msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+        msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=('Arial Black', 80), justify=CENTER) #On initialise
+        msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)#Nord Est
         win.update()
         
         
         # Pour chaque entier naturel jusqu'à notre note
         for i in range(score_total_animation+1) :
             
-            if i > 0 :
-                msg_note.destroy() # pour pas laisser de traces après ou sinon il y a superposition
+            """if i > 0 :
+                msg_note.destroy() # pour pas laisser de traces après ou sinon il y a superposition"""
                 
             couleur= couleur_score(i)
             #Textes :
             msg_annonce_note = interface.CTkLabel(win, text='Note :', font=('Arial Black', 50), justify=CENTER)
-            msg_note = interface.CTkLabel(win, text=str(i), text_color=couleur, font=('Arial Black', 80), justify=CENTER)
+            msg_note.configure(text=str(i), text_color=couleur)
+            
             msg_annonce_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
-            msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)#Nord Est
+            
             
 
             # Mise à jour de la page
