@@ -602,7 +602,7 @@ def w_score(ville,win):
 
 
     #Transfo des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',30), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
