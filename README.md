@@ -397,3 +397,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Modification des textes affichés.
 
 >"Note" n'est plus affiché en couleur.
+
+>Ajout du menu pour changer la couleur des boutons
