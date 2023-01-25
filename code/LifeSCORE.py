@@ -588,7 +588,7 @@ def w_score(ville,win):
     
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
     win.iconphoto(False, icone)
-    win.title(f'LifeScore  |  Score de {str(ville).capitalize()}')
+    win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
         
 
     #Donnees PROVISOIRES !!!
