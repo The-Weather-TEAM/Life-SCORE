@@ -41,9 +41,9 @@ def maj_modules_requirements():
         moduleSeul = module.split(">")[0] # car c'est en format module>=x.x.x
 
         if moduleSeul + "==" in pipList:
-            print(moduleSeul, "-> est present")
+            print(moduleSeul, "-> Module present")
         else: 
-            print(moduleSeul, "-> n'est pas present, en cours d'installation.")
+            print(moduleSeul, "-> Module installé")
             output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf-8")
 
             if output == "": # output == "" quand il y a un erreur d'installation
@@ -76,8 +76,6 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 
 
 import pandas
-import pyglet
-from pyglet.font import ttf
 from time import sleep
 import csv
 import customtkinter as interface
@@ -92,12 +90,12 @@ RECUPERATION REPERTOIRE COURANT
 nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 
 #NE MARCHE PAS SI LE FICHIER N'EXISTE PAS NATHAN TU PEUX AIDER ?
-if not os.path.isfile(nom_du_repertoire+'/data/style.txt'):
-    nom_fichier = nom_du_repertoire+'/data/style.txt'
+if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/style.txt'):
+    nom_fichier = nom_du_repertoire+'/donnees/utilisateur/style.txt'
     with open(nom_fichier,"w") as fichier:
         fichier.write("System")
 
-with open(nom_du_repertoire +'/data/style.txt') as txt:
+with open(nom_du_repertoire +'/donnees/utilisateur/style.txt') as txt:
     style = txt.read()
 
 
@@ -109,14 +107,10 @@ RECUPERATION POLICES ET STYLE
 
 '''
 interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
-interface.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
-#BUGGGGGGGGGG NE MARCHE PAS 
-'''pyglet.font.add_file(nom_du_repertoire+'\\unbounded.ttf')
-nom_police=pyglet.font.ttf.TruetypeInfo(nom_du_repertoire+'\\unbounded.ttf').get_name('name')   
-nom_police_f=pyglet.font.ttf.TruetypeInfo(nom_du_repertoire+'\\unbounded.ttf').get_name('family')   
-print(nom_police)
-print(nom_police_f)'''
+
+
 
 
 '''
@@ -173,12 +167,12 @@ def telechargement(bouton,fenetre):
     
     
     windowDownload = interface.CTkToplevel() #fenetre de tkinter
-    windowDownload.title('Page de telechargement')
+    windowDownload.title('LifeScore  |  Téléchargement')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowDownload.minsize(width=int(510*4/3), height=384) #768
     windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
 
-    msg_aide = interface.CTkLabel(windowDownload, text="téléchargement en cours", width = 1000, font =('Bold',16), justify=LEFT)
+    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =('Bold',16), justify=LEFT)
     msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
 
     progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate',)
@@ -188,20 +182,20 @@ def telechargement(bouton,fenetre):
     
     
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide)
-    print(erreur_maj)
+    #print(erreur_maj)
     if not erreur_maj:
-        print('marche')
+        #print('marche')
         valeur_bol = creation_fichiers()
-        print(valeur_bol)
+        #print(valeur_bol)
         retour_pages(windowDownload,bouton)
         if valeur_bol == (True,True):
-            print('true,true')
+            #print('true,true')
             w_qcm(fenetre,option ="sans_qcm")
         else: #Qcm non terminé
-            print('faire le qcm')
+            #print('faire le qcm')
             w_qcm(fenetre)
     else:
-        print('suspicious ne marche pas')
+        #print('suspicious ne marche pas')
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
 
@@ -215,9 +209,9 @@ def creation_fichiers(arg = None):
     '''
     if arg == None:
         # Création le fichier du dico s'il existe pas :
-        if not os.path.isfile(nom_du_repertoire+'/data/csv_dico.csv') : 
-            print(os.path.join(nom_du_repertoire, '/data/csv_dico.csv')) #Ce csv prend les valeurs de Dico Global
-            file = open(nom_du_repertoire+'/data/csv_dico.csv','w')
+        if not os.path.isfile(nom_du_repertoire+'/donnees/csv/csv_dico.csv') : 
+            #print(os.path.join(nom_du_repertoire, '/donnees/csv/csv_dico.csv')) #Ce csv prend les valeurs de Dico Global
+            file = open(nom_du_repertoire+'/donnees/csv/csv_dico.csv','w')
             ecriture = csv.writer(file)
             ecriture.writerow(['CLE','VALEUR'])
             file.close()
@@ -225,7 +219,7 @@ def creation_fichiers(arg = None):
         else:
             #si qcm terminé
             try :
-                if len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
+                if len(pandas.read_csv(nom_du_repertoire+'/donnees/csv/csv_dico.csv')) +1 == len(list_Questions):
                     return True,True
                 else:
                     #Si on a pas un fichier complet
@@ -235,8 +229,8 @@ def creation_fichiers(arg = None):
                 return False,False
         
     tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] #valeurs du dico
-    if not len(pandas.read_csv(nom_du_repertoire+'/data/csv_dico.csv')) +1 == len(list_Questions):
-        with open(nom_du_repertoire+'/data/csv_dico.csv','w', encoding='UTF8', newline='') as f:
+    if not len(pandas.read_csv(nom_du_repertoire+'/donnees/csv/csv_dico.csv')) +1 == len(list_Questions):
+        with open(nom_du_repertoire+'/donnees/csv/csv_dico.csv','w', encoding='UTF8', newline='') as f:
             ecriture = csv.writer(f)
             ecriture.writerow(['CLE','VALEUR'])
             ecriture.writerows(tab_Reponses)
@@ -262,25 +256,25 @@ def w_qcm(win,option = None): # w pour window
     n = len(list_Questions)
     
 
-    msg_principal = interface.CTkLabel(win, text="Le Qcm a déja été effectué : Veuillez continuer", width = 1000, font =('Bold',18), justify=CENTER)
+    msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =('Bold',18), justify=CENTER)
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
     btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="Paramètres")
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
-    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/15), command=lambda: avancer(win), text="OK") #appele la fonction question1
+    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/15), command=lambda: avancer(win), text="Lancer la recherche") #appele la fonction question1
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 
 
 
     if option == None :
-        msg_principal.configure(text = "Bienvenue, nous allons commencer par un petit QCM")
+        msg_principal.configure(text = "Bienvenue !  Nous allons commencer par une étude de vos préférences.")
         n = 0
 
     win.mainloop() #pour fermer la fenetre
@@ -393,7 +387,7 @@ Ils sont répartis en 4 catégories :
             - La sécurité (taux d'accidents / vols / risques / ...)"""
     change_etat_btn(btn)
     windowAide = interface.CTkToplevel() #fenetre de tkinter
-    windowAide.title('Page 1bis - Aide')
+    windowAide.title('LifeScore  |  Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowAide.minsize(width=int(510*4/3), height=384) #768
     msg_aide = interface.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',16), justify=LEFT)
@@ -420,7 +414,7 @@ def parametres(bouton):
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
     windowParam = interface.CTkToplevel()
-    windowParam.title('Page 1ter - Parametres')
+    windowParam.title('LifeScore  |  Paramètres')
     windowParam.minsize(width=int(510*4/3), height=384) #768
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
@@ -454,7 +448,7 @@ def change_apparence_page(choix):
     else:choix = "Light"
 
     #print("Option choisie (en anglais):", choix)
-    with open(nom_du_repertoire + '/data/style.txt', 'w') as txt:
+    with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
         txt.write(choix)
     
         
@@ -499,20 +493,20 @@ def w_question(fenetre):
     affiche la seconde page qui contient la requête de la ville
     """
     creation_fichiers("Rajout des lignes") #rajoute les lignes au dico csv dès qu'on quitte la page de QCM
-    fenetre.title('Seconde page - requête de la ville')
+    fenetre.title('LifeScore  |  Requête de la commune')
     
-    icon_2 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon2.png')
-    fenetre.iconphoto(False, icon_2)
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    fenetre.iconphoto(False, icone)
 
     #input
     entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
     
     #message
-    msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police, justify comme sur word
+    msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',20), justify=CENTER) #font = taille + police, justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="AIDE\nARRONDISSEMENTS") #Boutton d'aide arrondissements
+    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="Aide\narrondissements") #Boutton d'aide arrondissements
     btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
     
     #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
@@ -542,7 +536,9 @@ def arrondissement(btn):
     - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
 
     windowAide = interface.CTkToplevel() #fenetre de tkinter
-    windowAide.title('Page 2bis - Aide')
+    windowAide.title('LifeScore  |  Aide')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    windowAide.iconphoto(False, icone)
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowAide.minsize(width=int(690*4/3), height=384) #768
     #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
@@ -590,9 +586,9 @@ def w_score(ville,win):
     """
     
     
-    icon_1 = tkinter.PhotoImage(file = nom_du_repertoire+'\icon.png')
-    win.iconphoto(False, icon_1)
-    win.title('Troisième page - Score de la ville')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    win.iconphoto(False, icone)
+    win.title(f'LifeScore  |  Score de {str(ville).capitalize()}')
         
 
     #Donnees PROVISOIRES !!!
@@ -602,7 +598,7 @@ def w_score(ville,win):
 
 
     #Transfo des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',30), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',70), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     #print(plus,moins)
@@ -637,8 +633,10 @@ def w_score(ville,win):
                 
             couleur= couleur_score(i)
             #Textes :
-            msg_note = interface.CTkLabel(win, text='Note : \n' +str(i), text_color=couleur, font=('Arial Black', 50), justify=CENTER)
-            msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
+            msg_annonce_note = interface.CTkLabel(win, text='Note :', font=('Arial Black', 50), justify=CENTER)
+            msg_note = interface.CTkLabel(win, text=str(i), text_color=couleur, font=('Arial Black', 80), justify=CENTER)
+            msg_annonce_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
+            msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)#Nord Est
             
 
             # Mise à jour de la page
@@ -765,17 +763,19 @@ def w_erreur(fenetre): # w pour window
     """
     
     #fenêtre
-    fenetre.title('Erreur - Echec du lancement')
+    fenetre.title('LifeScore  |  Erreur')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    fenetre.iconphoto(False, icone)
     
     msg_principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
         width = 1000, font =('Bold',18), justify=CENTER) #font = taille + police justify comme sur word
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
-    btn_aide  = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+    btn_aide  = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="Aide") #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="PARAMETRES")
+    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="Paramètres")
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
@@ -817,19 +817,17 @@ CREATION DE La FENETRE PRINCIPALE
 '''
 #fenêtre
 fenetrePrincipale = interface.CTk() #fenetre de tkinter
-fenetrePrincipale.title('Accueil - QCU')
+fenetrePrincipale.title('LifeScore  |  Menu principal')
+icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=768, height=500) #768 = taille minimum de la fenetre
 fenetrePrincipale.state('zoomed')
-
 #boutton de lancement
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Lancer le téléchargement") #appele la fonction question1
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer") #appele la fonction question1
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 #message de lancement
-msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers", width = 1000, font =('Bold',18), justify=CENTER)
+msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
-
-
-

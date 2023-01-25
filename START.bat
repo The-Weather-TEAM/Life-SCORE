@@ -1,4 +1,2 @@
-@ echo  off
-cd .\code
-py LifeSCORE.py
-pause > nul
+@ echo off
+py .\code\LifeSCORE.py

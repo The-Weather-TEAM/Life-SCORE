@@ -42,7 +42,7 @@ OUVERTURE DE LA BASE DE DONNEES
 '''
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
-with open(nom_du_repertoire+"\database.json", "r") as fichier_json :
+with open(nom_du_repertoire+"\systeme\\base_de_donnees.json", "r") as fichier_json :
     infos_csv = json.load(fichier_json)
 
 
@@ -97,7 +97,7 @@ class Donnees:
     '''
     def recup_donnees_auto(self, csv) :
         
-        lien_fichier = os.path.join(os.path.dirname(__file__),'data')+'/'+csv+'.csv'
+        lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
         
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
@@ -123,7 +123,7 @@ class Donnees:
     def is_commune_france(self,msg):
 
         if str(self.ville) == '':
-            msg.configure(text = "Il faut saisir une ville")
+            msg.configure(text = "Veuillez saisir le nom d'une commune.")
             return False
 
 
@@ -145,7 +145,7 @@ class Donnees:
             self.ville = "-".join(liste_ville)
         #print(self.ville)
 
-        fichier = open(self.repertoire + '/data/commune_modifiee.csv',"r",encoding='utf-8')
+        fichier = open(self.repertoire + '/donnees/csv/commune_modifiee.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
@@ -159,7 +159,7 @@ class Donnees:
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
             
-            with open(self.repertoire + '/data/population.csv',"r") as fichier : 
+            with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
                 infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                 rangee = infos[infos['com_code'] == self.code_insee]
 
@@ -194,7 +194,7 @@ class Donnees:
                 self.code_insee = row.values[0][0]
                 self.ville = row.values[0][3]
                 
-                with open(self.repertoire + '/data/population.csv',"r") as fichier : 
+                with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
                     infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                     rangee = infos[infos['com_code'] == self.code_insee]
 
@@ -238,7 +238,7 @@ class Donnees:
         """
 
         
-        data = p.read_csv(self.repertoire + '/data/' + csv ,delimiter=delim ,usecols=colones,low_memory=False)
+        data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False)
 
         rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
@@ -304,3 +304,4 @@ class Donnees:
     def __str__(self) :
         if self.ville != '' :
             return str(self.ville)
+    

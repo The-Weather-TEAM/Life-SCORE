@@ -1,5 +1,5 @@
 '''
-                  [CALCUL_COEFFICIENTS.PY]
+                      [CALCUL_COEFS.PY]
                          
              Cacul de l'importance des notations 
               en fonction des résultats du QCM
