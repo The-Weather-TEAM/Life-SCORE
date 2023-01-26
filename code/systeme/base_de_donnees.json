@@ -69,7 +69,15 @@
                                                                           "colonne_donnee" : "name"
                                                                 
 
-    }]
+    }],
     
+    "monuments_historiques":
+    ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "insee",
+                                                                          "colonne_donnee" : "appellation_courante"
+                                                                
+
+    }]
 
 }
