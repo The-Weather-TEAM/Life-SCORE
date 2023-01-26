@@ -41,7 +41,7 @@ def maj_modules_requirements():
         moduleSeul = module.split(">")[0] # car c'est en format module>=x.x.x
 
         if moduleSeul + "==" in pipList:
-            print(moduleSeul, "-> Module present")
+            print(moduleSeul, "-> Module présent")
         else: 
             print(moduleSeul, "-> Module installé")
             output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf-8")
@@ -194,20 +194,14 @@ def telechargement(bouton,fenetre):
     
     
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide)
-    #print(erreur_maj)
     if not erreur_maj:
-        #print('marche')
         valeur_bol = creation_fichiers()
-        #print(valeur_bol)
         retour_pages(windowDownload,bouton)
         if valeur_bol == (True,True):
-            #print('true,true')
             w_qcm(fenetre,option ="sans_qcm")
         else: #Qcm non terminé
-            #print('faire le qcm')
             w_qcm(fenetre)
     else:
-        #print('suspicious ne marche pas')
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
 
@@ -222,7 +216,6 @@ def creation_fichiers(arg = None):
     if arg == None:
         # Création le fichier du dico s'il existe pas :
         if not os.path.isfile(nom_du_repertoire+'/donnees/csv/csv_dico.csv') : 
-            #print(os.path.join(nom_du_repertoire, '/donnees/csv/csv_dico.csv')) #Ce csv prend les valeurs de Dico Global
             file = open(nom_du_repertoire+'/donnees/csv/csv_dico.csv','w')
             ecriture = csv.writer(file)
             ecriture.writerow(['CLE','VALEUR'])
@@ -466,7 +459,6 @@ def change_apparence_page(choix):
         elif choix == "Sombre": choix = "Dark"
         else:choix = "Light"
 
-        #print("Option choisie (en anglais):", choix)
         with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
             txt.write(choix)
     else: #Si on veut changer les boutons
@@ -474,7 +466,6 @@ def change_apparence_page(choix):
         elif choix == "Bleu Foncé": choix = "dark-blue"
         else:choix = "green"
 
-        #print("Option choisie (en anglais):", choix)
         with open(nom_du_repertoire + '/donnees/utilisateur/couleur_boutons.txt', 'w') as txt:
             txt.write(choix)
     
@@ -590,7 +581,6 @@ def ville(entree,msg,fenetre):
     """
     global Donnees_ville
     ville = entree.get()
-    #print(ville)
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.configure(text = "Veuillez patienter ...")
@@ -628,7 +618,6 @@ def w_score(ville,win):
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',70), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
-    #print(plus,moins)
 
 
 
@@ -637,7 +626,6 @@ def w_score(ville,win):
     
     '''
     
-    #print(score)
     if score != 'N/A':
         
         # Transformations

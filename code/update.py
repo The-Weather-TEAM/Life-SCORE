@@ -5,7 +5,6 @@
     Programme de téléchargement et mises à jour des données
 
                   développé par Nathan
-                         & Thor
 
 
 - Créé le dossier "data" avec tous les CSV dedans ;
@@ -25,24 +24,31 @@
 
 
 '''
-BIBLIOTHEQUES
+BIBLIOTHEQUES ET PROGRAMMES
  
 '''
-import os
-import requests # Demandes de connexion
-import csv # Lecture des CSV
-import json # Pour lire notre base de données
-import pandas as p # Lecture et écriture des CSV
-import datetime # Conversion UNIX + vérification des versions
-import time # Conversion UNIX
+# Bibliothèques souvent utilisées :
+import os                                # Pour utiliser les répertoires
 from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
-from classes import is_connected as connexion
+import requests                          # Demandes de connexion
 
+# Bibliothèques pour la modification de documents :
+import csv                               # Lecture des CSV
+import pandas as p                       # Lecture et écriture des CSV
+import json                              # Pour lire notre base de données
+
+# Bibliothèques pour les conversions de temps :
+import datetime                          # Conversion UNIX + vérification des versions
+import time                              # Conversion UNIX
     
-# Pour éviter erreurs de coupure réseau :
+# Bibliothèques pour éviter erreurs de coupure réseau :
 from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeout
 from urllib3.exceptions import ProtocolError, ReadTimeoutError
 from http.client import IncompleteRead
+
+
+# Importation de la fonction de test de connexion :
+from classes import is_connected as connexion
 
 
 
@@ -54,7 +60,7 @@ def executer(barre_progres,fenetre,message):
 
 
     # Temps en secondes entre les vérifications de mises à jour :
-    #temps_maj = 2592000       # Nombre de secondes dans un mois (30 jours)
+    #temps_maj = 2592000       #* Nombre de secondes dans un mois (30 jours)
     temps_maj = 0
 
 
@@ -68,12 +74,12 @@ def executer(barre_progres,fenetre,message):
 
     # Pour récupérer le chemin relatif vers le dossier data :
     repertoire_courant = os.path.dirname(__file__)
-    repertoire_donnees = os.path.join(repertoire_courant, 'donnees')
+    repertoire_donnees = os.path.join(repertoire_courant+'/donnees')
 
 
     # Pour savoir si les fichiers existait avant le programme :
-    is_file_versions = os.path.isfile(repertoire_donnees+'/'+'versions.csv')
-    is_file_options = os.path.isfile(repertoire_donnees+'\\utilisateur'+'options.csv')
+    is_file_versions = os.path.isfile(repertoire_donnees+'/versions.csv')
+    is_file_options = os.path.isfile(repertoire_donnees+'/utilisateur/options.csv')
 
 
 
@@ -81,7 +87,7 @@ def executer(barre_progres,fenetre,message):
     # Création du fichier pour les options de l'application même si on a pas internet :
     if os.path.exists(repertoire_donnees) and not is_file_options :
             os.path.join(repertoire_donnees, 'options.csv')
-            csv.writer(open(repertoire_donnees+'/'+'options.csv', "w")).writerow(['OPTION', 'VALEUR'])
+            csv.writer(open(repertoire_donnees+'/options.csv', "w")).writerow(['OPTION', 'VALEUR'])
             is_file_options = True
     
     
@@ -102,7 +108,7 @@ def executer(barre_progres,fenetre,message):
                                    
         '''
         
-        with open(repertoire_courant+"\systeme\\base_de_donnees.json", "r") as fichier_json :
+        with open(repertoire_courant+"/systeme/base_de_donnees.json", "r") as fichier_json :
             liste_csv = json.load(fichier_json)
 
 
@@ -118,8 +124,8 @@ def executer(barre_progres,fenetre,message):
         # Création du dossier s'il n'existe pas :
         if not os.path.exists(repertoire_donnees):
             os.makedirs(repertoire_donnees)
-            os.makedirs(repertoire_donnees+'\csv')
-            os.makedirs(repertoire_donnees+'\\utilisateur')
+            os.makedirs(repertoire_donnees+'/csv')
+            os.makedirs(repertoire_donnees+'/utilisateur')
 
 
 
@@ -131,7 +137,7 @@ def executer(barre_progres,fenetre,message):
         # Création le fichier des infos s'il existe pas :
         if not is_file_versions :
             os.path.join(repertoire_donnees, 'versions.csv')
-            csv.writer(open(repertoire_donnees+'/'+'versions.csv', "w")).writerow(['NOM', 'VERSION'])
+            csv.writer(open(repertoire_donnees+'/versions.csv', "w")).writerow(['NOM', 'VERSION'])
     
     
     
@@ -157,7 +163,7 @@ def executer(barre_progres,fenetre,message):
             
             # Comptage du fichier courant + variable boolnéenne pour savoir si le fichier existait déjà
             csv_courant += 1
-            is_courant_csv = os.path.isfile(repertoire_donnees+'\csv\\'+id+'.csv')
+            is_courant_csv = os.path.isfile(repertoire_donnees+'/csv/'+id+'.csv')
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de tant de secondes :
@@ -241,11 +247,9 @@ def executer(barre_progres,fenetre,message):
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
                 if is_file_versions and is_courant_csv:
                     message.configure(text = f"Vérification de la présence de {id}...")
-                    print(id)
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
                     pourcentage = csv_courant/nombre_total_csv
-                    print(pourcentage)
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
@@ -277,7 +281,7 @@ def executer(barre_progres,fenetre,message):
                     
                     # Supprime la version actuelle ssi il y avait le fichier .csv :
                     if is_file_versions and is_courant_csv :
-                        os.remove(repertoire_donnees+'\csv\\'+id+'.csv')
+                        os.remove(repertoire_donnees+'/csv/'+id+'.csv')
                     
                     
                     # Données modifiées (courant et en général) :
@@ -312,7 +316,7 @@ def executer(barre_progres,fenetre,message):
                             print (msg_erreur)
                             
                             # Tout supprimer pour refaire une installation propore :
-                            delete_data(repertoire_donnees+'\csv')
+                            delete_data(repertoire_donnees+'/csv')
                             
                             erreur_internet = True
                             return erreur_internet
@@ -333,7 +337,7 @@ def executer(barre_progres,fenetre,message):
                     
                     
                     # On le sauvegarde avec le bon nom et l'extention :
-                    nom_du_fichier = os.path.join(repertoire_donnees+'\csv\\'+id+'.csv')
+                    nom_du_fichier = os.path.join(repertoire_donnees+'/csv/'+id+'.csv')
                     open(nom_du_fichier, 'wb').write(recup_csv_internet.content)
                     
                     
@@ -341,7 +345,6 @@ def executer(barre_progres,fenetre,message):
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     nombre_csv_modifies += 1
                     pourcentage = csv_courant/nombre_total_csv
-                    print(pourcentage)
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
@@ -377,7 +380,7 @@ def executer(barre_progres,fenetre,message):
                                 
                                 # On actualise la version téléchargée :
                                 lire_versions.loc[lire_versions["NOM"] == id, "VERSION"] = val
-                                lire_versions.to_csv(repertoire_donnees+'/'+'versions.csv', index=False)
+                                lire_versions.to_csv(repertoire_donnees+'/versions.csv', index=False)
                                 
                         # On supprime les informations du dictionnaire (si en même temps il y a des nouveaux fichiers) :
                         del nouvelles_informations[id]
@@ -460,7 +463,7 @@ def executer(barre_progres,fenetre,message):
     
     if is_modified and not mise_a_jour :
         
-        rajout_donnee = csv.writer(open(repertoire_donnees+'/'+'versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux 
+        rajout_donnee = csv.writer(open(repertoire_donnees+'/versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux 
             
         for cle, val in nouvelles_informations.items():
             rajout_donnee.writerow([cle, val])  

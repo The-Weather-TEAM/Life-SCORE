@@ -48,8 +48,6 @@ def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
         else: # si la valeur est endehors des limits, on ne l'accept pas
             noteSurCent = 0
 
-#         print(f"Global: {valeursIdeals[critere]}; Local: {valSaisit}") # affiche les valeurs pour les tests
-#         print(critere, noteSurCent)
 
         listDeNotes.append(noteSurCent) # ajoute le note au list de notes des criteres
 
@@ -73,7 +71,6 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
         "pression": 1.013,
         "vent": 10
     }
-    # print(dicoMeteoVille)
 
 
 

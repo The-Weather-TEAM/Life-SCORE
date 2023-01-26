@@ -130,20 +130,15 @@ class Donnees:
         self.ville = self.ville.strip() #Enlève les espaces en trop
         
 
-        #print('i' in self.ville)
         if "-" in self.ville or ' ' in self.ville:
             liste_ville = re.split("-| ",self.ville)#sépare avec espace, - et '
-            #print(liste_ville)
             for i in range(len(liste_ville)): #
                 if liste_ville[i] not in ['lès','l','d','en','de','des','les','à']:
                     if liste_ville[i][:2] in ["d'","l'"] : #si on a d'hérault
-                        #print('vrai')
                         liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
                     else: 
                         liste_ville[i] = liste_ville[i].capitalize()
-                    #print(liste_ville[i])
             self.ville = "-".join(liste_ville)
-        #print(self.ville)
 
         fichier = open(self.repertoire + '/donnees/csv/commune_modifiee.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
@@ -152,10 +147,7 @@ class Donnees:
 
         # Recup ligne de ville pour code insee  
         row = cr[(cr['NCCENR'] == str(self.ville)) | (cr['LIBELLE'] == str(self.ville))]
-        #print(row)
         if not row.empty:
-            #print(row.values)
-            #print(self.ville)
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
             
@@ -173,9 +165,7 @@ class Donnees:
             return True
         
         else:
-            #print(self.ville)
             self.ville = self.ville.strip('-')        
-            #print(self.ville,'strip')
             liste = list(self.ville)
             dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
                                     "î":"i", "ô":"o","-":" ","'":" "}
@@ -183,14 +173,10 @@ class Donnees:
             for i in range(len(liste)):
                 if liste[i] in dico_carac_spéciaux:
                     liste[i] = dico_carac_spéciaux[liste[i]]
-            #print(liste)
             self.ville = ''.join(liste) #Redonne la ville sans accents
             row = cr[(cr['NCC'] == str(self.ville).upper())] 
-            #print(self.ville)
 
             if not row.empty:
-                #print(row.values)
-                #print(self.ville)
                 self.code_insee = row.values[0][0]
                 self.ville = row.values[0][3]
                 
@@ -288,7 +274,6 @@ class Donnees:
                 note_finale += int(self.liste_notes[i])
             else:
                 self.liste_notes.pop(i) #Supprime tous les None
-        #print(self.liste_notes,'adidjeidjzofjroef')
         
         if len(self.liste_notes) == 0: #Si on n'a pas de données
             return 'N/A'
