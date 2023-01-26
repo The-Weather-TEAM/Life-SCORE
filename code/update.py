@@ -241,11 +241,11 @@ def executer(barre_progres,fenetre,message):
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
                 if is_file_versions and is_courant_csv:
                     message.configure(text = f"Vérification de la présence de {id}...")
-                    #print(id)
+                    print(id)
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
                     pourcentage = csv_courant/nombre_total_csv
-                    #print(pourcentage)
+                    print(pourcentage)
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
@@ -340,8 +340,8 @@ def executer(barre_progres,fenetre,message):
                     
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     nombre_csv_modifies += 1
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
-                    #print(pourcentage)
+                    pourcentage = csv_courant/nombre_total_csv
+                    print(pourcentage)
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
@@ -364,7 +364,7 @@ def executer(barre_progres,fenetre,message):
                     else :
                         msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier téléchargé"
                         
-                    #print (msg_csv_courant)
+                    print (msg_csv_courant)
                     
                     
                     # Si le fichier a été mis à jour :
@@ -405,7 +405,7 @@ def executer(barre_progres,fenetre,message):
                         
             # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
             # avec gestion du nombre de caractères pour avoir du texte homogène
-            else : 
+            else :
                 pourcentage = int(csv_courant/nombre_total_csv*100)
                 
                 if pourcentage < 10 :
