@@ -78,6 +78,42 @@
                                                                           "colonne_donnee" : "appellation_courante"
                                                                 
 
+    }],
+    
+    "m2_maison":
+    ["639c7cf4969f3318338df9a8","dfb542cd-a808-41e2-9157-8d39b5c24edb", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "INSEE_C",
+                                                                          "colonne_donnee" : "loypredm2"
+                                                                
+
+    }],
+    
+    "m2_appartement":
+    ["639c7cf4969f3318338df9a8","bc9d5d13-07cc-4d38-8254-88db065bd42b", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "INSEE_C",
+                                                                          "colonne_donnee" : "loypredm2"
+                                                                
+
+    }],
+    
+    "jardins":
+    ["5ee2fe1cba88d5c5a1179ef2","49a648e5-ef47-41fe-aa18-9323a811c2c7", { "insee" : 0,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "ville",
+                                                                          "colonne_donnee" : "nom_du_jardin"
+                                                                
+
+    }],
+    
+    "radon_nucleaire":
+    ["53834c53a3a72906c7ec5c4c","817114f8-9b61-48fa-b7a4-0e3c1331a44c", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "insee_com",
+                                                                          "colonne_donnee" : "classe_potentiel"
+                                                                
+
     }]
 
 }
