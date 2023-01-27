@@ -431,12 +431,20 @@ def parametres(bouton):
     variable.set("System")"""
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
     switch_apparence.set('Styles')
-    switch_apparence.place(relx = 0.2, rely = 0.8, anchor = CENTER)
+    switch_apparence.place(relx = 0.2, rely = 0.25, anchor = CENTER)
     #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
     switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
     switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.41, rely = 0.8, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
+    switch_boutons.place(relx = 0.41, rely = 0.25, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
     
+    frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
+    frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*4), font= ('Bold', 18))
+    entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
+    #TODO: fonction qui modifie le frequence MAJ dans les csv options
+    btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, command=lambda:print("changer le valeur du csv"), text="Confirmer")
+    btn_confirm_frequence.place(relx = 0.62, rely = 0.15, anchor = CENTER)
+
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
                                                                 text="Appliquer les Changements")
