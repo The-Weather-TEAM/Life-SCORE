@@ -435,13 +435,13 @@ def parametres(bouton):
     #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
     switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
     switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.4, rely = 0.8, anchor = CENTER)
+    switch_boutons.place(relx = 0.41, rely = 0.8, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
     
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
                                                                 text="Appliquer les Changements")
 
-    btn_changements.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+    btn_changements.place(relx = 0.5, rely = 0.65, anchor = CENTER)
 
     windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))#Meme effet que le bouton sauf que c'est si on ferme la page manuellement
 
