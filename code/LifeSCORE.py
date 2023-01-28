@@ -373,21 +373,6 @@ def est_termine(btn_1,btn_2):
         msg_principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
         return True
 
-def changer_option(option, valeur):
-    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
-
-    dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
-    dictionaire_options[option] = valeur # on change l'option
-    open(path_options, "w").write(str(dictionaire_options)) # on re-ecrit tout les options au fichier
-
-def lire_option(option):
-    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
-
-    return eval(open(path_options, "r").read()).get(option) # on ouvre et recupere l'option qu'on veut
-    
-
-
-
 
 def aide(btn):
 
@@ -425,7 +410,7 @@ def parametres(bouton):
     """
     Fonction qui ouvre la page de paramètres avec dessus : (X  = pas fait, A = à Améliorer, V = fait)
         -Crédits                                                        X
-        -Option pour modifier la fréquence de mises à jour              X
+        -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
     """
@@ -451,13 +436,13 @@ def parametres(bouton):
     
     frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
     frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
-    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*4), font= ('Bold', 18))
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
     entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
-    #TODO: fonction qui modifie le frequence MAJ dans les csv options
+
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
-                                                            command=lambda:changer_option("FREQ_MAJ", int(entree_frequence_maj.get())*86400), # jours * nb sec dans jour 
+                                                            command=lambda:changer_option("FREQ_MAJ", round(float(entree_frequence_maj.get())*86400)) if est_numerique(entree_frequence_maj.get()) else None, # jours * nb sec dans jour 
                                                             text="Confirmer")
-    btn_confirm_frequence.place(relx = 0.62, rely = 0.15, anchor = CENTER)
+    btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
 
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 

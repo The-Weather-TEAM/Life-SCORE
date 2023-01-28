@@ -72,8 +72,32 @@ def is_connected(url) :
             
         return True
 
+"""
+FONCTIONS UTILE DANS TOUT L'APPLICATION
 
+"""
+def changer_option(option, valeur):
+    """Modifie la valeur d'un option donné dans ./donnees/options.txt"""
+    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
+    dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
+    dictionaire_options[option] = valeur # on change l'option
+    open(path_options, "w").write(str(dictionaire_options)) # on re-ecrit tout les options au fichier
+
+def lire_option(option):
+    """Renvoi la valeur de l'option donné dans ./donnees/options.txt"""
+    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
+
+    return eval(open(path_options, "r").read()).get(option) # on ouvre et recupere l'option qu'on veut
+    
+def est_numerique(num: str) -> bool:
+    """Renvoi si un string est numerique"""
+    assert num == str, "On peut que evaluer si un string est numerique."
+    try:
+        float(num)
+        return True
+    except:
+        return False
 
 
 '''

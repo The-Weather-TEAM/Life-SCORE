@@ -49,7 +49,7 @@ from http.client import IncompleteRead
 
 # Importation de la fonction de test de connexion :
 from classes import is_connected as connexion
-
+from classes import lire_option          # Utile pour lire les parametres d'utilisateur
 
 
 
@@ -61,7 +61,7 @@ def executer(barre_progres,fenetre,message):
 
     # Temps en secondes entre les vérifications de mises à jour :
     #temps_maj = 2592000       #* Nombre de secondes dans un mois (30 jours)
-    temps_maj = 0
+    temps_maj = lire_option("FREQ_MAJ")
 
 
 
