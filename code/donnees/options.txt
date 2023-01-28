@@ -1,1 +1,1 @@
-{'test': True, 'option1': 'dark'}
+{'APPARENCE': 'System', 'FREQ_MAJ': 864000, 'DERNIERE_MAJ': 10}

@@ -454,7 +454,9 @@ def parametres(bouton):
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*4), font= ('Bold', 18))
     entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
     #TODO: fonction qui modifie le frequence MAJ dans les csv options
-    btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, command=lambda:print("changer le valeur du csv"), text="Confirmer")
+    btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
+                                                            command=lambda:changer_option("FREQ_MAJ", int(entree_frequence_maj.get())*86400), # jours * nb sec dans jour 
+                                                            text="Confirmer")
     btn_confirm_frequence.place(relx = 0.62, rely = 0.15, anchor = CENTER)
 
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
