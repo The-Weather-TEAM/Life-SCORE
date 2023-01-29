@@ -40,7 +40,7 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v0.5.2
+# Version actuelle : v0.5.3
 
 > Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
 
@@ -56,13 +56,10 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 
 
 Changements :
-- Les demandes de villes s'adaptent, il n'y a plus d'erreur ;
-- Changement de style (clair / foncé) et sauvegarde des paramètres ;
-- Les arrondissements marchent ;
-- Nouvelle base de donnée et récupération automatique et plus rapide des données ;
-- Il n'y a plus de changement de fenêtres : les transitions sont plus fluides ;
-- Gestion automatique des bibliothèques et mises à jour ;
-- Animation de la note (avec fonction maths) et nouvelle police d'écriture.
+- Ajout de l'interface de téléchargement ;
+- Nouvelle page de paramètres qui permet de modifier la couleur et l'apparence de l'application ;
+- Code plus organisé avec une partie facultative (donnees) et une obligatoire (systeme) ;
+- Nouvelle gestion des csv plus présice pour récupérer plus de données.
 
 
 
