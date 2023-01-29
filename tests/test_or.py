@@ -36,3 +36,5 @@ print(type(c))
 d = "    sneis  eie c jd"
 d=d.strip()
 print(d)
+
+print(float(0))

@@ -425,3 +425,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Ajout de code pour créer automatiquement tous les fichiers dans données : maintenant le dossier n'est plus indispensable pour le premier lancement.
 
 >Ajout d'un pourcentage pour savoir où le téléchargement en est.
+
+>Correction de bugs pour la mise à jour + correction de grammaire

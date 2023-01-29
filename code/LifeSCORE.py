@@ -451,7 +451,7 @@ def parametres(bouton):
     entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
 
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
-                                                            command=lambda:changer_option("FREQ_MAJ", round(float(entree_frequence_maj.get())*86400)) if est_numerique(entree_frequence_maj.get()) else None, # jours * nb sec dans jour 
+                                                            command=lambda:changer_option("FREQ_MAJ", round(float(entree_frequence_maj.get())*86400)) if est_nombre(entree_frequence_maj.get(),message) else None, # jours * nb sec dans jour 
                                                             text="Confirmer")
     btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
 
