@@ -4,7 +4,6 @@
                          
     Programme de téléchargement et mises à jour des données
 
-                  développé par Nathan
 
 
 - Créé le dossier "data" avec tous les CSV dedans ;
