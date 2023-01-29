@@ -51,7 +51,7 @@ def maj_modules_requirements():
 
 
 
-#maj_modules_requirements() # A AMELIORER
+maj_modules_requirements() # A AMELIORER
 
 
 
@@ -110,7 +110,7 @@ if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/style.txt'):
 if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'):
     nom_fichier = nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'
     with open(nom_fichier,"w") as fichier:
-        fichier.write("blue")
+        fichier.write("green")
 
 with open(nom_du_repertoire +'/donnees/utilisateur/style.txt') as txt:
     style = txt.read()

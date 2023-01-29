@@ -338,6 +338,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
+                    message_pourcentage.configure(text = f"{round(pourcentage*100)}%")
                     fenetre.update()
                     
                     
