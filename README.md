@@ -424,3 +424,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Premier prototype final de l'interface de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
 
 >Les options sont stockées dans un fichier txt. Et ça marche !
+
+>Ajout de code pour créer automatiquement tous les fichiers dans données : maintenant le dossier n'est plus indispensable pour le premier lancement.
+
+>Ajout d'un pourcentage pour savoir où le téléchargement en est.

@@ -76,15 +76,25 @@ def is_connected(url) :
 FONCTIONS UTILE DANS TOUT L'APPLICATION
 
 """
+def is_options() :
+    if not os.path.isfile(os.path.dirname(__file__)+"/donnees/options.txt") :
+        os.path.join(os.path.dirname(__file__), "donnees/options.txt")
+        path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
+        dic_def = {'APPARENCE': 'System',
+                   'FREQ_MAJ': 0,
+                   'DERNIERE_MAJ': 0}
+        open(path_options, "w").write(str(dic_def))
+
 def changer_option(option, valeur):
+    is_options()
     """Modifie la valeur d'un option donné dans ./donnees/options.txt"""
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
-
     dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
     dictionaire_options[option] = valeur # on change l'option
     open(path_options, "w").write(str(dictionaire_options)) # on re-ecrit tout les options au fichier
 
 def lire_option(option):
+    is_options()
     """Renvoi la valeur de l'option donné dans ./donnees/options.txt"""
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
@@ -194,7 +204,7 @@ class Donnees:
                         liste_ville[i] = liste_ville[i].capitalize()
             self.ville = "-".join(liste_ville)
 
-        fichier = open(self.repertoire + '/donnees/csv/commune_modifiee.csv',"r",encoding='utf-8')
+        fichier = open(self.repertoire + '/donnees/csv/communes.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
@@ -276,9 +286,9 @@ class Donnees:
         m_p : list de int (mx+p) pour la fonction affine
         delim : str le delimiteur, une virgule par défaut
         """
-
-        
-        data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False)
+        data = p.read_csv(self.repertoire + '/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
+        # ! pour l'instant on a que SPORT
+        #data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
 
         rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
         #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\

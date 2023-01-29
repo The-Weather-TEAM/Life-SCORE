@@ -92,6 +92,14 @@ nom_du_repertoire = os.path.dirname(__file__)  #Explicite
 '''
 A REMPLACER PAR LES CSV
 '''
+repertoire_courant = os.path.dirname(__file__)
+repertoire_donnees = os.path.join(repertoire_courant+'/donnees')
+if not os.path.exists(repertoire_donnees):
+    os.makedirs(repertoire_donnees)
+    os.makedirs(repertoire_donnees+'/csv')
+    os.makedirs(repertoire_donnees+'/utilisateur')
+
+
 
 #Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
 if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/style.txt'):
@@ -187,13 +195,16 @@ def telechargement(bouton,fenetre):
     msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =('Bold',16), justify=LEFT)
     msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
 
+    message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =('Bold',12), justify=LEFT)
+    message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)
+
     progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate',)
     progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
     progressbar.set(0)
     windowDownload.update()
     
     
-    erreur_maj = update.executer(progressbar,windowDownload,msg_aide)
+    erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
         valeur_bol = creation_fichiers()
         retour_pages(windowDownload,bouton)
@@ -592,7 +603,7 @@ def ville(entree,msg,fenetre):
     if Donnees_ville.is_commune_france(msg): #Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
         msg.configure(text = "Veuillez patienter ...")
         #FAIRE TOUS LES CALCULS ICI :
-        Donnees_ville.note_par_habitants('sport.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',')
+        Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',')
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
         efface_fenetre(fenetre)
         w_score(Donnees_ville,fenetre)

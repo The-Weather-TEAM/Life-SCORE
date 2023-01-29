@@ -54,7 +54,7 @@ from classes import lire_option          # Utile pour lire les parametres d'util
 
 
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
-def executer(barre_progres,fenetre,message):
+def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
 
@@ -78,19 +78,9 @@ def executer(barre_progres,fenetre,message):
 
     # Pour savoir si les fichiers existait avant le programme :
     is_file_versions = os.path.isfile(repertoire_donnees+'/versions.csv')
-    is_file_options = os.path.isfile(repertoire_donnees+'/utilisateur/options.csv')
-
-
 
     
-    # Création du fichier pour les options de l'application même si on a pas internet :
-    if os.path.exists(repertoire_donnees) and not is_file_options :
-            os.path.join(repertoire_donnees, 'options.csv')
-            csv.writer(open(repertoire_donnees+'/options.csv', "w")).writerow(['OPTION', 'VALEUR'])
-            is_file_options = True
-    
-    
-    
+
 
 
     # Test de connexion internet sur le site data.gouv.fr :
@@ -252,6 +242,7 @@ def executer(barre_progres,fenetre,message):
                     barre_progres.configure(determinate_speed=pourcentage)
                     barre_progres.step()
                     barre_progres.set(pourcentage)
+                    message_pourcentage.configure(text = f"{round(pourcentage*100)}%")
                     
                     fenetre.update()                  # Retourne la version du fichier
 

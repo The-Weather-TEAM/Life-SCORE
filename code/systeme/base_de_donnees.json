@@ -8,6 +8,17 @@
                                                                 
 
     }],
+
+    "communes":
+    ["58c984b088ee386cdb1261f3","6c1db35c-3ee3-42f8-80fb-d366e451cc30", { "insee" : 1,
+                                                                          "delimiteur" : ",",
+                                                                          "colonne_ville" : "-",
+                                                                          "colonne_donnee" : ["-"],
+                                                                          "type" : "-",
+                                                                          "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/"
+                                                                
+    
+    }],
     
     "ecoles":
     ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
