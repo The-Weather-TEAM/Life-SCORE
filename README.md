@@ -421,4 +421,4 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 29 Janiver 2023 :
 >Premier prototype final de l'interface de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
->Les options sont stockés dans un fichier txt. Et ça marche !
+>Les options sont stockées dans un fichier txt. Et ça marche !
