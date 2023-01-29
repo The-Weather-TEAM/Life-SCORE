@@ -410,3 +410,15 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >"Note" n'est plus affiché en couleur.
 
 >Ajout du menu pour changer la couleur des boutons
+
+
+28 Janvier 2023 :
+>Nouvelle méthode pour récupérer automatiquement les données d'un csv en fonction de son type et du nombre de données à récuperer.
+>Les résultats sont données sous forme de tableau.
+
+
+
+
+29 Janiver 2023 :
+>Premier prototype final de l'interface de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
+>Les options sont stockés dans un fichier txt. Et ça marche !
