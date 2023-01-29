@@ -3,7 +3,7 @@ population,1672674792.0
 ecoles,1665031368.0
 colleges,1665031388.0
 lycees,1673323276.0
-police_gendarmerie,1674705637.0
+police_gendarmerie,1674878437.0
 festivals,1666102802.0
 musees,1666162604.0
 ecoles,1665031368.0
@@ -13,4 +13,8 @@ ecoles,1665031368.0
 lycees,1673323276.0
 festivals,1666102802.0
 hopitaux,1620028007.0
-monuments_historiques,1641919161.0
+monuments_historiques,1641919161.0
+m2_maison,1673365528.0
+m2_appartement,1673365528.0
+jardins,1640363401.0
+radon_nucleaire,1557157650.0

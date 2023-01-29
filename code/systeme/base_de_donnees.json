@@ -3,7 +3,8 @@
     ["5e1465ef634f413f2cc19e8d","7edb9963-1cd5-425e-a1e4-7491d15e1be5", { "insee" : 1,
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : "com_code",
-                                                                          "colonne_donnee" : "popleg_tot"
+                                                                          "colonne_donnee" : ["popleg_tot"],
+                                                                          "type" : "simple"
                                                                 
 
     }],
@@ -12,7 +13,7 @@
     ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
                                                                 
 
     }],
@@ -21,7 +22,7 @@
     ["63478da6e4e27dba6feacfa4","b63bd365-c589-48e4-b7d8-9e4f5db133c5", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
                                                                 
 
     }],
@@ -30,7 +31,7 @@
     ["63bce30c70d6d100b09dde9a","27d469ff-9908-4b7e-a2e0-9439bb38a395", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : "nom_de_l_etablissment"
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
                                                                 
 
     }],
@@ -39,7 +40,7 @@
     ["5489cda0c751df35a24120e7","c53cd4d4-4623-4772-9b8c-bc72a9cdf4c2", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_commune",
-                                                                          "colonne_donnee" : "service"
+                                                                          "colonne_donnee" : ["service"]
                                                                 
 
     }],
@@ -48,7 +49,7 @@
     ["62cf95993d99f22480f49334","47ac11c2-8a00-46a7-9fa8-9b802643f975", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_commune",
-                                                                          "colonne_donnee" : "nom_du_festival"
+                                                                          "colonne_donnee" : ["nom_du_festival"]
                                                                 
 
     }],
@@ -57,7 +58,7 @@
     ["5e27c8e2dee7e70ed425e8d6","29406189-15e9-4f2f-9e9d-d18649762198", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "commune",
-                                                                          "colonne_donnee" : "nom_officiel_du_musee"
+                                                                          "colonne_donnee" : ["nom_officiel_du_musee"]
                                                                 
 
     }],
@@ -66,7 +67,7 @@
     ["5f07458de03abf6e1e97bcf9","c41a1919-fbd7-4d19-a8df-1719bef8b14a", { "insee" : 0,
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : "addr-city",
-                                                                          "colonne_donnee" : "name"
+                                                                          "colonne_donnee" : ["name"]
                                                                 
 
     }],
@@ -75,7 +76,7 @@
     ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee",
-                                                                          "colonne_donnee" : "appellation_courante"
+                                                                          "colonne_donnee" : ["appellation_courante"]
                                                                 
 
     }],
@@ -84,7 +85,7 @@
     ["639c7cf4969f3318338df9a8","dfb542cd-a808-41e2-9157-8d39b5c24edb", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "INSEE_C",
-                                                                          "colonne_donnee" : "loypredm2"
+                                                                          "colonne_donnee" : ["loypredm2"]
                                                                 
 
     }],
@@ -93,7 +94,7 @@
     ["639c7cf4969f3318338df9a8","bc9d5d13-07cc-4d38-8254-88db065bd42b", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "INSEE_C",
-                                                                          "colonne_donnee" : "loypredm2"
+                                                                          "colonne_donnee" : ["loypredm2"]
                                                                 
 
     }],
@@ -102,7 +103,7 @@
     ["5ee2fe1cba88d5c5a1179ef2","49a648e5-ef47-41fe-aa18-9323a811c2c7", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "ville",
-                                                                          "colonne_donnee" : "nom_du_jardin"
+                                                                          "colonne_donnee" : ["nom_du_jardin"]
                                                                 
 
     }],
@@ -111,7 +112,7 @@
     ["53834c53a3a72906c7ec5c4c","817114f8-9b61-48fa-b7a4-0e3c1331a44c", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee_com",
-                                                                          "colonne_donnee" : "classe_potentiel"
+                                                                          "colonne_donnee" : ["classe_potentiel"]
                                                                 
 
     }]

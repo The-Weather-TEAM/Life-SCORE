@@ -119,21 +119,27 @@ class Donnees:
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV
 
     '''
-    def recup_donnees_auto(self, csv) :
+    def recup_donnees_simple(self, csv) :
         
         lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
         
+        colonnes = [infos_csv[csv][2]['colonne_ville']]
+        for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
+            colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
+        
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
-                            usecols=[infos_csv[csv][2]['colonne_ville'],
-                                    infos_csv[csv][2]['colonne_donnee']],
+                            usecols=colonnes,
                             encoding='utf-8',
                             low_memory=False)
         
         rangee = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
         
         try:
-                return int(rangee.values[0][1])
+                resultat = []
+                for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
+                    resultat.append(rangee.values[0][i+1])
+                return resultat
             
         except IndexError : #Si pas de données
             return None
@@ -141,6 +147,30 @@ class Donnees:
 
 
 
+
+
+
+
+    def recuperation_donnees(self, csv) :
+        
+        type_recuperation = infos_csv[csv][2]['type']
+        
+        if type_recuperation == 'simple' :
+            return Donnees.recup_donnees_simple(self, csv)
+        
+        elif type_recuperation  == 'par_population' :
+            return print('pas encore fair lol')
+        
+        elif type_recuperation == 'blablabla' :
+            return print('pas encore fair lol')
+        
+        
+        
+        
+        
+        
+        
+        
     """
     VERIFIE SI LA COMMUNE EST FRANCAISE ET DONNE SON CODE INSEE
     """
@@ -257,7 +287,8 @@ class Donnees:
             nbr_etab = rangee.values[0][1]
         
             # Calcul établiseements par habitants
-            etab_par_hab = nbr_etab / self.recup_donnees_auto('population')
+            habitant = self.recuperation_donnees('population')[0]
+            etab_par_hab = nbr_etab / int(habitant)
 
             # Calcul réalisé avec les données Françaises
             #16071.4*etab_sport_par_hab - 3.57143
