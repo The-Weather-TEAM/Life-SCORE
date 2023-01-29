@@ -102,6 +102,17 @@ Changements :
 
 
 
+# Projet d'interface finale
+### Page d'accueil :
+![image](https://user-images.githubusercontent.com/104134380/215339265-72d5fd3b-1e61-4d31-a90f-40b565ae0de9.png)
+
+### Page de paramètres :
+![image](https://user-images.githubusercontent.com/104134380/215340861-4d5b28cd-eb84-4761-b3e2-58783fd12816.png)
+
+
+
+
+
 # Journal de bord
 Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
 
