@@ -21,7 +21,8 @@ def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
     - `valeursIdeals` et `valeursSaisit` doivent avoir les memes noms de clefs.
     - Un critere de `valeursIdeals` ne peut pas avoir 3 valeurs identiques, mais il peut en avoir 2 si l'ideal est le maximum ou minimum.
     """
-
+    assert type(valeursIdeals) == type(valeursIdeals) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
+    
     # calcule le rapport entre les donnes local est la moyenne global
     listDeNotes = []
 
