@@ -414,6 +414,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 28 Janvier 2023 :
 >Nouvelle méthode pour récupérer automatiquement les données d'un csv en fonction de son type et du nombre de données à récuperer.
+
 >Les résultats sont données sous forme de tableau.
 
 
@@ -421,4 +422,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 29 Janiver 2023 :
 >Premier prototype final de l'interface de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
+
 >Les options sont stockées dans un fichier txt. Et ça marche !
