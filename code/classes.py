@@ -85,9 +85,12 @@ def is_options() :
                    'DERNIERE_MAJ': 0}
         open(path_options, "w").write(str(dic_def))
 
-def changer_option(option, valeur):
+def changer_option(option, valeur,msg=None):
     is_options()
     """Modifie la valeur d'une option donnée dans ./donnees/options.txt"""
+    if msg != None:
+        msg.configure(text = "Modification effectuée !") #Si un message est renseigné
+
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
     dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
     dictionaire_options[option] = valeur # on change l'option
@@ -100,20 +103,13 @@ def lire_option(option):
 
     return eval(open(path_options, "r").read()).get(option) # on ouvre et recupere l'option qu'on veut
     
-def est_nombre(num: str,msg) -> bool:
+def est_nombre(num: str) -> bool:
     """Renvoie uniquement les nombres"""
     #assert num == str, "Seul un nombre est accepté comme réponse" #Je le commente car num sera forcément un str (précisé au dessus)
     try:
-        num = float(num)
-        print(type(num))
-        if num != 0:
-            msg.configure(text = "Modification effectuée !")
-            return True
-        else:
-            msg.configure(text = "Vous ne pouvez pas utiliser la valeur 0 !")
-            return False
+        float(num)
+        return True
     except:
-        msg.configure(text = "Seul un nombre est accepté comme réponse")
         return False
 
 
