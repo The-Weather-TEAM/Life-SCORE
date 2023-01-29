@@ -461,7 +461,7 @@ def parametres(bouton):
 
 def change_apparence_page(choix):
 
-    if choix in ["Système","Sombre","Light"] : #Si on veut changer les pages
+    if choix in ["Système","Sombre","Clair"] : #Si on veut changer les pages
         if choix == "Système": choix = "System"
         elif choix == "Sombre": choix = "Dark"
         else:choix = "Light"
