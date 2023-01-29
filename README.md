@@ -415,7 +415,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 28 Janvier 2023 :
 >Nouvelle méthode pour récupérer automatiquement les données d'un csv en fonction de son type et du nombre de données à récuperer.
 
->Les résultats sont données sous forme de tableau.
+>Les résultats sont donnés sous forme de tableau.
 
 
 
