@@ -86,8 +86,8 @@ def is_options() :
         open(path_options, "w").write(str(dic_def))
 
 def changer_option(option, valeur,msg=None):
-    is_options()
     """Modifie la valeur d'une option donnée dans ./donnees/options.txt"""
+    is_options()
     if msg != None:
         msg.configure(text = "Modification effectuée !") #Si un message est renseigné
 
@@ -97,8 +97,8 @@ def changer_option(option, valeur,msg=None):
     open(path_options, "w").write(str(dictionaire_options)) # on re-ecrit tout les options au fichier
 
 def lire_option(option):
-    is_options()
     """Renvoie la valeur de l'option donnée dans ./donnees/options.txt"""
+    is_options()
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
     return eval(open(path_options, "r").read()).get(option) # on ouvre et recupere l'option qu'on veut
