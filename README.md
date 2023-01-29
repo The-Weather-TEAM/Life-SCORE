@@ -59,7 +59,7 @@ Changements :
 - Ajout de l'interface de téléchargement ;
 - Nouvelle page de paramètres qui permet de modifier la couleur et l'apparence de l'application ;
 - Code plus organisé avec une partie facultative (donnees) et une obligatoire (systeme) ;
-- Nouvelle gestion des csv plus présice pour récupérer plus de données.
+- Nouvelle gestion des csv plus précise pour récupérer plus de données.
 
 
 
