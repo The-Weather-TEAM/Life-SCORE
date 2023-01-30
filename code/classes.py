@@ -207,7 +207,7 @@ class Donnees:
                         liste_ville[i] = liste_ville[i].capitalize()
             self.ville = "-".join(liste_ville)
 
-        fichier = open(self.repertoire + '/donnees/csv/communes.csv',"r",encoding='utf-8')
+        fichier = open(self.repertoire + '/commune_modifiee.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()

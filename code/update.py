@@ -239,8 +239,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
                     recup_version = ligne.values[0][1]                       # Retourne la version du fichier
                     pourcentage = csv_courant/nombre_total_csv
-                    barre_progres.configure(determinate_speed=pourcentage)
-                    barre_progres.step()
+                    #barre_progres.configure(determinate_speed=1)
                     barre_progres.set(pourcentage)
                     message_pourcentage.configure(text = f"{round(pourcentage*100)}%")
                     
