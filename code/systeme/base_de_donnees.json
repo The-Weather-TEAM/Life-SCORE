@@ -126,6 +126,42 @@
                                                                           "colonne_donnee" : ["classe_potentiel"]
                                                                 
 
+    }],
+    
+    "juridictions_compétentes":
+    ["6392017edf7251532fda4bab","168c8b83-a542-4815-86c1-f2eafa0c58b4", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "Commune",
+                                                                          "colonne_donnee" : ["Tribunal_judiciaire_compétent"]
+                                                                
+
+    }],
+    
+    "action_coeur_de_ville":
+    ["5acc7eddc751df5e21efdf20","f547b346-af1e-41b5-b647-8f23e71ffe1c", { "insee" : 1,
+                                                                          "delimiteur" : ",",
+                                                                          "colonne_ville" : "insee_com",
+                                                                          "colonne_donnee" : ["lib_acv"]
+                                                                
+
+    }],
+    
+    "production_electricite_gaz":
+    ["5f90f665bf376c0ae5d5f959","4d444532-b972-4a29-ac8a-7a2dc0128d3e", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "1_f_code_insee_pdl",
+                                                                          "colonne_donnee" : ["s_3_prod_d_filiere"]
+                                                                
+
+    }],
+    
+    "dose_rayonnements_telluriques":
+    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : "code_insee",
+                                                                          "colonne_donnee" : ["dose_rayonnements_telluriques"]
+                                                                
+
     }]
 
 }
