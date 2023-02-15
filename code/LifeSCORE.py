@@ -79,6 +79,7 @@ import pandas
 from time import sleep
 import csv
 import customtkinter as interface
+from tkintermapview import TkinterMapView
 
 
 
@@ -636,7 +637,13 @@ def w_score(ville,win):
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',70), justify=CENTER)#fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
-
+    
+    # Carte du ville
+    carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
+    carte_ville.set_address(f"{ville}, France")
+    carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
+    print(400/win.winfo_height(), win.winfo_height())
+    carte_ville.place(relx=0.3, rely=0.18)
 
 
     '''
