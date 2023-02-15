@@ -149,10 +149,8 @@ global erreur_maj
 #global Fenetre_CTk #Globale pour la fenêtre principale
 
 
-
-
-
-
+# Global pour la nouvelle version de UPDATE
+global progressbar,windowDownload,msg_aide,message_pourcentage
 
 
 
