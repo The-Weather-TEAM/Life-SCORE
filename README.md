@@ -427,3 +427,6 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Ajout d'un pourcentage pour savoir où le téléchargement en est.
 
 >Correction de bugs pour la mise à jour + correction de grammaire
+
+15 Fevrier 2023:
+>Ajoute d'une carte sur la page de note du ville concerné.
