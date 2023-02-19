@@ -451,12 +451,12 @@ def parametres(bouton):
 
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message) if est_nombre(entree_frequence_maj.get()) else message.configure(text = "Vous devez entrer un nombre !"), # jours * nb sec dans jour 
-                                                            text="Confirmer",font=('Arial Black',30))
+                                                            text="Confirmer")
     btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
 
     btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/10),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
-                                                                text="Appliquer les Changements",font=('Arial Black',30))
+                                                                text="Appliquer les Changements")
 
     btn_changements.place(relx = 0.5, rely = 0.65, anchor = CENTER)
 
@@ -638,7 +638,7 @@ def w_score(ville,win):
     
     # Carte du ville
     carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
-    carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France")
+    carte_ville.set_address(f"{ville}, France")
     carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
     print(400/win.winfo_height(), win.winfo_height())
     carte_ville.place(relx=0.3, rely=0.18)
