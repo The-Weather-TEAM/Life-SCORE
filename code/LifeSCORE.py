@@ -71,7 +71,7 @@ import tkinter.font
 from classes import * #Import de nos classes créées
 
 from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
-
+from PIL import Image #pour les logos et les boutons de CTK
 
 
 
@@ -275,14 +275,14 @@ def w_qcm(win,option = None): # w pour window
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
-    btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="AIDE") #Bouton d'aide
+    btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda: aide(btn_aide), text="AIDE" ,font=('Arial Black',30)) #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="Paramètres")
+    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30))
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
-    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/15), command=lambda: avancer(win), text="Lancer la recherche") #appele la fonction question1
+    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Arial Black',30)) #appele la fonction question1
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 
@@ -298,7 +298,7 @@ def w_qcm(win,option = None): # w pour window
 
 
 
-def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le premier passage
+def avancer(fenetre): 
     global msg_principal
     #global btn_ok
     global n #n prend +1 a chaque questions
@@ -309,8 +309,8 @@ def avancer(fenetre): # bouton est le bouton d'aide qui disparait après le prem
     """
     if n < len(list_Questions):
         btn_ok.place_forget() #Cache ce bouton
-        btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15), command=lambda: plus0(btn_gauche,btn_droite), text="Non")
-        btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15), command=lambda: plus1(btn_gauche,btn_droite), text="Oui")
+        btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus0(btn_gauche,btn_droite), text="Non",font=('Arial Black',30))
+        btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus1(btn_gauche,btn_droite), text="Oui",font=('Arial Black',30))
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
         btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
         msg_principal.configure(text =f'{list_Questions[n][0]}') #change le texte du msg principal pour la question suivante
@@ -329,7 +329,7 @@ def efface_fenetre(fenetre):
     """
     for widget in fenetre.winfo_children():
 
-        if not str(widget) == '.!ctkbutton3': #Pour garder le btn parametres
+        if str(widget) not in ['.!ctkbutton4','.!ctkbutton2']: #Pour garder le btn parametres et le logo
             widget.destroy()
         
 
@@ -405,7 +405,7 @@ Ils sont répartis en 4 catégories :
     windowAide.minsize(width=int(510*4/3), height=384) #768
     msg_aide = interface.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',16), justify=LEFT)
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda:retour_pages(windowAide,btn), text="Compris !")
+    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda:retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
 
@@ -451,12 +451,12 @@ def parametres(bouton):
 
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message) if est_nombre(entree_frequence_maj.get()) else message.configure(text = "Vous devez entrer un nombre !"), # jours * nb sec dans jour 
-                                                            text="Confirmer")
+                                                            text="Confirmer",font=('Arial Black',30))
     btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
 
-    btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/15),  
+    btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/10),  
                                                                 command=lambda:retour_pages(windowParam,bouton), 
-                                                                text="Appliquer les Changements")
+                                                                text="Appliquer les Changements",font=('Arial Black',30))
 
     btn_changements.place(relx = 0.5, rely = 0.65, anchor = CENTER)
 
@@ -541,14 +541,14 @@ def w_question(fenetre):
     msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',20), justify=CENTER) #font = taille + police, justify comme sur word
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
 
-    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: arrondissement(btn_arrondissement), text="Aide\narrondissements") #Boutton d'aide arrondissements
-    btn_arrondissement.place(relx=0.94, rely=0.9 ,anchor = SE)
+    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), text="Aide\narrondissements",font=('Arial Black',30)) #Boutton d'aide arrondissements
+    btn_arrondissement.place(relx=0.9, rely=0.9 ,anchor = SE)
     
     #test_connexion(msg_ville) #Petit problème si ya pas de connection ça empêche le démarrage de l'application
 
 
     # Boutton
-    btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/15), command=lambda: ville(entree,msg_ville,fenetre),text="Recherche")
+    btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=('Arial Black',30))
     btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
 
     fenetre.bind('KP_Return',ville(entree,msg_ville,fenetre)) #Appuyer sur entrée revient à appuyer sur le Bouton NE MARCHE PAS!
@@ -579,7 +579,7 @@ def arrondissement(btn):
     #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
     msg_aide = interface.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
     msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
-    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/15), command=lambda :retour_pages(windowAide,btn), text="Compris !")
+    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda :retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
 
@@ -698,7 +698,7 @@ def w_score(ville,win):
 
 
     #Bouton retour
-    btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/15), command=lambda:retour_pages(win,None,False), text= "Noter une autre ville", font=('Bold',20))
+    btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False), text= "Noter une autre ville", font=('Arial Black',20))
     btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
     
 
@@ -813,14 +813,14 @@ def w_erreur(fenetre): # w pour window
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) #Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     #boutons 
     #bouton_explication/aide
-    btn_aide  = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda: aide(btn_aide), text="Aide") #Bouton d'aide
+    btn_aide  = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: aide(btn_aide), text="Aide",font=('Arial Black',30)) #Bouton d'aide
     btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE)
     #bouton de paramètres qui ouvre une page pour les mises à jour et leur fréquence
-    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15),command=lambda : parametres(btn_parametre), text="Paramètres")
+    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30))
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)
 
     #bouton ok Qui continue après le premier message
-    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/15), command=fenetre.destroy, text="OK") #Ferme la page
+    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=('Arial Black',30)) #Ferme la page
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
 
 def taille_police(chaine):
@@ -864,11 +864,16 @@ fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=768, height=500) #768 = taille minimum de la fenetre
 fenetrePrincipale.state('zoomed')
 #boutton de lancement
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/15), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer") #appele la fonction question1
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) #appele la fonction question1
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) #place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 #message de lancement
 msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
+
+#logo qui doit rester tt le long
+logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/logo.png'), size=(180, 180))
+btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "")
+btn_nul.place(relx=0.1,rely=0.15,anchor = CENTER)
 
 fenetrePrincipale.mainloop()
