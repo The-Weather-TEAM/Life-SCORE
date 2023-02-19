@@ -429,4 +429,4 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Correction de bugs pour la mise à jour + correction de grammaire
 
 15 Fevrier 2023:
->Ajoute d'une carte sur la page de note du ville concerné.
+>Ajoute d'une carte sur la page de notation montrant la ville
