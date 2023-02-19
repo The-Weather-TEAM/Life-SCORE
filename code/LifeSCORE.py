@@ -640,7 +640,6 @@ def w_score(ville,win):
     carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
     carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France")
     carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
-    print(400/win.winfo_height(), win.winfo_height())
     carte_ville.place(relx=0.3, rely=0.18)
 
 
