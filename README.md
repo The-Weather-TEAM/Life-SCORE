@@ -78,6 +78,7 @@ Changements :
 - urllib3
 - http
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
+- tkintermapview (source: https://github.com/TomSchimansky/TkinterMapView)
 - pyglet
 - subprocess
 - sys
