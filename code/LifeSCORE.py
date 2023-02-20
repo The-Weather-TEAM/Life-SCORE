@@ -323,15 +323,23 @@ def avancer(fenetre):
 
 
 
-def efface_fenetre(fenetre):
+def efface_fenetre(fenetre,option="Classique"): #option = "Classique" est une valeur de base pour garder lee btn parametres si on met une autre option il efface quand meme ce bouton
     """
     Fonction qui efface tout d'une fenêtre à l'autre pour pouvoir afficher d'autres choses
     """
-    for widget in fenetre.winfo_children():
+    if option == "Classique":
+        for widget in fenetre.winfo_children():
 
-        if str(widget) not in ['.!ctkbutton4','.!ctkbutton2'] and "toplevel" not in str(widget): #Pour garder le btn parametres et le logo et les pages d'aides
-            print(widget)
-            widget.destroy()
+            if str(widget) not in ['.!ctkbutton4','.!ctkbutton2'] and "toplevel" not in str(widget): #Pour garder le btn parametres et le logo et les pages d'aides
+
+                widget.destroy()
+    else:
+        for widget in fenetre.winfo_children():
+
+            if str(widget) != '.!ctkbutton2' : #Pour garder le logo
+
+                widget.destroy()
+
         
 
 
@@ -516,10 +524,13 @@ def change_etat_btn(bouton):
     
     Ca marche désormais :) 
     """
-    if bouton  and bouton.cget("state") == NORMAL : #Récupère l'attribut et le change
-        bouton.configure(state=DISABLED)
-    else:
-        bouton.configure(state=NORMAL)
+    try :
+        if bouton  and bouton.cget("state") == NORMAL : #Récupère l'attribut et le change
+            bouton.configure(state=DISABLED)
+        else:
+            bouton.configure(state=NORMAL)
+    except TclError:
+        return None
 
 
 
@@ -607,7 +618,7 @@ def ville(entree,msg,fenetre):
         #FAIRE TOUS LES CALCULS ICI :
         Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',')
         #ON OUVRE LA TROISIEME PAGE QU'APRES AVOIR FAIT TOUS LES CALCULS
-        efface_fenetre(fenetre)
+        efface_fenetre(fenetre,"Efface_reste")
         w_score(Donnees_ville,fenetre)
 
 
