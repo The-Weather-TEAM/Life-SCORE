@@ -329,7 +329,8 @@ def efface_fenetre(fenetre):
     """
     for widget in fenetre.winfo_children():
 
-        if str(widget) not in ['.!ctkbutton4','.!ctkbutton2']: #Pour garder le btn parametres et le logo
+        if str(widget) not in ['.!ctkbutton4','.!ctkbutton2'] and "toplevel" not in str(widget): #Pour garder le btn parametres et le logo et les pages d'aides
+            print(widget)
             widget.destroy()
         
 
@@ -430,6 +431,8 @@ def parametres(bouton):
     windowParam.title('LifeScore  |  Paramètres')
     windowParam.minsize(width=int(510*4/3), height=384) #768
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
+
+    #Tous les messages présents  (Titre)
 
     message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
     message.place(relx=0.5,rely=0.5,anchor = CENTER)
