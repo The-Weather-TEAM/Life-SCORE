@@ -432,6 +432,10 @@ def parametres(bouton):
         -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
+    TODO : réorganiser cette fonction pour que ce soit en gros :
+    ! creation de tous les widgets
+
+    ! placement de tous les widgets pour que ce soit plus structuré
     """
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
@@ -440,10 +444,14 @@ def parametres(bouton):
     windowParam.minsize(width=int(510*4/3), height=384) #768
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
-    #Tous les messages présents  (Titre)
+    #Tous les messages présents  (Titre + un message par classe)
+    msg_titre =interface.CTkLabel(windowParam,text="PARAMETRES", width = 50, font =('Arial Black',25),text_color = "#2DA472")
+    msg_titre.place(relx=0.5,rely=0.1,anchor = CENTER)
 
-    message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
-    message.place(relx=0.5,rely=0.5,anchor = CENTER)
+    msg = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Arial',18)) #font = taille + police, justify comme sur word
+    msg.place(relx=0.5,rely=0.5,anchor = CENTER)
+
+
 
     """variable = interface.StringVar()
     variable.set("System")"""
@@ -529,7 +537,7 @@ def change_etat_btn(bouton):
             bouton.configure(state=DISABLED)
         else:
             bouton.configure(state=NORMAL)
-    except TclError:
+    except TclError: #Erreur si le nom n'est pas reconnu par tkinter (le bouton a été supprimé)
         return None
 
 
