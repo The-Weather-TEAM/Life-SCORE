@@ -74,9 +74,8 @@ from requests.exceptions import ConnectionError #Pas sûr de l'utilité là
 from PIL import Image #pour les logos et les boutons de CTK
 
 
-
 import pandas
-from time import sleep
+from time import sleep, strftime, localtime
 import csv
 import customtkinter as interface
 from tkintermapview import TkinterMapView
@@ -422,6 +421,10 @@ Ils sont répartis en 4 catégories :
     return windowAide
 
 
+def date_dernier_verification():
+    """Renvoi date formaté du dernier mis a jour des donnees"""
+    dernier_maj_sec = lire_option("DERNIERE_MAJ")
+    return strftime("%d/%m/%Y à %Hh%M", localtime(dernier_maj_sec))
 
 
 
@@ -449,16 +452,18 @@ def parametres(bouton):
     variable.set("System")"""
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
     switch_apparence.set('Styles')
-    switch_apparence.place(relx = 0.2, rely = 0.25, anchor = CENTER)
+    switch_apparence.place(relx = 0.2, rely = 0.35, anchor = CENTER)
     #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
     switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
     switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.41, rely = 0.25, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
+    switch_boutons.place(relx = 0.41, rely = 0.35, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
     
     frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
     frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
     entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
+    dernier_verification = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Bold", 17), text_color="#646464")
+    dernier_verification.place(relx=0.325, rely=0.22, anchor= CENTER)
 
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message) if est_nombre(entree_frequence_maj.get()) else message.configure(text = "Vous devez entrer un nombre !"), # jours * nb sec dans jour 
