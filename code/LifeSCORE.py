@@ -435,29 +435,22 @@ def parametres(bouton):
         -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
+        -Suprimmer donnes d'utilisateur                                 X
     """
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
     windowParam = interface.CTkToplevel()
     windowParam.title('LifeScore  |  Paramètres')
-    windowParam.minsize(width=int(510*4/3), height=384) #768
+    windowParam.geometry("680x480") #768
+    windowParam.resizable(False, False)
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
     #Tous les messages présents  (Titre)
 
-    message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
-    message.place(relx=0.5,rely=0.5,anchor = CENTER)
-
     """variable = interface.StringVar()
     variable.set("System")"""
-    switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.set('Styles')
-    switch_apparence.place(relx = 0.2, rely = 0.35, anchor = CENTER)
-    #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
-    switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
-    switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.41, rely = 0.35, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
-    
+
+
     frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
     frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
@@ -470,11 +463,29 @@ def parametres(bouton):
                                                             text="Confirmer")
     btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
 
-    btn_changements = interface.CTkButton(windowParam,height=int(windowParam.winfo_screenheight()/10),  
-                                                                command=lambda:retour_pages(windowParam,bouton), 
-                                                                text="Appliquer les Changements")
 
-    btn_changements.place(relx = 0.5, rely = 0.65, anchor = CENTER)
+
+    apparence_message = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION:", font=('Bold', 18))
+    apparence_message.place(relx = 0.30, rely = 0.37, anchor = CENTER)
+    switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
+    switch_apparence.set('Styles')
+    switch_apparence.place(relx = 0.2, rely = 0.45, anchor = CENTER)
+    #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
+    switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
+    switch_boutons.set('Couleur Boutons') 
+    switch_boutons.place(relx = 0.41, rely = 0.45, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
+
+
+    message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
+    message.place(relx=0.5,rely=0.7,anchor = CENTER)
+
+    btn_changements = interface.CTkButton(windowParam,height=60,
+                                                        width=550,  
+                                                        command=lambda:retour_pages(windowParam,bouton), 
+                                                        text="Appliquer les Changements",
+                                                        font=('Arial Black',30))
+
+    btn_changements.place(relx = 0.5, rely = 0.85, anchor = CENTER)
 
     windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))#Meme effet que le bouton sauf que c'est si on ferme la page manuellement
 
