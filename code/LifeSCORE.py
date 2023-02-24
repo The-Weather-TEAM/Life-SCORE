@@ -441,16 +441,16 @@ def parametres(bouton):
     change_etat_btn(bouton)
     windowParam = interface.CTkToplevel()
     windowParam.title('LifeScore  |  Paramètres')
-    windowParam.geometry("680x480") #768
+    windowParam.geometry("680x700") #768
     windowParam.resizable(False, False)
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
     #Tous les messages présents  (Titre)
 
+    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
+    msg_titre.place(relx=0.5, rely=0.064, anchor = CENTER)
     """variable = interface.StringVar()
     variable.set("System")"""
-
-
     frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
     frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
@@ -482,7 +482,7 @@ def parametres(bouton):
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
                                                         command=lambda:retour_pages(windowParam,bouton), 
-                                                        text="Appliquer les Changements",
+                                                        text="APPLIQUER LES CHANGEMENTS",
                                                         font=('Arial Black',30))
 
     btn_changements.place(relx = 0.5, rely = 0.85, anchor = CENTER)
@@ -667,10 +667,12 @@ def w_score(ville,win):
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
     # Carte du ville
-    carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
-    carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France")
-    carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
-    carte_ville.place(relx=0.3, rely=0.18)
+    if is_connected("https://mt0.google.com/"):
+        carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
+        carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insert la ville pour l'adress (et format pour les arrondissements) 
+        carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
+        carte_ville.place(relx=0.3, rely=0.18)
+    
 
 
     '''
