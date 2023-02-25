@@ -421,11 +421,16 @@ Ils sont répartis en 4 catégories :
     return windowAide
 
 
-def date_dernier_verification():
+def date_dernier_verification() -> str:
     """Renvoi date formaté du dernier mis a jour des donnees"""
     dernier_maj_sec = lire_option("DERNIERE_MAJ")
     return strftime("%d/%m/%Y à %Hh%M", localtime(dernier_maj_sec))
 
+def supprimer_donnees_utilisateur():
+    """Suprime le fichier csv_dico.csv de ./donnees/csv/"""
+    repertoire_cible = nom_du_repertoire + "/donnees/csv/"
+    if "csv_dico.csv" in os.listdir(repertoire_cible): # on verifie que le fichier existe
+        os.remove(repertoire_cible + "csv_dico.csv") # on suprime le fichier
 
 
 def parametres(bouton):
@@ -435,7 +440,7 @@ def parametres(bouton):
         -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
-        -Suprimmer donnes d'utilisateur                                 X
+        -Suprimmer donnes d'utilisateur                                 V
     """
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
@@ -455,8 +460,8 @@ def parametres(bouton):
     # Pour changer la frequence des mis a jours
     frequence_message = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
     frequence_message.place(relx = 0.02, rely = 0.15)
-    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
-    entree_frequence_maj.place(relx = 0.1, rely = 0.22, anchor = CENTER)
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=51, font= ('Bold', 18))
+    entree_frequence_maj.place(relx = 0.06, rely = 0.20)
     dernier_verification = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Yu Gothic Light", 16), text_color="#646464")
     dernier_verification.place(relx=0.06, rely=0.24)
 
@@ -480,18 +485,26 @@ def parametres(bouton):
     # Pour les donnes d'utilisateur
     donnees_message = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
     donnees_message.place(relx=0.02, rely=0.51)
-    # TODO: Boutton supression et Boutton conditions
+
+    btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
+                                                command=supprimer_donnees_utilisateur,
+                                                text="SUPPRIMER",
+                                                font=("Bold", 18))
+    btn_supprimer_donnees.place(relx=0.06, rely=0.56)
+
+    # TODO: Boutton conditions Utilisateur
 
     message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
     message.place(relx=0.5,rely=0.75,anchor = CENTER)
 
+    # TODO: Boutton credit et rapporter bug
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
                                                         command=lambda:retour_pages(windowParam,bouton), 
                                                         text="APPLIQUER LES CHANGEMENTS",
                                                         font=('Arial Black',30))
 
-    btn_changements.place(relx = 0.5, rely = 0.85, anchor = CENTER)
+    btn_changements.place(relx = 0.5, rely = 0.87, anchor = CENTER)
 
     windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))#Meme effet que le bouton sauf que c'est si on ferme la page manuellement
 
