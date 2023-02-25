@@ -447,37 +447,43 @@ def parametres(bouton):
 
     #Tous les messages présents  (Titre)
 
-    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
-    msg_titre.place(relx=0.5, rely=0.064, anchor = CENTER)
+    titre_message = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
+    titre_message.place(relx=0.5, rely=0.064, anchor = CENTER)
     """variable = interface.StringVar()
     variable.set("System")"""
-    frequence_message = interface.CTkLabel(windowParam, text="Frequence de mis a jour (en jours):", font= ('Bold', 18))
-    frequence_message.place(relx = 0.29, rely = 0.15, anchor = CENTER)
+
+    # Pour changer la frequence des mis a jours
+    frequence_message = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    frequence_message.place(relx = 0.02, rely = 0.15)
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=int(10.3*5), font= ('Bold', 18))
-    entree_frequence_maj.place(relx = 0.53, rely = 0.15, anchor = CENTER)
-    dernier_verification = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Bold", 17), text_color="#646464")
-    dernier_verification.place(relx=0.325, rely=0.22, anchor= CENTER)
+    entree_frequence_maj.place(relx = 0.1, rely = 0.22, anchor = CENTER)
+    dernier_verification = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Yu Gothic Light", 16), text_color="#646464")
+    dernier_verification.place(relx=0.06, rely=0.24)
 
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message) if est_nombre(entree_frequence_maj.get()) else message.configure(text = "Vous devez entrer un nombre !"), # jours * nb sec dans jour 
                                                             text="Confirmer")
-    btn_confirm_frequence.place(relx = 0.625, rely = 0.15, anchor = CENTER)
+    btn_confirm_frequence.place(relx = 0.195, rely = 0.22, anchor = CENTER)
 
 
-
-    apparence_message = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION:", font=('Bold', 18))
-    apparence_message.place(relx = 0.30, rely = 0.37, anchor = CENTER)
+    # Pour l'apparence de l'application
+    apparence_message = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    apparence_message.place(relx = 0.02, rely = 0.33)
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
     switch_apparence.set('Styles')
-    switch_apparence.place(relx = 0.2, rely = 0.45, anchor = CENTER)
+    switch_apparence.place(relx = 0.06, rely = 0.38)
     #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
     switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
     switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.41, rely = 0.45, anchor = CENTER) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
+    switch_boutons.place(relx = 0.27, rely = 0.38) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
 
+    # Pour les donnes d'utilisateur
+    donnees_message = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    donnees_message.place(relx=0.02, rely=0.51)
+    # TODO: Boutton supression et Boutton conditions
 
     message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
-    message.place(relx=0.5,rely=0.7,anchor = CENTER)
+    message.place(relx=0.5,rely=0.75,anchor = CENTER)
 
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
