@@ -423,6 +423,7 @@ def supprimer_donnees_utilisateur():
     repertoire_cible = nom_du_repertoire + "/donnees/csv/"
     if "csv_dico.csv" in os.listdir(repertoire_cible): # on verifie que le fichier existe
         os.remove(repertoire_cible + "csv_dico.csv") # on suprime le fichier
+        sys.exit() #ferme le programme pour éviter de potentielles erreurs
 
 
 def parametres(bouton):
@@ -488,7 +489,7 @@ def parametres(bouton):
 
     # TODO: Boutton conditions Utilisateur
 
-    message = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
+    message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme ", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
     message.place(relx=0.5,rely=0.75,anchor = CENTER)
 
     # TODO: Boutton credit et rapporter bug
