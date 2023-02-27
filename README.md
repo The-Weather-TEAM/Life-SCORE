@@ -418,7 +418,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 
-29 Janiver 2023 : **Nouvelle version v0.5.3**
+29 Janvier 2023 : **Nouvelle version v0.5.3**
 >Premier prototype final de l'interface de l'application : https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
 
 >Les options sont stockées dans un fichier txt. Et ça marche !
@@ -439,5 +439,9 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 20 Fevrier 2023:
 >Fix des issues #85 et #86 découverte aujourd'hui 
 
+
+
 25 Fevrier 2023:
->Commencement du stylisation des fenetres pour resembler les images plus haut dans le README.
+>Début des améliorations graphiques pour se rapprocher de l'idée du projet d'interface finale https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
+
+>Modifications des pages d'aides (ajout de "MessageBox" pour contenir le texte et correction de l'indentation pour avoir une meilleure lisibilité)
