@@ -186,7 +186,7 @@ def telechargement(bouton,fenetre):
     message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =('Bold',12), justify=LEFT)
     message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)
 
-    progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate',)
+    progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
     progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
     progressbar.set(0)
     windowDownload.update()
@@ -431,6 +431,7 @@ def parametres(bouton):
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
         -Suprimmer donnes d'utilisateur                                 V
+        TODO : on réorganisera cette fonction pour avoir d'un coté tte les créations et de l'autre tous les placements
     """
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
@@ -468,10 +469,11 @@ def parametres(bouton):
     switch_apparence.set('Styles')
     switch_apparence.place(relx = 0.06, rely = 0.38)
     #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
-    switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
+    # ! on garde les boutons ou on laisse tout en vert ? -Raf
+    """switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
     switch_boutons.set('Couleur Boutons') 
     switch_boutons.place(relx = 0.27, rely = 0.38) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
-
+    """
     # Pour les donnes d'utilisateur
     donnees_message = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
     donnees_message.place(relx=0.02, rely=0.51)
@@ -514,6 +516,8 @@ def change_apparence_page(choix):
 
         with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
             txt.write(choix)
+
+        interface.set_appearance_mode(choix)
     else: #Si on veut changer les boutons
         if choix == "Bleu": choix = "blue"
         elif choix == "Bleu Foncé": choix = "dark-blue"
