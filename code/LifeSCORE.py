@@ -1,10 +1,6 @@
 '''
-
                       [LIFESCORE.PY]
                  CODE PRINCIPAL DE LIFE-SCORE
-
-
-
 Code Tkinter ne pas oublier quand on crée des variable de les commenter (bon nom + fonction)
 réferences : 
     - Les boutons s'écrivent btn_NOM
@@ -13,8 +9,6 @@ réferences :
     - Les listes s'écrivent list_NOM
     - Les dictionnaires s'écrivent dico_NOM
     - Les url de csv ou d'API s'écrivent url_csv_NOM ou url_api_NOM
-
-
 '''
 import subprocess
 import sys
@@ -84,7 +78,6 @@ from tkintermapview import TkinterMapView
 
 '''
 RECUPERATION REPERTOIRE COURANT
-
 '''
 
 nom_du_repertoire = os.path.dirname(__file__)  #Explicite
@@ -124,7 +117,6 @@ with open(nom_du_repertoire +'/donnees/utilisateur/couleur_boutons.txt') as txt:
 
 '''
 RECUPERATION POLICES ET STYLE
-
 '''
 interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 interface.set_default_color_theme(str(style_bouton))  # Themes: blue (default), dark-blue, green
@@ -135,7 +127,6 @@ interface.set_default_color_theme(str(style_bouton))  # Themes: blue (default), 
 
 '''
 VARIABLES GLOBALES
-
 '''
 global msg_principal # On pose les questions a travers lui
 global list_Questions # Les valeurs de ce tableau sont les questions 
@@ -156,7 +147,6 @@ global progressbar,windowDownload,msg_aide,message_pourcentage
 
 '''
 FONCTIONS DU CODE PRINCIPAL
-
 '''
 
 
@@ -440,14 +430,7 @@ def parametres(bouton):
         -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V (placements à regarder)
         -Un bouton pour fermer la page et appliquer les changements     A
-<<<<<<< HEAD
-    TODO : réorganiser cette fonction pour que ce soit en gros :
-    ! creation de tous les widgets
-
-    ! placement de tous les widgets pour que ce soit plus structuré
-=======
         -Suprimmer donnes d'utilisateur                                 V
->>>>>>> a570cec933d6112953c775f07ff487dba73a184a
     """
     #fenetre.wait_window()     # block until window is destroyed
     change_etat_btn(bouton)
@@ -457,20 +440,10 @@ def parametres(bouton):
     windowParam.resizable(False, False)
     frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
-    #Tous les messages présents  (Titre + un message par classe)
-    msg_titre =interface.CTkLabel(windowParam,text="PARAMETRES", width = 50, font =('Arial Black',25),text_color = "#2DA472")
-    msg_titre.place(relx=0.5,rely=0.1,anchor = CENTER)
+    #Tous les messages présents  (Titre)
 
-    msg = interface.CTkLabel(windowParam,text="Vous devrez relancer l'application pour actualiser les changements", width = 50, font =('Arial',18)) #font = taille + police, justify comme sur word
-    msg.place(relx=0.5,rely=0.5,anchor = CENTER)
-
-
-<<<<<<< HEAD
-
-=======
     titre_message = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
     titre_message.place(relx=0.5, rely=0.064, anchor = CENTER)
->>>>>>> a570cec933d6112953c775f07ff487dba73a184a
     """variable = interface.StringVar()
     variable.set("System")"""
 
@@ -581,7 +554,7 @@ def change_etat_btn(bouton):
             bouton.configure(state=DISABLED)
         else:
             bouton.configure(state=NORMAL)
-    except TclError: #Erreur si le nom n'est pas reconnu par tkinter (le bouton a été supprimé)
+    except TclError:
         return None
 
 
@@ -681,7 +654,6 @@ def ville(entree,msg,fenetre):
 def w_score(ville,win):
     """
     affiche la dernière page qui contient le score et le bouton pour revenir
-
     -    ville est un objet de la classe Donnees précédemment créé après avoirs appuyé sur recherche
     """
     
@@ -903,7 +875,6 @@ def taille_police(chaine):
 
 '''
 VARIABLE GLOBALES
-
 '''
 
 
@@ -921,7 +892,6 @@ dico_Reponses = {} # Traité dans coefficients.py
 
 '''
 CREATION DE La FENETRE PRINCIPALE
-
 '''
 #fenêtre
 fenetrePrincipale = interface.CTk() #fenetre de tkinter
