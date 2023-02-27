@@ -387,22 +387,24 @@ def aide(btn):
     """
     Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
     """
-    texte_aide="""Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes.
-Pour commencer, nous réalisons un QCM de 8 questions afin de déterminer vos préférences.
-Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient propre à lui même. 
-Le plus de critères sont réunis afin d'avoir le plus de précision possible. 
-Ils sont répartis en 4 catégories :
-            - Le climat (pluie en un an / pollution de l'air / températures / vent / ...)
-            - La qualité de vie (activités / patrimoine / ville fleurie / ...)
-            - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)
-            - La sécurité (taux d'accidents / vols / risques / ...)"""
+    texte_aide=("Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes."
+    + " Pour commencer, nous réalisons un QCM de 8 questions afin de déterminer vos préférences."
+    + " Pour chaques critères, on définit une note sur 100 ainsi qu'un coefficient propre à lui même. "
+    + " Le plus de critères sont réunis afin d'avoir le plus de précision possible. "
+    + "\n\nIls sont répartis en 4 catégories :"
+    + "\n   - Le climat (pluie par an / pollution de l'air / température / vent / ...)"
+    + "\n   - La qualité de vie (activités / patrimoine / ville fleurie / ...)"
+    + "\n   - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)"
+    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)")
     change_etat_btn(btn)
     windowAide = interface.CTkToplevel() #fenetre de tkinter
     windowAide.title('LifeScore  |  Aide')
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
     windowAide.minsize(width=int(510*4/3), height=384) #768
-    msg_aide = interface.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',16), justify=LEFT)
-    msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
+    txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
+    txt_aide.insert("0.0", text = texte_aide)
+    txt_aide.place(relx=0.05,rely=0.05)
+    txt_aide.configure(state = "disabled", font = ("Arial",18),wrap="word") #disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
     btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda:retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn)) #Qu'on clique sur le btn ok ou qu'on ferme la page on obtient le meme resultat
@@ -608,20 +610,20 @@ def arrondissement(btn):
     Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
     """
     change_etat_btn(btn) # bouton devient inactif grâce à l'autre fonction pour ne pas qu'on appuye dessus plusieurs fois
-    texte_aide="""
-    Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :
-    - Si vous saisissez uniquement le nom de la ville, le premier arrondissement sera pris comme base
-    - Sinon, écrivez le nom de la ville comme cela : Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)"""
+    texte_aide=("Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :"
+    + "\n     - Si vous saisissez uniquement le nom de la ville, le premier            arrondissement sera pris comme base"
+    + "\n     - Sinon, écrivez le nom de la ville comme cela : \n\n           Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)")
 
     windowAide = interface.CTkToplevel() #fenetre de tkinter
     windowAide.title('LifeScore  |  Aide')
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
     windowAide.iconphoto(False, icone)
     #window.tk.call('tk::PlaceWindow', window) A VOIR PEUT ETRE (PLACEMENT AU CENTRE ?)
-    windowAide.minsize(width=int(690*4/3), height=384) #768
-    #windowAide.resizable(False,False) #Taille non modifiable !!! ON NE LE MET PAS !!!
-    msg_aide = interface.CTkLabel(windowAide, text=texte_aide, width = 1000, font =('Bold',14))
-    msg_aide.place(relx = 0.5, rely = 0.3, anchor = CENTER)
+    windowAide.minsize(width=int(510*4/3), height=384) 
+    txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
+    txt_aide.insert("0.0", text = texte_aide)
+    txt_aide.place(relx=0.05,rely=0.05)
+    txt_aide.configure(state = "disabled", font = ("Arial",18),wrap="word") #disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
     btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda :retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
@@ -736,7 +738,7 @@ def w_score(ville,win):
         msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Arial Black',60), justify=CENTER)
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)#Nord Est
         msg_NonAttribue = interface.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville", width = 1000, font =('Bold',30), justify=LEFT)
-        msg_NonAttribue.place(relx = 0.5, rely = 0.5,anchor = CENTER)
+        msg_NonAttribue.place(relx = 0.5, rely = 0.9,anchor = CENTER)
 
 
 
