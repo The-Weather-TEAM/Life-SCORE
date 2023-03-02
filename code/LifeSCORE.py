@@ -128,19 +128,20 @@ interface.set_default_color_theme(str(style_bouton))  # Themes: blue (default), 
 '''
 VARIABLES GLOBALES
 '''
-global msg_principal # On pose les questions a travers lui
-global list_Questions # Les valeurs de ce tableau sont les questions 
-# global list_alternative # Les valeurs de ce tableau sont les questions alternatives (ex pour ne pas demander à un sextagénère s'il est étudiant)
-global dico_Reponses # Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
-global n # Pour faire list_Questions[n]
-global btn_ok # Boutton qui continue (est utilisé plusieurs fois d'où la variable globale 
-global Donnees_ville # Ce que l'on va traiter grâce aux autres fichiers
-global erreur_maj
-#global Fenetre_CTk #Globale pour la fenêtre principale
+global msg_principal # STR | On pose les questions a travers ce texte
+global list_Questions # LIST | Les valeurs de ce tableau sont les questions 
+global dico_Reponses # DICT | Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
+global n # INT | Pour faire list_Questions[n]
+global btn_ok # CTkButton | Boutton qui continue (est utilisé plusieurs fois d'où la variable globale) 
+global Donnees_ville # Donnees | Ce que l'on va traiter grâce aux autres fichiers
+global erreur_maj # Bool | Pour savoir si le téléchargement à causé des problèmes
 
 
-# Global pour la nouvelle version de UPDATE
-global progressbar,windowDownload,msg_aide,message_pourcentage
+# Variables globales pour la nouvelle version de UPDATE
+global progressbar # CTkProgressbar | Montre l'avancée visuelle du téléchargement
+#global windowDownload # CTk | Page de téléchargement 
+global msg_aide # STR | Renvoie l'avancée du téléchargement
+global message_pourcentage # STR | Renvoie l'avancée du téléchargement
 
 
 
