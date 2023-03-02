@@ -429,83 +429,78 @@ def supprimer_donnees_utilisateur():
 def parametres(bouton):
     """
     Fonction qui ouvre la page de paramètres avec dessus : (X  = pas fait, A = à Améliorer, V = fait)
-        -Crédits                                                        X
+        -Crédits #!On les garde ?                                       X
         -Option pour modifier la fréquence de mises à jour              V
-        -Volet pour changer le style de l'application                   V (placements à regarder)
-        -Un bouton pour fermer la page et appliquer les changements     A
+        -Volet pour changer le style de l'application                   V 
+        -Un bouton pour fermer la page                                  V
         -Suprimmer donnes d'utilisateur                                 V
-        TODO : on réorganisera cette fonction pour avoir d'un coté tte les créations et de l'autre tous les placements
+
     """
-    #fenetre.wait_window()     # block until window is destroyed
-    change_etat_btn(bouton)
+    change_etat_btn(bouton) #Bloque le bouton paramètre sur la page principale jusqu'à que cell-ci soit fermée
+    
+    # Création de la fenêtre
+    
     windowParam = interface.CTkToplevel()
     windowParam.title('LifeScore  |  Paramètres')
-    windowParam.geometry("680x700") #768
+    windowParam.geometry("680x650") #768
     windowParam.resizable(False, False)
-    frame_tk =interface.CTkFrame(windowParam) #On va y mettre les crédits
 
-    #Tous les messages présents  (Titre)
+    #Création des widgets :
 
-    titre_message = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
-    titre_message.place(relx=0.5, rely=0.064, anchor = CENTER)
-    """variable = interface.StringVar()
-    variable.set("System")"""
+    #Tous les messages présents :
+    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
+    msg_frequence = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Yu Gothic Light", 16), text_color="#646464")
+    msg_apparence = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    msg_donnees = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
+    message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme ", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
 
-    # Pour changer la frequence des mis a jours
-    frequence_message = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    frequence_message.place(relx = 0.02, rely = 0.15)
-    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=51, font= ('Bold', 18))
-    entree_frequence_maj.place(relx = 0.06, rely = 0.20)
-    dernier_verification = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_dernier_verification()}", font= ("Yu Gothic Light", 16), text_color="#646464")
-    dernier_verification.place(relx=0.06, rely=0.24)
-
+    #Tous les boutons présents :
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message) if est_nombre(entree_frequence_maj.get()) else message.configure(text = "Vous devez entrer un nombre !"), # jours * nb sec dans jour 
                                                             text="Confirmer")
-    btn_confirm_frequence.place(relx = 0.195, rely = 0.22, anchor = CENTER)
-
-
-    # Pour l'apparence de l'application
-    apparence_message = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    apparence_message.place(relx = 0.02, rely = 0.33)
-    switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.set('Styles')
-    switch_apparence.place(relx = 0.06, rely = 0.38)
-    #Pour les boutons bleu, bleu foncé, vert On pourrait en rajouter
-    # ! on garde les boutons ou on laisse tout en vert ? -Raf
-    """switch_boutons = interface.CTkOptionMenu(windowParam, values=["Bleu", "Bleu Foncé", "Vert"],command=change_apparence_page)
-    switch_boutons.set('Couleur Boutons') 
-    switch_boutons.place(relx = 0.27, rely = 0.38) # prev relx + 0.21 a l'aire d'avoir un bon espacement pour les options
-    """
-    # Pour les donnes d'utilisateur
-    donnees_message = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    donnees_message.place(relx=0.02, rely=0.51)
-
     btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,
                                                 text="SUPPRIMER",
                                                 font=("Bold", 18))
-    btn_supprimer_donnees.place(relx=0.06, rely=0.56)
-
-    # TODO: Boutton conditions Utilisateur
-
-    message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme ", width = 50, font =('Bold',18)) #font = taille + police, justify comme sur word
-    message.place(relx=0.5,rely=0.75,anchor = CENTER)
-
-    # TODO: Boutton credit et rapporter bug
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
                                                         command=lambda:retour_pages(windowParam,bouton), 
-                                                        text="APPLIQUER LES CHANGEMENTS",
+                                                        text="FERMER LA PAGE",
                                                         font=('Arial Black',30))
+    
+    #Autres (les entrées et les volets "switch") :
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=51, font= ('Bold', 18))
+    switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
+    switch_apparence.set('Styles') #La valeur initiale (à titre indicatif) 
 
+
+    #Placement des widgets (Dans l'ordre dans lequel ils sont affichés) :
+    
+    msg_titre.place(relx=0.5, rely=0.064, anchor = CENTER)
+
+    #La fréquence de mise à jour
+    msg_frequence.place(relx = 0.02, rely = 0.15)
+    entree_frequence_maj.place(relx = 0.06, rely = 0.20)
+    btn_confirm_frequence.place(relx = 0.195, rely = 0.22, anchor = CENTER)
+    msg_verif.place(relx=0.06, rely=0.24)
+
+    #L'apparence de l'application 
+    msg_apparence.place(relx = 0.02, rely = 0.33)
+    switch_apparence.place(relx = 0.06, rely = 0.38)
+
+    #La suppression des données 
+    msg_donnees.place(relx=0.02, rely=0.51)
+    btn_supprimer_donnees.place(relx=0.06, rely=0.56)
+
+    #Fin de la page
+    message.place(relx=0.5,rely=0.75,anchor = CENTER)
     btn_changements.place(relx = 0.5, rely = 0.87, anchor = CENTER)
 
+    # TODO: Boutton credit et rapporter bug
+    # TODO: Boutton conditions Utilisateur -Raf : Non c'est bon ya pas de conditions a accepter ?
     windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))#Meme effet que le bouton sauf que c'est si on ferme la page manuellement
-
-
     windowParam.mainloop()
-
 
 
 
