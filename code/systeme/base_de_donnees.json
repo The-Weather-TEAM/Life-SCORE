@@ -128,7 +128,7 @@
 
     }],
     
-    "juridictions_compétentes":
+    "juridictions_competentes":
     ["6392017edf7251532fda4bab","168c8b83-a542-4815-86c1-f2eafa0c58b4", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "Commune",
