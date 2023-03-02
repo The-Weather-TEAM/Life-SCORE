@@ -445,3 +445,8 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Début des améliorations graphiques pour se rapprocher de l'idée du projet d'interface finale https://github.com/The-Weather-TEAM/Life-SCORE/#projet-dinterface-finale
 
 >Modifications des pages d'aides (ajout de "MessageBox" pour contenir le texte et correction de l'indentation pour avoir une meilleure lisibilité)
+
+
+
+2 Mars 2023 :
+>Nettoyage du code eet ajouts de commentaires
