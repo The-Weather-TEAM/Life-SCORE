@@ -4,7 +4,8 @@
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : "com_code",
                                                                           "colonne_donnee" : ["popleg_tot"],
-                                                                          "type" : "simple"
+                                                                          "type" : "simple",
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -15,7 +16,8 @@
                                                                           "colonne_ville" : "-",
                                                                           "colonne_donnee" : ["-"],
                                                                           "type" : "-",
-                                                                          "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/"
+                                                                          "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
     
     }],
@@ -24,7 +26,8 @@
     ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -33,7 +36,8 @@
     ["63478da6e4e27dba6feacfa4","b63bd365-c589-48e4-b7d8-9e4f5db133c5", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -42,7 +46,8 @@
     ["63bce30c70d6d100b09dde9a","27d469ff-9908-4b7e-a2e0-9439bb38a395", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
-                                                                          "colonne_donnee" : ["nom_de_l_etablissment"]
+                                                                          "colonne_donnee" : ["nom_de_l_etablissment"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -51,7 +56,8 @@
     ["5489cda0c751df35a24120e7","c53cd4d4-4623-4772-9b8c-bc72a9cdf4c2", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_commune",
-                                                                          "colonne_donnee" : ["service"]
+                                                                          "colonne_donnee" : ["service"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -60,7 +66,8 @@
     ["62cf95993d99f22480f49334","47ac11c2-8a00-46a7-9fa8-9b802643f975", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee_commune",
-                                                                          "colonne_donnee" : ["nom_du_festival"]
+                                                                          "colonne_donnee" : ["nom_du_festival"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -69,7 +76,8 @@
     ["5e27c8e2dee7e70ed425e8d6","29406189-15e9-4f2f-9e9d-d18649762198", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "commune",
-                                                                          "colonne_donnee" : ["nom_officiel_du_musee"]
+                                                                          "colonne_donnee" : ["nom_officiel_du_musee"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -78,7 +86,8 @@
     ["5f07458de03abf6e1e97bcf9","c41a1919-fbd7-4d19-a8df-1719bef8b14a", { "insee" : 0,
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : "addr-city",
-                                                                          "colonne_donnee" : ["name"]
+                                                                          "colonne_donnee" : ["name"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -87,7 +96,8 @@
     ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee",
-                                                                          "colonne_donnee" : ["appellation_courante"]
+                                                                          "colonne_donnee" : ["appellation_courante"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -96,7 +106,8 @@
     ["639c7cf4969f3318338df9a8","dfb542cd-a808-41e2-9157-8d39b5c24edb", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "INSEE_C",
-                                                                          "colonne_donnee" : ["loypredm2"]
+                                                                          "colonne_donnee" : ["loypredm2"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -105,7 +116,8 @@
     ["639c7cf4969f3318338df9a8","bc9d5d13-07cc-4d38-8254-88db065bd42b", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "INSEE_C",
-                                                                          "colonne_donnee" : ["loypredm2"]
+                                                                          "colonne_donnee" : ["loypredm2"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -114,7 +126,8 @@
     ["5ee2fe1cba88d5c5a1179ef2","49a648e5-ef47-41fe-aa18-9323a811c2c7", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "ville",
-                                                                          "colonne_donnee" : ["nom_du_jardin"]
+                                                                          "colonne_donnee" : ["nom_du_jardin"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -123,7 +136,8 @@
     ["53834c53a3a72906c7ec5c4c","817114f8-9b61-48fa-b7a4-0e3c1331a44c", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee_com",
-                                                                          "colonne_donnee" : ["classe_potentiel"]
+                                                                          "colonne_donnee" : ["classe_potentiel"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -132,7 +146,8 @@
     ["6392017edf7251532fda4bab","168c8b83-a542-4815-86c1-f2eafa0c58b4", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "Commune",
-                                                                          "colonne_donnee" : ["Tribunal_judiciaire_compétent"]
+                                                                          "colonne_donnee" : ["Tribunal_judiciaire_compétent"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -141,7 +156,8 @@
     ["5acc7eddc751df5e21efdf20","f547b346-af1e-41b5-b647-8f23e71ffe1c", { "insee" : 1,
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : "insee_com",
-                                                                          "colonne_donnee" : ["lib_acv"]
+                                                                          "colonne_donnee" : ["lib_acv"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -150,7 +166,8 @@
     ["5f90f665bf376c0ae5d5f959","4d444532-b972-4a29-ac8a-7a2dc0128d3e", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "1_f_code_insee_pdl",
-                                                                          "colonne_donnee" : ["s_3_prod_d_filiere"]
+                                                                          "colonne_donnee" : ["s_3_prod_d_filiere"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }],
@@ -159,7 +176,8 @@
     ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee",
-                                                                          "colonne_donnee" : ["dose_rayonnements_telluriques"]
+                                                                          "colonne_donnee" : ["dose_rayonnements_telluriques"],
+                                                                          "source" : "www.data.gouv.fr"
                                                                 
 
     }]

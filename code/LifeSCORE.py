@@ -487,7 +487,7 @@ def w_question(fenetre):
     '''
     creation_fichiers("Rajout des lignes") # Rajoute les lignes au dico csv dès qu'on quitte la page de QCM
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png') # Icone provisoire
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     fenetre.iconphoto(False, icone)
 
     # Création des widgets
@@ -514,7 +514,7 @@ def arrondissement(btn):
     # Initialisation
     windowAide = interface.CTkToplevel()
     windowAide.title('LifeScore  |  Aide')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     windowAide.iconphoto(False, icone)
     windowAide.minsize(width=int(510*4/3), height=384)
 
@@ -567,7 +567,7 @@ def w_score(ville,win):
     '''
     
     # Initialisation 
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     win.iconphoto(False, icone)
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
 
@@ -760,7 +760,7 @@ def w_erreur(fenetre): # w pour window
     
     # Initialisation
     fenetre.title('LifeScore  |  Erreur')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     fenetre.iconphoto(False, icone)
     
     # Création des widgets
@@ -817,7 +817,7 @@ if __name__ == "__main__":
     # Initialisation
     fenetrePrincipale = interface.CTk() # fenetre de tkinter
     fenetrePrincipale.title('LifeScore  |  Menu principal')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\1.png')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     fenetrePrincipale.iconphoto(False, icone)
     fenetrePrincipale.minsize(width=768, height=500) # 768 = taille minimum de la fenetre
     fenetrePrincipale.state('zoomed')

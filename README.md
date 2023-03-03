@@ -6,7 +6,6 @@ Réalisé par :
 - Nathan B.
 - Raphël F.
 - Thor N.
-- Noémie L.
 
 
 
@@ -120,7 +119,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Travail sur la personnalisation : comment faire pour avoir un logiciel personnalisé.
 
 > Première répartition du travail : 
->-  Raphaël et Noémie -> Interface graphique
+>-  Raphaël -> Interface graphique
 >-  Frédéric -> Traitement de données des API pour la météo et le climat
 >-  Thor -> Programmation des coefficients entre le formulaire et la notation 
 >-  Nathan -> Traitement de bases de données + Graphisme
