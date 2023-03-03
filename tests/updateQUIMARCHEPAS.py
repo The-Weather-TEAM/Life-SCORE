@@ -174,7 +174,7 @@ def aide_telechargement(id):
             
             
             
-            
+        print('test - lancement 3')    
         # On récupère la version téléchargée initialement si le fichier existait déjà :
         if is_file_versions and is_courant_csv:
             message_aide.configure(text = f"Vérification de la présence de {id}...")
