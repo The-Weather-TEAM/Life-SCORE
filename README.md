@@ -449,4 +449,9 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 2 Mars 2023 :
->Nettoyage du code eet ajouts de commentaires
+>Nettoyage du code et ajouts de commentaires
+
+
+
+3 Mars 2023 :
+>Grand nettoyage et amélioration de la logique (l'enchaînement des fonctions) de `LifeScore.py`, il faudrait le faire pour les autres fichiers
