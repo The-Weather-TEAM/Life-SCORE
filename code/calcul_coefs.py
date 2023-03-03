@@ -8,8 +8,6 @@
 
 
 
-
-
 def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
     """
     Calcule coefficients de tout les differents valeurs pour ensuite en deduire une note
@@ -19,7 +17,7 @@ def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
     Et le structure du dictionaire `valeursSaisit` doit etre: `{critere: valeur}`
 
     - `valeursIdeals` et `valeursSaisit` doivent avoir les memes noms de clefs.
-    - Un critere de `valeursIdeals` ne peut pas avoir 3 valeurs identiques, mais il peut en avoir 2 si l'ideal est le maximum ou minimum.
+    - Un critere de `valeursIdeals` ne peut pas avoir 3 valeurs identiques. Mais il peut en avoir 2 si l'ideal est soit le Minimum ou le Maximum.
     """
     assert type(valeursIdeals) == type(valeursIdeals) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
     
@@ -37,32 +35,29 @@ def calculCoefficients(valeursIdeals :dict, valeursSaisit: dict) -> float:
         if valSaisit == valIdeal: # si on a la valeur exact qu'on cherche
             noteSurCent = 1
 
-        elif valMin <= valSaisit <= valMax: # si il inclus au limits données
-            # trouve a quel limite appartient la le valeur saisit
-            domainDuValeur = valMin if valSaisit <= valIdeal else valMax
-            # pour trouver la distance entre valIdeal est la domainDuValeur (on l'utilise pour calc du pourcentage)    
-            domainDuValeur = abs(valIdeal - domainDuValeur)
+        elif valMin <= valSaisit <= valMax: # si la valeur local est entre les limits données
 
-            distanceDesValeurs = abs(valIdeal - valSaisit) # calcule la difference entre les valeurs Saisit et Ideal
-            noteSurCent = 1 - (distanceDesValeurs/domainDuValeur) # calcule un note par rapport a cette distance
+            # on cherche la domain de valSaisit, donc si il est inferieur ou superieur a valIdeal
+            domainDuValeur = valMin if valSaisit <= valIdeal else valMax   
+            longeurDuDomain = abs(valIdeal - domainDuValeur) # "longeur" du domain ou se trouve valSaisit
 
-        else: # si la valeur est endehors des limits, on ne l'accept pas
+            distanceDesValeurs = abs(valIdeal - valSaisit) # difference entire valSaisit et valIdeal
+            noteSurCent = 1 - (distanceDesValeurs/longeurDuDomain) # calcule un note par rapport a cette difference et la longeur du domain
+
+        else: # si la valeur est en-dehors des limits, on ne l'accept pas
             noteSurCent = 0
 
 
         listDeNotes.append(noteSurCent) # ajoute le note au list de notes des criteres
 
     
-    noteMoyenneDesCriteres = sum(listDeNotes)/len(listDeNotes) # calcule la note moyenne du ville
+    noteMoyenneDesCriteres = sum(listDeNotes)/len(listDeNotes) # calcule la note moyenne total
 
-    return round(noteMoyenneDesCriteres, 2) # renvoi la note 
+    return round(noteMoyenneDesCriteres, 2) # renvoi la note finale
+
 
 
 if __name__ == "__main__": # pour tester le code et demontrer comment l'appliquer
-
-
-    import classes as recupMeteo
-    class_ville = recupMeteo.Donnees("oslo")
 
     dicoMeteoVille = { #class_ville.meteo() # just pour le test
         "humidite": 75,
