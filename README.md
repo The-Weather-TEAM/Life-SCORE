@@ -454,3 +454,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 3 Mars 2023 :
 >Grand nettoyage et amélioration de la logique (l'enchaînement des fonctions) de `LifeScore.py`, il faudrait le faire pour les autres fichiers
+
+>Ajout des sources dans `LifeScore.py`, `calculscoefs.py` et `update.py`
