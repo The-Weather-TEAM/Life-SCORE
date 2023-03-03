@@ -28,6 +28,9 @@ import requests
 from requests.exceptions import ConnectionError, ReadTimeout
 from tkinter import *
 import pandas as p
+
+# fix pour un erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi sa marche
+# https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
