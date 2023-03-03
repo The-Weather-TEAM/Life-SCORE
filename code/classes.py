@@ -73,7 +73,7 @@ def is_connected(url) :
         return True
 
 """
-FONCTIONS UTILE DANS TOUT L'APPLICATION
+FONCTIONS UTILE DANS TOUTE L'APPLICATION
 
 """
 def is_options() :

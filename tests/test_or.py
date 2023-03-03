@@ -38,3 +38,9 @@ d=d.strip()
 print(d)
 
 print(float(0))
+
+def t():
+    return 2,3
+
+a,b = t()
+print(a,b)
