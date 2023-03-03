@@ -7,6 +7,11 @@ Syntaxe de nos variables :
     - Les textes (classe interface.CTkLabel) s'écrivent msg_NOM
     - Les listes s'écrivent list_NOM
     - Les dictionnaires s'écrivent dico_NOM
+
+Pour tous les widgets du code, leurs création dépendait de notre mémoire sur Tkinter et de la documentation sur CustomTkinter 
+'https://github.com/TomSchimansky/CustomTkinter/wiki/'
+Les valeurs (de taille, de police, de couleur,... ont été trouvées après plusieurs essais par nous même)
+De même pour les placements, nos connaissances de Tkinter nous ont permis de retrouver certaines méthodes avec des arguments précis (.place(relx et rely))
 '''
 
 # Bibliothèques essentielles pour la mise à jour des autres bibliothèques
@@ -17,7 +22,8 @@ import os
 
 '''
 MODULE DE MISE A JOUR DES BIBLIOTHEQUES
- 
+
+- Idee de Nathan
 '''
 
 # Verifie si tout les modules dans requirements.txt sont present, sinon ils sont installés.
@@ -65,6 +71,8 @@ from time import sleep, strftime, localtime # Sleep met en pause le programme, s
 
 '''
 VARIABLES GLOBALES (utilisées à travers plusieurs fonctions)
+
+- Idée de Raphaël (au fur et à mesure que le code avançait, plusieurs variables ont été ajoutées)
 '''
 global msg_principal        # STR | On pose les questions a travers ce texte
 global list_Questions       # LIST | Les valeurs de ce tableau sont les questions 
@@ -75,12 +83,12 @@ global Donnees_ville        # Donnees | Ce que l'on va traiter grâce aux autres
 global erreur_maj           # Bool | Pour savoir si le téléchargement à causé des problèmes
 
 
-# Variables globales pour la nouvelle version de UPDATE
+# Variables globales pour la nouvelle version de UPDATE - Idee de rendre ces variables globales de Nathan 
 global progressbar          # CTkProgressbar | Montre l'avancée visuelle du téléchargement
 global msg_aide             # STR | Renvoie l'avancée du téléchargement
 global message_pourcentage  # STR | Renvoie l'avancée du téléchargement
 
-# Constantes 
+# Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
 list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
@@ -102,6 +110,9 @@ FONCTIONS
 def creation_fichiers(arg = None):
     '''
     fonction qui crée, complète ou vérifie le contenu du fichier csv_dico.csv
+
+    - La création si le fichier n'existe pas vient des documentations python,
+    la modification du csv vient de la documentation du module csv, le reste de Raphaël
     '''
     if arg == None: #On crée ou vérifie le fichier
         # Création du fichier s'il n'existe pas :
@@ -134,6 +145,8 @@ def telechargement(bouton,fenetre):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
     Puis renvoie sur le qcm ou la suite du programme
+
+    - Page calquée sur les autres pages d'aides vues plus loin par Raphaël
     '''
     
     global erreur_maj
@@ -179,6 +192,8 @@ FONCTIONS UTILISEES PLUSIEURS FOIS
 def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de base pour garder certains widgets
     """
     Fonction qui efface tous les widgets d'une fenêtre à l'autre pour pouvoir afficher d'autres choses
+
+    - winfo_children() a été pris dans la documentation de Tkinter, les noms ont été trouvé par print() et tests par Raphaël
     """
     if option == "Classique": # On veut garder le logo, le bouton qui ouvre la page de paramètres et les pages d'aides
         for widget in fenetre.winfo_children():
@@ -200,6 +215,8 @@ def avancer(fenetre):
     Passe à la question 1, ouvre le qcm et ajoute les deux boutons Non et Oui.
     
     Si le qcm est terminé, ouvre la seconde page
+
+    - Idée d'utilisation des variables globales n et du message principal par Raphaël
     """
     if n < len(list_Questions):
         btn_ok.place_forget() # Le cache le temps du lancement de cette fonction
@@ -222,6 +239,8 @@ def plus(b1,b2,arg):
     '''
     Ajoute 0 ou 1 au dico de reponses (respectivement Non et Oui) En fonction de l'argument
     et passe à la question suivante
+
+    - Idee personnelle (On avait avant une fonction plus0 et plus1, on les a combinés pour éviter la redondance) par Raphaël
     '''
     global list_Questions
     global n
@@ -240,6 +259,8 @@ def est_termine(btn_1,btn_2):
     global btn_ok
     '''
     Verifie si le QCM est terminé (dernière question répondue). Si c'est le cas, On affiche un message puis retour bouton ok 
+
+    - Idee de Raphaël et Nathan pour terminer le qcm (une simple recherche sur les longueurs suffit)
     '''
     if n >= len(list_Questions):
         btn_1.destroy()
@@ -252,6 +273,8 @@ def est_termine(btn_1,btn_2):
 def retour_pages(window,btn,cle=True):
     """
     Fonction qui passe de la page actuelle à la page N°x
+
+    - Idee de la clé de Raphaël pour pouvoir appeler cette fonction à plusieurs reprises avec des cas différents
     """
     
     if cle==True : # Si on a juste une page d'aide
@@ -266,13 +289,16 @@ def retour_pages(window,btn,cle=True):
 def change_etat_btn(bouton):
     '''
     Fonction qui change l'état du bouton utilisé
+
+    - Nécessité de se renseigner sur la documentation de CustomTkinter par Tom Schimansky 
+    'https://github.com/TomSchimansky/CustomTkinter/wiki/CTkButton'
     '''
     try :
         if bouton  and bouton.cget("state") == NORMAL : # Récupère l'attribut et le change
             bouton.configure(state=DISABLED)
         else:
             bouton.configure(state=NORMAL)
-    except TclError:
+    except TclError: # SI le boutton n'existe plus
         return None
 
 
@@ -286,6 +312,10 @@ def w_qcm(win,option = None): # w pour window
     Affiche la premiere page :
         - Si le fichier csv_dico.csv est incomplet ou non existant, lance le Qcm
         - Sinon (les données sont présentes), propose de passer à la suite (fin du Qcm)
+
+    - L'idée du Questionnaire nous est venu après une discussion entre les membres et le professeur sur un moyen de rendre 
+    l'expérience unique à l'utilisateur
+    Cette fenêtre était la première créée dans notre programme, cette fonction ne crée plus la fenêtre désormais
     """
     # initialisation des variables utilisées
     global msg_principal
@@ -327,7 +357,11 @@ def w_qcm(win,option = None): # w pour window
 def aide(btn):
 
     """
-    Ouvre Une fenêtre d'aide avec un texte et peut être des graphismes
+    Ouvre Une fenêtre d'aide avec un texte*
+
+    - Pour la TextBox, ce code python de Tom Schimansky nous a aidé à la reproduire
+    'https://github.com/TomSchimansky/CustomTkinter/blob/master/examples/complex_example.py'
+    le reste vient de Raphaël
     """
     # Constante 
     texte_aide=("Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes."
@@ -338,7 +372,7 @@ def aide(btn):
     + "\n   - Le climat (pluie par an / pollution de l'air / température / vent / ...)"
     + "\n   - La qualité de vie (activités / patrimoine / ville fleurie / ...)"
     + "\n   - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)"
-    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)")
+    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)") #Pour une meilleure clarté du code j'écrit ce str ainsi
 
     # Initialisation de la page
     change_etat_btn(btn)
@@ -371,6 +405,8 @@ def parametres(bouton):
         -Volet pour changer le style de l'application                   V 
         -Un bouton pour fermer la page                                  V
         -Suprimmer donnes d'utilisateur                                 V
+
+    - Idee de Nathan et Raphaël, application CTk par Raphaël et application des fréquences de MaJ par Thor
 
     """
     change_etat_btn(bouton) # Bloque le bouton paramètre sur la page principale jusqu'à que cell-ci soit fermée
@@ -445,15 +481,19 @@ def parametres(bouton):
 def date_derniere_verification() -> str:
     '''
     Retourne la date formatée de la dernière mise à jour
+    
+    - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
-    derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction proviens de classes.py
+    derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction provient de classes.py
     return strftime("%d/%m/%Y à %Hh%M", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
 
 
 def supprimer_donnees_utilisateur():
     '''
-    Suprime le fichier csv_dico.csv dans /donnees/csv/
+    Suprime le fichier csv_dico.csv dans /donnees/csv
     (Si l'utilisateur souhaite refaire le questionnaire)
+
+    - Idee de Thor
     '''
     repertoire_cible = nom_du_repertoire + "/donnees/csv/" # nom_du_repertoire créé au début du code
     if "csv_dico.csv" in os.listdir(repertoire_cible): # Si le fichier existe
@@ -465,6 +505,8 @@ def change_apparence_page(choix):
     '''
     Change l'apparence de l'interface (Sombre ou Clair)
     (Système revient à ce que l'ordinateur a pour valeur par défault)
+
+    - Idee de transformation du texte et de l'écccriture par Raphaël
     '''
 
     if choix in ["Système","Sombre","Clair"] : # Si on veut changer les pages
@@ -484,6 +526,8 @@ def change_apparence_page(choix):
 def w_question(fenetre):
     '''
     Affiche la seconde page qui contient la requête de la ville
+
+    - Léger calque sur w_qcm()
     '''
     creation_fichiers("Rajout des lignes") # Rajoute les lignes au dico csv dès qu'on quitte la page de QCM
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
@@ -510,6 +554,8 @@ def arrondissement(btn):
 
     '''
     Ouvre Une fenêtre d'aide avec un texte et un bouton de retour
+
+    - Copie de la fonction aide() remaniée pour les arrondissements par Raphaël 
     '''
     # Initialisation
     windowAide = interface.CTkToplevel()
@@ -545,11 +591,13 @@ def ville(entree,msg,fenetre):
     Récupère l'entrée, vérifie si la ville existe bien:
         -Si oui, continue vers la page 3
         -Si non, affiche un message d'erreur
+    
+        - L'idée de créer une classe de Donnees est détaillée dans classes.py , le reste est de Raphaël
     '''
     global Donnees_ville
     ville = entree.get()
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france(msg): # Je dois ajouter Code/ au début car vscode lance mal le fichier sinon ça va
+    if Donnees_ville.is_commune_france(msg):
         msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         fenetre.update()
         Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
@@ -564,6 +612,8 @@ def w_score(ville,win):
     '''
     affiche la dernière page qui contient le score et le bouton pour revenir
     ville est un objet de la classe Donnees précédemment créé après avoirs appuyé sur recherche
+
+    - Reprise de w_qcm() et w_question() remaniée par Raphaël, la carte est de Thor avec l'api 'https://mt0.google.com'
     '''
     
     # Initialisation 
@@ -578,14 +628,14 @@ def w_score(ville,win):
 
 
     # Transformation des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',70), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
     # Carte du ville
     if is_connected("https://mt0.google.com/"):
         carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
-        carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insert la ville pour l'adress (et format pour les arrondissements) 
+        carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insère la ville pour l'adresse (et format pour les arrondissements) 
         carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
         carte_ville.place(relx=0.3, rely=0.18)
     
@@ -594,6 +644,8 @@ def w_score(ville,win):
     '''
     ANIMATION DU SCORE FINAL
     
+    - Idée de Nathan détaillée dans fonction_animation_score()
+    - Les avantages et inconvénients sont de Raphaël
     '''
     
     if score != 'N/A':
@@ -654,7 +706,7 @@ def w_score(ville,win):
 def taille_police(chaine):
     '''
     Fonction qui retourne une taille de police adéquate en fonction du nombre de caractères et d'une fonction f(x) = -mx+p
-    idée : Raf
+    idée : Raphaël avec les cours de Mathématiques
     '''
     longueur = len(chaine)
     taille = -1.5*longueur + 70 # a modifier peut etre faire une fonction inverse ?
@@ -664,6 +716,8 @@ def taille_police(chaine):
 def couleur_score(note):
     '''
     Fonction qui renvoie la note en une couleur hexadécmale. Du Rouge au Vert
+
+    - Idee de Raphaël complétée par Nathan l'idée est de modifier des valeurs de rouge et de vert en fonction de la note
     '''
     if note != 'N/A' :
         
@@ -693,7 +747,9 @@ def couleur_score(note):
 def fonction_animation_score(x, total) :
     '''
     Calcule le temps entre deux entiers pour le score total (pour l'animation de la note)
-    x,total sont des INTEGER et la fonction renvoie un FLOAT pour donner la "vitesse" de changement
+    x,total sont des INT et la fonction renvoie un FLOAT pour donner la "vitesse" de changement
+
+    - Idee de ... sur ... réalisée par Nathan
     '''
     # Remet le total sur 100 pour avoir un ralenti à la fin de la note
     x = (x/total)*100
@@ -710,6 +766,8 @@ def fonction_animation_score(x, total) :
 def avantages_inconvenients(dic):
     '''
     Prend les 5 meilleurs aspects de la ville pour indiquer des avantages à y habiter
+
+    - Idée de Raphaël en utilisant les algorithmes de recherche de maximum et minimum de l'année de première
     '''
     # Avantages
     list_bonus= []
@@ -741,6 +799,8 @@ def avantages_inconvenients(dic):
 def plus_et_moins(pl,mal):
     '''
     Transforme en Str formaté les avantages et inconvénients
+
+    - Idee de Raphaël 
     '''
     plus, moins = "Les Avantages : ", "Les Inconvénients :" # texte a retourner
     for val_plus in pl:
@@ -756,6 +816,8 @@ def plus_et_moins(pl,mal):
 def w_erreur(fenetre): # w pour window
     '''
     Affiche la page d'erreur qui signale le problème
+
+    - Calque sur w_qcm() par Raphaël
     '''
     
     # Initialisation
@@ -786,6 +848,8 @@ if __name__ == "__main__":
 
     '''
     RECUPERATION STYLE
+
+    - Idée obtenue sur le forum StackOverflow (pour la création de fichiers inexistants)
     '''
 
     # Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
@@ -813,6 +877,8 @@ if __name__ == "__main__":
 
     '''
     CREATION DE La FENETRE PRINCIPALE
+
+    - Idée de Raphaël récupérée d'anciens travaux Tkinter complétés par la documentation de CustomTkinter 
     '''
     # Initialisation
     fenetrePrincipale = interface.CTk() # fenetre de tkinter

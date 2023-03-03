@@ -19,7 +19,8 @@ def calculCoefficients(valeursIdeales :dict, valeursSaisies: dict) -> float:
     - `valeursIdeales` et `valeursSaisies` doivent avoir les memes noms de clefs.
     - Un critere de `valeursIdeales` ne peut pas avoir 3 valeurs identiques. Mais il peut en avoir 2 si l'ideal est soit le Minimum ou le Maximum.
     
-    - Idée de Thor
+    - Idée de Thor : L'idée s'apparente à celle du calcul du pourcentage d'une pente sauf qu'ici on cherche l'écart 
+                    de la valeur en fonction de la longueur d'étude de ces valeurs
     '''
     assert type(valeursIdeales) == type(valeursIdeales) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
     
