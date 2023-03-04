@@ -297,7 +297,7 @@ class Donnees:
         #data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
 
         rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
-            
+        #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
         try:
             nbr_etab = rangee.values[0][1]
         
