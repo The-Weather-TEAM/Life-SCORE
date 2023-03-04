@@ -16,6 +16,11 @@
 - Création du fichier options.csv qui permet de stocker des données pour l'application
 - Implémentation de Tkinter
 
+
+SOURCES :
+Tout est basé sur nos cours, ou la documentation liée aux bibliothèques utilisés.
+Chaque processus est pensé et écrit par notre équipe.
+
 '''
 
 
@@ -53,6 +58,14 @@ from classes import lire_option          # Utile pour lire les parametres d'util
 
 
 
+
+'''
+La partie des variables Tkinter est gérée par Raphaël, le reste par Nathan
+
+'''
+
+
+
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
 def executer(barre_progres,fenetre,message,message_pourcentage):
 
@@ -84,6 +97,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
     # Test de connexion internet sur le site data.gouv.fr :
+    # Basé sur un ancien projet de Frédéric et Nathan
     test_connexion = connexion('https://www.data.gouv.fr')
 
     if test_connexion :
@@ -97,6 +111,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                                    
         '''
         
+        # Base de données gérée par Frédéric et Nathan
         with open(repertoire_courant+"/systeme/base_de_donnees.json", "r") as fichier_json :
             liste_csv = json.load(fichier_json)
 
@@ -111,6 +126,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
         # Création du dossier s'il n'existe pas :
+        # Faitr par nous même à l'aide de la documentation de os
         if not os.path.exists(repertoire_donnees):
             os.makedirs(repertoire_donnees)
             os.makedirs(repertoire_donnees+'/csv')
@@ -124,6 +140,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
         
         # Création le fichier des infos s'il existe pas :
+        # Source : cours de première sur l'utilisation des CSV
         if not is_file_versions :
             os.path.join(repertoire_donnees, 'versions.csv')
             csv.writer(open(repertoire_donnees+'/versions.csv', "w")).writerow(['NOM', 'VERSION'])
@@ -133,6 +150,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
 
         # Lecture du fichier CSV des versions :
+        # Source : cours de première sur la bibliothèque Pandas
         lire_versions = p.read_csv(repertoire_donnees+'/versions.csv')
 
 
@@ -143,6 +161,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         
         '''
         # Pour chaque fichier CSV de la base de données :
+        # Imaginé et codé par Nathan
         for id in liste_csv :
             
             
@@ -168,6 +187,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 '''
                 
                 # On récupère les données du CSV à l'aide d'un protocole :
+                # Except : cours de terminale sur la gestion d'erreurs
                 #https://help.opendatasoft.com/apis/ods-explore-v2/
                 try :
                     metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
@@ -206,6 +226,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 
                 '''
                 CONVERSION DATE EN UNIX
+                Imaginé par Nathan, basé sur un ancien projet de Frédéric et Nathan
                 
                 '''
                 
@@ -291,6 +312,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     '''
                     
                     # On récupère le fichier .csv sur internet :
+                    # Fait par Nathan à partir de la documentation de requests
                     try :
                         recup_csv_internet = requests.get(lien, allow_redirects=True, stream=True) # Stream enregistre avant que le fichier soit téléchargé (pour ChunkedEncodingError)
                         

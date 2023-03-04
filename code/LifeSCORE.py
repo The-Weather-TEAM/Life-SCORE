@@ -20,10 +20,12 @@ import sys
 import os
 
 
+
 '''
 MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 
-- Idee de Nathan
+- Idée de Nathan
+- Réalisé par Thor
 '''
 
 # Verifie si tout les modules dans requirements.txt sont present, sinon ils sont installés.
@@ -87,6 +89,7 @@ global erreur_maj           # Bool | Pour savoir si le téléchargement à caus�
 global progressbar          # CTkProgressbar | Montre l'avancée visuelle du téléchargement
 global msg_aide             # STR | Renvoie l'avancée du téléchargement
 global message_pourcentage  # STR | Renvoie l'avancée du téléchargement
+
 
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
@@ -155,6 +158,8 @@ def telechargement(bouton,fenetre):
     # Initialisation de la page
     windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
     windowDownload.title('LifeScore  |  Téléchargement')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
+    windowDownload.iconphoto(False, icone)
     windowDownload.minsize(width=int(510*4/3), height=384)
     windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
 
@@ -378,6 +383,8 @@ def aide(btn):
     change_etat_btn(btn)
     windowAide = interface.CTkToplevel() # fenetre de tkinter
     windowAide.title('LifeScore  |  Aide')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
+    windowAide.iconphoto(False, icone)
     windowAide.minsize(width=int(510*4/3), height=384) # 768
 
     # Création des widgets
@@ -415,6 +422,8 @@ def parametres(bouton):
     
     windowParam = interface.CTkToplevel()
     windowParam.title('LifeScore  |  Paramètres')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
+    windowParam.iconphoto(False, icone)
     windowParam.geometry("680x650") # 768
     windowParam.resizable(False, False)
 
@@ -718,6 +727,7 @@ def couleur_score(note):
     Fonction qui renvoie la note en une couleur hexadécmale. Du Rouge au Vert
 
     - Idee de Raphaël complétée par Nathan l'idée est de modifier des valeurs de rouge et de vert en fonction de la note
+    - Basé sur la fonction fonction_animation_score de Nathan
     '''
     if note != 'N/A' :
         
@@ -749,12 +759,13 @@ def fonction_animation_score(x, total) :
     Calcule le temps entre deux entiers pour le score total (pour l'animation de la note)
     x,total sont des INT et la fonction renvoie un FLOAT pour donner la "vitesse" de changement
 
-    - Idee de ... sur ... réalisée par Nathan
+    - Idée et réalisation par Nathan, aidé par nos cours de mathématiques sur les fonctions
     '''
     # Remet le total sur 100 pour avoir un ralenti à la fin de la note
     x = (x/total)*100
     
     # TODO : A REFAIRE car c'est pas fluide comme annimation !
+    # !! Il faudrait trouver une fonction qui soit sympa qui commence pas trop haut qui et termine à 100 assez haut
     if x < 50:
         return 0.20 - (x/250)
     elif x < 85:
@@ -883,7 +894,7 @@ if __name__ == "__main__":
     # Initialisation
     fenetrePrincipale = interface.CTk() # fenetre de tkinter
     fenetrePrincipale.title('LifeScore  |  Menu principal')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
+    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     fenetrePrincipale.iconphoto(False, icone)
     fenetrePrincipale.minsize(width=768, height=500) # 768 = taille minimum de la fenetre
     fenetrePrincipale.state('zoomed')
