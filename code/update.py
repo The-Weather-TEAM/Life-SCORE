@@ -254,7 +254,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             
                 # Conversion du tableau version en UNIX :
-                date_temps = datetime.datetime(*version)
+                date_temps = datetime.datetime(*version) # *liste renvoie tout ce que contient la liste
                 version = time.mktime(date_temps.timetuple())
                             
                        
