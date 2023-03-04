@@ -64,7 +64,20 @@ La partie des variables Tkinter est gérée par Raphaël, le reste par Nathan
 
 '''
 
+def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> str:
+    """
+    Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
+    ex: "44%  -  population  -> Fichier à jour"
+
+    - `pourcentage` contient le pourcentage du telechargement de tout les fichiers
+    - `id` represent le nom du fichier (ex: population)
+    - `message` contient le message à ajouter à la fin (ex: Fichier à jour)
+    """
+    pourcent_str = str(pourcentage)
+    message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
+
+    return message
 
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
 def executer(barre_progres,fenetre,message,message_pourcentage):
@@ -80,8 +93,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
     # Variables boléennes (qui servent pour des conditions) :
-    is_file_versions, is_modified, erreur_internet, mise_a_jour = False, False, False, False
-
+    is_file_versions = is_modified = erreur_internet = mise_a_jour = False
 
 
     # Pour récupérer le chemin relatif vers le dossier data :
@@ -164,7 +176,6 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         # Imaginé et codé par Nathan
         for id in liste_csv :
             
-            
             # Initialisation de variable boolnéenne pour savoir si le csv courant est modifié :
             is_courant_modified = False
             
@@ -204,12 +215,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
                             
                         erreur_internet = True
-                        return erreur_internet
                     
-                    
-                    
-                    
-                    
+
                     # Si il y a pas de connexion mais on a déjà le fichier :
                     else :
                         
@@ -218,8 +225,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         print (msg_pas_internet)
                             
                         erreur_internet = False
-                        return erreur_internet
-                    
+                        
+                    return erreur_internet
                 
                 
                 
@@ -247,7 +254,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             
                 # Conversion du tableau version en UNIX :
-                date_temps = datetime.datetime(version[0], version[1], version[2], version[3], version[4], version[5])
+                date_temps = datetime.datetime(*version)
                 version = time.mktime(date_temps.timetuple())
                             
                        
@@ -295,7 +302,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     
                     
                     # Données modifiées (courant et en général) :
-                    is_courant_modified, is_modified = True, True
+                    is_courant_modified = is_modified = True
                                 
                                 
                     # Lien de téléchargement :    
@@ -330,7 +337,6 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                             delete_data(repertoire_donnees+'/csv')
                             
                             erreur_internet = True
-                            return erreur_internet
                         
                         
                         # Si il y a pas de connexion mais on a déjà le fichier :
@@ -341,7 +347,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                             print (msg_pas_internet)
                             
                             erreur_internet = False
-                            return erreur_internet
+                        
+                        return erreur_internet
                     
                     
                     
@@ -369,18 +376,15 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 INTERFACE SUR TERMINAL + VARIABLES POUR TKINTER
                     
                 '''
+                pourcentage = round(pourcentage*100)
+
                 if is_courant_modified:
                     # Message sur le terminal (provisoire, à modifier pour du Tkinter)
                     # avec gestion du nombre de caractères pour avoir du texte homogène
-                    if pourcentage < 10 :
-                        msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier téléchargé"
-                    elif pourcentage < 100 :
-                        msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier téléchargé"
-                    else :
-                        msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier téléchargé"
-                        
+
+                    msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier téléchargé")
+
                     print (msg_csv_courant)
-                    
                     
                     # Si le fichier a été mis à jour :
                     if mise_a_jour :
@@ -406,15 +410,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
                 # avec gestion du nombre de caractères pour avoir du texte homogène          
                 else :
-                    pourcentage = int(csv_courant/nombre_total_csv*100)
-                    
-                    if pourcentage < 10 :
-                        msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
-                    elif pourcentage < 100 :
-                        msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
-                    else :
-                        msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
-                            
+                    msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier à jour")
+
                     print (msg_csv_courant)
                         
                         
@@ -423,12 +420,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             else :
                 pourcentage = int(csv_courant/nombre_total_csv*100)
                 
-                if pourcentage < 10 :
-                    msg_csv_courant = str(pourcentage)+"%   -  "+str(id)+"  -> Fichier à jour"
-                elif pourcentage < 100 :
-                    msg_csv_courant = str(pourcentage)+"%  -  "+str(id)+"  -> Fichier à jour"
-                else :
-                    msg_csv_courant = str(pourcentage)+"% -  "+str(id)+"  -> Fichier à jour"
+                msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier à jour")
                         
                 print (msg_csv_courant)
         
