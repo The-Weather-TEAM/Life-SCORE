@@ -173,8 +173,9 @@ def telechargement(bouton,fenetre):
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     windowDownload.iconphoto(False, icone)
     windowDownload.minsize(width=int(510*4/3), height=384)
-    windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
     windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
+    windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
+    
 
     # Création des widgets
     msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =('Bold',16), justify=LEFT)
@@ -200,8 +201,6 @@ def telechargement(bouton,fenetre):
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
         
-        
-    windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
     windowDownload.mainloop()
 
 '''
@@ -918,7 +917,7 @@ if __name__ == "__main__":
     fenetrePrincipale.title('LifeScore  |  Menu principal')
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     fenetrePrincipale.iconphoto(False, icone)
-    fenetrePrincipale.minsize(width=868, height=800) # 768 = taille minimum de la fenetre
+    fenetrePrincipale.minsize(width=1080  , height=848) # Taille minimum de la fenetre
     fenetrePrincipale.state('zoomed')
     
     
