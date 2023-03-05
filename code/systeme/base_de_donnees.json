@@ -32,8 +32,8 @@
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "moyenne" : "1,7",
-                                                                          "max" : "813",
+                                                                          "moyenne" : 1.7,
+                                                                          "max" : 813,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -46,8 +46,8 @@
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "0,2",
-                                                                          "max" : "219",
+                                                                          "moyenne" : 0.2,
+                                                                          "max" : 219,
                                                                           "categorie": "qualité_de_vie"
                                                                          
                                                                 
@@ -61,8 +61,8 @@
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "0,1",
-                                                                          "max" : "171",
+                                                                          "moyenne" : 0.1,
+                                                                          "max" : 171,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -74,9 +74,9 @@
                                                                           "colonne_ville" : "code_commune",
                                                                           "colonne_donnee" : ["service"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
-                                                                          "moyenne" : "0,2",
-                                                                          "max" : "20",
+                                                                          "type" : "autre",
+                                                                          "moyenne" : 0.2,
+                                                                          "max" : 20,
                                                                           "categorie": "securite"
                                                                 
 
@@ -89,8 +89,8 @@
                                                                           "colonne_donnee" : ["nom_du_festival"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "1",
-                                                                          "max" : "",
+                                                                          "moyenne" : 1,
+                                                                          "max" : 10,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -103,8 +103,8 @@
                                                                           "colonne_donnee" : ["nom_officiel_du_musee"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "3,5",
-                                                                          "max" : "130",
+                                                                          "moyenne" : 3.5,
+                                                                          "max" : 130,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -117,8 +117,8 @@
                                                                           "colonne_donnee" : ["name"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "0,4",
-                                                                          "max" : "38",
+                                                                          "moyenne" : 0.4,
+                                                                          "max" : 38,
                                                                           "categorie": "securite"
                                                                 
 
@@ -131,8 +131,8 @@
                                                                           "colonne_donnee" : ["appellation_courante"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "0,5",
-                                                                          "max" : "1855",
+                                                                          "moyenne" : 0.5,
+                                                                          "max" : 1855,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -145,8 +145,8 @@
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "2401",
-                                                                          "max" : "20000",
+                                                                          "moyenne" : 2401,
+                                                                          "max" : 20000,
                                                                           "categorie": "prix"
                                                                 
 
@@ -159,8 +159,8 @@
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "2999",
-                                                                          "max" : "25000",
+                                                                          "moyenne" : 2999,
+                                                                          "max" : 25000,
                                                                           "categorie": "prix"
                                                                 
 
@@ -173,8 +173,8 @@
                                                                           "colonne_donnee" : ["nom_du_jardin"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : "1",
-                                                                          "max" : "530",
+                                                                          "moyenne" : 1,
+                                                                          "max" : 530,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -198,7 +198,7 @@
                                                                           "colonne_ville" : "Commune",
                                                                           "colonne_donnee" : ["Tribunal_judiciaire_compétent"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "autre",
                                                                           "categorie": "securite"
                                                                 
 
@@ -210,7 +210,7 @@
                                                                           "colonne_ville" : "insee_com",
                                                                           "colonne_donnee" : ["lib_acv"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "autre",
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -231,10 +231,10 @@
     "dose_rayonnements_telluriques":
     ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
                                                                           "delimiteur" : ";",
-                                                                          "colonne_ville" : "code_insee",
+                                                                          "colonne_ville" : "Code_insee",
                                                                           "colonne_donnee" : ["dose_rayonnements_telluriques"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "autre",
                                                                           "categorie": "securite"
                                                                 
 

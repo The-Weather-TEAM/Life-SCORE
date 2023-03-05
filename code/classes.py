@@ -116,6 +116,27 @@ def est_nombre(num: str) -> bool:
         return False
 
 
+
+
+
+
+def creation_fonction_affine(a, b) :
+    pente = (b - a) / -50
+    origine = a - (pente * 50)
+    return lambda x: pente * x + origine
+
+
+
+def savoir_note(a, b, note) :
+    note_finale = creation_fonction_affine(a, b)
+    return note_finale(note)
+
+
+
+
+
+
+
 '''
 CLASSE PRINCIPALE
 
@@ -127,6 +148,7 @@ class Donnees:
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] #La liste dans laquelle on rempli les notes 
+        self.habitants = None
 
 
 
@@ -162,12 +184,31 @@ class Donnees:
 
 
 
+    def recup_donnees_par_population(self, csv, liste_csv) :
+        
+        if self.habitants is None :
+            self.habitant = int(self.recuperation_donnees('population')[0])
+        nombre = Donnees.recup_donnees_simple(self, csv)
+        try :
+            nombre = int(nombre[0])
+            if nombre is None :
+                nombre = 0
+        except :
+            return None
+        
+        note = nombre / self.habitant
+        
+        a = liste_csv[csv][2]['moyenne']
+        b = liste_csv[csv][2]['max']
+        
+        return savoir_note(a, b, note)
+        
+        
+        
 
 
 
-
-
-    def recuperation_donnees(self, csv) :
+    def recuperation_donnees(self, csv, liste_csv=None) :
         
         type_recuperation = infos_csv[csv][2]['type']
         
@@ -175,11 +216,10 @@ class Donnees:
             return Donnees.recup_donnees_simple(self, csv)
         
         elif type_recuperation  == 'par_population' :
-            return print('pas encore fair lol')
+            return Donnees.recup_donnees_par_population(self, csv, liste_csv)
         
         elif type_recuperation == 'blablabla' :
             return print('pas encore fair lol')
-        
         
         
         
@@ -332,11 +372,35 @@ class Donnees:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     '''
     METHODE POUR DONNER LE SCORE FINALE DE LA VILLE
     
     '''
     def note_finale(self):
+
+
+
+        with open(os.path.dirname(__file__)+"/systeme/base_de_donnees.json", "r") as fichier_json :
+            liste_csv = json.load(fichier_json)
+        
+        
+        for id in liste_csv :
+            print (id)
+            if liste_csv[id][2]['insee'] == 1 :
+                print(self.recuperation_donnees(id, liste_csv))
+        
+
 
         note_finale = 0
         for i in range(len(self.liste_notes)) :
