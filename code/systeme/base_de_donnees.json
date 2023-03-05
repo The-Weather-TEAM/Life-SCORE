@@ -8,19 +8,20 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 1800,
                                                                           "max": 2000000
-                                                                         
-                                                                
+
+
 
     }],
 
     "communes":
-    ["58c984b088ee386cdb1261f3","6c1db35c-3ee3-42f8-80fb-d366e451cc30", { "insee" : 1,
+    ["58c984b088ee386cdb1261f3","6c1db35c-3ee3-42f8-80fb-d366e451cc30", { "insee" : 0,
                                                                           "delimiteur" : ",",
-                                                                          "colonne_ville" : "-",
-                                                                          "colonne_donnee" : ["-"],
-                                                                          "type" : "-",
+                                                                          "colonne_ville" : "NCC",
+                                                                          "colonne_donnee" : ["COM"],
+                                                                          "type" : "recuperation_insee",
                                                                           "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
-                                                                          "source" : "www.data.gouv.fr"
+                                                                          "source" : "www.data.gouv.fr",
+                                                                          "arrondissement" : "1ER ARRONDISSEMENT"
                                                                 
     
     }],
@@ -28,7 +29,7 @@
     "ecoles":
     ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
                                                                           "delimiteur" : ";",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
@@ -45,7 +46,7 @@
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.00010510826,
                                                                           "max" : 0.00003045437,
                                                                           "categorie": "qualité_de_vie"
@@ -60,7 +61,7 @@
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.00005076142,
                                                                           "max" : 0.00003557452,
                                                                           "categorie": "qualité_de_vie"
@@ -74,7 +75,7 @@
                                                                           "colonne_ville" : "code_commune",
                                                                           "colonne_donnee" : ["service"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "autre",
+                                                                          "type" : "par_habitant",
                                                                           "moyenne" : 0.00005585032,
                                                                           "max" : 20,
                                                                           "categorie": "securite"
@@ -88,7 +89,7 @@
                                                                           "colonne_ville" : "code_insee_commune",
                                                                           "colonne_donnee" : ["nom_du_festival"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 1,
                                                                           "max" : 10,
                                                                           "categorie": "qualité_de_vie"
@@ -102,7 +103,7 @@
                                                                           "colonne_ville" : "commune",
                                                                           "colonne_donnee" : ["nom_officiel_du_musee"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 3.5,
                                                                           "max" : 130,
                                                                           "categorie": "qualité_de_vie"
@@ -116,7 +117,7 @@
                                                                           "colonne_ville" : "addr-city",
                                                                           "colonne_donnee" : ["name"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.4,
                                                                           "max" : 38,
                                                                           "categorie": "securite"
@@ -130,7 +131,7 @@
                                                                           "colonne_ville" : "insee",
                                                                           "colonne_donnee" : ["appellation_courante"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.5,
                                                                           "max" : 1855,
                                                                           "categorie": "qualité_de_vie"
@@ -144,7 +145,7 @@
                                                                           "colonne_ville" : "INSEE_C",
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "simple_affixe",
                                                                           "moyenne" : 2401,
                                                                           "max" : 20000,
                                                                           "categorie": "prix"
@@ -158,7 +159,7 @@
                                                                           "colonne_ville" : "INSEE_C",
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "simple_affixe",
                                                                           "moyenne" : 2999,
                                                                           "max" : 25000,
                                                                           "categorie": "prix"
@@ -172,7 +173,7 @@
                                                                           "colonne_ville" : "ville",
                                                                           "colonne_donnee" : ["nom_du_jardin"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_population",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 1,
                                                                           "max" : 530,
                                                                           "categorie": "qualité_de_vie"
@@ -186,7 +187,7 @@
                                                                           "colonne_ville" : "insee_com",
                                                                           "colonne_donnee" : ["classe_potentiel"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "simple_affixe",
                                                                           "categorie": "securite"
                                                                 
 
@@ -198,7 +199,7 @@
                                                                           "colonne_ville" : "Commune",
                                                                           "colonne_donnee" : ["Tribunal_judiciaire_compétent"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "autre",
+                                                                          "type" : "oui_non",
                                                                           "categorie": "securite"
                                                                 
 
@@ -210,7 +211,7 @@
                                                                           "colonne_ville" : "insee_com",
                                                                           "colonne_donnee" : ["lib_acv"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "autre",
+                                                                          "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -222,7 +223,7 @@
                                                                           "colonne_ville" : "1_f_code_insee_pdl",
                                                                           "colonne_donnee" : ["s_3_prod_d_filiere"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "liste",
                                                                           "categorie": "securite"
                                                                 
 
@@ -234,7 +235,7 @@
                                                                           "colonne_ville" : "Code_insee",
                                                                           "colonne_donnee" : ["dose_rayonnements_telluriques"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "autre",
+                                                                          "type" : "simple_affixe",
                                                                           "categorie": "securite"
                                                                 
 
