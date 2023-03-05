@@ -67,6 +67,7 @@ from PIL import Image # pour les logos et les boutons de CTK
 # Lecture de données (csv)
 import pandas
 import csv
+import math
 
 # Autre(s)
 from time import sleep, strftime, localtime # Sleep met en pause le programme, strftime convertit le temps et localtime redonne le temps de l'ordinateur
@@ -688,7 +689,7 @@ def w_score(ville,win):
             
             # Mise à jour de la page
             win.update()
-            sleep(fonction_animation_score(i, score_total_animation)*0.1) 
+            sleep(fonction_animation_score(i, score_total_animation)) 
             
             
 
@@ -759,11 +760,19 @@ def fonction_animation_score(x, total) :
     Calcule le temps entre deux entiers pour le score total (pour l'animation de la note)
     x,total sont des INT et la fonction renvoie un FLOAT pour donner la "vitesse" de changement
 
-    - Idée et réalisation par Nathan, aidé par nos cours de mathématiques sur les fonctions
+    - Idée et réalisation par Nathan, aidé par nos cours de mathématiques sur les fonctions et la trigo
     '''
     # Remet le total sur 100 pour avoir un ralenti à la fin de la note
-    x = (x/total)*100
     
+    
+    
+    
+    x = (x/total)*5
+    x_pour_cos = x + 1.2
+    return ((math.cos(x_pour_cos))+1.2)*0.03
+    
+    
+    '''
     # TODO : A REFAIRE car c'est pas fluide comme annimation !
     # !! Il faudrait trouver une fonction qui soit sympa qui commence pas trop haut qui et termine à 100 assez haut
     if x < 50:
@@ -771,7 +780,7 @@ def fonction_animation_score(x, total) :
     elif x < 85:
         return 0.10
     else:
-        return 0.50 + ((x-85)/15)
+        return 0.50 + ((x-85)/15)'''
 
 
 def avantages_inconvenients(dic):
