@@ -461,3 +461,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 5 Mars 2023 :
 >Nouvelle animation de la note basée sur un fonction trigonométrique
+
+>Aout des sources dans `classes.py`
+
+>Prise en compte d'auutres CSV "par habitants" dans la note finale !

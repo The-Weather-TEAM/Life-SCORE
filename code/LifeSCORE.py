@@ -26,9 +26,11 @@ MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 
 - Idée de Nathan
 - Réalisé par Thor
+- Redémarrage requis par Nathan
 '''
 
 # Verifie si tout les modules dans requirements.txt sont present, sinon ils sont installés.
+nouvelle_bibliotheque = False
 nom_du_repertoire = os.path.dirname(__file__) # Cherche le chemin du repertoire courant
 
 # liste des modules deja installé
@@ -43,9 +45,18 @@ for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt")
     else: 
         print(moduleSeul, "-> Module installé")
         output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf-8")
+        nouvelle_bibliotheque = True
 
         if output == "": # output == "" quand il y a une erreur d'installation
             raise ConnectionError("Erreur de connection, verifiez votre connection d'internet!")
+
+
+# Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
+if nouvelle_bibliotheque == True :
+    print("\n\n\n\n\n********************\n[ATTENTION]\nVeuillez redémarrer le programme pour appliquer l'instation des bibliothèques.\n\n********************\n\n\n\n\n")
+    sys.exit()
+
+
 
 
 
@@ -772,11 +783,9 @@ def fonction_animation_score(x, total) :
     x = (x/total)*5
     x_pour_cos = x + 1.2
     return ((math.cos(x_pour_cos))+1.2)*0.03
-    
-    
+
     '''
-    # TODO : A REFAIRE car c'est pas fluide comme annimation !
-    # !! Il faudrait trouver une fonction qui soit sympa qui commence pas trop haut qui et termine à 100 assez haut
+    # ANCIENNE ANIMATION
     if x < 50:
         return 0.20 - (x/250)
     elif x < 85:

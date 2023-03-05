@@ -118,8 +118,11 @@ def est_nombre(num: str) -> bool:
 
 
 
-
-def savoir_note(a, b, x) :
+'''
+Pour calculer une fonction à l'aide de deux points
+Idée et réalisation de Nathan
+'''
+def calculer_fonction_affine(a, b, x) :
     m = (b - a) / 50
     p = a - (m*50)
     return (x-p)/m
@@ -143,8 +146,8 @@ class Donnees:
 
 
     '''
-    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV
-
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple)
+    Pensé et réalisé par Nathan
     '''
     def recup_donnees_simple(self, csv) :
         
@@ -172,7 +175,10 @@ class Donnees:
             return None
 
 
-
+    '''
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
+    Pensé et réalisé par Nathan
+    '''
     def recup_donnees_par_population(self, csv, liste_csv) :
         
         if self.habitants is None :
@@ -187,16 +193,20 @@ class Donnees:
         
         note = nombre / self.habitant
         
+        #On récupère directement la note
         a = liste_csv[csv][2]['moyenne']
         b = liste_csv[csv][2]['max']
-        
-        return savoir_note(a, b, note)
+        return calculer_fonction_affine(a, b, note)
         
         
         
 
 
-
+    '''
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
+    HUB où on fait le pont entre les autres fonctions par rapport au type de CSV 
+    Pensé et réalisé par Nathan
+    '''
     def recuperation_donnees(self, csv, liste_csv=None) :
         
         type_recuperation = infos_csv[csv][2]['type']
@@ -208,7 +218,7 @@ class Donnees:
             return Donnees.recup_donnees_par_population(self, csv, liste_csv)
         
         elif type_recuperation == 'blablabla' :
-            return print('pas encore fair lol')
+            return print('pas encore fait lol')
         
         
         
@@ -379,27 +389,38 @@ class Donnees:
     def note_finale(self):
 
 
+        '''
+        Ici on  récupère chaque données pour chaque CSV, si elle sont utilisables on rajoute ça dans la note finale
+        Pensé et réalisé par Nathan, à l'aide des fonctions au dessus
+        '''
+        # On ouvre le fichier json de la base de données
         with open(os.path.dirname(__file__)+"/systeme/base_de_donnees.json", "r") as fichier_json :
             liste_csv = json.load(fichier_json)
         
-        
+        # Pour chaque CSV
         for id in liste_csv :
             print (id)
-            if liste_csv[id][2]['insee'] == 1 :
+            if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
                 resultat = self.recuperation_donnees(id, liste_csv)
                 print(self.recuperation_donnees(id, liste_csv))
+                # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
                     if type(resultat) is not list :
+                        # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
                         if resultat < 0 :
                             resultat = 0
                         elif resultat > 100 :
                             resultat = 100
                         self.liste_notes.append(resultat)
         
+        # Pour tester avant de tout envoyer
         print(self.liste_notes)
         
 
-
+        '''
+        Création de la note finale
+        Fait par Raphaël (je crois ?)
+        '''
         note_finale = 0
         for i in range(len(self.liste_notes)) :
             if self.liste_notes[i] != None:
@@ -422,3 +443,6 @@ class Donnees:
         if self.ville != '' :
             return str(self.ville)
     
+
+
+# Fin du code !

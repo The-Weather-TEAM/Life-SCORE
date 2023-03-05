@@ -1,8 +1,9 @@
 '''
                         [UPDATE.PY]
                             V.7
+             /!\  SANS LE MULTI-TELECHARGEMENT  /!\ 
                          
-    Programme de téléchargement et mises à jour des données
+    Programme de téléchargement et mises à jour des données automatique
 
 
 
@@ -10,7 +11,6 @@
 - Télécharge et installe les fichiers lors de la première utilisation ;
 - Recherche de mises à jour tous les mois et retéléchargement des csv si nouvelle version disponible ;
 - Internet pas indispensable pour le programme, mais bloque lors de la première utilisation ;
-- Messages sous variables pour une compabilité efficace avec Tkinter
 - Code dans une fonction pour return sur le code principal une variable d'erreur
 - Gestion si coupure d'internet en plein téléchargement
 - Création du fichier options.csv qui permet de stocker des données pour l'application
@@ -68,7 +68,7 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     """
     Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
-    ex: "44%  -  population  -> Fichier à jour"
+    ex: "44%  -  population  -> Fichier à jour
 
     - `pourcentage` contient le pourcentage du telechargement de tout les fichiers
     - `id` represent le nom du fichier (ex: population)
@@ -78,6 +78,11 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
 
     return message
+
+
+
+
+
 
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
 def executer(barre_progres,fenetre,message,message_pourcentage):
@@ -120,7 +125,9 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
         '''
         BASE DE DONNEES DES CSV      
-                                   
+        par Frédéric et Nathan
+        
+        Idée de l'équipe, avec gestion des CSV
         '''
         
         # Base de données gérée par Frédéric et Nathan
@@ -138,7 +145,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
         # Création du dossier s'il n'existe pas :
-        # Faitr par nous même à l'aide de la documentation de os
+        # Fait par nous même à l'aide de la documentation de os
         if not os.path.exists(repertoire_donnees):
             os.makedirs(repertoire_donnees)
             os.makedirs(repertoire_donnees+'/csv')
@@ -194,7 +201,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 
                 '''
                 VERIFICATION VERSION
-                
+                Idée et code par Nathan
                 '''
                 
                 # On récupère les données du CSV à l'aide d'un protocole :
@@ -315,7 +322,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     
                     '''
                     TELECHARGEMENT DU CSV
-                    
+                    Pensé et réalisé par Nathan
                     '''
                     
                     # On récupère le fichier .csv sur internet :
@@ -324,6 +331,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         recup_csv_internet = requests.get(lien, allow_redirects=True, stream=True) # Stream enregistre avant que le fichier soit téléchargé (pour ChunkedEncodingError)
                         
                     except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead or ReadTimeoutError or ReadTimeout : 
+                        # Les erreurs ont étés récupéré en testant le code et sur internet, pour éviter la corruption des fichiers.
                         test_connexion = connexion('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
@@ -361,6 +369,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     
                     
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
+                    # Fait par Nathan et Raphaël (pour la comptabilité Tkinter)
                     nombre_csv_modifies += 1
                     pourcentage = csv_courant/nombre_total_csv
                     barre_progres.configure(determinate_speed=pourcentage)
@@ -374,7 +383,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     
                 '''  
                 INTERFACE SUR TERMINAL + VARIABLES POUR TKINTER
-                    
+                Fait par Nathan
                 '''
                 pourcentage = round(pourcentage*100)
 
@@ -462,7 +471,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     
     '''
     AJOUT DES INFOS DES NOUVELLES VERSIONS TELECHARGEES
-    
+    Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow
     '''
     
     if is_modified and not mise_a_jour :
@@ -476,3 +485,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         
     # Envoie sur le programme principal s'il y a une erreur ou non :
     return erreur_internet
+
+
+
+# Fin du programme de mise à jour !
