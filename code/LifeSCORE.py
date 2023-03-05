@@ -202,14 +202,15 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
     """
     if option == "Classique": # On veut garder le logo, le bouton qui ouvre la page de paramètres et les pages d'aides
         for widget in fenetre.winfo_children():
+            print(widget)
 
-            if str(widget) not in ['.!ctkbutton4','.!ctkbutton2'] and "toplevel" not in str(widget):
+            if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] and "toplevel" not in str(widget):
                 widget.destroy() # .destroy() supprime le widget
 
     else: # On veut juste garder le logo
         for widget in fenetre.winfo_children():
 
-            if str(widget) not in ['.!ctkbutton4','.!ctkbutton2'] : # Le nom du bouton où l'on met le logo (non modifiable)
+            if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] : # Le nom du bouton où l'on met le logo (non modifiable)
                 widget.destroy()
 
 
@@ -286,8 +287,8 @@ def retour_pages(window,btn,cle=True):
         window.destroy()
         change_etat_btn(btn)
     else:
-        
         efface_fenetre(window)
+        btn_quitter.place(relx=0.9,rely=0.15,anchor=NE)
         w_question(window)
 
 
@@ -629,6 +630,7 @@ def w_score(ville,win):
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     win.iconphoto(False, icone)
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
+    btn_quitter.place(relx=0.9,rely=0.9,anchor = SE)
 
     # Données PROVISOIRES !!!
     dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant 5':-1} # Exemple
@@ -904,11 +906,14 @@ if __name__ == "__main__":
     msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
     logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/logo.png'), size=(180, 180))
     btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
+    btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/12), command=fenetrePrincipale.destroy,
+                                      text= "QUITTER", font=('Arial Black',20))
     
+
     # Placement des widgets
     btn_nul.place(relx=0.1,rely=0.15,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
     msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
-
+    btn_quitter.place(relx = 0.9,rely = 0.15, anchor = NE) # Il devra aussi rester pendant toute l'exécution
 
     fenetrePrincipale.mainloop()
