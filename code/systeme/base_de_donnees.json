@@ -5,7 +5,10 @@
                                                                           "colonne_ville" : "com_code",
                                                                           "colonne_donnee" : ["popleg_tot"],
                                                                           "type" : "simple",
-                                                                          "source" : "www.data.gouv.fr"
+                                                                          "source" : "www.data.gouv.fr",
+                                                                          "moyenne" : 1800,
+                                                                          "max": 2000000,
+                                                                          "cathegorie": "blablabla"
                                                                 
 
     }],
@@ -25,6 +28,7 @@
     "ecoles":
     ["63478da8b4c219a0cf8c0d3a","fda33536-a0e0-4cad-b1bf-b88d2a7586e6", { "insee" : 1,
                                                                           "delimiteur" : ";",
+                                                                          "type" : "par_population",
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr"
