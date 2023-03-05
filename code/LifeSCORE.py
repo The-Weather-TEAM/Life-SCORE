@@ -215,7 +215,6 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
     """
     if option == "Classique": # On veut garder le logo, le bouton qui ouvre la page de paramètres et les pages d'aides
         for widget in fenetre.winfo_children():
-            print(widget)
 
             if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] and "toplevel" not in str(widget):
                 widget.destroy() # .destroy() supprime le widget
@@ -421,7 +420,6 @@ def aide(btn):
 def parametres(bouton):
     """
     Fonction qui ouvre la page de paramètres avec dessus : (X  = pas fait, A = à Améliorer, V = fait)
-        -Crédits # !On les garde ?                                      X
         -Option pour modifier la fréquence de mises à jour              V
         -Volet pour changer le style de l'application                   V 
         -Un bouton pour fermer la page                                  V
@@ -922,9 +920,14 @@ if __name__ == "__main__":
     
     
     '''
-    #idée de nathan, vous aimez bien ou pas ?
+    #idée de nathan, vous aimez bien ou pas ? #! NON c'est pas une bonne idée le plein écran j'avais déjà essayé 
     fenetrePrincipale.attributes('-fullscreen', True)
     '''
+    credits_texte = ("                       Réalisé par :\n\n" 
+    +"- Nathan Bosy          : Analyse des Csv\n" 
+    +"- Raphaël Farenc      : Interface CTk\n"
+    +"- Thor Naughton       : Calcul des Coefficients \n"
+    +"- Frédéric Marquet    : Base de Donnée")
     
     # Création des widgets
     btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
@@ -933,12 +936,17 @@ if __name__ == "__main__":
     btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
     btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/12), command=fenetrePrincipale.destroy,
                                       text= "QUITTER", font=('Arial Black',20))
+    credits = interface.CTkTextbox(fenetrePrincipale, width = 400 , corner_radius=2,border_spacing=5,
+                                   spacing2=2,fg_color='#A0A0A0')
+    credits.insert("0.0", text = credits_texte)
+    credits.configure(state = "disabled", font = ("Yu Gothic Light",19))
     
 
     # Placement des widgets
     btn_nul.place(relx=0.1,rely=0.15,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+    btn_quitter.place(relx = 0.9,rely = 0.15, anchor = NE) # Il devra aussi rester pendant toute l'exécution
     msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
-    btn_quitter.place(relx = 0.9,rely = 0.15, anchor = NE) # Il devra aussi rester pendant toute l'exécution
+    credits.place(relx=0.5,rely=0.9, anchor = S)
 
     fenetrePrincipale.mainloop()
