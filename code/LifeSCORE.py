@@ -174,6 +174,7 @@ def telechargement(bouton,fenetre):
     windowDownload.iconphoto(False, icone)
     windowDownload.minsize(width=int(510*4/3), height=384)
     windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
+    windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
 
     # Création des widgets
     msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =('Bold',16), justify=LEFT)
