@@ -58,7 +58,7 @@ if nouvelle_bibliotheque == True :
 
 
 
-
+print("\n\n\n\n\n")
 
 '''
 BIBLIOTHEQUES
@@ -919,15 +919,12 @@ if __name__ == "__main__":
     fenetrePrincipale.state('zoomed')
     
     
-    '''
-    #idée de nathan, vous aimez bien ou pas ? #! NON c'est pas une bonne idée le plein écran j'avais déjà essayé 
-    fenetrePrincipale.attributes('-fullscreen', True)
-    '''
+    
     credits_texte = ("                       Réalisé par :\n\n" 
-    +"- Nathan Bosy          : Analyse des Csv\n" 
-    +"- Raphaël Farenc      : Interface CTk\n"
-    +"- Thor Naughton       : Calcul des Coefficients \n"
-    +"- Frédéric Marquet    : Base de Donnée")
+    +"- Nathan B.      : Gestion des données & calculs\n" 
+    +"- Raphaël F.     : Interface graphique\n"
+    +"- Thor N.          : Calcul des coefficients & API\n"
+    +"- Frédéric M.    : Recherches pour la base")
     
     # Création des widgets
     btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1

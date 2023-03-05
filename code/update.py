@@ -482,7 +482,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             rajout_donnee.writerow([cle, val])  
                         
         
-        
+    print("\n\n\n\n\n")
     # Envoie sur le programme principal s'il y a une erreur ou non :
     return erreur_internet
 

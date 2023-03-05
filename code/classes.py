@@ -192,7 +192,7 @@ class Donnees:
             return None
         
         note = nombre / self.habitant
-        
+        print(" - Par habitant :", note)
         #On récupère directement la note
         a = liste_csv[csv][2]['moyenne']
         b = liste_csv[csv][2]['max']
@@ -332,7 +332,6 @@ class Donnees:
         delim : str le delimiteur, une virgule par défaut
         """
         data = p.read_csv(self.repertoire + '/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
-        # ! pour l'instant on a que SPORT
         #data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
 
         rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
@@ -343,6 +342,7 @@ class Donnees:
             # Calcul établiseements par habitants
             habitant = self.recuperation_donnees('population')[0]
             etab_par_hab = nbr_etab / int(habitant)
+            print("Le csv sport (test)\n - Par habitant :", etab_par_hab)
 
             # Calcul réalisé avec les données Françaises
             #16071.4*etab_sport_par_hab - 3.57143
@@ -355,9 +355,8 @@ class Donnees:
                 
             if note < 0 :
                 note = 0
-        
+            print(" - Note /100 :", note)
         except IndexError : # Si pas de données
-            self.liste_notes.append(None)
             return None
             
             
@@ -366,16 +365,6 @@ class Donnees:
         # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143
         self.liste_notes.append(note)
         return note
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -399,10 +388,10 @@ class Donnees:
         
         # Pour chaque CSV
         for id in liste_csv :
-            print (id)
+            print ("Le csv", id)
             if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
                 resultat = self.recuperation_donnees(id, liste_csv)
-                print(self.recuperation_donnees(id, liste_csv))
+                print(" - Note /100 :", self.recuperation_donnees(id, liste_csv))
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
                     if type(resultat) is not list :
@@ -414,7 +403,8 @@ class Donnees:
                         self.liste_notes.append(resultat)
         
         # Pour tester avant de tout envoyer
-        print(self.liste_notes)
+        print("\nLES NOTES :",self.liste_notes)
+        print("\n\n\n\n\n")
         
 
         '''
