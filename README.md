@@ -465,3 +465,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Aout des sources dans `classes.py`
 
 >Prise en compte d'auutres CSV "par habitants" dans la note finale !
+
+>Ajout des crédits au début de `LifeScore.py` (permet de remplir l'espace vide)
