@@ -4,3 +4,4 @@ customtkinter>=5.0.3
 Pillow>=9.2.0
 urllib3>=1.26.8
 tkintermapview>=1.28
+tkinter>=8.5
