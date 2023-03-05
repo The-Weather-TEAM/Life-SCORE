@@ -198,9 +198,10 @@ def telechargement(bouton,fenetre):
     else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
-
+        
+        
+    windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
     windowDownload.mainloop()
-
 
 '''
 FONCTIONS UTILISEES PLUSIEURS FOIS
@@ -916,9 +917,15 @@ if __name__ == "__main__":
     fenetrePrincipale.title('LifeScore  |  Menu principal')
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     fenetrePrincipale.iconphoto(False, icone)
-    fenetrePrincipale.minsize(width=768, height=500) # 768 = taille minimum de la fenetre
+    fenetrePrincipale.minsize(width=868, height=800) # 768 = taille minimum de la fenetre
     fenetrePrincipale.state('zoomed')
-
+    
+    
+    '''
+    #idée de nathan, vous aimez bien ou pas ?
+    fenetrePrincipale.attributes('-fullscreen', True)
+    '''
+    
     # Création des widgets
     btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
     msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
