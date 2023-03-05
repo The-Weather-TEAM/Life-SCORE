@@ -32,8 +32,8 @@
                                                                           "colonne_ville" : "code_insee_de_la_commune",
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "moyenne" : 1.7,
-                                                                          "max" : 813,
+                                                                          "moyenne" : 0.00078740157,
+                                                                          "max" : 0.0009,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -46,8 +46,8 @@
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : 0.2,
-                                                                          "max" : 219,
+                                                                          "moyenne" : 0.00010510826,
+                                                                          "max" : 0.00003045437,
                                                                           "categorie": "qualité_de_vie"
                                                                          
                                                                 
@@ -61,8 +61,8 @@
                                                                           "colonne_donnee" : ["nom_de_l_etablissment"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_population",
-                                                                          "moyenne" : 0.1,
-                                                                          "max" : 171,
+                                                                          "moyenne" : 0.00005076142,
+                                                                          "max" : 0.00003557452,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -75,7 +75,7 @@
                                                                           "colonne_donnee" : ["service"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "autre",
-                                                                          "moyenne" : 0.2,
+                                                                          "moyenne" : 0.00005585032,
                                                                           "max" : 20,
                                                                           "categorie": "securite"
                                                                 
