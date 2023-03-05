@@ -119,21 +119,10 @@ def est_nombre(num: str) -> bool:
 
 
 
-
-def creation_fonction_affine(a, b) :
-    pente = (b - a) / -50
-    origine = a - (pente * 50)
-    return lambda x: pente * x + origine
-
-
-
-def savoir_note(a, b, note) :
-    note_finale = creation_fonction_affine(a, b)
-    return note_finale(note)
-
-
-
-
+def savoir_note(a, b, x) :
+    m = (b - a) / 50
+    p = a - (m*50)
+    return (x-p)/m
 
 
 
@@ -390,7 +379,6 @@ class Donnees:
     def note_finale(self):
 
 
-
         with open(os.path.dirname(__file__)+"/systeme/base_de_donnees.json", "r") as fichier_json :
             liste_csv = json.load(fichier_json)
         
@@ -398,7 +386,17 @@ class Donnees:
         for id in liste_csv :
             print (id)
             if liste_csv[id][2]['insee'] == 1 :
+                resultat = self.recuperation_donnees(id, liste_csv)
                 print(self.recuperation_donnees(id, liste_csv))
+                if resultat is not None :
+                    if type(resultat) is not list :
+                        if resultat < 0 :
+                            resultat = 0
+                        elif resultat > 100 :
+                            resultat = 100
+                        self.liste_notes.append(resultat)
+        
+        print(self.liste_notes)
         
 
 
