@@ -20,6 +20,10 @@ import sys
 import os
 
 
+# Révolutionnaire (pour faire plusieurs actions)
+import threading
+
+
 
 '''
 MODULE DE MISE A JOUR DES BIBLIOTHEQUES
@@ -605,7 +609,14 @@ def arrondissement(btn):
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
     windowAide.mainloop()
 
-
+"""
+# ! NATHAN - J'ai essayé de rajouter une barre de chargement mais bon je n'y arrive pas mdr
+def chargement(fenetre) :
+    progressbar = interface.CTkProgressBar(master=fenetre, mode="indeterminnate")
+    progressbar.place(relx= 0.5, rely=0.48, anchor = CENTER)
+    progressbar.start()
+    fenetre.mainloop()
+ """
 
 def ville(entree,msg,fenetre):
     '''
@@ -620,10 +631,14 @@ def ville(entree,msg,fenetre):
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
         msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
+        #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
+        #fonction_barre_chargement.run()
         fenetre.update()
         Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
         efface_fenetre(fenetre,"Efface_reste") # Enlève même le bouton paramètre et les pages d'aide pour ne pas obstruer l'écran
         w_score(Donnees_ville,fenetre)
+
+
 
 
 
