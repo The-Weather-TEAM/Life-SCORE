@@ -116,8 +116,8 @@
                                                                           "colonne_donnee" : ["name"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "par_habitant",
-                                                                          "moyenne" : 0.4,
-                                                                          "max" : 38,
+                                                                          "moyenne" : 0.00000000047,
+                                                                          "max" : 0.00000000177,
                                                                           "categorie": "securite"
                                                                 
 

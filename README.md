@@ -467,3 +467,11 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Prise en compte d'auutres CSV "par habitants" dans la note finale !
 
 >Ajout des crédits au début de `LifeScore.py` (permet de remplir l'espace vide)
+
+
+
+
+6 Mars 2023 :
+>Modification des crédits (pour éviter qu'on puisse les sélectionner)
+
+>correction de problèmes avec les csv
