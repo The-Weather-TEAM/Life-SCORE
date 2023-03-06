@@ -37,12 +37,12 @@ MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 nouvelle_bibliotheque = False
 nom_du_repertoire = os.path.dirname(__file__) # Cherche le chemin du repertoire courant
 
-# liste des modules deja installé
+# Liste des modules deja installé
 list_pip = subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=subprocess.PIPE).stdout.decode("utf-8")
 
-# on installe tous les modules individuellement pour pouvoir les afficher un par un
+# On installe tous les modules individuellement pour pouvoir les afficher un par un
 for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines(): # os.pardir équivaut à ../ en linux
-    moduleSeul = module.split(">")[0] # car c'est en format module>=x.x.x
+    moduleSeul = module.split(">")[0] # Format module>=x.x.x
 
     if moduleSeul + "==" in list_pip:
         print(moduleSeul, "-> Module présent")
@@ -62,7 +62,7 @@ if nouvelle_bibliotheque == True :
 
 
 
-print("\n\n\n\n\n")
+print("\n\n")
 
 '''
 BIBLIOTHEQUES
@@ -304,7 +304,7 @@ def retour_pages(window,btn,cle=True):
         change_etat_btn(btn)
     else:
         efface_fenetre(window)
-        btn_quitter.place(relx=0.9,rely=0.15,anchor=NE)
+        btn_quitter.place(relx=0.95, rely=0.05,anchor=NE)
         w_question(window)
 
 
@@ -935,11 +935,11 @@ if __name__ == "__main__":
     
     
     
-    credits_texte = ("                       Réalisé par :\n\n" 
-    +"- Nathan B.      : Gestion des données & calculs\n" 
-    +"- Raphaël F.     : Interface graphique\n"
-    +"- Thor N.          : Calcul des coefficients & API\n"
-    +"- Frédéric M.    : Recherches pour la base")
+    credits_texte = ("                        Réalisé par :\n\n" 
+    +"- Nathan B    : Gestion des données & calculs\n" 
+    +"- Raphaël F   : Interface graphique          \n"
+    +"- Thor N        : Calcul des coefficients & API\n"
+    +"- Frédéric M  : Recherches pour la base")
     
     # Création des widgets
     btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
@@ -948,15 +948,13 @@ if __name__ == "__main__":
     btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
     btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/12), command=fenetrePrincipale.destroy,
                                       text= "QUITTER", font=('Arial Black',20))
-    credits = interface.CTkTextbox(fenetrePrincipale, width = 400 , corner_radius=2,border_spacing=5,
-                                   spacing2=2,fg_color='#A0A0A0')
-    credits.insert("0.0", text = credits_texte)
-    credits.configure(state = "disabled", font = ("Yu Gothic Light",19))
+    credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
+                                 font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
     
 
     # Placement des widgets
     btn_nul.place(relx=0.1,rely=0.15,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-    btn_quitter.place(relx = 0.9,rely = 0.15, anchor = NE) # Il devra aussi rester pendant toute l'exécution
+    btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # Il devra aussi rester pendant toute l'exécution
     msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
     credits.place(relx=0.5,rely=0.9, anchor = S)

@@ -120,9 +120,9 @@
                                                                           "colonne_ville" : "addr-city",
                                                                           "colonne_donnee" : ["name"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "compter_par_population",
-                                                                          "moyenne" : 0.4,
-                                                                          "max" : 38,
+                                                                          "type" : "compter_par_habitant",
+                                                                          "moyenne" : 0.00000000047,
+                                                                          "max" : 0.00000000177,
                                                                           "categorie": "securite"
                                                                 
 
