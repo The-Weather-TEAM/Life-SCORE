@@ -474,4 +474,10 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 6 Mars 2023 :
 >Modification des crédits (pour éviter qu'on puisse les sélectionner)
 
->correction de problèmes avec les csv
+>Correction de problèmes avec les csv
+
+>Modification des paramètres dans la base de données
+
+>Nouveau logo et importation d'images qui correspondent à la charte graphique verte de l'appli
+
+>La note finale prend maintenant en compte les csv de type simple, par population, comptage par population et simple avec fonction affine !! Lez go 
