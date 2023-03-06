@@ -107,8 +107,8 @@
                                                                           "colonne_donnee" : ["nom_officiel_du_musee"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
-                                                                          "moyenne" : 3.5,
-                                                                          "max" : 130,
+                                                                          "moyenne" : 0.00003773584,
+                                                                          "max" : 0.00011764705,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -135,8 +135,8 @@
                                                                           "colonne_donnee" : ["appellation_courante"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
-                                                                          "moyenne" : 0.5,
-                                                                          "max" : 1855,
+                                                                          "moyenne" : 0.00066666666,
+                                                                          "max" : 0.0055,
                                                                           "categorie": "qualité_de_vie",
                                                                           "diviseur": 4
                                                                 
