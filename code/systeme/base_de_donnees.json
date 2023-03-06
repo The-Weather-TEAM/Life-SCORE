@@ -92,7 +92,7 @@
                                                                           "colonne_ville" : "code_insee_commune",
                                                                           "colonne_donnee" : ["nom_du_festival"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "oui_non"
+                                                                          "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
