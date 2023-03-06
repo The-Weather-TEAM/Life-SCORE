@@ -670,11 +670,18 @@ def w_score(ville,win):
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
     # Carte de la commune 
-    if is_connected("https://mt0.google.com/"):
-        carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
-        carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insère la ville pour l'adresse (et format pour les arrondissements) 
-        carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=fr&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
-        #hl=fr pour une carte française, ..., ..., ...
+    """
+    CARTE DU VILLE
+
+    - Source et documentation: https://github.com/TomSchimansky/TkinterMapView (la liste des cartes possibles est tout en bas du README)
+    - Idée de Nathan, implémenté par Thor
+    """
+    if is_connected("https://mt0.google.com/"): # On verifie qu'il y a un connection au server ou on va recuperer la carte
+
+        carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height()) # On declare l'objet de la carte avec ces tailles respectives
+        carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # Insère la ville pour l'adresse (et format pour les arrondissements)
+        carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=fr&x={x}&y={y}&z={z}&s=Ga", max_zoom=22) # On decide quel carte et zoom on va utiliser
+        # lyrs = type de carte (m:standard) | hl = langue du carte | x,y,z = coordonees d'ou on veut aller | s = ? (je ne trouve pas de documentation officiel pour ce lien)
         carte_ville.place(relx=0.3, rely=0.18)
     
 
