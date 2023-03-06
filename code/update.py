@@ -1,6 +1,6 @@
 '''
                         [UPDATE.PY]
-                            V.7
+                            V.8
              /!\  SANS LE MULTI-TELECHARGEMENT  /!\ 
                          
     Programme de téléchargement et mises à jour des données automatique
@@ -54,6 +54,7 @@ from http.client import IncompleteRead
 # Importation de la fonction de test de connexion :
 from classes import is_connected as connexion
 from classes import lire_option          # Utile pour lire les parametres d'utilisateur
+from classes import changer_option       # Utile pour changer les options (obvious)
 
 
 
@@ -409,6 +410,10 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                                 
                         # On supprime les informations du dictionnaire (si en même temps il y a des nouveaux fichiers) :
                         del nouvelles_informations[id]
+                        
+                        # Pour l'interface, dire la dernière màj
+                        changer_option("DERNIERE_MAJ", time.time())
+                        
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
                         mise_a_jour = False

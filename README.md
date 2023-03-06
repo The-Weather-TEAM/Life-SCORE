@@ -481,3 +481,5 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Nouveau logo et importation d'images qui correspondent à la charte graphique verte de l'appli
 
 >La note finale prend maintenant en compte les csv de type simple, par population, comptage par population et simple avec fonction affine !! Lez go 
+
+>Ajout de la fonctionnalité pour voir la denrière màj dans la page des paramètres
