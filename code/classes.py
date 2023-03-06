@@ -119,14 +119,17 @@ def est_nombre(num: str) -> bool:
 
 
 
+
 '''
 Pour calculer une fonction à l'aide de deux points
 Idée et réalisation de Nathan
 '''
-def calculer_fonction_affine(a, b, x) :
-    m = (b - a) / 50
-    p = a - (m*50)
-    return (x-p)/m
+def calculer_fonction_affine(a, b, x) : # a et b deux points correspondant à la moyenne (50) et le maximum (100)
+    m = (b - a) / 50 #On calcule le coef directeur
+    p = a - (m*50)   #On calcule l'ordonnée à l'oginine
+    return (x-p)/m   #On renvoie la note
+
+
 
 
 
@@ -146,24 +149,34 @@ class Donnees:
 
 
 
+
+
+
+
+
+
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple)
     Pensé et réalisé par Nathan
     '''
     def recup_donnees_simple(self, csv) :
         
+        # On récupère le répertoire pour accéder au csv
         lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
         
+        # On récupère les infos des données qu'on voudrait récupérer
         colonnes = [infos_csv[csv][2]['colonne_ville']]
         for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
             colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
         
+        # On va lire le fichier
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
                             usecols=colonnes,
                             encoding='utf-8',
                             low_memory=False)
         
+        # On trouve la rangée qui valide le code insee
         rangee = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
         
         try:
@@ -172,19 +185,25 @@ class Donnees:
                     resultat.append(rangee.values[0][i+1])
                 return resultat
             
+        # Au cas où il n'y a pas de données
         except IndexError : #Si pas de données
+            
+            #! A MODIFIER PAR 0 une fois le code terminé
             return None
         
-            
-            
-            
-            
-            
-            
-    def compter(self, csv, liste_csv):
         
-
+            
+            
+            
+    '''
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (en comptant le nombre d'éléments)
+    Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
+    '''
+    def recup_donnees_compter_par_habitant(self, csv, liste_csv):
+        
         try:
+            
+            # Ici c'est tout comme la fonction au dessus
             lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
             
             colonnes = [infos_csv[csv][2]['colonne_ville']]
@@ -198,28 +217,27 @@ class Donnees:
                                 low_memory=False)
             
             res = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+            
+            # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
             rep = len(df)
             print(rep)
             
             
-            
-            
+            # On récupère les habitants si c'ets pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
             if self.habitants is None :
                 self.habitant = int(self.recuperation_donnees('population')[0])
-                
+            
             note = rep / self.habitant
             print(" - Par habitant :", note)
-            #On récupère directement la note
+            
+            #On récupère directement la note en utilisant la fonction affine
             a = liste_csv[csv][2]['moyenne']
             b = liste_csv[csv][2]['max']   
-                    
-                
             return calculer_fonction_affine(a, b, note)
             
         except : #Si pas de données
             return None
-
 
 
 
@@ -233,7 +251,10 @@ class Donnees:
         
         if self.habitants is None :
             self.habitant = int(self.recuperation_donnees('population')[0])
+        
+        # On utilise recup_donnees_simple pour éviter de faire la même chose dans un autre endroit
         nombre = Donnees.recup_donnees_simple(self, csv)
+        
         try :
             nombre = int(nombre[0])
             if nombre is None :
@@ -241,6 +262,7 @@ class Donnees:
         except :
             return None
         
+        # On divise par le nombre d'habitants et on utilise la fonction affine
         note = nombre / self.habitant
         print(" - Par habitant :", note)
         #On récupère directement la note
@@ -268,7 +290,10 @@ class Donnees:
             return Donnees.recup_donnees_par_population(self, csv, liste_csv)
         
         elif type_recuperation == 'compter_par_population' :
-            return Donnees.compter(self, csv, liste_csv)
+            return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
+        
+        #elif type_recuperation == 'blablabla' :
+        #    return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
         
         
 
@@ -405,7 +430,7 @@ class Donnees:
                 
             if note < 0 :
                 note = 0
-            print(" - Note /100 :", note)
+            print(" - Note /100 :", note, "\n")
         except IndexError : # Si pas de données
             return None
             
@@ -442,7 +467,7 @@ class Donnees:
             if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
                 resultat = self.recuperation_donnees(id, liste_csv)
                     
-                print(" - Note /100 :", resultat)
+                print(" - Note /100 :", resultat, "\n")
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
                     if type(resultat) is not list :
