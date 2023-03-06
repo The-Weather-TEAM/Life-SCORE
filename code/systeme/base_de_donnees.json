@@ -175,9 +175,7 @@
                                                                           "colonne_ville" : "ville",
                                                                           "colonne_donnee" : ["nom_du_jardin"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "compter_par_population",
-                                                                          "moyenne" : 1,
-                                                                          "max" : 530,
+                                                                          "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
