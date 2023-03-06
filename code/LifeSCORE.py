@@ -698,8 +698,8 @@ def w_score(ville,win):
 
         # Placements
         msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)# Nord Est
-        msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
-        msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+        #msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
+        #msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
         win.update()
         
         # Pour chaque entier naturel jusqu'à notre note
