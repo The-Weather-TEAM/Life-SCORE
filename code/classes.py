@@ -221,7 +221,7 @@ class Donnees:
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
             rep = len(df)
-            print(rep)
+            print(" - Total dans la ville :", rep)
             
             
             # On récupère les habitants si c'ets pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
@@ -276,6 +276,29 @@ class Donnees:
 
 
     '''
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple juste en utilisant l'affine)
+    Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple et recup_donnees_population
+    '''
+    def recup_donnees_simple_affine(self, csv, liste_csv) :
+    
+        try :
+            nombre = Donnees.recup_donnees_simple(self, csv)
+            print(" - Donnée :", nombre)
+            a = liste_csv[csv][2]['moyenne']
+            b = liste_csv[csv][2]['max']
+            
+            nombre = int(((str(nombre[0])).split(','))[0])
+    
+            return calculer_fonction_affine(a, b, nombre)
+        
+        except :
+            return None
+
+
+
+
+
+    '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
     HUB où on fait le pont entre les autres fonctions par rapport au type de CSV 
     Pensé et réalisé par Nathan
@@ -292,8 +315,8 @@ class Donnees:
         elif type_recuperation == 'compter_par_population' :
             return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
         
-        #elif type_recuperation == 'blablabla' :
-        #    return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
+        elif type_recuperation == 'simple_affine' :
+            return Donnees.recup_donnees_simple_affine(self, csv, liste_csv)
         
         
 
@@ -430,7 +453,7 @@ class Donnees:
                 
             if note < 0 :
                 note = 0
-            print(" - Note /100 :", note, "\n")
+            print(" - Note /100 :", note)
         except IndexError : # Si pas de données
             return None
             
@@ -463,11 +486,11 @@ class Donnees:
         
         # Pour chaque CSV
         for id in liste_csv :
-            print ("Le csv", id)
+            print ("\nLe csv", id)
             if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
                 resultat = self.recuperation_donnees(id, liste_csv)
                     
-                print(" - Note /100 :", resultat, "\n")
+                print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
                     if type(resultat) is not list :
@@ -477,6 +500,9 @@ class Donnees:
                         elif resultat > 100 :
                             resultat = 100
                         self.liste_notes.append(resultat)
+            else :
+                print("Fonction pas encore implémentée")
+        
         
         # Pour tester avant de tout envoyer
         print("\nLES NOTES :",self.liste_notes)

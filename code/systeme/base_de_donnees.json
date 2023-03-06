@@ -7,7 +7,7 @@
                                                                           "type" : "simple",
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 1800,
-                                                                          "max": 2000000
+                                                                          "max": 200000
                                                                          
                                                                 
 
@@ -143,7 +143,7 @@
                                                                           "colonne_ville" : "INSEE_C",
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple_affixe",
+                                                                          "type" : "simple_affine",
                                                                           "moyenne" : 11.7,
                                                                           "max" : 25,
                                                                           "categorie": "prix"
@@ -157,7 +157,7 @@
                                                                           "colonne_ville" : "INSEE_C",
                                                                           "colonne_donnee" : ["loypredm2"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple_affixe",
+                                                                          "type" : "simple_affine",
                                                                           "moyenne" : 14.8,
                                                                           "max" : 40,
                                                                           "categorie": "prix"
@@ -183,7 +183,9 @@
                                                                           "colonne_ville" : "insee_com",
                                                                           "colonne_donnee" : ["classe_potentiel"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple_affixe",
+                                                                          "type" : "simple_affine",
+                                                                          "moyenne" : 2,
+                                                                          "max" : -0.5,
                                                                           "categorie": "securite"
                                                                 
 
@@ -228,11 +230,13 @@
     "dose_rayonnements_telluriques":
     ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
                                                                           "delimiteur" : ";",
-                                                                          "colonne_ville" : "Code_insee",
+                                                                          "colonne_ville" : "code_insee",
                                                                           "colonne_donnee" : ["dose_rayonnements_telluriques"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple_affixe",
-                                                                          "categorie": "securite"
+                                                                          "type" : "simple_affine",
+                                                                          "categorie": "securite",
+                                                                          "moyenne" : 650,
+                                                                          "maximum" : 2000
                                                                 
 
     }]

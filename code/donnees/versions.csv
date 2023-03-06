@@ -3,8 +3,6 @@ population,1672674792.0
 communes,1677081590.0
 colleges,1665031388.0
 lycees,1673323276.0
-police_gendarmerie,1678075221.0
-musees,1666162604.0
 hopitaux,1620028007.0
 monuments_historiques,1641919161.0
 m2_maison,1673365528.0
@@ -17,3 +15,5 @@ dose_rayonnements_telluriques,1632227502.0
 festivals,1666102802.0
 ecoles,1675778115.0
 juridictions_competentes,1670513047.0
+police_gendarmerie,1678075221.0
+musees,1666162604.0
