@@ -8,8 +8,8 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 1800,
                                                                           "max": 2000000
-
-
+                                                                         
+                                                                
 
     }],
 
@@ -22,7 +22,7 @@
                                                                           "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
                                                                           "source" : "www.data.gouv.fr",
                                                                           "arrondissement" : "1ER ARRONDISSEMENT"
-                                                                
+
     
     }],
     
@@ -35,7 +35,8 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 0.00078740157,
                                                                           "max" : 0.0009,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "diviseur" : 4
                                                                 
 
     }],
@@ -48,8 +49,9 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00010510826,
-                                                                          "max" : ,0.00014662756
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "max" : 0.00014662756,
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "diviseur" : 4
                                                                          
                                                                 
 
@@ -64,7 +66,8 @@
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00005076142,
                                                                           "max" : 0.00012941633,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "diviseur" : 4
                                                                 
 
     }],
@@ -89,7 +92,9 @@
                                                                           "colonne_ville" : "code_insee_commune",
                                                                           "colonne_donnee" : ["nom_du_festival"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "simple",
+                                                                          "type" : "compter_par_population",
+                                                                          "moyenne" : 1,
+                                                                          "max" : 10,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -101,9 +106,9 @@
                                                                           "colonne_ville" : "commune",
                                                                           "colonne_donnee" : ["nom_officiel_du_musee"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_habitant",
-                                                                          "moyenne" : 0.00003773584,
-                                                                          "max" : 0,
+                                                                          "type" : "compter_par_population",
+                                                                          "moyenne" : 3.5,
+                                                                          "max" : 130,
                                                                           "categorie": "qualité_de_vie"
                                                                 
 
@@ -115,7 +120,7 @@
                                                                           "colonne_ville" : "addr-city",
                                                                           "colonne_donnee" : ["name"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_habitant",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.4,
                                                                           "max" : 38,
                                                                           "categorie": "securite"
@@ -129,10 +134,11 @@
                                                                           "colonne_ville" : "insee",
                                                                           "colonne_donnee" : ["appellation_courante"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_habitant",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.5,
                                                                           "max" : 1855,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "diviseur": 4
                                                                 
 
     }],
@@ -171,7 +177,7 @@
                                                                           "colonne_ville" : "ville",
                                                                           "colonne_donnee" : ["nom_du_jardin"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_habitant",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 1,
                                                                           "max" : 530,
                                                                           "categorie": "qualité_de_vie"

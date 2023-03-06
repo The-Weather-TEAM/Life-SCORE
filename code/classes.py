@@ -36,6 +36,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import os
 import random #Pour un easter egg
 import re # pour les splits
+import csv as util_csv
 
 
 
@@ -173,7 +174,31 @@ class Donnees:
             
         except IndexError : #Si pas de données
             return None
-
+        
+            
+    def compter(self, csv):
+        
+        lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
+        
+        colonnes = [infos_csv[csv][2]['colonne_ville']]
+        for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
+            colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
+        
+        fichier = p.read_csv(lien_fichier,
+                            delimiter=infos_csv[csv][2]['delimiteur'],
+                            usecols=colonnes,
+                            encoding='utf-8',
+                            low_memory=False)
+        
+        rangee = []
+        for i in colonnes :
+            rangee.append(fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee]) # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+            print(rangee)
+        try:
+                return rangee
+            
+        except IndexError : #Si pas de données
+            return None
 
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
@@ -196,6 +221,7 @@ class Donnees:
         #On récupère directement la note
         a = liste_csv[csv][2]['moyenne']
         b = liste_csv[csv][2]['max']
+        
         return calculer_fonction_affine(a, b, note)
         
         
@@ -208,7 +234,6 @@ class Donnees:
     Pensé et réalisé par Nathan
     '''
     def recuperation_donnees(self, csv, liste_csv=None) :
-        
         type_recuperation = infos_csv[csv][2]['type']
         
         if type_recuperation == 'simple' :
@@ -217,12 +242,13 @@ class Donnees:
         elif type_recuperation  == 'par_population' :
             return Donnees.recup_donnees_par_population(self, csv, liste_csv)
         
-        elif type_recuperation == 'blablabla' :
-            return print('pas encore fait lol')
+        elif type_recuperation == 'compter_par_population' :
+            res = (Donnees.compter(self, csv))
+            print(res)
         
         
-        
-        
+
+
         
         
         
@@ -391,7 +417,8 @@ class Donnees:
             print ("Le csv", id)
             if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
                 resultat = self.recuperation_donnees(id, liste_csv)
-                print(" - Note /100 :", self.recuperation_donnees(id, liste_csv))
+                    
+                print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
                     if type(resultat) is not list :
