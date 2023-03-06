@@ -669,7 +669,7 @@ def w_score(ville,win):
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
-    # Carte du ville
+    # Carte de la commune 
     if is_connected("https://mt0.google.com/"):
         carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
         carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insère la ville pour l'adresse (et format pour les arrondissements) 
