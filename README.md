@@ -471,7 +471,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 
-6 Mars 2023 :
+6 Mars 2023 : **Nouvelle version v0.5.4**
 >Modification des crédits (pour éviter qu'on puisse les sélectionner)
 
 >Correction de problèmes avec les csv
@@ -482,4 +482,4 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 >La note finale prend maintenant en compte les csv de type simple, par population, comptage par population et simple avec fonction affine !! Lez go 
 
->Ajout de la fonctionnalité pour voir la denrière màj dans la page des paramètres
+>Ajout de la fonctionnalité pour voir la dernière màj dans la page des paramètres
