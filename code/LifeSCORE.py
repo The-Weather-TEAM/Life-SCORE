@@ -674,6 +674,7 @@ def w_score(ville,win):
         carte_ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height())
         carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France") # insère la ville pour l'adresse (et format pour les arrondissements) 
         carte_ville.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=fr&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
+        #hl=fr pour une carte française, ..., ..., ...
         carte_ville.place(relx=0.3, rely=0.18)
     
 
