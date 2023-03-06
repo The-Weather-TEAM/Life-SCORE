@@ -352,7 +352,7 @@ def w_qcm(win,option = None): # w pour window
     msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =('Bold',18), justify=CENTER)
     
     # Bouttons :
-    btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda: aide(btn_aide), text="AIDE" ,font=('Arial Black',30)) # Ouvre la page d'instructions
+    btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda: aide(btn_aide), text="Aide " ,font=('Arial Black',30)) # Ouvre la page d'instructions
     btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
     btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Arial Black',30)) # Commence le Qcm ou continue le programme
 
@@ -564,7 +564,7 @@ def w_question(fenetre):
     msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
-                                             text="Aide\narrondissements",font=('Arial Black',30)) # Boutton d'aide arrondissements
+                                             text="Aide 2",font=('Arial Black',30)) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
                                      command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=('Arial Black',30))
     
@@ -946,8 +946,8 @@ if __name__ == "__main__":
     msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
     logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
     btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
-    btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/12), command=fenetrePrincipale.destroy,
-                                      text= "QUITTER", font=('Arial Black',20))
+    btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
+                                      text= "Quitter", font=('Arial Black',30))
     credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
                                  font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
     
