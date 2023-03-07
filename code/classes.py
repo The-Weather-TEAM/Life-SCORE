@@ -563,7 +563,12 @@ class Donnees:
 
 
 
-
+    '''
+    Gérér les notes avant de faire la note finale
+    
+    Fait par Raphaël et Nathan
+    
+    '''
     def prepa_recup_donnees(self, liste_csv, id):
         print ("\nLe csv", id)
         if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
