@@ -102,7 +102,7 @@ Fait par Thor
 def is_options() :
     """
     Fonction qui verifie si le fichier options.txt existe pour eviter des erreurs avec les autres fontions options
-    - Idée + Implémentation par Rafael
+    - Idée + Implémentation par Nathan
     """
     path_options = os.path.join(os.path.dirname(__file__),"donnees/options.txt") # localise le fichier cible
     if not os.path.isfile(path_options) : # on verifie si cette fichie existe pas
@@ -140,7 +140,7 @@ def lire_option(option: str):
     
 # Renvoie uniquement les nombres
 def est_nombre(num: str) -> bool:
-    """Verifie si un string donné est numerique
+    """Verifie si l'entrée est un nombre (plus précisément un float)
     - Code de Thor
     """
 
