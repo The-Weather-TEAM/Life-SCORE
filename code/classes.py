@@ -47,7 +47,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 from requests.exceptions import ConnectionError, ReadTimeout
 
 
-
+# Multithreading, géré par Nathan (permet de faire plusieurs actions en même temps)
+import threading
 
 
 '''
@@ -529,27 +530,13 @@ class Donnees:
         
         # Pour chaque CSV
         for id in liste_csv :
-            print ("\nLe csv", id)
-            if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
-                
-                # On part sur le HUB de la récupération de données
-                resultat = self.recuperation_donnees(id, liste_csv)
-                    
-                print(" - Note /100 :", resultat)
-                
-                # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
-                if resultat is not None :
-                    
-                    if type(resultat) is not list :
-                        # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
-                        if resultat < 0 :
-                            resultat = 0
-                        elif resultat > 100 :
-                            resultat = 100
-                        self.liste_notes.append(resultat)
-            else :
-                print("Fonction pas encore implémentée")
-        
+            self.prepa_recup_donnees(liste_csv, id) #Ancienne méthode, pas très rapide avec bcp de CSV
+            
+        """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
+            a = threading.Thread(target=self.prepa_recup_donnees, args=(liste_csv, id,))
+            a.start()
+        a.join()
+        """
         
         # Pour tester avant de tout envoyer
         print("\nLES NOTES :",self.liste_notes)
@@ -573,6 +560,27 @@ class Donnees:
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
         return int(note_finale / len(self.liste_notes))
+
+
+
+
+    def prepa_recup_donnees(self, liste_csv, id):
+        print ("\nLe csv", id)
+        if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
+            resultat = self.recuperation_donnees(id, liste_csv)
+                    
+            print(" - Note /100 :", resultat)
+                # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
+            if resultat is not None :
+                if type(resultat) is not list :
+                        # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
+                    if resultat < 0 :
+                        resultat = 0
+                    elif resultat > 100 :
+                        resultat = 100
+                    self.liste_notes.append(resultat)
+        else :
+            print("Fonction pas encore implémentée")
 
 
 

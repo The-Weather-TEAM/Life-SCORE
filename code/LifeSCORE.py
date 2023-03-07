@@ -20,9 +20,6 @@ import sys
 import os
 
 
-# Révolutionnaire (pour faire plusieurs actions)
-import threading
-
 
 
 '''
