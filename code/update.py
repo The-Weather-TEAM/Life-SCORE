@@ -9,17 +9,16 @@
 
 - Créé le dossier "data" avec tous les CSV dedans ;
 - Télécharge et installe les fichiers lors de la première utilisation ;
-- Recherche de mises à jour tous les mois et retéléchargement des csv si nouvelle version disponible ;
+- Recherche de mises à jour et retéléchargement des csv si nouvelle version disponible ;
 - Internet pas indispensable pour le programme, mais bloque lors de la première utilisation ;
-- Code dans une fonction pour return sur le code principal une variable d'erreur
-- Gestion si coupure d'internet en plein téléchargement
+- Gestion d'erreur avancée (coupure d'internet, ...)
 - Création du fichier options.csv qui permet de stocker des données pour l'application
 - Implémentation de Tkinter
 
 
 SOURCES :
 Tout est basé sur nos cours, ou la documentation liée aux bibliothèques utilisés.
-Chaque processus est pensé et écrit par notre équipe.
+Chaque processus est pensé et écrit par Nathan 
 
 '''
 
@@ -50,7 +49,6 @@ from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeo
 from urllib3.exceptions import ProtocolError, ReadTimeoutError
 from http.client import IncompleteRead
 
-
 # Importation de la fonction de test de connexion :
 from classes import is_connected as connexion
 from classes import lire_option          # Utile pour lire les parametres d'utilisateur
@@ -61,20 +59,16 @@ from classes import changer_option       # Utile pour changer les options (obvio
 
 
 '''
-La partie des variables Tkinter est gérée par Raphaël, le reste par Nathan
+Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
+ex: "44%  -  population  -> Fichier à jour
+
+- `pourcentage` contient le pourcentage du telechargement de tout les fichiers
+- `id` represent le nom du fichier (ex: population)
+- `message` contient le message à ajouter à la fin (ex: Fichier à jour)
 '''
-
 def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> str:
-    """
-    Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
-    ex: "44%  -  population  -> Fichier à jour
-
-    - `pourcentage` contient le pourcentage du telechargement de tout les fichiers
-    - `id` represent le nom du fichier (ex: population)
-    - `message` contient le message à ajouter à la fin (ex: Fichier à jour)
-    """
     pourcent_str = str(pourcentage)
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
 
@@ -83,16 +77,18 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
 
 
 
+'''
+FONCTION PRINCIPALE
 
-
+'''
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
 def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
 
     # Temps en secondes entre les vérifications de mises à jour :
-    #temps_maj = 2592000       #* Nombre de secondes dans un mois (30 jours)
-    temps_maj = lire_option("FREQ_MAJ")
+    #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
+    temps_maj = lire_option("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
 
 
 
@@ -114,7 +110,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
 
-    # Test de connexion internet sur le site data.gouv.fr :
+    # Test de connexion internet sur le site data.gouv.fr dans classes.py
     # Basé sur un ancien projet de Frédéric et Nathan
     test_connexion = connexion('https://www.data.gouv.fr')
 
@@ -131,9 +127,11 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         Idée de l'équipe, avec gestion des CSV
         '''
         
-        # Base de données gérée par Frédéric et Nathan
+        # Base de données gérée par Frédéric et Nathan 
+        # Frédéric : recherches
+        # Nathan   : recherches et à la relation base de données et programme
         with open(repertoire_courant+"/systeme/base_de_donnees.json", "r") as fichier_json :
-            liste_csv = json.load(fichier_json)
+            liste_csv = json.load(fichier_json) # On le lance avec du JSON
 
 
 
@@ -146,7 +144,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
         # Création du dossier s'il n'existe pas :
-        # Fait par nous même à l'aide de la documentation de os
+        # Fait par nous même à l'aide de la documentation de la bibliothèque os
         if not os.path.exists(repertoire_donnees):
             os.makedirs(repertoire_donnees)
             os.makedirs(repertoire_donnees+'/csv')
@@ -172,6 +170,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         # Lecture du fichier CSV des versions :
         # Source : cours de première sur la bibliothèque Pandas
         lire_versions = p.read_csv(repertoire_donnees+'/versions.csv')
+
 
 
 
@@ -203,6 +202,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 '''
                 VERIFICATION VERSION
                 Idée et code par Nathan
+                
+                Les métadonnées ont été trouvés avec la documentation de opendatasoft.com
                 '''
                 
                 # On récupère les données du CSV à l'aide d'un protocole :
@@ -217,7 +218,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     # Si il n'y a pas de connexion et c'est le premier lancement :
                     if not test_connexion and not is_file_versions :
                                              
-                        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                        # Message sur le terminal si on a pas internet :
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                         print (msg_erreur)
 
@@ -228,7 +229,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     # Si il y a pas de connexion mais on a déjà le fichier :
                     else :
                         
-                        # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
+                        # Message sur le terminal si on a pas internet :
                         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
                         print (msg_pas_internet)
                             
@@ -241,7 +242,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 
                 '''
                 CONVERSION DATE EN UNIX
-                Imaginé par Nathan, basé sur un ancien projet de Frédéric et Nathan
+                Imaginé par Nathan, basé sur un ancien projet de Frédéric et Nathan (v.4 de l'application)
                 
                 '''
                 
@@ -324,6 +325,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     '''
                     TELECHARGEMENT DU CSV
                     Pensé et réalisé par Nathan
+                    
+                    Efface tout si il y a une coupure d'accès à internet pour éviter la corruption des fichiers
                     '''
                     
                     # On récupère le fichier .csv sur internet :
@@ -476,7 +479,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     
     '''
     AJOUT DES INFOS DES NOUVELLES VERSIONS TELECHARGEES
-    Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow
+    Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
     '''
     
     if is_modified and not mise_a_jour :
@@ -493,4 +496,4 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
 
-# Fin du programme de mise à jour !
+# Fin du programme !

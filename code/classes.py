@@ -7,11 +7,16 @@
 
 
 LISTE DES CLASSES :
-- "Donnees" : traitement des données pour le programmme
+- "Donnees" : traitement des données pour le programmme :
+     . Traitement des données (transformer les infos d'uun csv en note) par Nathan
+     . Savoir si la commune est française par Raphaël
+     . Note finale par Raphaël et Nathan
 
 
 LISTE DES FONCTIONS :
-- "is_connected" : vérifie si l'utilisateur a accès à internet / au site demandé
+- "is_connected" : vérifie si l'utilisateur a accès à internet / au site demandé, fait par Nathan
+- Fonctions pour lire/écrire/initialiser les paramètres, fait par Thor
+- Fonction pour calculer une fonction affine, fait par Nathan
 
 '''
 
@@ -23,26 +28,31 @@ LISTE DES FONCTIONS :
 BIBLIOTHEQUES
  
 '''
+# Bibliothèques souvent utilisées :
+import requests                        # Demandes de connexion
+from tkinter import *                  # Interface utilisateur
+import os                              # Interaction avec le système
+import random                          # Pour un petit easter egg
+import re                              # pour les splits
 
-import requests
-from requests.exceptions import ConnectionError, ReadTimeout
-from tkinter import *
-import pandas as p
+# Bibliothèque pour l'utilisation des CSV :
+import pandas as p    # Lecture des csv
 
-# fix pour un erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi sa marche
-# https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
+#* Fix pour une erreur avec pandas.read_csv(), il n'y a pas d'explication pourquoi ça marche
+#* Source : https://stackoverflow.com/questions/44629631/while-using-pandas-got-error-urlopen-error-ssl-certificate-verify-failed-cert
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
-import os
-import random #Pour un easter egg
-import re # pour les splits
-import csv as util_csv
+
+# Bibliothèques pour éviter erreurs de coupure réseau :
+from requests.exceptions import ConnectionError, ReadTimeout
+
+
 
 
 
 '''
 OUVERTURE DE LA BASE DE DONNEES
- 
+
 '''
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
@@ -55,10 +65,10 @@ with open(nom_du_repertoire+"\systeme\\base_de_donnees.json", "r") as fichier_js
 
 '''
 SAVOIR S'IL Y A UNE CONNEXION INTERNET
-(avec qu'un seul essai)
+(avec qu'un seul essai pour éviter les bugs)
 
+Fait par Nathan d'après un ancien projet (v.4 de l'application)
 '''
-
 def is_connected(url) :
     temp = 0
 
@@ -69,17 +79,25 @@ def is_connected(url) :
               
                 
         except ConnectionError or ReadTimeout or TimeoutError :    
-            print('\n\nProblème réseau.\nTentative de reconnexion en cours...')
+            print('\n\nProblème réseau.\nVeuillez vous reconnecter et relancer le programme')
                 
             return False 
         
             
         return True
 
+
+
+
+
 """
 FONCTIONS UTILE DANS TOUTE L'APPLICATION
 
+Fait par Thor
+
 """
+
+# Vérifier si le fichier options est présent
 def is_options() :
     if not os.path.isfile(os.path.dirname(__file__)+"/donnees/options.txt") :
         os.path.join(os.path.dirname(__file__), "donnees/options.txt")
@@ -89,26 +107,31 @@ def is_options() :
                    'DERNIERE_MAJ': 0}
         open(path_options, "w").write(str(dic_def))
 
+
+# Changer une option
 def changer_option(option, valeur,msg=None):
     """Modifie la valeur d'une option donnée dans ./donnees/options.txt"""
     is_options()
     if msg != None:
-        msg.configure(text = "Modification effectuée !") #Si un message est renseigné
+        msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
 
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
     dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
-    dictionaire_options[option] = valeur # on change l'option
-    open(path_options, "w").write(str(dictionaire_options)) # on re-ecrit tout les options au fichier
+    dictionaire_options[option] = valeur                      # on change l'option
+    open(path_options, "w").write(str(dictionaire_options))   # on re-ecrit tout les options au fichier
 
+
+# Récupérer une option du fichier
 def lire_option(option):
     """Renvoie la valeur de l'option donnée dans ./donnees/options.txt"""
     is_options()
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
-    return eval(open(path_options, "r").read()).get(option) # on ouvre et recupere l'option qu'on veut
+    return eval(open(path_options, "r").read()).get(option)   # on ouvre et recupere l'option qu'on veut
     
+    
+# Renvoie uniquement les nombres
 def est_nombre(num: str) -> bool:
-    """Renvoie uniquement les nombres"""
     #assert num == str, "Seul un nombre est accepté comme réponse" #Je le commente car num sera forcément un str (précisé au dessus)
     try:
         float(num)
@@ -122,12 +145,16 @@ def est_nombre(num: str) -> bool:
 
 '''
 Pour calculer une fonction à l'aide de deux points
+
 Idée et réalisation de Nathan
+
 '''
-def calculer_fonction_affine(a, b, x) : # a et b deux points correspondant à la moyenne (50) et le maximum (100)
-    m = (b - a) / 50 #On calcule le coef directeur
-    p = a - (m*50)   #On calcule l'ordonnée à l'oginine
-    return (x-p)/m   #On renvoie la note
+def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
+   
+    m = (max - moyenne) / 50                    # On calcule le coef directeur
+    p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
+   
+    return (x-p)/m                              # On renvoie la note
 
 
 
@@ -137,7 +164,6 @@ def calculer_fonction_affine(a, b, x) : # a et b deux points correspondant à la
 CLASSE PRINCIPALE
 
 '''  
-
 class Donnees:
     def __init__(self,ville) :
         
@@ -157,7 +183,9 @@ class Donnees:
 
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple)
+    
     Pensé et réalisé par Nathan
+    
     '''
     def recup_donnees_simple(self, csv) :
         
@@ -197,7 +225,9 @@ class Donnees:
             
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (en comptant le nombre d'éléments)
+    
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
+    
     '''
     def recup_donnees_compter_par_habitant(self, csv, liste_csv):
         
@@ -245,7 +275,9 @@ class Donnees:
 
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
+    
     Pensé et réalisé par Nathan
+    
     '''
     def recup_donnees_par_population(self, csv, liste_csv) :
         
@@ -265,7 +297,7 @@ class Donnees:
         # On divise par le nombre d'habitants et on utilise la fonction affine
         note = nombre / self.habitant
         print(" - Par habitant :", note)
-        #On récupère directement la note
+        # On récupère directement la note
         a = liste_csv[csv][2]['moyenne']
         b = liste_csv[csv][2]['max']
         
@@ -277,7 +309,9 @@ class Donnees:
 
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple juste en utilisant l'affine)
+    
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple et recup_donnees_population
+    
     '''
     def recup_donnees_simple_affine(self, csv, liste_csv) :
     
@@ -299,9 +333,11 @@ class Donnees:
 
 
     '''
-    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (par habaitant)
+    METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV
+    
     HUB où on fait le pont entre les autres fonctions par rapport au type de CSV 
     Pensé et réalisé par Nathan
+    
     '''
     def recuperation_donnees(self, csv, liste_csv=None) :
         type_recuperation = infos_csv[csv][2]['type']
@@ -326,6 +362,9 @@ class Donnees:
         
     """
     VERIFIE SI LA COMMUNE EST FRANCAISE ET DONNE SON CODE INSEE
+    
+    Fait par Raphaël
+    
     """
     def is_commune_france(self,msg):
 
@@ -334,14 +373,14 @@ class Donnees:
             return False
 
 
-        self.ville = self.ville.strip() #Enlève les espaces en trop
+        self.ville = self.ville.strip() # Enlève les espaces en trop
         
 
         if "-" in self.ville or ' ' in self.ville:
-            liste_ville = re.split("-| ",self.ville)#sépare avec espace, - et '
-            for i in range(len(liste_ville)): #
+            liste_ville = re.split("-| ",self.ville)# Sépare avec espace, - et '
+            for i in range(len(liste_ville)):
                 if liste_ville[i] not in ['lès','l','d','en','de','des','les','à']:
-                    if liste_ville[i][:2] in ["d'","l'"] : #si on a d'hérault
+                    if liste_ville[i][:2] in ["d'","l'"] : # Si on a d'hérault
                         liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
                     else: 
                         liste_ville[i] = liste_ville[i].capitalize()
@@ -416,8 +455,10 @@ class Donnees:
         
     '''
     METHODE POUR NOTER LES ETABLISSEMENTS SPORTIFS
-    TEMPORAIRE : NE MARCHE PAS AVEC LA BASE DE DONNEES
     
+    Fait par Raphaël et Nathan
+    
+    #! VERSION QU'AVEC LE CSV TEST SPORT
     '''
     def note_par_habitants(self,csv,colones,m_p,delim = ','):
         """
@@ -472,6 +513,8 @@ class Donnees:
     '''
     METHODE POUR DONNER LE SCORE FINALE DE LA VILLE
     
+    Fait par Raphaëm et Nathan
+    
     '''
     def note_finale(self):
 
@@ -488,11 +531,15 @@ class Donnees:
         for id in liste_csv :
             print ("\nLe csv", id)
             if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
+                
+                # On part sur le HUB de la récupération de données
                 resultat = self.recuperation_donnees(id, liste_csv)
                     
                 print(" - Note /100 :", resultat)
+                
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
                 if resultat is not None :
+                    
                     if type(resultat) is not list :
                         # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
                         if resultat < 0 :
@@ -509,18 +556,21 @@ class Donnees:
         print("\n\n\n\n\n")
         
 
+
+
+
         '''
         Création de la note finale
-        Fait par Raphaël (je crois ?)
+        Fait par Raphaël #?(je crois)
         '''
         note_finale = 0
         for i in range(len(self.liste_notes)) :
             if self.liste_notes[i] != None:
                 note_finale += int(self.liste_notes[i])
             else:
-                self.liste_notes.pop(i) #Supprime tous les None
+                self.liste_notes.pop(i) # Supprime tous les None
         
-        if len(self.liste_notes) == 0: #Si on n'a pas de données
+        if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
         return int(note_finale / len(self.liste_notes))
 
@@ -530,6 +580,7 @@ class Donnees:
     '''
     POUR REDONNER UN STR DE LA VILLE
     
+    Fait par Raphaël
     '''
     def __str__(self) :
         if self.ville != '' :
