@@ -100,18 +100,23 @@ Fait par Thor
 
 # Vérifier si le fichier options est présent
 def is_options() :
-    if not os.path.isfile(os.path.dirname(__file__)+"/donnees/options.txt") :
-        os.path.join(os.path.dirname(__file__), "donnees/options.txt")
-        path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
+    """
+    Fonction qui verifie si le fichier options.txt existe pour eviter des erreurs avec les autres fontions options
+    - Idée + Implémentation par Rafael
+    """
+    path_options = os.path.join(os.path.dirname(__file__),"donnees/options.txt") # localise le fichier cible
+    if not os.path.isfile(path_options) : # on verifie si cette fichie existe pas
         dic_def = {'APPARENCE': 'System',
                    'FREQ_MAJ': 0,
                    'DERNIERE_MAJ': 0}
-        open(path_options, "w").write(str(dic_def))
+        open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
 
 
 # Changer une option
-def changer_option(option, valeur,msg=None):
-    """Modifie la valeur d'une option donnée dans ./donnees/options.txt"""
+def changer_option(option: str, valeur: any,msg=None):
+    """Modifie la valeur d'une option donnée dans ./donnees/options.txt
+    - Idée et Implémentation par Thor
+    """
     is_options()
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
@@ -123,8 +128,10 @@ def changer_option(option, valeur,msg=None):
 
 
 # Récupérer une option du fichier
-def lire_option(option):
-    """Renvoie la valeur de l'option donnée dans ./donnees/options.txt"""
+def lire_option(option: str):
+    """Renvoie la valeur de l'option donnée dans ./donnees/options.txt
+    - Idée et Implémentation par Thor
+    """
     is_options()
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
@@ -133,6 +140,10 @@ def lire_option(option):
     
 # Renvoie uniquement les nombres
 def est_nombre(num: str) -> bool:
+    """Verifie si un string donné est numerique
+    - Code de Thor
+    """
+
     #assert num == str, "Seul un nombre est accepté comme réponse" #Je le commente car num sera forcément un str (précisé au dessus)
     try:
         float(num)
