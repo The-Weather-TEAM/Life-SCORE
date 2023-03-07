@@ -109,10 +109,10 @@ repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le ch
 n = 0
 list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
                 ('Avez vous moins de 30 ans ?','Age'),
-                ('Etes vous etudiant ?','Scolarite'), # Change pour  X si personne = vieille                
-                ('Avez vous\Vivez vous avec des enfants ?','Famille'),
+                ('Etes vous etudiant ?','Scolarite'),                
+                ('Avez vous\Vivez vous avec des enfants ?','Enfants'),
                 ('La culture a-t-elle une place importante pour vous ?','Culture'),
-                ('préférez vous la campagne à la ville ?','citadin'),
+                ('préférez vous la ville à la campagne ?','Citadin'),
                 ('Avez vous un travail ?','Travail'),
                 ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
 
