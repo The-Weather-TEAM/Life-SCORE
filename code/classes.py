@@ -183,6 +183,9 @@ class Donnees:
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] #La liste dans laquelle on rempli les notes 
         self.habitants = None
+        
+        #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
+        self.notes_finales = {}
 
 
 
@@ -521,6 +524,7 @@ class Donnees:
         # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
         # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143
         self.liste_notes.append(note)
+        self.notes_finales["sport"]=note
         return note
 
 
@@ -557,6 +561,7 @@ class Donnees:
         
         # Pour tester avant de tout envoyer
         print("\nLES NOTES :",self.liste_notes)
+        print(self.notes_finales)
         print("\n\n\n\n\n")
         
 
@@ -601,6 +606,7 @@ class Donnees:
                     elif resultat > 100 :
                         resultat = 100
                     self.liste_notes.append(resultat)
+                    self.notes_finales[id] = resultat
         else :
             print("Fonction pas encore implémentée")
 
