@@ -217,7 +217,7 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
     if option == "Classique": # On veut garder le logo, le bouton qui ouvre la page de paramètres et les pages d'aides
         for widget in fenetre.winfo_children():
 
-            if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] and "toplevel" not in str(widget):
+            if str(widget) not in ['.!ctkbutton5','.!ctkbutton4','.!ctkbutton2','.!ctkbutton3'] and "toplevel" not in str(widget):
                 widget.destroy() # .destroy() supprime le widget
 
     else: # On veut juste garder le logo
@@ -250,8 +250,8 @@ def avancer(fenetre):
         msg_principal.configure(text =f'{list_Questions[n][0]}') # Affiche la question suivante
 
     else:
-        efface_fenetre(fenetre)    
-        w_question(fenetre) # Ouvre la seconde fenêtre : Fin de la première
+        efface_fenetre(fenetre,"Efface_reste")    
+        w_question(fenetre) # Ouvre la seconde page : Fin de la première
 
 
 def plus(b1,b2,arg):
@@ -348,19 +348,13 @@ def w_qcm(win,option = None): # w pour window
 
     msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =('Bold',18), justify=CENTER)
     
-    # Bouttons :
-    btn_aide = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda: aide(btn_aide), text="Aide " ,font=('Arial Black',30)) # Ouvre la page d'instructions
-    btn_parametre = interface.CTkButton(win, height=int(win.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
+    # Boutton :
     btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Arial Black',30)) # Commence le Qcm ou continue le programme
-
 
     # Placement des widgets :
 
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # anchor place relativement à un point (ici le centre) et relx/rely place avec un % de x et de y de ce point
-    btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
-    btn_aide.place(relx=0.9, rely=0.9 ,anchor = SE) # SE = SouthEast (en bas à droite)
     # bouton ok Qui continue après le premier message
-    
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 
@@ -373,17 +367,17 @@ def w_qcm(win,option = None): # w pour window
     win.mainloop() # pour fermer la fenetre
 
 
-def aide(btn):
+def info(btn):
 
     """
-    Ouvre Une fenêtre d'aide avec un texte*
+    Ouvre Une fenêtre d'informations avec un texte*
 
     - Pour la TextBox, ce code python de Tom Schimansky nous a aidé à la reproduire
     'https://github.com/TomSchimansky/CustomTkinter/blob/master/examples/complex_example.py'
     le reste vient de Raphaël
     """
     # Constante 
-    texte_aide=("Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes."
+    texte_info=("Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes."
     + " Pour commencer, nous réalisons un QCM de 8 questions afin de déterminer vos préférences."
     + " Pour chaques critères, on définit une note sur 100 ainsi qu'un coefficient propre à lui même. "
     + " Le plus de critères sont réunis afin d'avoir le plus de précision possible. "
@@ -391,31 +385,32 @@ def aide(btn):
     + "\n   - Le climat (pluie par an / pollution de l'air / température / vent / ...)"
     + "\n   - La qualité de vie (activités / patrimoine / ville fleurie / ...)"
     + "\n   - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)"
-    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)") #Pour une meilleure clarté du code j'écrit ce str ainsi
+    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)" #Pour une meilleure clarté du code j'écrit ce str ainsi
+    + "\n\nCeci n'est qu'un prototype et certaines communes (très peu d'habitants) peuvent ne pas apparaître à cause du manque de données. ")
 
     # Initialisation de la page
     change_etat_btn(btn)
-    windowAide = interface.CTkToplevel() # fenetre de tkinter
-    windowAide.title('LifeScore  |  Aide')
+    windowInfo = interface.CTkToplevel() # fenetre de tkinter
+    windowInfo.title('LifeScore  |  Informations')
     icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
-    windowAide.iconphoto(False, icone)
-    windowAide.minsize(width=int(510*4/3), height=384) # 768
+    windowInfo.iconphoto(False, icone)
+    windowInfo.minsize(width=int(510*4/3), height=384) # 768
 
     # Création des widgets
-    txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
-    txt_aide.insert("0.0", text = texte_aide)
-    txt_aide.configure(state = "disabled", font = ("Arial",18),
+    txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0)
+    txt_info.insert("0.0", text = texte_info)
+    txt_info.configure(state = "disabled", font = ("Arial",18),
                        wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
-    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda:retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
+    btn_compris = interface.CTkButton(windowInfo, height=int(windowInfo.winfo_screenheight()/10), command=lambda:retour_pages(windowInfo,btn), text="Compris !",font=('Arial Black',30))
 
     # Placement des widgets
-    txt_aide.place(relx=0.05,rely=0.05)
+    txt_info.place(relx=0.05,rely=0.05)
     btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
     # Protocole de fermeture
-    windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn)) 
+    windowInfo.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowInfo,btn)) 
 
-    windowAide.mainloop()
+    windowInfo.mainloop()
 
 
 def parametres(bouton):
@@ -570,7 +565,7 @@ def w_question(fenetre):
     msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
-                                             text="Aide 2",font=('Arial Black',30)) # Boutton d'aide arrondissements
+                                             text="Aide",font=('Arial Black',30)) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
                                      command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=('Arial Black',30))
     
@@ -948,7 +943,11 @@ if __name__ == "__main__":
                                       text= "Quitter", font=('Arial Black',30))
     credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
                                  font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
-    
+    btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
+                                   command=lambda: info(btn_info), text="Info" ,font=('Arial Black',30)) # Ouvre la page d'instructions
+    btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
+                                        command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
+
 
     # Placement des widgets
     btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
@@ -956,5 +955,7 @@ if __name__ == "__main__":
     msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
     btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
     credits.place(relx=0.5,rely=0.9, anchor = S)
+    btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
+    btn_info.place(relx=0.9, rely=0.9 ,anchor = SE) # SE = SouthEast (en bas à droite)
 
     fenetrePrincipale.mainloop()
