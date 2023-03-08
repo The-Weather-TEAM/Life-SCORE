@@ -470,7 +470,6 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 
-
 6 Mars 2023 : **Nouvelle version v0.5.4**
 >Modification des crédits (pour éviter qu'on puisse les sélectionner)
 
@@ -483,3 +482,14 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >La note finale prend maintenant en compte les csv de type simple, par population, comptage par population et simple avec fonction affine !! Lez go 
 
 >Ajout de la fonctionnalité pour voir la dernière màj dans la page des paramètres
+
+
+
+8 Mars 2023 : 
+>Ajout des diviseurs dans certains csv (qui repertorient des données sur plusieurs années)
+
+>Modification de la map avec Openmap (et plus google), ajoût d'un pin pour voir la ville de loin
+
+>Centralisation des paramètres sur un fichier
+
+>Page des paramètres interactive (les données marquées sont celles de l'utilisateur)
