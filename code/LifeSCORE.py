@@ -467,7 +467,11 @@ def parametres(bouton):
                                                         font=('Arial Black',30))
     
     # Autres (les entrées et les volets "switch") :
-    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text="30", width=51, font= ('Bold', 18))
+    
+    # Pour récuperer la fréquence des màj et le transformer en jours
+    frequence_maj = int(lire_option('FREQ_MAJ')/86400)
+    
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text=frequence_maj, width=51, font= ('Bold', 18))
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
     switch_apparence.set('Styles') # La valeur initiale (à titre indicatif) 
 
