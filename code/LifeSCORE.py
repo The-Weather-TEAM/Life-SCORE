@@ -426,7 +426,7 @@ def parametres(bouton):
         -Un bouton pour fermer la page                                  V
         -Suprimmer donnes d'utilisateur                                 V
 
-    - Idee de Nathan et Raphaël, application CTk par Raphaël et application des fréquences de MaJ par Thor
+    - Idee de Nathan et Raphaël, application CTk par Raphaël et application des fréquences de MaJ par Thor & Nathan
 
     """
     change_etat_btn(bouton) # Bloque le bouton paramètre sur la page principale jusqu'à que cell-ci soit fermée
@@ -473,7 +473,14 @@ def parametres(bouton):
     
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text=frequence_maj, width=51, font= ('Bold', 18))
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
-    switch_apparence.set('Styles') # La valeur initiale (à titre indicatif) 
+
+    # Traduction en direct, pour voir directement quel mode on a selectioné 
+    apparence = lire_option("APPARENCE")
+    if apparence == "System" : apparence = "Système"
+    elif apparence == "Light" : apparence = "Clair"
+    elif apparence == "Dark" : apparence = "Sombre"
+    
+    switch_apparence.set(apparence) # La valeur initiale (à titre indicatif) 
 
 
     # Placement des widgets (Dans l'ordre dans lequel ils sont affichés) :
@@ -540,9 +547,7 @@ def change_apparence_page(choix):
         elif choix == "Sombre": choix = "Dark"
         else:choix = "Light"
 
-        with open(nom_du_repertoire + '/donnees/utilisateur/style.txt', 'w') as txt:
-            txt.write(choix)
-
+        changer_option('APPARENCE', choix)
         interface.set_appearance_mode(choix)
 
 
@@ -902,29 +907,14 @@ if __name__ == "__main__":
     '''
     RECUPERATION STYLE
 
-    - Idée obtenue sur le forum StackOverflow (pour la création de fichiers inexistants)
+    - Fonction lyre_option fait par Thor dans classes.py
+    
     '''
 
     # Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
-    if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/style.txt'):
-        nom_fichier = nom_du_repertoire+'/donnees/utilisateur/style.txt'
-        with open(nom_fichier,"w") as fichier:
-            fichier.write("System")
-
-    if not os.path.isfile(nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'):
-        nom_fichier = nom_du_repertoire+'/donnees/utilisateur/couleur_boutons.txt'
-        with open(nom_fichier,"w") as fichier:
-            fichier.write("green")
-
-    with open(nom_du_repertoire +'/donnees/utilisateur/style.txt') as txt:
-        style = txt.read()
-
-    with open(nom_du_repertoire +'/donnees/utilisateur/couleur_boutons.txt') as txt:
-        style_bouton = txt.read()
-
-    
+    style = lire_option('APPARENCE')
     interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
-    interface.set_default_color_theme(str(style_bouton))  # Themes: blue (default), dark-blue, green
+    interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
 
 
