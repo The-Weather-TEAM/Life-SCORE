@@ -257,6 +257,10 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     # Si ce n'est pas des données rondes (données avec milisecondes) :
                     i = i.split('.', 1)[0]
                     
+                    #Supprimer les données des heures en UTC (pas besoin)
+                    i = i.split('+', 1)[0]
+
+
                     # Transformation du str() en int() :
                     version[temp_conversion_version] = int(i)
                     temp_conversion_version += 1
