@@ -35,7 +35,8 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 0.00078740157,
                                                                           "max" : 0.0009,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "diviseur":6
                                                                 
 
     }],

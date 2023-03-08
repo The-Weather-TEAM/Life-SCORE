@@ -263,12 +263,18 @@ class Donnees:
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
             rep = len(df)
-            print(" - Total dans la ville :", rep)
             
             
             # On récupère les habitants si c'ets pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
             if self.habitants is None :
                 self.habitant = int(self.recuperation_donnees('population')[0])
+            
+            # On divise si un CSV repertorie plusieurs années
+            diviseur = infos_csv[csv][2].get('diviseur')
+            if diviseur != None :
+                rep = rep / diviseur
+                
+            print(" - Total dans la ville :", rep)
             
             note = rep / self.habitant
             print(" - Par habitant :", note)
