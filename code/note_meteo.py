@@ -52,7 +52,7 @@ def notes_meteo_ville(ville: str) -> ("dict | None"):
             tout_les_donnees += list(ville_air["hourly"].items()) # on ajoute tout ces donnes a la liste de donnees
     else:
         return None
-    if len(tout_les_donnees == 0): return None # si vide, il y a pas de notes a faire
+    if len(tout_les_donnees) == 0: return None # si vide, il y a pas de notes a faire
 
     donnees_moy = {} # va contenir les donnees moyennes de chaque critere
 
