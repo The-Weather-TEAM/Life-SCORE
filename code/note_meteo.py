@@ -8,10 +8,12 @@ import requests
 from calcul_coefs import calculCoefficients
 
 
-def notes_meteo_ville(ville: str) -> dict:
+def notes_meteo_ville(ville: str) -> ("dict | None"):
     """
     Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals
     
+    Renvoi un `dict` avec les notes ou `None` si on n'a pas pue recuperer les donnes pour calculer des notes
+
     - Idée de tout le Groupe (idée initial du projet) & Implementé par Thor
 
     Sources:
@@ -48,7 +50,9 @@ def notes_meteo_ville(ville: str) -> dict:
             del ville_air["hourly"]["time"] # pour iterer plus facilement les valeurs
 
             tout_les_donnees += list(ville_air["hourly"].items()) # on ajoute tout ces donnes a la liste de donnees
-    
+    else:
+        return None
+    if len(tout_les_donnees == 0): return None # si vide, il y a pas de notes a faire
 
     donnees_moy = {} # va contenir les donnees moyennes de chaque critere
 
