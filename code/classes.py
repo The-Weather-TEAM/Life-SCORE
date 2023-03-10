@@ -529,6 +529,42 @@ class Donnees:
 
 
 
+    """
+    ITER LES NOTES ET APPLIQUE LES REPONSES AUX DIFFERENTS CRITERES PAR RAPPORT AU QCM
+    
+    Idée par le group, fait par Thor
+    """
+    def applique_coefs_QCM(self, qcm_reponses: dict, notes: dict) -> dict:
+        """
+        Applique les choix du QCM aux notes pour que les notes en question
+        sont pris en compte ou pas
+        
+        """
+        #! La fonction n'est pas du tout dans sont etat terminé
+
+        qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
+            #! Besoin d'aide pour choisir quoi va avec quoi
+            "Activite": ["monuments_historiques"],
+            "Age": [],
+            "Scolarite": ["sport"],
+            "Enfants": ["ecoles", "colleges", "lycees", "sport"],
+            "Culture": ["monuments_historique"],
+            "Citadin": [],
+            "Travail": [],
+            "Cherche_Emploi": []
+        }
+
+        for qcm_coefs in qcm_to_criteres.keys(): # pour chaque choix de question
+            
+            if not qcm_reponses[qcm_coefs]: # si la reponse est 0 (ou non)
+
+                for critere in qcm_to_criteres[qcm_coefs]: # pour chaque critere en relation avec la question
+                    critere_note = notes.get(critere)
+                    if critere_note: # on verifie que la note de ce critere existe
+                        del notes[critere] # on suprimme cette note du dict car elle n'a plus d'importance
+        
+        return notes # renvoi nouveau dictionaire de notes
+            
 
 
 
