@@ -97,7 +97,7 @@ global n                    # INT | Pour faire list_Questions[n]
 global btn_ok               # CTkButton | Boutton qui continue (est utilisé plusieurs fois d'où la variable globale) 
 global Donnees_ville        # Donnees | Ce que l'on va traiter grâce aux autres fichiers
 global erreur_maj           # Bool | Pour savoir si le téléchargement à causé des problèmes
-
+global icone                # PhotoImage | Prend les données du logo en png pour l'afficher sur chaques pages
 
 # Variables globales pour la nouvelle version de UPDATE - Idee de rendre ces variables globales de Nathan 
 global progressbar          # CTkProgressbar | Montre l'avancée visuelle du téléchargement
@@ -118,6 +118,8 @@ list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Repro
                 ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
 
 dico_Reponses = {} # Traité dans coefficients.py
+
+#icone = interface.CTkImage(light_image=Image.open(nom_du_repertoire+'\systeme\icones\\logo.png'))
 
 
 '''
@@ -172,7 +174,6 @@ def telechargement(bouton,fenetre):
     # Initialisation de la page
     windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
     windowDownload.title('LifeScore  |  Téléchargement')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     windowDownload.iconphoto(False, icone)
     windowDownload.minsize(width=int(510*4/3), height=384)
     windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
@@ -393,7 +394,6 @@ def info(btn):
     change_etat_btn(btn)
     windowInfo = interface.CTkToplevel() # fenetre de tkinter
     windowInfo.title('LifeScore  |  Informations')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     windowInfo.iconphoto(False, icone)
     windowInfo.minsize(width=int(510*4/3), height=384) # 768
 
@@ -431,7 +431,6 @@ def parametres(bouton):
     
     windowParam = interface.CTkToplevel()
     windowParam.title('LifeScore  |  Paramètres')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     windowParam.iconphoto(False, icone)
     windowParam.geometry("680x650") # 768
     windowParam.resizable(False, False)
@@ -535,7 +534,7 @@ def change_apparence_page(choix):
     Change l'apparence de l'interface (Sombre ou Clair)
     (Système revient à ce que l'ordinateur a pour valeur par défault)
 
-    - Idee de transformation du texte et de l'écccriture par Raphaël
+    - Idee de transformation du texte et de l'écriture par Raphaël
     '''
 
     if choix in ["Système","Sombre","Clair"] : # Si on veut changer les pages
@@ -558,7 +557,6 @@ def w_question(fenetre):
     '''
     creation_fichiers("Rajout des lignes") # Rajoute les lignes au dico csv dès qu'on quitte la page de QCM
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
     fenetre.iconphoto(False, icone)
 
     # Création des widgets
@@ -587,7 +585,6 @@ def arrondissement(btn):
     # Initialisation
     windowAide = interface.CTkToplevel()
     windowAide.title('LifeScore  |  Aide')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     windowAide.iconphoto(False, icone)
     windowAide.minsize(width=int(510*4/3), height=384)
 
@@ -655,8 +652,6 @@ def w_score(ville,win):
     '''
     
     # Initialisation 
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
-    win.iconphoto(False, icone)
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
     btn_quitter.place(relx=0.9,rely=0.9,anchor = SE)
 
@@ -876,7 +871,6 @@ def w_erreur(fenetre): # w pour window
     
     # Initialisation
     fenetre.title('LifeScore  |  Erreur')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png')
     fenetre.iconphoto(False, icone)
     
     # Création des widgets
@@ -893,70 +887,71 @@ def w_erreur(fenetre): # w pour window
 
 
 
-if __name__ == "__main__":
-    if not os.path.exists(repertoire_donnees):
-        os.makedirs(repertoire_donnees)
-        os.makedirs(repertoire_donnees+'/csv')
-        os.makedirs(repertoire_donnees+'/utilisateur')
+
+if not os.path.exists(repertoire_donnees):
+    os.makedirs(repertoire_donnees)
+    os.makedirs(repertoire_donnees+'/csv')
+    os.makedirs(repertoire_donnees+'/utilisateur')
 
 
-    '''
-    RECUPERATION STYLE
+'''
+RECUPERATION STYLE
 
-    - Fonction lyre_option fait par Thor dans classes.py
-    
-    '''
+- Fonction lyre_option fait par Thor dans classes.py
 
-    # Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
-    style = lire_option('APPARENCE')
-    interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
-    interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
+'''
 
-
-
-    '''
-    CREATION DE La FENETRE PRINCIPALE
-
-    - Idée de Raphaël récupérée d'anciens travaux Tkinter complétés par la documentation de CustomTkinter 
-    '''
-    # Initialisation
-    fenetrePrincipale = interface.CTk() # fenetre de tkinter
-    fenetrePrincipale.title('LifeScore  |  Menu principal')
-    icone = tkinter.PhotoImage(file = nom_du_repertoire+'\systeme\icones\\logo.png') # Icone provisoire
-    fenetrePrincipale.iconphoto(False, icone)
-    fenetrePrincipale.minsize(width=1080  , height=848) # Taille minimum de la fenetre
-    fenetrePrincipale.state('zoomed')
-    
-    
-    
-    credits_texte = ("                        Réalisé par :\n\n" 
-    +"- Nathan B    : Gestion des données & calculs\n" 
-    +"- Raphaël F   : Interface graphique          \n"
-    +"- Thor N        : Calcul des coefficients & API\n"
-    +"- Frédéric M  : Recherches pour la base")
-    
-    # Création des widgets
-    btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
-    msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
-    logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
-    btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
-    btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
-                                      text= "Quitter", font=('Arial Black',30))
-    credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
-                                 font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
-    btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                   command=lambda: info(btn_info), text="Info" ,font=('Arial Black',30)) # Ouvre la page d'instructions
-    btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                        command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
+# Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
+style = lire_option('APPARENCE')
+interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
+interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 
 
-    # Placement des widgets
-    btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-    btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # Il devra aussi rester pendant toute l'exécution
-    msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
-    credits.place(relx=0.5,rely=0.9, anchor = S)
-    btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
-    btn_info.place(relx=0.9, rely=0.9 ,anchor = SE) # SE = SouthEast (en bas à droite)
 
-    fenetrePrincipale.mainloop()
+'''
+CREATION DE La FENETRE PRINCIPALE
+
+- Idée de Raphaël récupérée d'anciens travaux Tkinter complétés par la documentation de CustomTkinter 
+'''
+# Initialisation
+fenetrePrincipale = interface.CTk() # fenetre de tkinter
+icone = PhotoImage(file = nom_du_repertoire+'\systeme\icones\logo.png') # Icone provisoire (on doit la créer après la création de la fenêtre)
+
+fenetrePrincipale.title('LifeScore  |  Menu principal')
+fenetrePrincipale.iconphoto(False, icone)
+fenetrePrincipale.minsize(width=1080  , height=848) # Taille minimum de la fenetre
+fenetrePrincipale.state('zoomed')
+
+
+
+credits_texte = ("                        Réalisé par :\n\n" 
++"- Nathan B    : Gestion des données & calculs\n" 
++"- Raphaël F   : Interface graphique          \n"
++"- Thor N        : Calcul des coefficients & API\n"
++"- Frédéric M  : Recherches pour la base")
+
+# Création des widgets
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
+msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
+logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
+btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
+btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
+                                    text= "Quitter", font=('Arial Black',30))
+credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
+                                font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
+btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
+                                command=lambda: info(btn_info), text="Info" ,font=('Arial Black',30)) # Ouvre la page d'instructions
+btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
+                                    command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
+
+
+# Placement des widgets
+btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # Il devra aussi rester pendant toute l'exécution
+msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
+btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
+btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
+credits.place(relx=0.5,rely=0.9, anchor = S)
+btn_info.place(relx=0.9, rely=0.9 ,anchor = SE) # SE = SouthEast (en bas à droite)
+
+fenetrePrincipale.mainloop()
