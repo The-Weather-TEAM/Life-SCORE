@@ -76,7 +76,7 @@
                                                                           "colonne_ville" : "code_commune",
                                                                           "colonne_donnee" : ["service"],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "par_habitant",
+                                                                          "type" : "compter_par_population",
                                                                           "moyenne" : 0.00005585032,
                                                                           "max" : 0.00006060606,
                                                                           "categorie": "securite"
@@ -128,7 +128,7 @@
     ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee",
-                                                                          "colonne_donnee" : ["appellation_courante"],
+                                                                          "colonne_donnee" : ["insee"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00066666666,
@@ -185,15 +185,15 @@
                                                                           "colonne_donnee" : ["classe_potentiel"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "simple_affine",
-                                                                          "moyenne" : 2,
-                                                                          "max" : -0.5,
+                                                                          "moyenne" : 3,
+                                                                          "max" : 1,
                                                                           "categorie": "securite"
                                                                 
 
     }],
     
     "juridictions_competentes":
-    ["6392017edf7251532fda4bab","168c8b83-a542-4815-86c1-f2eafa0c58b4", { "insee" : 1,
+    ["6392017edf7251532fda4bab","168c8b83-a542-4815-86c1-f2eafa0c58b4", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "Commune",
                                                                           "colonne_donnee" : ["Tribunal_judiciaire_compétent"],
@@ -229,7 +229,7 @@
     }],
     
     "dose_rayonnements_telluriques":
-    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
+    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee",
                                                                           "colonne_donnee" : ["dose_rayonnements_telluriques"],

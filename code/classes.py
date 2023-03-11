@@ -221,7 +221,8 @@ class Donnees:
         
         # On trouve la rangée qui valide le code insee
         rangee = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
-        
+            
+            
         try:
                 resultat = []
                 for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
@@ -231,8 +232,7 @@ class Donnees:
         # Au cas où il n'y a pas de données
         except IndexError : #Si pas de données
             
-            #! A MODIFIER PAR 0 une fois le code terminé
-            return None
+            return 0
         
         
             
@@ -268,7 +268,16 @@ class Donnees:
             rep = len(df)
             
             
-            # On récupère les habitants si c'ets pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
+            # Extention pour les CSV de type oui_non
+            if infos_csv[csv][2]['type'] == 'oui_non':
+                if rep != 0 :
+                    return 100
+                else:
+                    return 0
+            
+            
+            
+            # On récupère les habitants si c'est pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
             if self.habitants is None :
                 self.habitant = int(self.recuperation_donnees('population')[0])
             
@@ -288,7 +297,7 @@ class Donnees:
             return calculer_fonction_affine(a, b, note)
             
         except : #Si pas de données
-            return None
+            return 0
 
 
 
@@ -313,7 +322,7 @@ class Donnees:
             if nombre is None :
                 nombre = 0
         except :
-            return None
+            return 0
         
         # On divise par le nombre d'habitants et on utilise la fonction affine
         note = nombre / self.habitant
@@ -347,7 +356,7 @@ class Donnees:
             return calculer_fonction_affine(a, b, nombre)
         
         except :
-            return None
+            return 0
 
 
 
@@ -369,11 +378,14 @@ class Donnees:
         elif type_recuperation  == 'par_population' :
             return Donnees.recup_donnees_par_population(self, csv, liste_csv)
         
-        elif type_recuperation == 'compter_par_population' :
+        elif type_recuperation == 'compter_par_population' or type_recuperation == 'oui_non':
             return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
         
         elif type_recuperation == 'simple_affine' :
             return Donnees.recup_donnees_simple_affine(self, csv, liste_csv)
+        
+        else :
+            print("Fonction pas encore implémentée")
         
         
 
