@@ -236,11 +236,13 @@ def plus(b1,b2,arg):
     global msg_principal
 
     
-    n += 1
+    
     if not est_termine(b1,b2):
         dico_Reponses[list_Questions[n][1]] = arg
+        n += 1 # ! IL FAUT TROUVER LE BON PLACEMENT POUR N !
         msg_principal.configure(text = list_Questions[n][0])
-        # print(n, dico_Reponses, list_Questions[n][1], arg) # print pour tester bug dico
+        print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
+
 
 def est_termine(btn_1,btn_2):
     global msg_principal
@@ -255,6 +257,7 @@ def est_termine(btn_1,btn_2):
         btn_2.destroy()
         btn_ok.place(relx=0.5,rely=0.5,anchor =CENTER)
         msg_principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
+        btn_ok.configure(text="Lancer la recherche")
         return True
 
 
@@ -310,7 +313,7 @@ def w_qcm(win,option = None): # w pour window
     global btn_ok
     global list_Questions
     global n
-    n = len(list_Questions)
+    n = len(list_Questions)-1
     efface_fenetre(win) # efface tout ce qui était déja présennt pour rajouter ce qui nous intéresse
     
     # Création des widgets :
@@ -331,6 +334,7 @@ def w_qcm(win,option = None): # w pour window
 
     if option == None :
         msg_principal.configure(text = "Bienvenue !  Nous allons commencer par une étude de vos préférences.")
+        btn_ok.configure(text = "Lancer Le Questionnaire")
         n = 0
 
     win.mainloop() # pour fermer la fenetre
