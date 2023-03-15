@@ -240,7 +240,7 @@ def plus(b1,b2,arg):
     if not est_termine(b1,b2):
         dico_Reponses[list_Questions[n][1]] = arg
         msg_principal.configure(text = list_Questions[n][0])
-
+        # print(n, dico_Reponses, list_Questions[n][1], arg) # print pour tester bug dico
 
 def est_termine(btn_1,btn_2):
     global msg_principal
