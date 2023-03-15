@@ -108,7 +108,8 @@ def is_options() :
     if not os.path.isfile(path_options) : # on verifie si cette fichie existe pas
         dic_def = {'APPARENCE': 'System',
                    'FREQ_MAJ': 0,
-                   'DERNIERE_MAJ': 0}
+                   'DERNIERE_MAJ': 0,
+                   "REPONSE_QCM": {}}
         open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
 
 

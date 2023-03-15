@@ -126,39 +126,6 @@ dico_Reponses = {} # Traité dans coefficients.py
 FONCTIONS
 '''
 
-def creation_fichiers(arg = None):
-    '''
-    fonction qui crée, complète ou vérifie le contenu du fichier csv_dico.csv
-
-    - La création si le fichier n'existe pas vient des documentations python,
-    la modification du csv vient de la documentation du module csv, le reste de Raphaël
-    '''
-    if arg == None: #On crée ou vérifie le fichier
-        # Création du fichier s'il n'existe pas :
-        if not os.path.isfile(nom_du_repertoire+'/donnees/csv/csv_dico.csv') : 
-            file = open(nom_du_repertoire+'/donnees/csv/csv_dico.csv','w')
-            ecriture = csv.writer(file)
-            ecriture.writerow(['CLE','VALEUR'])
-            file.close()
-            return False # Le fichier n'existait pas, on peut lancer le questionnaire
-        else:
-            # Si le fichier existe
-            try :
-                if len(pandas.read_csv(nom_du_repertoire+'/donnees/csv/csv_dico.csv')) +1 == len(list_Questions):
-                    return True # Le fichier est donc complet, on peut passer à la suite sans refaire le questionnaire
-                else:
-                    # Si on a pas un fichier complet
-                    return False # Le fichier n'était donc pas complet, on peut lancer le questionnaire
-            except pandas.errors.EmptyDataError:
-                return False # Le fichier nest vide, on peut lancer le questionnaire
-        
-    tab_Reponses = [[tpl[0],tpl[1]] for tpl in dico_Reponses.items()] # Valeurs du dico (tpl pour tuple)
-    if not len(pandas.read_csv(nom_du_repertoire+'/donnees/csv/csv_dico.csv')) + 1 == len(list_Questions): # Si les données ne sont pas déjà présentes
-        with open(nom_du_repertoire+'/donnees/csv/csv_dico.csv','w', encoding='UTF8', newline='') as f: # Rajoute toutes les données
-            ecriture = csv.writer(f)
-            ecriture.writerow(['CLE','VALEUR'])
-            ecriture.writerows(tab_Reponses)
-
 
 def telechargement(bouton,fenetre):
     '''
@@ -194,9 +161,9 @@ def telechargement(bouton,fenetre):
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
-        valeur_bol = creation_fichiers()
+        valeur_bol = len(lire_option("REPONSE_QCM")) == len(list_Questions)
         retour_pages(windowDownload,bouton)
-        if valeur_bol == True: # Si les données du questionnaires ont déja été remplies
+        if valeur_bol: # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
         else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
             w_qcm(fenetre)
@@ -271,7 +238,7 @@ def plus(b1,b2,arg):
     
     n += 1
     if not est_termine(b1,b2):
-        dico_Reponses[list_Questions[n-1][1]] = arg
+        dico_Reponses[list_Questions[n][1]] = arg
         msg_principal.configure(text = list_Questions[n][0])
 
 
@@ -331,7 +298,7 @@ FONCTIONS PRICIPALES
 def w_qcm(win,option = None): # w pour window
     """
     Affiche la premiere page :
-        - Si le fichier csv_dico.csv est incomplet ou non existant, lance le Qcm
+        - Si le dico REPONSE_QCM dans ./donnees/options.txt est incomplet ou vide, lance le Qcm
         - Sinon (les données sont présentes), propose de passer à la suite (fin du Qcm)
 
     - L'idée du Questionnaire nous est venu après une discussion entre les membres et le professeur sur un moyen de rendre 
@@ -518,15 +485,13 @@ def date_derniere_verification() -> str:
 
 def supprimer_donnees_utilisateur():
     '''
-    Suprime le fichier csv_dico.csv dans /donnees/csv
+    Efface les choix de qcm dans le fichier ./donnees/options.txt
     (Si l'utilisateur souhaite refaire le questionnaire)
 
     - Idee de Thor
     '''
-    repertoire_cible = nom_du_repertoire + "/donnees/csv/" # nom_du_repertoire créé au début du code
-    if "csv_dico.csv" in os.listdir(repertoire_cible): # Si le fichier existe
-        os.remove(repertoire_cible + "csv_dico.csv") # On le supprime
-        sys.exit() # Ferme le programme pour éviter de potentielles erreurs
+    changer_option("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
+    sys.exit() # Ferme le programme pour éviter de potentielles erreurs
 
 
 def change_apparence_page(choix):
@@ -555,7 +520,7 @@ def w_question(fenetre):
 
     - Léger calque sur w_qcm()
     '''
-    creation_fichiers("Rajout des lignes") # Rajoute les lignes au dico csv dès qu'on quitte la page de QCM
+    changer_option("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
     fenetre.iconphoto(False, icone)
 
