@@ -1,1 +1,1 @@
-{'APPARENCE': 'Light', 'FREQ_MAJ': 0, 'DERNIERE_MAJ': 1678909110.6131947, 'REPONSE_QCM': {'Activite': 1, 'Age': 1, 'Scolarite': 1, 'Enfants': 1, 'Culture': 1, 'Citadin': 1, 'Travail': 0, 'Cherche_Emploi': 0}}
+{'APPARENCE': 'Light', 'FREQ_MAJ': 0, 'DERNIERE_MAJ': 1678976206.7375412, 'REPONSE_QCM': {'Cherche_Emploi': 1}}
