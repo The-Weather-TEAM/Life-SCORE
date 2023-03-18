@@ -118,6 +118,8 @@ def changer_option(option: str, valeur: any,msg=None):
     """Modifie la valeur d'une option donnée dans ./donnees/options.txt
     - Idée et Implémentation par Thor
     """
+    assert type(option) == str, "Le nom de l'option doit etre de type string"
+
     is_options()
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
@@ -133,6 +135,7 @@ def lire_option(option: str):
     """Renvoie la valeur de l'option donnée dans ./donnees/options.txt
     - Idée et Implémentation par Thor
     """
+    assert type(option) == str, "L'argument entré doit etre un string"
     is_options()
     path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
 
@@ -141,13 +144,13 @@ def lire_option(option: str):
     
 # Renvoie uniquement les nombres
 def est_nombre(num: str) -> bool:
-    """Verifie si l'entrée est un nombre (plus précisément un float)
+    """Verifie si l'entrée est un nombre
     - Code de Thor
     """
+    assert type(num) == str, "L'argument entré doit etre un string"
 
-    #assert num == str, "Seul un nombre est accepté comme réponse" #Je le commente car num sera forcément un str (précisé au dessus)
     try:
-        float(num)
+        float(num) # on utilise float() pour accepter les "." dans un nombre decimale
         return True
     except:
         return False
@@ -552,8 +555,9 @@ class Donnees:
         Applique les choix du QCM aux notes pour que les notes en question
         sont pris en compte ou pas
         
+        - idee du Group, fait par Thor.
         """
-        #! La fonction n'est pas du tout dans sont etat terminé
+        assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
 
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
             #! Besoin d'aide pour choisir quoi va avec quoi
@@ -561,21 +565,19 @@ class Donnees:
             "Age": [],
             "Scolarite": ["sport"],
             "Enfants": ["ecoles", "colleges", "lycees", "sport"],
-            "Culture": ["monuments_historique"],
+            "Culture": ["monuments_historiques"],
             "Citadin": [],
             "Travail": [],
             "Cherche_Emploi": []
         }
 
-        for qcm_coefs in qcm_to_criteres.keys(): # pour chaque choix de question
-            
-            if not qcm_reponses[qcm_coefs]: # si la reponse est 0 (ou non)
+        for reponse, criteres in qcm_to_criteres.items(): # pour chaque reponse du qcm
+            if not qcm_reponses[reponse]: # si c'est 0 (donc si c'est non)
 
-                for critere in qcm_to_criteres[qcm_coefs]: # pour chaque critere en relation avec la question
-                    critere_note = notes.get(critere)
-                    if critere_note: # on verifie que la note de ce critere existe
-                        del notes[critere] # on suprimme cette note du dict car elle n'a plus d'importance
-        
+                for critere in criteres: # pour chaque critere impacté par cette reponse
+                    if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
+                        del notes[critere] # on la suprimme pour enlever son impact sur la note du vile
+
         return notes # renvoi nouveau dictionaire de notes
             
 
