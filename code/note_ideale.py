@@ -1,5 +1,5 @@
 '''
-                      [CALCUL_COEFS.PY]
+                      [NOTE_IDEALE.PY]
                          
              Cacul de l'importance des notations 
               en fonction des résultats du QCM
@@ -8,9 +8,9 @@
 
 
 
-def calculCoefficients(valeursIdeales :dict, valeursSaisies: dict) -> dict:
+def calcul_note_ideale(valeursIdeales :dict, valeursSaisies: dict) -> dict:
     '''
-    Calcule coefficients de tout les differents valeurs pour ensuite en deduire des notes
+    Calcule les notes de tout les differents valeurs par rapport a leur valeur ideal ou preferable
 
     La structure du dictionaire `valeursIdeales` doit etre: `{critere: (valeurMinimal, valeursIdeal, valeurMaximal)}`
 
@@ -53,7 +53,7 @@ def calculCoefficients(valeursIdeales :dict, valeursSaisies: dict) -> dict:
             noteSurCent = 0
 
 
-        listDeNotes[critere] = round(noteSurCent, 4) # ajoute le note au dictionaire de notes des criteres
+        listDeNotes[critere] = round(noteSurCent*100, 4) # ajoute le note au dictionaire de notes des criteres (et les multiplie par 100 pour un pourcentage)
 
     
 
@@ -83,7 +83,7 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
         "vent": (0, 7, 17.5) # en m/s | (0, table 1 pieton, moyenne table 2) du source: https://cppwind.com/outdoor-comfort-criteria/
     }
     
-    notes = calculCoefficients(valeursIdeales, dicoMeteoVille)
+    notes = calcul_note_ideale(valeursIdeales, dicoMeteoVille)
     note_moy = sum(notes.values())/len(notes.values())
     print(notes)
     print(note_moy)
