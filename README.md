@@ -493,3 +493,6 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Centralisation des paramètres sur un fichier
 
 >Page des paramètres interactive (les données marquées sont celles de l'utilisateur)
+
+22 Mars 2023:
+>Ajout des notes de météo et de qualité d'air d'un ville.
