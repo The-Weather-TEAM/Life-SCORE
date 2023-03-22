@@ -57,7 +57,7 @@ OUVERTURE DE LA BASE DE DONNEES
 '''
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
-with open(nom_du_repertoire+"\systeme\\base_de_donnees.json", "r") as fichier_json :
+with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r") as fichier_json :
     infos_csv = json.load(fichier_json)
 
 
