@@ -719,7 +719,10 @@ def taille_police(chaine):
     idée : Raphaël avec les cours de Mathématiques
     '''
     longueur = len(chaine)
-    taille = -1.5*longueur + 70 # a modifier peut etre faire une fonction inverse ?
+    if longueur <= 4:
+        return 60
+    else:
+        taille = 5 * (-math.log(longueur-4)+10)
     return taille
 
 
