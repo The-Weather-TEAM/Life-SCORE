@@ -107,7 +107,7 @@ def is_options() :
     - Idée + Implémentation par Nathan
     """
     path_options = os.path.join(os.path.dirname(__file__),"donnees/options.txt") # localise le fichier cible
-    if not os.path.isfile(path_options) : # on verifie si cette fichie existe pas
+    if not os.path.isfile(path_options) : # on verifie si ce fichier n'existe pas
         dic_def = {'APPARENCE': 'System',
                    'FREQ_MAJ': 0,
                    'DERNIERE_MAJ': 0,
