@@ -494,5 +494,13 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 >Page des paramètres interactive (les données marquées sont celles de l'utilisateur)
 
+
+
+
 22 Mars 2023:
 >Ajout des notes de météo et de qualité d'air d'un ville.
+
+
+
+23 Mars 2023:
+>Fix d'un bug qui ne mettait pas les bonnes questions avec des problèmes d'indices
