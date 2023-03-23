@@ -650,9 +650,10 @@ class Donnees:
             "Cherche_Emploi": []
         }
 
-        for reponse, criteres in qcm_to_criteres.items(): # pour chaque reponse du qcm
-            if not qcm_reponses[reponse]: # si c'est 0 (donc si c'est non)
-
+        for reponse, valeur in qcm_reponses.items(): # pour chaque reponse du qcm
+            if not valeur: # si c'est 0 (donc si c'est non)
+                criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
+                
                 for critere in criteres: # pour chaque critere impacté par cette reponse
                     if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
                         del notes[critere] # on la suprimme pour enlever son impact sur la note du vile
@@ -690,9 +691,9 @@ class Donnees:
         """
         
         if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
-            notes_meteo = self.notes_meteo_ville(self.ville)
-            self.notes_finales.update(notes_meteo)
-            self.liste_notes += list(notes_meteo.values())
+            notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo
+            self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
+            self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes (# ?pq on utilise pas just le dico?)
 
         # change quels notes sont utile dependant des choix de QCM
         self.notes_finales = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
