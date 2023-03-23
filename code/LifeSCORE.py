@@ -716,10 +716,13 @@ def w_score(ville,win):
 def taille_police(chaine):
     '''
     Fonction qui retourne une taille de police adéquate en fonction du nombre de caractères et d'une fonction f(x) = -mx+p
-    idée : Raphaël avec les cours de Mathématiques
+    idée : Raphaël avec les cours de Mathématiques et plusieurs tests sur une calculatrice graphique
     '''
     longueur = len(chaine)
-    taille = -1.5*longueur + 70 # a modifier peut etre faire une fonction inverse ?
+    if longueur <= 4:
+        return 60
+    else:
+        taille = 5 * (-math.log(longueur-4)+10)
     return taille
 
 
