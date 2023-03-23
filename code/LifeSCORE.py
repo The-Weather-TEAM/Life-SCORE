@@ -313,7 +313,7 @@ def w_qcm(win,option = None): # w pour window
     global btn_ok
     global list_Questions
     global n
-    n = len(list_Questions)-1
+    n = len(list_Questions)-1 #? Pourquoi on met -1 ?? - Nathan
     efface_fenetre(win) # efface tout ce qui était déja présennt pour rajouter ce qui nous intéresse
     
     # Création des widgets :
