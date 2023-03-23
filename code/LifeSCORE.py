@@ -161,9 +161,9 @@ def telechargement(bouton,fenetre):
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
-        valeur_bol = len(lire_option("REPONSE_QCM")) == len(list_Questions)
+        print(len(lire_option("REPONSE_QCM")),len(list_Questions))
         retour_pages(windowDownload,bouton)
-        if valeur_bol: # Si les données du questionnaires ont déja été remplies
+        if len(lire_option("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
         else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
             w_qcm(fenetre)
@@ -206,9 +206,8 @@ def avancer(fenetre):
 
     - Idée d'utilisation des variables globales n et du message principal par Raphaël
     """
-    if n < len(list_Questions):
+    if n != len(list_Questions):
         btn_ok.place_forget() # Le cache le temps du lancement de cette fonction
-        
         # Création des boutons
         btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,0), text="Non",font=('Arial Black',30))
         btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,1), text="Oui",font=('Arial Black',30))
@@ -216,8 +215,7 @@ def avancer(fenetre):
         # Placements et Modifications
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
         btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
-        msg_principal.configure(text =f'{list_Questions[n][0]}') # Affiche la question suivante
-
+        msg_principal.configure(text =f'{list_Questions[n][0]}') # Affiche la premiere question
     else:
         efface_fenetre(fenetre,"Efface_reste")    
         w_question(fenetre) # Ouvre la seconde page : Fin de la première
@@ -237,11 +235,12 @@ def plus(b1,b2,arg):
 
     
     
+    dico_Reponses[list_Questions[n][1]] = arg
+    n +=1
     if not est_termine(b1,b2):
-        dico_Reponses[list_Questions[n][1]] = arg
-        n += 1 # ! IL FAUT TROUVER LE BON PLACEMENT POUR N !
         msg_principal.configure(text = list_Questions[n][0])
-        print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
+        
+    print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
 
 
 def est_termine(btn_1,btn_2):
@@ -257,6 +256,7 @@ def est_termine(btn_1,btn_2):
         btn_2.destroy()
         btn_ok.place(relx=0.5,rely=0.5,anchor =CENTER)
         msg_principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
+        changer_option("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
         btn_ok.configure(text="Lancer la recherche")
         return True
 
@@ -313,8 +313,9 @@ def w_qcm(win,option = None): # w pour window
     global btn_ok
     global list_Questions
     global n
-    n = len(list_Questions)-1 #? Pourquoi on met -1 ?? - Nathan
-    efface_fenetre(win) # efface tout ce qui était déja présennt pour rajouter ce qui nous intéresse
+    n = len(list_Questions) 
+    
+    efface_fenetre(win) # efface tout ce qui était déja présent pour rajouter ce qui nous intéresse
     
     # Création des widgets :
 
@@ -524,7 +525,6 @@ def w_question(fenetre):
 
     - Léger calque sur w_qcm()
     '''
-    changer_option("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
     fenetre.iconphoto(False, icone)
 
