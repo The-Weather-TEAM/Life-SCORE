@@ -495,6 +495,8 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 >Page des paramètres interactive (les données marquées sont celles de l'utilisateur)
 
 
+Petite pause pour se concentrer sur nos épreuves de spécialités
+-------------
 
 
 22 Mars 2023:
@@ -504,3 +506,14 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 23 Mars 2023:
 >Fix d'un bug qui ne mettait pas les bonnes questions avec des problèmes d'indices
+
+
+
+28 Mars 2023:
+>Implémentation quasi complète (il manque plus que els résultats de l'API) des avantages et inconvénients
+
+>Repositionnements, ajustement des polices
+
+>Résolution d'un problème de lecture de caractères spéciaux (accents)
+
+<sub>Je suis très confiant quant à l'avancée du projet, on pourrait dire que l'on est entré dans la phase finale des retouches pour avoir le meilleur code possible :)</sub>
