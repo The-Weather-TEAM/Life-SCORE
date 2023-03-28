@@ -836,7 +836,6 @@ def avantages_inconvenients(dic):
         maxi = 50
         cle_maxi = "Valeur initiale"
         for cle in dic.keys():
-            print(cle,dic[cle])
             if dic[cle] > maxi:
                 maxi = dic[cle]
                 cle_maxi = cle
