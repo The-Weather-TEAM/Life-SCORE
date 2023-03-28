@@ -485,7 +485,7 @@ def date_derniere_verification() -> str:
     - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
     derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction provient de classes.py
-    return strftime("%d/%m/%Y à %Hh%M", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
+    return strftime("%d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
 
 
 def supprimer_donnees_utilisateur():

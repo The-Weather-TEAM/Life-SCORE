@@ -169,6 +169,7 @@ Idée et réalisation de Nathan
 '''
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
    
+    print(x)
     m = (max - moyenne) / 50                    # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
    
@@ -351,17 +352,17 @@ class Donnees:
     '''
     def recup_donnees_simple_affine(self, csv, liste_csv) :
     
-        try :
+        #try :
             nombre = Donnees.recup_donnees_simple(self, csv)
             print(" - Donnée :", nombre)
             a = liste_csv[csv][2]['moyenne']
             b = liste_csv[csv][2]['max']
             
             nombre = int(((str(nombre[0])).split(','))[0])
-    
+            print('test', nombre)
             return calculer_fonction_affine(a, b, nombre)
         
-        except :
+        #except :
             return 0
 
 
