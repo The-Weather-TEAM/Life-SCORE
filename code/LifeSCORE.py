@@ -705,14 +705,14 @@ def w_score(ville,win):
         score = str(score)
         
         # Mise en place du reste du texte, pour éviter une surcharge du nombre d'elements à rafraichir
-        msg_bonus = interface.CTkLabel(win,text=plus, width = 1000, font =('Bold',30), justify=LEFT)
-        msg_malus = interface.CTkLabel(win,text=moins, width = 1000, font =('Bold',30), justify=LEFT)
+        msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =('Bold',25), justify=LEFT)
+        msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =('Bold',25), justify=LEFT)
         msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=('Arial Black', 80), justify=CENTER) # On initialise
 
         # Placements
         msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)# Nord Est
-        msg_bonus.place(relx = 0.1, rely = 0.45,anchor = CENTER)
-        msg_malus.place(relx=0.7,rely=0.45,anchor = CENTER)
+        msg_bonus.place(relx = 0.15, rely = 0.45,anchor = CENTER)
+        msg_malus.place(relx=0.85,rely=0.45,anchor = CENTER)
         win.update()
         
         # Pour chaque entier naturel jusqu'à notre note
