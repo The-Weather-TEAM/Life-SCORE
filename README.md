@@ -4,7 +4,7 @@ Life score est une application pensée et conçue par cinq étudiants du lycée 
 Réalisé par :
 - Frédéric M.
 - Nathan B.
-- Raphël F.
+- Raphaaël F.
 - Thor N.
 
 
