@@ -625,10 +625,11 @@ def w_score(ville,win):
     btn_quitter.place(relx=0.9,rely=0.9,anchor = SE)
 
     # Données PROVISOIRES !!!
-    dico = {'Atout 1':9,'Atout 2':10,'Atout 3':5,'Atout 4':7,'Inconvéniant 1':-2,'Atout 5':4,'Inconvéniant 2':-1,'Inconvéniant 3':-2,'Inconvéniant 4':-1,'Inconvéniant 5':-1} # Exemple
-    score = Donnees_ville.note_finale() # Provisoire
-    bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
 
+    score = Donnees_ville.note_finale() # Provisoire
+    dico = Donnees_ville.notes_finales # Un dictionnaire
+    bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
+    print(dico)
 
     # Transformation des données en texte
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
@@ -671,8 +672,8 @@ def w_score(ville,win):
 
         # Placements
         msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)# Nord Est
-        #msg_bonus.place(relx = 0.15, rely = 0.7,anchor = CENTER)
-        #msg_malus.place(relx=0.8,rely=0.7,anchor = CENTER)
+        msg_bonus.place(relx = 0.1, rely = 0.45,anchor = CENTER)
+        msg_malus.place(relx=0.7,rely=0.45,anchor = CENTER)
         win.update()
         
         # Pour chaque entier naturel jusqu'à notre note
@@ -793,7 +794,7 @@ def avantages_inconvenients(dic):
     # Avantages
     list_bonus= []
     for i in range(5):
-        maxi = 0
+        maxi = 50
         cle_maxi = "Valeur initiale"
         for cle in dic.keys():
             if dic[cle] > maxi:
@@ -806,7 +807,7 @@ def avantages_inconvenients(dic):
     list_malus= []
     cle_mini = "Valeur initiale"
     for i in range(5):
-        mini = 0 # REQUIERT QUE LES MALUS SOIENT EN NEGATIF !!!
+        mini = 50 # REQUIERT QUE LES MALUS SOIENT EN NEGATIF !!!
         for cle in dic.keys():
             if dic[cle] < mini:
                 mini = dic[cle]
@@ -825,10 +826,10 @@ def plus_et_moins(pl,mal):
     '''
     plus, moins = "Les Avantages : ", "Les Inconvénients :" # texte a retourner
     for val_plus in pl:
-        plus += f"\n - {val_plus} "
+        plus = plus + "\n - " + val_plus
     for val_moins in mal:
-        moins += f"\n - {val_moins} "
-
+        moins = moins + "\n - " + val_moins
+    print(plus,'\n',moins)
     return plus,moins
 
 
