@@ -167,6 +167,17 @@ FONCTIONS
 '''
 
 
+#! Nathan : c'est une fonction que j'ai utilisé l'année dernière pour reload un programme, ça peut être simpa pour l'installation de modules / rede de l'application
+'''
+def restart():      
+    os.execl(sys.executable,                                     # Execute l'executable python
+             os.path.abspath(__file__),                          # Le fichier actuel
+             *sys.argv)                                          # Avec les arguments actuels
+
+'''
+
+
+
 def telechargement(bouton,fenetre):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
