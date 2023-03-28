@@ -1,4 +1,44 @@
 '''
+
+
+# à mettre si jamais on a pas déjà import tout ça
+
+import os
+import json # Pour la lecture des données csv
+
+
+
+# OUVERTURE DE LA BASE DE DONNEES, à mettre avant d'utiliser la fonction pour la variable infos_csv
+nom_du_repertoire = os.path.dirname(__file__)
+with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r") as fichier_json :
+    infos_csv = json.load(fichier_json)
+    
+
+# Fonction qui permet de récupérer la description du csv
+def texte_csv(nom_du_csv) :
+    return infos_csv[nom_du_csv][2]['nom']
+
+
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
                       [LIFESCORE.PY]
                  CODE PRINCIPAL DE LIFE-SCORE
 Syntaxe de nos variables : 

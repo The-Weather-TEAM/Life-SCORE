@@ -7,7 +7,8 @@
                                                                           "type" : "simple",
                                                                           "source" : "www.data.gouv.fr",
                                                                           "moyenne" : 1800,
-                                                                          "max": 200000
+                                                                          "max": 200000,
+                                                                          "nom": "La population"
                                                                          
                                                                 
 
@@ -21,7 +22,8 @@
                                                                           "type" : "recuperation_insee",
                                                                           "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "arrondissement" : "1ER ARRONDISSEMENT"
+                                                                          "arrondissement" : "1ER ARRONDISSEMENT",
+                                                                          "nom": "Le nom de la commune"
 
     
     }],
@@ -36,7 +38,8 @@
                                                                           "moyenne" : 0.00078740157,
                                                                           "max" : 0.0009,
                                                                           "categorie": "qualité_de_vie",
-                                                                          "diviseur":6
+                                                                          "diviseur":6,
+                                                                          "nom": "Les écoles"
                                                                 
 
     }],
@@ -50,7 +53,8 @@
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00010510826,
                                                                           "max" : 0.00014662756,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les collèges"
                                                                          
                                                                 
 
@@ -65,7 +69,8 @@
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00005076142,
                                                                           "max" : 0.00012941633,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les lycées"
                                                                 
 
     }],
@@ -77,7 +82,8 @@
                                                                           "colonne_donnee" : ["service"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
-                                                                          "categorie": "securite"
+                                                                          "categorie": "securite",
+                                                                          "nom": "Les centres de police & gendarmerie"
                                                                 
 
     }],
@@ -89,7 +95,8 @@
                                                                           "colonne_donnee" : ["nom_du_festival"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les festivals"
                                                                 
 
     }],
@@ -103,13 +110,14 @@
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00003773584,
                                                                           "max" : 0.00011764705,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les musées"
                                                                 
 
     }],
                 
     "monuments_historiques":
-    ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 1,
+    ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "insee",
                                                                           "colonne_donnee" : ["insee"],
@@ -117,7 +125,8 @@
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.00066666666,
                                                                           "max" : 0.0055,
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les monuments historiques"
                                                                 
 
     }],
@@ -131,7 +140,8 @@
                                                                           "type" : "simple_affine",
                                                                           "moyenne" : 11.7,
                                                                           "max" : 25,
-                                                                          "categorie": "prix"
+                                                                          "categorie": "prix",
+                                                                          "nom": "Le prix des maisons"
                                                                 
 
     }],
@@ -145,7 +155,8 @@
                                                                           "type" : "simple_affine",
                                                                           "moyenne" : 14.8,
                                                                           "max" : 40,
-                                                                          "categorie": "prix"
+                                                                          "categorie": "prix",
+                                                                          "nom": "Le prix des appartements"
                                                                 
 
     }],
@@ -159,7 +170,8 @@
                                                                           "type" : "simple_affine",
                                                                           "moyenne" : 3,
                                                                           "max" : 1,
-                                                                          "categorie": "securite"
+                                                                          "categorie": "securite",
+                                                                          "nom": "L'exposition nucléaire"
                                                                 
 
     }],
@@ -171,7 +183,8 @@
                                                                           "colonne_donnee" : ["lib_acv"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
-                                                                          "categorie": "qualité_de_vie"
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "La ville est iscrite dans un programme de rénovations"
                                                                 
 
     }],
@@ -183,7 +196,8 @@
                                                                           "colonne_donnee" : ["s_3_prod_d_filiere"],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "liste",
-                                                                          "categorie": "securite"
+                                                                          "categorie": "securite",
+                                                                          "nom": "La production d'énergie"
                                                                 
 
     }],
@@ -197,7 +211,8 @@
                                                                           "type" : "simple_affine",
                                                                           "categorie": "securite",
                                                                           "moyenne" : 650,
-                                                                          "maximum" : 2000
+                                                                          "maximum" : 2000,
+                                                                          "nom": "La dose d'ondes telluriques"
                                                                 
 
     }]
