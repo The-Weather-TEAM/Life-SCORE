@@ -59,8 +59,9 @@ OUVERTURE DE LA BASE DE DONNEES
 '''
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
-with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r") as fichier_json :
+with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
+    print(infos_csv) 
 
 
 
@@ -251,7 +252,7 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
     
     '''
-    def recup_donnees_compter_par_habitant(self, csv, liste_csv):
+    def recup_donnees_compter_par_habitant(self, csv, infos_csv):
         
         try:
             
@@ -299,8 +300,8 @@ class Donnees:
             print(" - Par habitant :", note)
             
             #On récupère directement la note en utilisant la fonction affine
-            a = liste_csv[csv][2]['moyenne']
-            b = liste_csv[csv][2]['max']   
+            a = infos_csv[csv][2]['moyenne']
+            b = infos_csv[csv][2]['max']   
             return calculer_fonction_affine(a, b, note)
             
         except : #Si pas de données
@@ -316,7 +317,7 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recup_donnees_par_population(self, csv, liste_csv) :
+    def recup_donnees_par_population(self, csv, infos_csv) :
         
         if self.habitants is None :
             self.habitant = int(self.recuperation_donnees('population')[0])
@@ -335,8 +336,8 @@ class Donnees:
         note = nombre / self.habitant
         print(" - Par habitant :", note)
         # On récupère directement la note
-        a = liste_csv[csv][2]['moyenne']
-        b = liste_csv[csv][2]['max']
+        a = infos_csv[csv][2]['moyenne']
+        b = infos_csv[csv][2]['max']
         
         return calculer_fonction_affine(a, b, note)
         
@@ -350,13 +351,13 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple et recup_donnees_population
     
     '''
-    def recup_donnees_simple_affine(self, csv, liste_csv) :
+    def recup_donnees_simple_affine(self, csv, infos_csv) :
     
         #try :
             nombre = Donnees.recup_donnees_simple(self, csv)
             print(" - Donnée :", nombre)
-            a = liste_csv[csv][2]['moyenne']
-            b = liste_csv[csv][2]['max']
+            a = infos_csv[csv][2]['moyenne']
+            b = infos_csv[csv][2]['max']
             
             nombre = int(((str(nombre[0])).split(','))[0])
             print('test', nombre)
@@ -376,20 +377,20 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recuperation_donnees(self, csv, liste_csv=None) :
+    def recuperation_donnees(self, csv, infos_csv=None) :
         type_recuperation = infos_csv[csv][2]['type']
         
         if type_recuperation == 'simple' :
             return Donnees.recup_donnees_simple(self, csv)
         
         elif type_recuperation  == 'par_population' :
-            return Donnees.recup_donnees_par_population(self, csv, liste_csv)
+            return Donnees.recup_donnees_par_population(self, csv, infos_csv)
         
         elif type_recuperation == 'compter_par_population' or type_recuperation == 'oui_non':
-            return Donnees.recup_donnees_compter_par_habitant(self, csv, liste_csv)
+            return Donnees.recup_donnees_compter_par_habitant(self, csv, infos_csv)
         
         elif type_recuperation == 'simple_affine' :
-            return Donnees.recup_donnees_simple_affine(self, csv, liste_csv)
+            return Donnees.recup_donnees_simple_affine(self, csv, infos_csv)
         
         else :
             print("Fonction pas encore implémentée")
@@ -677,16 +678,13 @@ class Donnees:
         Ici on  récupère chaque données pour chaque CSV, si elle sont utilisables on rajoute ça dans la note finale
         Pensé et réalisé par Nathan, à l'aide des fonctions au dessus
         '''
-        # On ouvre le fichier json de la base de données
-        with open(os.path.dirname(__file__)+"/systeme/base_de_donnees.json", "r") as fichier_json :
-            liste_csv = json.load(fichier_json)
         
         # Pour chaque CSV
-        for id in liste_csv :
-            self.prepa_recup_donnees(liste_csv, id) #Ancienne méthode, pas très rapide avec bcp de CSV
+        for id in infos_csv :
+            self.prepa_recup_donnees(infos_csv, id) #Ancienne méthode, pas très rapide avec bcp de CSV
             
         """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
-            a = threading.Thread(target=self.prepa_recup_donnees, args=(liste_csv, id,))
+            a = threading.Thread(target=self.prepa_recup_donnees, args=(infos_csv, id,))
             a.start()
         a.join()
         """
@@ -731,10 +729,10 @@ class Donnees:
     Fait par Raphaël et Nathan
     
     '''
-    def prepa_recup_donnees(self, liste_csv, id):
+    def prepa_recup_donnees(self, infos_csv, id):
         print ("\nLe csv", id)
-        if liste_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
-            resultat = self.recuperation_donnees(id, liste_csv)
+        if infos_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
+            resultat = self.recuperation_donnees(id, infos_csv)
                     
             print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
@@ -746,17 +744,10 @@ class Donnees:
                     elif resultat > 100 :
                         resultat = 100
                     self.liste_notes.append(resultat)
-                    self.notes_finales[id] = resultat #à remplacer par self.notes_finales[transfo_id(id)] = resultat
+                    self.notes_finales[infos_csv[id][2]['nom']] =  resultat# Le nom formel
         else :
             print("Fonction pas encore implémentée")
 
-
-    def transfo_id(id):
-        '''
-        Transforme le nom des fichiers en str propres à la lecture (la redondace est donc inévitable)
-        Fait par Raphaël
-        '''
-        if id == "action_coeurd"
 
     '''
     POUR REDONNER UN STR DE LA VILLE

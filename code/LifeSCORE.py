@@ -642,7 +642,7 @@ def ville(entree,msg,fenetre):
         #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
         #fonction_barre_chargement.run()
         fenetre.update()
-        Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
+        #Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
         efface_fenetre(fenetre,"Efface_reste") # Enlève même le bouton paramètre et les pages d'aide pour ne pas obstruer l'écran
         w_score(Donnees_ville,fenetre)
 
@@ -665,7 +665,6 @@ def w_score(ville,win):
     btn_quitter.place(relx=0.9,rely=0.9,anchor = SE)
 
     # Données PROVISOIRES !!!
-
     score = Donnees_ville.note_finale() # Provisoire
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
@@ -837,6 +836,7 @@ def avantages_inconvenients(dic):
         maxi = 50
         cle_maxi = "Valeur initiale"
         for cle in dic.keys():
+            print(cle,dic[cle])
             if dic[cle] > maxi:
                 maxi = dic[cle]
                 cle_maxi = cle

@@ -44,3 +44,7 @@ def t():
 
 a,b = t()
 print(a,b)
+
+import json
+a = json.loads('systeme/base_de_donnees.json')
+print(a)

@@ -83,7 +83,7 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
                                                                           "categorie": "securite",
-                                                                          "nom": "Les centres de police & gendarmerie"
+                                                                          "nom": "Les forces de l'ordre"
                                                                 
 
     }],
@@ -184,7 +184,7 @@
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie",
-                                                                          "nom": "La ville est iscrite dans un programme de rénovations"
+                                                                          "nom": "Les projets de rénovation"
                                                                 
 
     }],
@@ -212,7 +212,7 @@
                                                                           "categorie": "securite",
                                                                           "moyenne" : 650,
                                                                           "maximum" : 2000,
-                                                                          "nom": "La dose d'ondes telluriques"
+                                                                          "nom": "La radioactivité"
                                                                 
 
     }]
