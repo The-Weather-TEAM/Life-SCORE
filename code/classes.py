@@ -217,8 +217,10 @@ class Donnees:
         
         # On récupère les infos des données qu'on voudrait récupérer
         colonnes = [infos_csv[csv][2]['colonne_ville']]
+        #print('iuhfdiuhfiuh', colonnes)
         for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
             colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
+        #print('jjjjjjjjjjj', colonnes)
         
         # On va lire le fichier
         fichier = p.read_csv(lien_fichier,
