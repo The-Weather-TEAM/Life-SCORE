@@ -517,3 +517,7 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 >Résolution d'un problème de lecture de caractères spéciaux (accents)
 
 <sub>Je suis très confiant quant à l'avancée du projet, on pourrait dire que l'on est entré dans la phase finale des retouches pour avoir le meilleur code possible :)</sub>
+
+> Ajout de la fonction qui permet de redémarrer automatiquement l'application :
+![code](https://user-images.githubusercontent.com/104134380/228389760-aa2df1e5-ad27-453a-97bc-f4afa10079e8.png)
+
