@@ -746,12 +746,17 @@ class Donnees:
                     elif resultat > 100 :
                         resultat = 100
                     self.liste_notes.append(resultat)
-                    self.notes_finales[id] = resultat
+                    self.notes_finales[id] = resultat #à remplacer par self.notes_finales[transfo_id(id)] = resultat
         else :
             print("Fonction pas encore implémentée")
 
 
-
+    def transfo_id(id):
+        '''
+        Transforme le nom des fichiers en str propres à la lecture (la redondace est donc inévitable)
+        Fait par Raphaël
+        '''
+        if id == "action_coeurd"
 
     '''
     POUR REDONNER UN STR DE LA VILLE
