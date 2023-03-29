@@ -525,3 +525,8 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 > Ajout de la fonction qui permet de redémarrer automatiquement l'application :
 ![code](https://user-images.githubusercontent.com/104134380/228389760-aa2df1e5-ad27-453a-97bc-f4afa10079e8.png)
 
+
+
+
+29 Mars 2023:
+>On a remarqué que l'issue #101 est causée par le caractère unicode dit 'invisible' `feff`, on essaie de la réssoudre dans les plus brefs délais
