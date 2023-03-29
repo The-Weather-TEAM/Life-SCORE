@@ -59,7 +59,7 @@ OUVERTURE DE LA BASE DE DONNEES
 '''
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
-with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8-sig") as fichier_json :
+with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
     #print(infos_csv) 
 
@@ -268,7 +268,7 @@ class Donnees:
             fichier = p.read_csv(lien_fichier,
                                 delimiter=infos_csv[csv][2]['delimiteur'],
                                 usecols=colonnes,
-                                encoding='utf-8-sig',
+                                encoding='utf-8',
                                 low_memory=False)
             
             res = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
@@ -429,7 +429,7 @@ class Donnees:
                         liste_ville[i] = liste_ville[i].capitalize()
             self.ville = "-".join(liste_ville)
 
-        fichier = open(self.repertoire + '/commune_modifiee.csv',"r",encoding='utf-8-sig')
+        fichier = open(self.repertoire + '/commune_modifiee.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
@@ -441,7 +441,7 @@ class Donnees:
             self.ville = row.values[0][3]
             
             with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
-                infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8-sig',low_memory=False)
+                infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                 rangee = infos[infos['com_code'] == self.code_insee]
 
             if not rangee.empty :
@@ -470,7 +470,7 @@ class Donnees:
                 self.ville = row.values[0][3]
                 
                 with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
-                    infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8-sig',low_memory=False)
+                    infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
                     rangee = infos[infos['com_code'] == self.code_insee]
 
                 if not rangee.empty :
@@ -759,9 +759,14 @@ class Donnees:
     def __str__(self) :
         if self.ville != '' :
             return str(self.ville)
-    
-print(';' == ';')
 
 # Fin du code !
 
 
+a =b'0xe9'
+print(a)
+b = a.decode('utf-8')
+c = a.decode('utf-8-sig')
+print(a.decode('utf-16'))
+
+print(b,c)
