@@ -1,1 +1,1 @@
-{'APPARENCE': 'System', 'FREQ_MAJ': 0, 'DERNIERE_MAJ': 1680006535.7355287, 'REPONSE_QCM': {'Activite': 0, 'Age': 0, 'Scolarite': 0, 'Enfants': 0, 'Culture': 0, 'Citadin': 0, 'Travail': 1, 'Cherche_Emploi': 1}}
+{'APPARENCE': 'System', 'FREQ_MAJ': 0, 'DERNIERE_MAJ': 1680080616.06382, 'REPONSE_QCM': {'Activite': 0, 'Age': 0, 'Scolarite': 0, 'Enfants': 0, 'Culture': 0, 'Citadin': 0, 'Travail': 1, 'Cherche_Emploi': 1}}
