@@ -1,5 +1,5 @@
 # Life SCORE
-Life score est une application pensée et conçue par cinq étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à des centaines de critères, de partout en France.
+Life score est une application pensée et conçue par quatre étudiants du lycée Henri IV Béziers. Il permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à plusieurs critères, partout en France.
 
 Réalisé par :
 - Frédéric M.
@@ -12,7 +12,7 @@ Réalisé par :
 
 
 # Le projet
-Le logiciel est reparti en 2 sections : la première est le test afin de connaître au maximum les attentes de l'utilisateur. Le deuxième permet de choisir une ville et défini le résultat (avec détails) du niveau de compatibilité par rapport à la demande.
+Le logiciel est reparti en 2 sections : la première est un questionnaire afin de connaître les attentes de l'utilisateur. La seconde permet de choisir une ville et défini le résultat (avec détails) du niveau de compatibilité par rapport à la demande.
 
 
 
@@ -26,7 +26,7 @@ Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui e
 
 
 ### La personnalisation 
-Chaque utilisateur va devoir remplir un formulaire de quelques minutes. Chaque réponse impactera le coefficient de plusieurs critères, pouvant devenir nul à très important. La note sera donc en fonction de l'utilisateur qui utilise notre application !
+Chaque utilisateur va devoir remplir un formulaire de quelques minutes. Chaque réponse impactera le coefficient de plusieurs critères, pouvant aller de nul à très important. La note ne sera donc pas la même en fonction des besoins de l'utilisateur!
 
 
 ### La gestion d'erreurs
@@ -48,15 +48,15 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
 
-- LifeSCORE.py : *Code principal avec l'interface graphique et utilise tous les programmes. Réalise le QCM et affiche la note et les données.*
-- classes.py : *Répertorie la classes Donnees (calcule les données), ainsi que toutes les fonctions comme is_connected*
+- LifeSCORE.py : *Code principal avec l'interface graphique et utilise tous les programmes. Réalise le QCM et affiche la note.*
+- classes.py : *Répertorie la classe Donnees (calcule les données), ainsi que toutes les fonctions comme is_connected*
 - update.py : *Programme de téléchargement et mises à jour des données*
-- calcul_coefficients.py : *Cacul de l'importance des notations en fonction des résultats du QCM*
+- calcul_coefficients.py : *Cacule de l'importance des notations en fonction des résultats du QCM*
 
 
 Changements :
 - Ajout de l'interface de téléchargement ;
-- Nouvelle page de paramètres qui permet de modifier la couleur et l'apparence de l'application ;
+- Nouvelle page de paramètres qui permet de modifier certains détails comme l'apparence de l'application, la fréquence de recherche de mise à jour,... ;
 - Code plus organisé avec une partie facultative (donnees) et une obligatoire (systeme) ;
 - Nouvelle gestion des csv plus précise pour récupérer plus de données.
 
@@ -111,7 +111,7 @@ Changements :
 
 
 # Journal de bord
-Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
+Toutes les modifications repertoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
 
 8 Décembre 2022
 > Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
@@ -121,22 +121,22 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Première répartition du travail : 
 >-  Raphaël -> Interface graphique
 >-  Frédéric -> Traitement de données des API pour la météo et le climat
->-  Thor -> Programmation des coefficients entre le formulaire et la notation 
->-  Nathan -> Traitement de bases de données + Graphisme
+>-  Thor -> Programmation des coefficients entre le questionnaire et la notation 
+>-  Nathan -> Traitement des bases de données + Graphisme
 
 
 
 10 Décembre 2022
-> Interface : première page créée avec la fonction pour le QCM à réponse binaire (0,1 mais vue par l'utilisateur comme un adjectif/nom).
+> Interface : première page créée avec la fonction pour le questionnaire à réponses binaire (0,1 mais vue par l'utilisateur comme un adjectif/nom).
 
-> Il faut trouver les questions (je suis parti sur une base de 10 Questions ca me semble pas mal). N'hésitez pas a jeter un coup d'oeil au code fréquemment pour comprendre les ajouts et me demander s'il y a des soucis.
+> Il faut trouver les questions (je suis parti sur une base de 10 Questions cela me semble pas mal). N'hésitez pas a jeter un coup d'oeil au code fréquemment pour comprendre les ajouts et me demander s'il y a des soucis.
 
 
 
 11 Décembre 2022
 > Interface : Fin de la première page au niveau fonctionnel (on pose les questions et ensuite on envoie sur la seconde page) et création de la seconde page(vide pour l'instant).
 
-> Même chose, chercher les questions mais maintenant c'est que l'aspect esthétique de la page et ses questions à trouver (Thor si le dico ne te vas pas dis le moi).
+> Même chose, chercher les questions mais maintenant c'est que l'aspect esthétique de la page et ses questions à trouver.
 
 
 
@@ -154,7 +154,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 17 Décembre 2022
 > Creation du fichier recup_meteo_classe qui utilise le même fonctionnement que l'autre mais sous forme de classe (plus facile à appeler).
 
-> Ajout de "la ville existe ?" : Fonction qui vérifie mis dans 'fenetre.py'.
+> Ajout de "la ville existe ?" : Fonction qui vérifie mise dans 'fenetre.py'.
 
 > Il faut désormais vérifier qu'elle soit en France.
 
@@ -165,14 +165,14 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 18 Décembre 2022
 > Mise en place de la page finale.
 
-> Ajout de la liste des 5 avantages/inconvénients (5 meilleurees et pires note dans le dico).
+> Ajout de la liste des 5 avantages/inconvénients (5 meilleurees et pires notes dans le dico).
 
-> tentative de test_connection (pas ouf empeche le lancement du programme si il n'y a pas de connexion.
+> tentative de test_connection (empêche le lancement du programme si il n'y a pas de connexion).
 
 
 
 26 Décembre 2022
-> Mise en place d'une classe qui récupère toutes les données météo de la ville demandée. On récupère tout ça sous un dictionnaire.
+> Mise en place d'une classe qui récupère toutes les données météo de la ville demandée. On récupère tout ça dans un dictionnaire.
 
 > Mise à jour de la méthode pour savoir si la ville est Française. (sans passer par un autre CSV).
 
@@ -181,11 +181,11 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 31 Décembre 2022
-> Création d'un code "recup_data.py" qui sert à plusieurs choses : 
->- créer le dossier data avec tous les csv dedans
->- télécharge et installe les fichiers lors de la première utilisation
->- recherche de mise à jour tous les mois et retéléchargement des csv si nouvelle version disponible
->- avec la base de csv stockée dessus.
+> Création d'un code "recup_data.py" qui sert à : 
+>- Créer le dossier data avec tous les csv dedans
+>- Télécharger et installer les fichiers lors de la première utilisation
+>- Rechercher de mise à jour tous les mois et mettre à jour des csv si nouvelle version disponible
+> avec la base de csv stockée dessus.
 
 > J'ai renommé les fichiers notamment 'recup_meteo_classe' en 'recup_meteo', c'est plus simple et j'ai modifié les codes qui les utilisent comme ça pas de souci.
 
@@ -196,25 +196,25 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 1 Janvier 2023
 > Bonne année ! Modification de l'organisation des fichiers : toutes les classes sont dans le fichier classes.py. J'ai modifié les codes pour qu'ils marchent avec cette nouvelle organisation.
 
-> Finitions du récup_data.py : ajout d'un pourcentage, gestion du singulier/pluriel qui sera utile après pour afficher les messages sur tkinter. Ajout des csv qui n'ont pas besoin de modifications (data.gouv.fr).
+> Finitions dz rzcup_data.py : ajout d'un pourcentage, gestion du singulier/pluriel qui sera utile après pour afficher les messages sur tkinter. Ajout des csv qui n'ont pas besoin de modifications (data.gouv.fr).
 
 
 
 2 Janvier 2023
-> J'ai renommé récup_data.py en update.py, et rajouté des commentaires pour que le code soit plus compréhensible.
+> J'ai renommé recup_data.py en update.py, et rajouté des commentaires pour que le code soit plus compréhensible.
 
-> Mis a jour du system pour noter les villes. Il note maintenant par rapport au distance du valeurs desiré au lieux d'un taux calculé. Il reste encore des choses a regler (ex: contourner un erreur de division par 0 quand la valeur desiré est 0).
+> Mise a jour du sysème pour noter les villes. Il note maintenant par rapport à l'écart des valeurs desirées plutôt qu'un taux calculé. Il reste encore des choses a régler (ex: contourner un erreur de division par 0 quand la valeur desiré est 0).
 
 
 
 3 Janvier 2023
-> Correction du big de update.py : si c'est la première utilisation et qu'il y a pas accès à internet, on active une variable erreur (utilisable pour stopper un tkinter).
+> Correction du bug de update.py : si c'est la première utilisation et qu'il n'y a aucun accès à internet, on active une variable erreur (utilisable pour stopper un tkinter).
 
-> Tous les messages sont maintenant des variables pour tkinter dans update.py.
+> Tous les messages sont maintenant des variables pour tkinter dans update.py `Tk.Message()`.
 
-> Changement du nom du fichier principal fenetre.py -> TheWeatherTeam.py.
+> Changement de nom du fichier principal fenetre.py -> TheWeatherTeam.py.
 
-> amélioration du système de pages d'aides et de retour aux pages précédentes (possibilité de suppression de certaines pages en remettant à zéro.
+> Amélioration du système de pages d'aides et de retour aux pages précédentes (possibilité de suppression de certaines pages en remettant à zéro).
 
 
 
@@ -225,7 +225,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 >Désactivation temporaire des classes qui utilisent internet (OpenWeatherAPI) car on ne l'utlise pas encore et ça plante si on a pas internet.
 
->Renomage du code principal pour LifeSCORE.py.
+>Modification du nom du fichier principal en LifeSCORE.py.
 
 >Création du document requirements.txt qui permet de télécharger toutes les bibliothèques d'un coup.
 
@@ -256,13 +256,13 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 > Correction des derniers bugs dans UPDATE.PY, Rajout de la gestion si coupure d'internet en plein téléchargement (ça passe en V3) :
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/30
 > - https://github.com/The-Weather-TEAM/Life-SCORE/issues/41
-> - https://github.com/The-Weather-TEAM/Life-SCORE/issues/51 (bug que Twitter et Mozilla avait, pour vous dire)
+> - https://github.com/The-Weather-TEAM/Life-SCORE/issues/51 (bug que Twitter et Mozilla ont aussi subi)
 
 > Normalement il y a plus aucun bug dans update.py, si vous en trouvez n'hésitez pas à rajouter ça dans issues.
 
-> Correction du bug de la notation : tout remarche https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
+> Correction du bug de la notation : tout remarche ! https://github.com/The-Weather-TEAM/Life-SCORE/issues/47
 
-> Nouveau système pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur ideal. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs ideals et leurs encadrements.
+> Nouveau système pour `calcul_coefficients.py` plus précis pour determiner les notes des villes en utilisant des encadrement minimum et maximum entourant la valeur idéale. Il y a aussi l'ajout des sources ou j'ai trouvé les valeurs idéales et leurs encadrements.
 
 > Transformation des pages de Tkinter vers CustomTkinter qui permet une approche plus "graphique", corrections de quelques bugs graphiques, adaptation du nombre de pixels,...
 
@@ -277,17 +277,17 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 > Correction du bug qui ne faisait pas marcher les villes avec accents (ex : 'Béziers') en remplaçant les caractères spéciaux (é,û,à,...) par leurs lettres respectives (e,u,a,...).
 
-> Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus ducoup).
+> Suppression de la troisième colonne dans la recherche de noms vu que les accents ne sont plus pris en compte (ça doit un petit peut accélérer le processus).
 
 
 
 13 Janvier 2023 : 
-> Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le qcm).
+> Ajout d'un csv rempli et vérifié à chaque lancement de programme (pour le questionnaire).
 
 
 
 14 Janvier 2023 :
-> Réglage du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche.
+> Correction du bug des arrondissements (peut encore s'améliorer genre autoriser : "Paris 1", "Paris1" et "Paris_1" pour l'instant, seul ce dernier marche.
 
 > Messages d'erreurs plus "performants".
 
@@ -346,7 +346,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 18 Janvier 2023 : **Nouvelle version v0.5.2**
 >Corrrection du problème empêchant d'écrire "cazouls d'hérault" alors que la ville est dans le CSV avec manipulation de tous les accents et suites de caractères (d', l', lès,...) .
 
->Les 3 fenêtres principales passent sur une seule (plus d'erreurs bizzares sur les scaling et tout). C'est top : https://github.com/The-Weather-TEAM/Life-SCORE/issues/62
+>Les 3 fenêtres principales passent sur une seule (empêche certaines erreurs sur les widgets d'arriver). C'est top : https://github.com/The-Weather-TEAM/Life-SCORE/issues/62
 
 >Nouvelle animation de la note : c'est fluide et c'est beau, quoi demander de mieux : https://github.com/The-Weather-TEAM/Life-SCORE/issues/61
 
@@ -359,7 +359,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 
 21 Janvier 2023 :
->Rajout d'une interface de téléchargements.
+>Rajout d'une interface de téléchargement.
 
 >Correction du bug de nouveaux csv dans la base de données : https://github.com/The-Weather-TEAM/Life-SCORE/issues/73
 
@@ -372,7 +372,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 22 Janvier 2023 :
 >Amélioration de l'option menu qui affiche les styles, maintenant il affiche le style courant .
 
->Amélioration de la taille de police avec une fonction qui calcule la taille en fonction de la longueur de la ville (sous forme mx +p).
+>Amélioration de la taille de police avec une fonction qui calcule la taille en fonction de la longueur de la ville (sous la forme d'une fonction affine mx +p).
 
 
 
@@ -389,7 +389,7 @@ Toutes les modifications reprtoriées ici : https://github.com/The-Weather-TEAM/
 
 >Correction de bugs apparu après l'implémentation de la dernière fonction (changements de variables mal effectués).
 
->Correction du bug sur le fichier csv_dico.csv qui le réécrivait avec un csv vide (si le csv était déja rempli, il attendait un tableau de réponse qui n'est jamais venu :( Ainsi, il enlevait les données ce qui force la réutilisation du qcm au lancement suivant).
+>Correction du bug sur le fichier csv_dico.csv qui le réécrivait avec un csv vide (si le csv était déja rempli, il attendait un tableau de réponse qui n'est jamais venu :( Ainsi, il enlevait les données ce qui force la réutilisation du questionnaire au lancement suivant).
 
 
 
@@ -507,6 +507,10 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 23 Mars 2023:
 >Fix d'un bug qui ne mettait pas les bonnes questions avec des problèmes d'indices
 
+
+
+24 Mars 2023:
+>Modification de la fonction qui défini la taille de la police de la ville par une fonction contenant un logarithme néperien (plus efficace pour les grandes et petites villes)
 
 
 28 Mars 2023:
