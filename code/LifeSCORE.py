@@ -1,4 +1,16 @@
 '''
+A GARDER PROVISOIREMENT, NOTES DE COMPATIBILITEES LINUX
+
+
+installer pip sur le terminal, tkinter aussi et pil.imagetk
+(j'ai testé avec ubuntu sans avoir mis à jour python et mise à part les trois trucs tt fonctionne)
+
+apt get install python3-pip
+apt get install python3-tk
+apt get install python3-pil.imagetk
+'''
+
+'''
 
 
 # à mettre si jamais on a pas déjà import tout ça
@@ -151,7 +163,7 @@ n = 0
 list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
                 ('Avez vous moins de 30 ans ?','Age'),
                 ('Etes vous etudiant ?','Scolarite'),                
-                ('Avez vous\Vivez vous avec des enfants ?','Enfants'),
+                ('Avez vous/Vivez vous avec des enfants ?','Enfants'),
                 ('La culture a-t-elle une place importante pour vous ?','Culture'),
                 ('préférez vous la ville à la campagne ?','Citadin'),
                 ('Avez vous un travail ?','Travail'),
@@ -159,7 +171,7 @@ list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Repro
 
 dico_Reponses = {} # Traité dans coefficients.py
 
-#icone = interface.CTkImage(light_image=Image.open(nom_du_repertoire+'\systeme\icones\\logo.png'))
+#icone = interface.CTkImage(light_image=Image.open(nom_du_repertoire+'/systeme/icones//logo.png'))
 
 
 '''
@@ -471,7 +483,7 @@ def parametres(bouton):
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
                                             command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message)
                                             if est_nombre(entree_frequence_maj.get()) \
-                                            else message.configure(text = "Vous devez entrer un nombre !"), # \ permet un retour à la ligne dans le code
+                                            else message.configure(text = "Vous devez entrer un nombre !"), # / permet un retour à la ligne dans le code
                                             text="Confirmer") # changer_option() se trouve dans classes.py
     btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,
@@ -937,12 +949,12 @@ CREATION DE La FENETRE PRINCIPALE
 '''
 # Initialisation
 fenetrePrincipale = interface.CTk() # fenetre de tkinter
-icone = PhotoImage(file = nom_du_repertoire+'\systeme\icones\logo.png') # Icone provisoire (on doit la créer après la création de la fenêtre)
+icone = PhotoImage(file = nom_du_repertoire+'/systeme/icones/logo.png') # Icone provisoire (on doit la créer après la création de la fenêtre)
 
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
-fenetrePrincipale.state('zoomed')
+fenetrePrincipale.state('normal')
 
 
 

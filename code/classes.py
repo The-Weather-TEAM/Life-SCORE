@@ -213,7 +213,7 @@ class Donnees:
     def recup_donnees_simple(self, csv) :
         
         # On récupère le répertoire pour accéder au csv
-        lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
+        lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv/'+csv+'.csv'
         
         # On récupère les infos des données qu'on voudrait récupérer
         colonnes = [infos_csv[csv][2]['colonne_ville']]
@@ -258,7 +258,7 @@ class Donnees:
         try:
             
             # Ici c'est tout comme la fonction au dessus
-            lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'\csv\\'+csv+'.csv'
+            lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv//'+csv+'.csv'
             
             colonnes = [infos_csv[csv][2]['colonne_ville']]
             for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
@@ -516,8 +516,8 @@ class Donnees:
         data = p.read_csv(self.repertoire + '/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
         #data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
 
-        rangee = data[(data[colones[0]]== self.code_insee)] #/!\ data[colones][0] != data[colones[0]] /!\
-        #/!\ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!\
+        rangee = data[(data[colones[0]]== self.code_insee)] #/!/ data[colones][0] != data[colones[0]] /!/
+        #/!/ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!/
         try:
             nbr_etab = rangee.values[0][1]
         

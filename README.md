@@ -90,10 +90,16 @@ Changements :
 
 ## Configuration recommandée :
 - Windows 10 / 11
-- Python 3.11.x
+- Python 3.10 ou plus récent
 - subprocess / sys / os (Bibliothèques intégrées à Python)
 - Bibliothèques utilisés (téléchargeables avec requirements.txt) :
 >Téléchargement automatique sur l'application depuis la v0.5.2.
+
+- Disponible maintenant sur Linux en installant trois compléments :
+
+`sudo apt get install python3-pip` ; 
+`sudo apt get install python3-tk` & 
+`sudo apt get install python3-pil.imagetk`
 
 
 
@@ -530,3 +536,7 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 29 Mars 2023:
 >On a remarqué que l'issue #101 est causée par le caractère unicode dit 'invisible' `feff`, on essaie de la réssoudre dans les plus brefs délais
+
+>Modification de la gestion d'ouvertures des fichiers & répertoires pour être compatible avec linux.
+
+>L'application est maintenant disponible sur linux ! Testé sur Ubuntu  22.04.2 LTS.
