@@ -231,11 +231,11 @@ class Donnees:
         liste_provisoire = []
         for a in fichier.columns:
             print(a)
-            liste.append(str(a))
+            liste_provisoire.append(str(a))
         
         # On trouve la rangée qui valide le code insee
         #liste[0] est présumé la case avec le code insee
-        rangee = fichier[fichier[liste[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
         print("rangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",rangee)
             
         try:
