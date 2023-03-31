@@ -442,7 +442,7 @@ Toutes les modifications repertoriées ici : https://github.com/The-Weather-TEAM
 
 
 20 Fevrier 2023:
->Fix des issues #85 et #86 découverte aujourd'hui 
+>Fix des issues #85 et #86 découvertes aujourd'hui 
 
 
 
@@ -543,12 +543,12 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 
 31 Mars 2023:
->Résolution de l'issue #101 en changeant le nom des colonnes en indices (puis on repasse au nom automatiquement et non pas "à la main") : Alors, tous caractère spécial est compté est l'issue n101 a été résolue
+>Résolution de l'issue #101 en changeant le nom des colonnes en indices (puis on repasse au nom automatiquement et non pas "à la main") : Alors, tous caractère spécial est compté est l'issue #101 a été résolue
 
 >L'application est maintenant disponible sur linux ! Testé sur Ubuntu  22.04.2 LTS. 
 
 >Dernière ligne droite ! Nous nous sommes répartis le "tâches finales" :
-- Raphaël  -> issue #101
+- Raphaël  -> issue : #101
 - Nathan   -> terminer la fonction qui prend en compte les csv sans code insee
 - Thor     -> mise en forme de l'api de météo (pour afficher les résultats en français) 
 - Frédéric -> polissage du code
