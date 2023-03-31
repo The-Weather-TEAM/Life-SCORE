@@ -231,7 +231,6 @@ class Donnees:
         
         liste_provisoire = []
         for a in fichier.columns:
-            print(a)
             liste_provisoire.append(str(a))
         
         # On trouve la rangée qui valide le code insee
