@@ -74,6 +74,45 @@ import os
 
 
 
+
+
+
+
+
+
+
+'''
+Pour varier les polices / code en fonction du système d'exploitation
+
+Source :
+https://www.quennec.fr/trucs-astuces/langages/python/python-connaitre-le-nom-du-syst%C3%A8me-et-le-nom-dh%C3%B4te-de-la-machine
+
+'''
+
+
+
+import platform
+print(platform.system())
+
+#Windows, Linux & Darwin (pour Macos)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''
 MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 
