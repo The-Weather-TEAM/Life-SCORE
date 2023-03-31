@@ -261,7 +261,7 @@ class Donnees:
     '''
     def recup_donnees_compter_par_habitant(self, csv, infos_csv):
         
-        try:
+        #try:
             
             # Ici c'est tout comme la fonction au dessus
             lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv//'+csv+'.csv'
@@ -312,7 +312,7 @@ class Donnees:
             b = infos_csv[csv][2]['max']   
             return calculer_fonction_affine(a, b, note)
             
-        except : #Si pas de données
+        #except : #Si pas de données
             return 0
 
 
