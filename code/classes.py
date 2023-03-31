@@ -220,10 +220,8 @@ class Donnees:
         
         # On récupère les infos des données qu'on voudrait récupérer
         colonnes = [infos_csv[csv][2]['colonne_ville']]
-        print(colonnes,'colooooooooooooooooooooooooone Insee')
         for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
             colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
-        print("colones utilisées",lien_fichier,colonnes)
         # On va lire le fichier
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
@@ -239,7 +237,6 @@ class Donnees:
         # On trouve la rangée qui valide le code insee
         #liste[0] est présumé la case avec le code insee
         rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
-        print("rangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",rangee)
             
         try:
                 resultat = []
@@ -273,7 +270,6 @@ class Donnees:
             for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
                 colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
             
-            print("liennnnnnn",lien_fichier)
             fichier = p.read_csv(lien_fichier,
                                 delimiter=infos_csv[csv][2]['delimiteur'],
                                 usecols=colonnes,
