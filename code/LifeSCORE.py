@@ -993,7 +993,7 @@ icone = PhotoImage(file = nom_du_repertoire+'/systeme/icones/logo.png') # Icone 
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
-fenetrePrincipale.state('normal')
+fenetrePrincipale.state('zoomed')
 
 
 
