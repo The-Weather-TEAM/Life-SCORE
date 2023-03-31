@@ -203,7 +203,7 @@
     }],
     
     "dose_rayonnements_telluriques":
-    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
+    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 0,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : "code_insee",
                                                                           "colonne_donnee" : ["dose_rayonnements_telluriques"],

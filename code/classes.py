@@ -225,7 +225,7 @@ class Donnees:
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
                             usecols=colonnes,
-                            encoding='utf-8-sig',
+                            encoding='utf-8',
                             low_memory=False)
         
         # On trouve la rangée qui valide le code insee
@@ -430,7 +430,7 @@ class Donnees:
             self.ville = "-".join(liste_ville)
 
         fichier = open(self.repertoire + '/commune_modifiee.csv',"r",encoding='utf-8')
-        cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8-sig',low_memory=False) # Encoding pour pouvoir avoir les accents 
+        cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
 
@@ -766,7 +766,7 @@ class Donnees:
 a =b'0xe9'
 print(a)
 b = a.decode('utf-8')
-c = a.decode('utf-8-sig')
+c = a.decode('utf-8')
 print(a.decode('utf-16'))
 
 print(b,c)
