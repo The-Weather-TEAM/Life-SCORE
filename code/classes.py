@@ -217,10 +217,10 @@ class Donnees:
         
         # On récupère les infos des données qu'on voudrait récupérer
         colonnes = [infos_csv[csv][2]['colonne_ville']]
-        print(colonnes,'colooooooooooooooooooooooooone')
+        print(colonnes,'colooooooooooooooooooooooooone Insee')
         for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
             colonnes.append(infos_csv[csv][2]['colonne_donnee'][i])
-        print("liennnnnnn",lien_fichier,colonnes)
+        print("colones utilisées",lien_fichier,colonnes)
         # On va lire le fichier
         fichier = p.read_csv(lien_fichier,
                             delimiter=infos_csv[csv][2]['delimiteur'],
@@ -228,8 +228,14 @@ class Donnees:
                             encoding='utf-8',
                             low_memory=False)
         
+        liste_provisoire = []
+        for a in fichier.columns:
+            print(a)
+            liste.append(str(a))
+        
         # On trouve la rangée qui valide le code insee
-        rangee = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        #liste[0] est présumé la case avec le code insee
+        rangee = fichier[fichier[liste[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
         print("rangeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",rangee)
             
         try:
@@ -762,11 +768,14 @@ class Donnees:
 
 # Fin du code !
 
-
+"""
 a =b'0xe9'
 print(a)
 b = a.decode('utf-8')
 c = a.decode('utf-8')
 print(a.decode('utf-16'))
 
-print(b,c)
+print(b,c)"""
+
+"""a = Donnees('sus')
+a.recup_donnees_simple('communes')"""
