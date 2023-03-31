@@ -57,6 +57,9 @@ import threading
 OUVERTURE DE LA BASE DE DONNEES
 
 '''
+
+global infos_csv
+
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
 with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
@@ -259,9 +262,9 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
     
     '''
-    def recup_donnees_compter_par_habitant(self, csv, infos_csv):
+    def recup_donnees_compter_par_habitant(self, csv):
         
-        #try:
+        try:
             
             # Ici c'est tout comme la fonction au dessus
             lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv//'+csv+'.csv'
@@ -277,7 +280,12 @@ class Donnees:
                                 encoding='utf-8',
                                 low_memory=False)
             
-            res = fichier[fichier[infos_csv[csv][2]['colonne_ville']] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+            liste_provisoire = []
+            for a in fichier.columns:
+                print(a)
+                liste_provisoire.append(str(a))
+
+            res = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
@@ -311,8 +319,8 @@ class Donnees:
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']   
             return calculer_fonction_affine(a, b, note)
-            
-        #except : #Si pas de données
+                
+        except : #Si pas de données
             return 0
 
 
@@ -325,7 +333,7 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recup_donnees_par_population(self, csv, infos_csv) :
+    def recup_donnees_par_population(self, csv) :
         
         if self.habitants is None :
             self.habitant = int(self.recuperation_donnees('population')[0])
@@ -359,7 +367,7 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple et recup_donnees_population
     
     '''
-    def recup_donnees_simple_affine(self, csv, infos_csv):
+    def recup_donnees_simple_affine(self, csv):
     
         #try :
             nombre = Donnees.recup_donnees_simple(self, csv)
@@ -385,20 +393,20 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recuperation_donnees(self, csv, infos_csv=None) :
+    def recuperation_donnees(self, csv) :
         type_recuperation = infos_csv[csv][2]['type']
         
         if type_recuperation == 'simple' :
             return Donnees.recup_donnees_simple(self, csv)
         
         elif type_recuperation  == 'par_population' :
-            return Donnees.recup_donnees_par_population(self, csv, infos_csv)
+            return Donnees.recup_donnees_par_population(self, csv)
         
         elif type_recuperation == 'compter_par_population' or type_recuperation == 'oui_non':
-            return Donnees.recup_donnees_compter_par_habitant(self, csv, infos_csv)
+            return Donnees.recup_donnees_compter_par_habitant(self, csv)
         
         elif type_recuperation == 'simple_affine' :
-            return Donnees.recup_donnees_simple_affine(self, csv, infos_csv)
+            return Donnees.recup_donnees_simple_affine(self, csv)
         
         else :
             print("Fonction pas encore implémentée")
@@ -689,10 +697,10 @@ class Donnees:
         
         # Pour chaque CSV
         for id in infos_csv :
-            self.prepa_recup_donnees(infos_csv, id) #Ancienne méthode, pas très rapide avec bcp de CSV
+            self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
             
         """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
-            a = threading.Thread(target=self.prepa_recup_donnees, args=(infos_csv, id,))
+            a = threading.Thread(target=self.prepa_recup_donnees, args=( id,))
             a.start()
         a.join()
         """
@@ -737,10 +745,10 @@ class Donnees:
     Fait par Raphaël et Nathan
     
     '''
-    def prepa_recup_donnees(self, infos_csv, id):
+    def prepa_recup_donnees(self, id):
         print ("\nLe csv", id)
         if infos_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
-            resultat = self.recuperation_donnees(id, infos_csv)
+            resultat = self.recuperation_donnees(id)
                     
             print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
@@ -776,6 +784,7 @@ c = a.decode('utf-8')
 print(a.decode('utf-16'))
 
 print(b,c)"""
-
-"""a = Donnees('sus')
+"""
+a = Donnees('sus')
+a.code_insee = 342
 a.recup_donnees_simple('communes')"""

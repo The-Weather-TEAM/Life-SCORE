@@ -19,7 +19,7 @@
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : 7,
                                                                           "colonne_donnee" : [1],
-                                                                          "type" : "recuperation_insee",
+                                                                          "type" : "simple",
                                                                           "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
                                                                           "source" : "www.data.gouv.fr",
                                                                           "arrondissement" : "1ER ARRONDISSEMENT",
