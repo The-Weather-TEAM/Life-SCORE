@@ -549,6 +549,6 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 >Dernière ligne droite ! Nous nous sommes répartis le "tâches finales" :
 - Raphaël  -> issue : #101
-- Nathan   -> terminer la fonction qui prend en compte les csv sans code insee
+- Nathan   -> terminer la fonction qui prend en compte les csv sans code insee et ajout de la comptabilité linux
 - Thor     -> mise en forme de l'api de météo (pour afficher les résultats en français) 
 - Frédéric -> polissage du code
