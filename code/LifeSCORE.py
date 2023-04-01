@@ -347,7 +347,7 @@ def w_qcm(win,option = None): # w pour window
     msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =('Bold',18), justify=CENTER)
     
     # Boutton :
-    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Arial Black',30)) # Commence le Qcm ou continue le programme
+    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Ubuntu',30, 'bold')) # Commence le Qcm ou continue le programme
 
     # Placement des widgets :
 
@@ -912,7 +912,7 @@ icone = PhotoImage(file = nom_du_repertoire+'/systeme/icones/logo.png') # Icone 
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
-fenetrePrincipale.state('zoomed')
+fenetrePrincipale.state('normal')
 
 
 
