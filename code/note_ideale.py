@@ -85,5 +85,5 @@ if __name__ == "__main__": # pour tester le code et demontrer comment l'applique
     
     notes = calcul_note_ideale(valeursIdeales, dicoMeteoVille)
     note_moy = sum(notes.values())/len(notes.values())
-    print(notes)
-    print(note_moy)
+    #print(notes)
+    #print(note_moy)

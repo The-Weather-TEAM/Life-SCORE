@@ -1,56 +1,4 @@
 '''
-A GARDER PROVISOIREMENT, NOTES DE COMPATIBILITEES LINUX
-
-
-installer pip sur le terminal, tkinter aussi et pil.imagetk
-(j'ai testé avec ubuntu sans avoir mis à jour python et mise à part les trois trucs tt fonctionne)
-
-apt get install python3-pip
-apt get install python3-tk
-apt get install python3-pil.imagetk
-'''
-
-'''
-
-
-# à mettre si jamais on a pas déjà import tout ça
-
-import os
-import json # Pour la lecture des données csv
-
-
-
-# OUVERTURE DE LA BASE DE DONNEES, à mettre avant d'utiliser la fonction pour la variable infos_csv
-nom_du_repertoire = os.path.dirname(__file__)
-with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r") as fichier_json :
-    infos_csv = json.load(fichier_json)
-    
-
-# Fonction qui permet de récupérer la description du csv
-def texte_csv(nom_du_csv) :
-    return infos_csv[nom_du_csv][2]['nom']
-
-
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
                       [LIFESCORE.PY]
                  CODE PRINCIPAL DE LIFE-SCORE
 Syntaxe de nos variables : 
@@ -66,6 +14,8 @@ Les valeurs (de taille, de police, de couleur,... ont été trouvées après plu
 De même pour les placements, nos connaissances de Tkinter nous ont permis de retrouver certaines méthodes avec des arguments précis (.place(relx et rely))
 '''
 
+
+
 # Bibliothèques essentielles pour la mise à jour des autres bibliothèques
 import subprocess
 import sys
@@ -75,34 +25,11 @@ import os
 
 
 
-
-
-
-
-
-
-'''
-Pour varier les polices / code en fonction du système d'exploitation
-
-Source :
-https://www.quennec.fr/trucs-astuces/langages/python/python-connaitre-le-nom-du-syst%C3%A8me-et-le-nom-dh%C3%B4te-de-la-machine
-
-'''
-
-
-
-import platform
-print(platform.system())
-
-#Windows, Linux & Darwin (pour Macos)
-
-
-
-
-
-
-
-
+# Message de bienvenue sur le terminal
+print(  "####################################################",
+      "\n##                   LIFE-SCORE                   ##",
+      "\n##              Terminal de débogage              ##",
+      "\n####################################################\n\n",)
 
 
 
@@ -120,6 +47,11 @@ MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 - Réalisé par Thor
 - Redémarrage requis par Nathan
 '''
+
+# Message sur le terminal
+print(  "################################",
+      "\n##  Installation des modules  ##",
+      "\n################################\n\n",)
 
 # Verifie si tout les modules dans requirements.txt sont present, sinon ils sont installés.
 nouvelle_bibliotheque = False
@@ -148,10 +80,9 @@ if nouvelle_bibliotheque == True :
     print("\n\n\n\n\n********************\n[ATTENTION]\nVeuillez redémarrer le programme pour appliquer l'instation des bibliothèques.\n\n********************\n\n\n\n\n")
 
     sys.exit(os.system(f"{sys.executable} ./LifeSCORE.py"))
-
-
-
 print("\n\n")
+
+
 
 '''
 BIBLIOTHEQUES
@@ -218,15 +149,6 @@ FONCTIONS
 '''
 
 
-#! Nathan : c'est une fonction que j'ai utilisé l'année dernière pour reload un programme, ça peut être simpa pour l'installation de modules / rede de l'application
-
-def restart():      
-    os.execl(sys.executable,             # Execute l'executable python
-             os.path.abspath(__file__),  # Le fichier actuel
-             *sys.argv)                  # Avec les arguments actuels
-
-
-
 
 def telechargement(bouton,fenetre):
     '''
@@ -262,7 +184,7 @@ def telechargement(bouton,fenetre):
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
-        print(len(lire_option("REPONSE_QCM")),len(list_Questions))
+        #print(len(lire_option("REPONSE_QCM")),len(list_Questions))
         retour_pages(windowDownload,bouton)
         if len(lire_option("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
@@ -273,6 +195,8 @@ def telechargement(bouton,fenetre):
         w_erreur(fenetre)
         
     windowDownload.mainloop()
+
+
 
 '''
 FONCTIONS UTILISEES PLUSIEURS FOIS
@@ -341,7 +265,7 @@ def plus(b1,b2,arg):
     if not est_termine(b1,b2):
         msg_principal.configure(text = list_Questions[n][0])
         
-    print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
+    #print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
 
 
 def est_termine(btn_1,btn_2):
@@ -573,8 +497,6 @@ def parametres(bouton):
     message.place(relx=0.5,rely=0.75,anchor = CENTER)
     btn_changements.place(relx = 0.5, rely = 0.87, anchor = CENTER)
 
-    # TODO: Boutton credit et rapporter bug
-    # TODO: Boutton conditions Utilisateur -Raf : Non c'est bon ya pas de conditions a accepter ?
     windowParam.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowParam,bouton))# Meme effet que le bouton sauf que c'est si on ferme la page manuellement
     windowParam.mainloop()
 
@@ -678,16 +600,12 @@ def arrondissement(btn):
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
     windowAide.mainloop()
 
-"""
-# ! NATHAN - J'ai essayé de rajouter une barre de chargement mais bon je n'y arrive pas mdr
-def chargement(fenetre) :
-    progressbar = interface.CTkProgressBar(master=fenetre, mode="indeterminnate")
-    progressbar.place(relx= 0.5, rely=0.48, anchor = CENTER)
-    progressbar.start()
-    fenetre.mainloop()
- """
+
+
+
 
 def ville(entree,msg,fenetre):
+
     '''
     Récupère l'entrée, vérifie si la ville existe bien:
         -Si oui, continue vers la page 3
@@ -695,16 +613,24 @@ def ville(entree,msg,fenetre):
     
         - L'idée de créer une classe de Donnees est détaillée dans classes.py , le reste est de Raphaël
     '''
+    
+    #! NATHAN : POUR MODIFIER le curseur et le mettre en mode je bosse, mais ça marche pas
+    fenetre.config(cursor="watch")
+    fenetre.update()
+    
     global Donnees_ville
     ville = entree.get()
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
+        
         msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
         #fonction_barre_chargement.run()
+        fenetre.config(cursor="arrow")
         fenetre.update()
         #Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
         efface_fenetre(fenetre,"Efface_reste") # Enlève même le bouton paramètre et les pages d'aide pour ne pas obstruer l'écran
+        
         w_score(Donnees_ville,fenetre)
 
 
@@ -729,7 +655,8 @@ def w_score(ville,win):
     score = Donnees_ville.note_finale() # Provisoire
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
-    print(dico)
+    
+    print(dico, "\n\n\n\n\n")
 
     # Transformation des données en texte
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
@@ -875,14 +802,7 @@ def fonction_animation_score(x, total) :
     x_pour_cos = x + 1.2
     return ((math.cos(x_pour_cos))+1.2)*0.03
 
-    '''
-    # ANCIENNE ANIMATION
-    if x < 50:
-        return 0.20 - (x/250)
-    elif x < 85:
-        return 0.10
-    else:
-        return 0.50 + ((x-85)/15)'''
+
 
 
 def avantages_inconvenients(dic):
@@ -929,7 +849,7 @@ def plus_et_moins(pl,mal):
         plus = plus + "\n - " + val_plus
     for val_moins in mal:
         moins = moins + "\n - " + val_moins
-    print(plus,'\n',moins)
+    #print(plus,'\n',moins)
     return plus,moins
 
 
@@ -970,7 +890,7 @@ if not os.path.exists(repertoire_donnees):
 '''
 RECUPERATION STYLE
 
-- Fonction lyre_option fait par Thor dans classes.py
+- Fonction lire_option fait par Thor dans classes.py
 
 '''
 
@@ -998,10 +918,10 @@ fenetrePrincipale.state('zoomed')
 
 
 credits_texte = ("                        Réalisé par :\n\n" 
-+"- Nathan B    : Gestion des données & calculs\n" 
++"- Nathan B    : Gestion des données, calculs & compatibilté\n" 
 +"- Raphaël F   : Interface graphique          \n"
 +"- Thor N        : Calcul des coefficients & API\n"
-+"- Frédéric M  : Recherches pour la base")
++"- Frédéric M  : Recherches pour la base de données")
 
 # Création des widgets
 btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1

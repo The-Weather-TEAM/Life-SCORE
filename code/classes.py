@@ -64,7 +64,6 @@ import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
 with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
-    #print(infos_csv) 
 
 
 
@@ -77,6 +76,13 @@ SAVOIR S'IL Y A UNE CONNEXION INTERNET
 Fait par Nathan d'après un ancien projet (v.4 de l'application)
 '''
 def is_connected(url) :
+    
+    print(  "\n\n\n################################",
+        "\n##         Test réseau        ##",
+        "\n################################\n\n",)
+
+    
+    
     temp = 0
 
     while temp == 0 :
@@ -90,7 +96,8 @@ def is_connected(url) :
                 
             return False 
         
-            
+        
+        print("Réseau disponible !\n\n")
         return True
 
 
@@ -173,7 +180,7 @@ Idée et réalisation de Nathan
 '''
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
    
-    print(x)
+    #print(x)
     m = (max - moyenne) / 50                    # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
    
@@ -194,8 +201,6 @@ class Donnees:
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] #La liste dans laquelle on rempli les notes 
         self.habitants = None
-        
-        #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
         self.notes_finales = {}
 
 
@@ -236,8 +241,11 @@ class Donnees:
         # On trouve la rangée qui valide le code insee
         #liste[0] est présumé la case avec le code insee
         
+        # Si le CSV utilise le code INSEE
         if infos_csv[csv][2]['insee'] == 1 :
-            rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+            rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee]
+            
+        # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
         else :
             rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
             
@@ -283,18 +291,16 @@ class Donnees:
             
             liste_provisoire = []
             for a in fichier.columns:
-                print(a)
+                #print(a)
                 liste_provisoire.append(str(a))
 
-            
+            # Si le CSV utilise le code INSEE
             if infos_csv[csv][2]['insee'] == 1 :
-                res = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
-                
+                res = fichier[fichier[liste_provisoire[0]] == self.code_insee]
+            
+            # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
                 res = fichier[fichier[liste_provisoire[0]] == self.ville]
-            
-            
-            
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
@@ -387,8 +393,12 @@ class Donnees:
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']
             
+<<<<<<< Updated upstream
             nombre = int(str(nombre[0]).split(',')[0])
             print('test', nombre)
+=======
+            nombre = int(((str(nombre[0])).split(','))[0])
+>>>>>>> Stashed changes
             return calculer_fonction_affine(a, b, nombre)
         
         except :
@@ -422,7 +432,7 @@ class Donnees:
             return Donnees.recup_donnees_simple_affine(self, csv)
         
         else :
-            print("Fonction pas encore implémentée")
+            print("Ne peut pas être noté.")
         
         
 
@@ -575,6 +585,9 @@ class Donnees:
         self.liste_notes.append(note)
         self.notes_finales["sport"]=note
         return note
+
+
+
 
 
     def notes_meteo_ville(self, ville: str) -> ("dict | None"):
@@ -732,8 +745,16 @@ class Donnees:
         '''
         
         # Pour chaque CSV
+        
+        print(    "################################",
+                "\n##     Notes de la ville      ##",
+                "\n################################\n\n",)
+
+                
+        
         for id in infos_csv :
-            self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
+            if id != "communes" :
+                self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
             
         """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
             a = threading.Thread(target=self.prepa_recup_donnees, args=( id,))
@@ -750,17 +771,16 @@ class Donnees:
         self.notes_finales = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
 
         # Pour tester avant de tout envoyer
-        print("\nLES NOTES :",self.liste_notes)
-        print(self.notes_finales)
-        print("\n\n\n\n\n")
-        
+        print("################################",
+            "\n##       NOTES FINALES        ##",
+            "\n################################\n\n")
 
 
 
 
         '''
         Création de la note finale
-        Fait par Raphaël #?(je crois)
+        Fait par Raphaël
         '''
         note_finale = 0
         for i in range(len(self.liste_notes)) :
@@ -798,7 +818,7 @@ class Donnees:
                     self.liste_notes.append(resultat)
                     self.notes_finales[infos_csv[id][2]['nom']] =  resultat# Le nom formel
         else :
-            print("Fonction pas encore implémentée")
+            print("Non noté.")
 
 
     '''
@@ -811,16 +831,3 @@ class Donnees:
             return str(self.ville)
 
 # Fin du code !
-
-"""
-a =b'0xe9'
-print(a)
-b = a.decode('utf-8')
-c = a.decode('utf-8')
-print(a.decode('utf-16'))
-
-print(b,c)"""
-"""
-a = Donnees('sus')
-a.code_insee = 342
-a.recup_donnees_simple('communes')"""
