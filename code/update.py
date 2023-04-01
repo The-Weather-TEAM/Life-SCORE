@@ -89,9 +89,12 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     # Temps en secondes entre les vérifications de mises à jour :
     #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
     temps_maj = lire_option("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
+    derniere_maj = lire_option("DERNIERE_MAJ") 
 
 
-
+    # Passe la vérification des fichiers
+    if time.time() - derniere_maj < temps_maj :
+        return False
 
 
     # Variables boléennes (qui servent pour des conditions) :
