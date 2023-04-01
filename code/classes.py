@@ -594,9 +594,12 @@ class Donnees:
 
         """
         assert type(ville) == str, "L'argument de ville doit etre de type string"
-        if "_" in ville:
-            ville = ville.split("_")[0] # evite erreur avec arrondissmenet
-            
+        
+        for char in ville:
+            if est_nombre(char):
+                ville = ville.split(char)[0] + f"{int(char):02d}"
+                break
+        print(ville)
         tout_les_donnees = []
         geoloc_ville = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={ville}") # pour recuperer longitude et latitude du ville
 
