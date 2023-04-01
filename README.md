@@ -552,3 +552,14 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 - Nathan   -> terminer la fonction qui prend en compte les csv sans code insee et ajout de la comptabilité linux
 - Thor     -> mise en forme de l'api de météo (pour afficher les résultats en français) 
 - Frédéric -> polissage du code
+
+
+
+01 Avril 2023 :
+>Prise en charge des CSV sans code INSEE, maintenant la base de données peut être agrandie sans toucher au code, car il est compatible :
+>- Avec les fichiers avec et sans code INSEE
+>- Les CSV simples, comptant une donnée par rapport à la population, comptant plusieurs données par rapport à la population, ou les CSV booléens (oui ou non).
+
+>Suppression de communes_modifiee.csv : on utilise maintenant le fichier commune de notre base de données
+
+>Modification de la gestion des arrondissements (temporaire)

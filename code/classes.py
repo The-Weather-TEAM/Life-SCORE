@@ -235,7 +235,13 @@ class Donnees:
         
         # On trouve la rangée qui valide le code insee
         #liste[0] est présumé la case avec le code insee
-        rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        
+        if infos_csv[csv][2]['insee'] == 1 :
+            rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+        else :
+            rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
+            
+            
             
         try:
                 resultat = []
@@ -245,7 +251,7 @@ class Donnees:
             
         # Au cas où il n'y a pas de données
         except IndexError : #Si pas de données
-            
+            print('Pas de données')
             return 0
         
         
@@ -280,7 +286,16 @@ class Donnees:
                 print(a)
                 liste_provisoire.append(str(a))
 
-            res = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+            
+            if infos_csv[csv][2]['insee'] == 1 :
+                res = fichier[fichier[liste_provisoire[0]] == self.code_insee] # MARCHE SEULEMENT SI LE CSV UTILISE LE CODE INSEE
+                
+            else :
+                res = fichier[fichier[liste_provisoire[0]] == self.ville]
+            
+            
+            
+            
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
@@ -316,6 +331,7 @@ class Donnees:
             return calculer_fonction_affine(a, b, note)
                 
         except : #Si pas de données
+            print('Pas de données')
             return 0
 
 
@@ -341,6 +357,7 @@ class Donnees:
             if nombre is None :
                 nombre = 0
         except :
+            print('Pas de données')
             return 0
         
         # On divise par le nombre d'habitants et on utilise la fonction affine
@@ -364,7 +381,7 @@ class Donnees:
     '''
     def recup_donnees_simple_affine(self, csv):
     
-        #try :
+        try :
             nombre = Donnees.recup_donnees_simple(self, csv)
             print(" - Donnée :", nombre)
             a = infos_csv[csv][2]['moyenne']
@@ -374,7 +391,8 @@ class Donnees:
             print('test', nombre)
             return calculer_fonction_affine(a, b, nombre)
         
-        #except :
+        except :
+            print('Pas de données')
             return 0
 
 
@@ -438,7 +456,7 @@ class Donnees:
                         liste_ville[i] = liste_ville[i].capitalize()
             self.ville = "-".join(liste_ville)
 
-        fichier = open(self.repertoire + '/commune_modifiee.csv',"r",encoding='utf-8')
+        fichier = open(self.repertoire + '/donnees/csv/communes.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
@@ -761,7 +779,7 @@ class Donnees:
     '''
     def prepa_recup_donnees(self, id):
         print ("\nLe csv", id)
-        if infos_csv[id][2]['insee'] == 1 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
+        if infos_csv[id][2]['insee'] >= 0 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
             resultat = self.recuperation_donnees(id)
                     
             print(" - Note /100 :", resultat)

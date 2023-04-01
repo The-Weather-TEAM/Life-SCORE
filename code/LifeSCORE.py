@@ -661,7 +661,7 @@ def arrondissement(btn):
     change_etat_btn(btn) # Bloque le bouton d'accès à cette page
     texte_aide=("Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :"
     + "\n     - Si vous saisissez uniquement le nom de la ville, le premier            arrondissement sera pris comme base"
-    + "\n     - Sinon, écrivez le nom de la ville comme cela : \n\n           Nom_X avec X le numéro de l'arrondissement (ex : Paris_7)")
+    + "\n     - Sinon, écrivez le nom de la ville comme cela : \n\n           Nom 1er Arrondissement / Nom Ne Arrondissement (ex : Paris 2e Arrondissement)")
 
     # Création des widgets
     txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
