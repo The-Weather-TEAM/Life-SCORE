@@ -144,6 +144,27 @@ dico_Reponses = {} # Traité dans coefficients.py
 #icone = interface.CTkImage(light_image=Image.open(nom_du_repertoire+'/systeme/icones//logo.png'))
 
 
+
+
+
+
+
+import platform
+systeme_exploitation = platform.system()
+print(platform.system())
+
+
+if systeme_exploitation == 'Linux' :
+    police_normal = 'Ubuntu'
+
+
+
+
+
+
+
+
+
 '''
 FONCTIONS
 '''
