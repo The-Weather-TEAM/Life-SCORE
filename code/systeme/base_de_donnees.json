@@ -15,7 +15,7 @@
     }],
 
     "communes":
-    ["58c984b088ee386cdb1261f3","6c1db35c-3ee3-42f8-80fb-d366e451cc30", { "insee" : 0,
+    ["58c984b088ee386cdb1261f3","6c1db35c-3ee3-42f8-80fb-d366e451cc30", { "insee" : -1,
                                                                           "delimiteur" : ",",
                                                                           "colonne_ville" : 7,
                                                                           "colonne_donnee" : [1],
@@ -119,7 +119,7 @@
     "monuments_historiques":
     ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 0,
                                                                           "delimiteur" : ";",
-                                                                          "colonne_ville" : 3,
+                                                                          "colonne_ville" : 0,
                                                                           "colonne_donnee" : [6],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
@@ -185,19 +185,6 @@
                                                                           "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Les projets de rénovation"
-                                                                
-
-    }],
-    
-    "production_electricite_gaz":
-    ["5f90f665bf376c0ae5d5f959","4d444532-b972-4a29-ac8a-7a2dc0128d3e", { "insee" : 1,
-                                                                          "delimiteur" : ";",
-                                                                          "colonne_ville" : 7,
-                                                                          "colonne_donnee" : [5],
-                                                                          "source" : "www.data.gouv.fr",
-                                                                          "type" : "liste",
-                                                                          "categorie": "securite",
-                                                                          "nom": "La production d'énergie"
                                                                 
 
     }],
