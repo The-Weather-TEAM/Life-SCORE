@@ -605,7 +605,9 @@ class Donnees:
         
         for char in ville: # pour gerer les arrondissements d'un ville
             if est_nombre(char): # on recherche un nombre pour separer le nom du ville
-                ville = ville.split(char)[0] + f"{int(char):02d}" # d'appres l'API geoloc, les arrondissement sont comme "Paris 03" pour 3 arrondisssmenet
+                
+                #! Nathan : j'ai enlevé + f"{int(char):02d} car ça ne marche pas avec Mareseille 2e arrondissement
+                ville = ville.split(char)[0] #+ f"{int(char):02d}" # d'appres l'API geoloc, les arrondissement sont comme "Paris 03" pour 3 arrondisssmenet
                 break
 
         print(ville)
