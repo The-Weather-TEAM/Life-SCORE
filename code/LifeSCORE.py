@@ -613,15 +613,14 @@ def ville(entree,msg,fenetre):
     
         - L'idée de créer une classe de Donnees est détaillée dans classes.py , le reste est de Raphaël
     '''
-    
-    #! NATHAN : POUR MODIFIER le curseur et le mettre en mode je bosse, mais ça marche pas
-    fenetre.config(cursor="watch")
-    fenetre.update()
-    
     global Donnees_ville
     ville = entree.get()
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
+        
+        #! NATHAN : POUR MODIFIER le curseur et le mettre en mode je bosse, mais ça marche pas
+        fenetre.config(cursor="watch")
+        fenetre.update()
         
         msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
