@@ -567,3 +567,5 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 >Mis en forme de l'API de météo, touts les criteres sont affiché en Français maintenant.
 
 > Passe la vérification des fichiers csv en fonction du temps de maj
+
+> Première modification des polices pour la compatibilité linux / windows

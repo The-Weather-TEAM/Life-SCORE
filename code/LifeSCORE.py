@@ -147,16 +147,21 @@ dico_Reponses = {} # Traité dans coefficients.py
 
 
 
-
+'''
+Système de compatiblité Windows / Linux
+pour les polices d'écritures & l'interface
+'''
 
 import platform
 systeme_exploitation = platform.system()
-print(platform.system())
 
+polices = []
 
 if systeme_exploitation == 'Linux' :
-    police_normal = 'Ubuntu'
-
+    polices.append('Ubuntu')
+    
+else :
+    polices.append('Arial')
 
 
 
@@ -192,8 +197,8 @@ def telechargement(bouton,fenetre):
     
 
     # Création des widgets
-    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =('Bold',16), justify=LEFT)
-    message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =('Bold',12), justify=LEFT)
+    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=LEFT)
+    message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
     progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
     progressbar.set(0)
 
@@ -255,8 +260,8 @@ def avancer(fenetre):
     if n != len(list_Questions):
         btn_ok.place_forget() # Le cache le temps du lancement de cette fonction
         # Création des boutons
-        btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,0), text="Non",font=('Arial Black',30))
-        btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,1), text="Oui",font=('Arial Black',30))
+        btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,0), text="Non",font=(polices[0],30))
+        btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,1), text="Oui",font=(polices[0],30))
         
         # Placements et Modifications
         btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
@@ -365,10 +370,10 @@ def w_qcm(win,option = None): # w pour window
     
     # Création des widgets :
 
-    msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =('Bold',18), justify=CENTER)
+    msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =(polices[0],18), justify=CENTER)
     
     # Boutton :
-    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=('Ubuntu',30, 'bold')) # Commence le Qcm ou continue le programme
+    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=(polices[0],30)) # Commence le Qcm ou continue le programme
 
     # Placement des widgets :
 
@@ -418,9 +423,9 @@ def info(btn):
     # Création des widgets
     txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0)
     txt_info.insert("0.0", text = texte_info)
-    txt_info.configure(state = "disabled", font = ("Arial",18),
+    txt_info.configure(state = "disabled", font = (polices[0],18),
                        wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
-    btn_compris = interface.CTkButton(windowInfo, height=int(windowInfo.winfo_screenheight()/10), command=lambda:retour_pages(windowInfo,btn), text="Compris !",font=('Arial Black',30))
+    btn_compris = interface.CTkButton(windowInfo, height=int(windowInfo.winfo_screenheight()/10), command=lambda:retour_pages(windowInfo,btn), text="Compris !",font=(polices[0],30))
 
     # Placement des widgets
     txt_info.place(relx=0.05,rely=0.05)
@@ -456,12 +461,12 @@ def parametres(bouton):
     # Création des widgets :
 
     # Tous les messages présents :
-    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= ('Arial Black', 40), text_color="#29A272")
-    msg_frequence = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_derniere_verification()}", font= ("Yu Gothic Light", 16), text_color="#646464")
-    msg_apparence = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    msg_donnees = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= ('Yu Gothic Light', 25), text_color="#29A272")
-    message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme ", width = 50, font =('Bold',18)) # font = taille + police, justify comme sur word
+    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= (polices[0], 40), text_color="#29A272")
+    msg_frequence = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR :", font= (polices[0], 25), text_color="#29A272")
+    msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_derniere_verification()}", font= (polices[0], 16), text_color="#646464")
+    msg_apparence = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION :", font= (polices[0], 25), text_color="#29A272")
+    msg_donnees = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR :", font= (polices[0], 25), text_color="#29A272")
+    message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme ", width = 50, font =(polices[0],18)) # font = taille + police, justify comme sur word
 
     # Tous les boutons présents :
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
@@ -472,19 +477,19 @@ def parametres(bouton):
     btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,
                                                 text="SUPPRIMER",
-                                                font=("Bold", 18))
+                                                font=(polices[0], 18))
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
                                                         command=lambda:retour_pages(windowParam,bouton), 
                                                         text="FERMER LA PAGE",
-                                                        font=('Arial Black',30))
+                                                        font=(polices[0],30))
     
     # Autres (les entrées et les volets "switch") :
     
     # Pour récuperer la fréquence des màj et le transformer en jours
     frequence_maj = int(lire_option('FREQ_MAJ')/86400)
     
-    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text=frequence_maj, width=51, font= ('Bold', 18))
+    entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text=frequence_maj, width=51, font= (polices[0], 18))
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
 
     # Traduction en direct, pour voir directement quel mode on a selectioné 
@@ -573,13 +578,13 @@ def w_question(fenetre):
     fenetre.iconphoto(False, icone)
 
     # Création des widgets
-    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = ('Bold',18))
-    msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =('Bold',20), 
+    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = (polices[0],18))
+    msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =(polices[0],20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
-                                             text="Aide",font=('Arial Black',30)) # Boutton d'aide arrondissements
+                                             text="Aide",font=(polices[0],30)) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
-                                     command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=('Arial Black',30))
+                                     command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=(polices[0],30))
     
     # Placement des widgets
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER)
@@ -609,8 +614,8 @@ def arrondissement(btn):
     # Création des widgets
     txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
     txt_aide.insert("0.0", text = texte_aide)
-    txt_aide.configure(state = "disabled", font = ("Arial",18),wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
-    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda :retour_pages(windowAide,btn), text="Compris !",font=('Arial Black',30))
+    txt_aide.configure(state = "disabled", font = (polices[0],18),wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
+    btn_compris = interface.CTkButton(windowAide, height=int(windowAide.winfo_screenheight()/10), command=lambda :retour_pages(windowAide,btn), text="Compris !",font=(polices[0],30))
     
     
     # Placement des widgets
@@ -679,7 +684,7 @@ def w_score(ville,win):
     print(dico, "\n\n\n\n\n")
 
     # Transformation des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=('Arial Black',taille_police(str(ville))), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=(polices[0],taille_police(str(ville))), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
@@ -713,9 +718,9 @@ def w_score(ville,win):
         score = str(score)
         
         # Mise en place du reste du texte, pour éviter une surcharge du nombre d'elements à rafraichir
-        msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =('Bold',25), justify=LEFT)
-        msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =('Bold',25), justify=LEFT)
-        msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=('Arial Black', 80), justify=CENTER) # On initialise
+        msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =(polices[0],25), justify=LEFT)
+        msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =(polices[0],25), justify=LEFT)
+        msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=(polices[0], 80), justify=CENTER) # On initialise
 
         # Placements
         msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)# Nord Est
@@ -729,7 +734,7 @@ def w_score(ville,win):
             couleur = couleur_score(i)
 
             # Informations :
-            msg_annonce_note = interface.CTkLabel(win, text='Note :', font=('Arial Black', 50), justify=CENTER)
+            msg_annonce_note = interface.CTkLabel(win, text='Note :', font=(polices[0], 50), justify=CENTER)
             msg_note.configure(text=str(i), text_color=couleur)
 
 
@@ -745,10 +750,10 @@ def w_score(ville,win):
     else:
         
         # Informations :
-        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =('Arial Black',60),
+        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =(polices[0],60),
                                        justify=CENTER)
         msg_NonAttribue = interface.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville",
-                                              width = 1000, font =('Bold',30), justify=LEFT)
+                                              width = 1000, font =(polices[0],30), justify=LEFT)
         
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)# Nord Est
         msg_NonAttribue.place(relx = 0.5, rely = 0.9,anchor = CENTER)
@@ -757,7 +762,7 @@ def w_score(ville,win):
 
     # Bouton retour
     btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False),
-                                      text= "Noter une autre ville", font=('Arial Black',20))
+                                      text= "Noter une autre ville", font=(polices[0],20))
     btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
     
 
@@ -889,9 +894,9 @@ def w_erreur(fenetre): # w pour window
     # Création des widgets
 
     msg_principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
-        width = 1000, font =('Bold',18), justify=CENTER) # font = taille + police justify comme sur word
-    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30))
-    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=('Arial Black',30)) # Ferme la page
+        width = 1000, font =(polices[0],18), justify=CENTER) # font = taille + police justify comme sur word
+    btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=(polices[0],30))
+    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=(polices[0],30)) # Ferme la page
 
     # Placement des widgets
     msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
@@ -933,7 +938,14 @@ icone = PhotoImage(file = nom_du_repertoire+'/systeme/icones/logo.png') # Icone 
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
-fenetrePrincipale.state('normal')
+
+
+#! Je dois finir la comptabilité
+if systeme_exploitation == 'Windows' :
+    fenetrePrincipale.state('zoomed')
+
+else :
+    fenetrePrincipale.state('normal')
 
 
 
@@ -944,18 +956,18 @@ credits_texte = ("                        Réalisé par :\n\n"
 +"- Frédéric M  : Recherches pour la base de données")
 
 # Création des widgets
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=('Arial Black',30)) # appele la fonction question1
-msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =('Bold',18), justify=CENTER)
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=(polices[0],30)) # appele la fonction question1
+msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =(polices[0],18), justify=CENTER)
 logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
-                                    text= "Quitter", font=('Arial Black',30))
+                                    text= "Quitter", font=(polices[0],30))
 credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
-                                font = ("Yu Gothic Light",19), pady=1,fg_color='#C0C0D0',justify=LEFT)
+                                font = (polices[0],19), pady=1,fg_color='#C0C0D0',justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                command=lambda: info(btn_info), text="Info" ,font=('Arial Black',30)) # Ouvre la page d'instructions
+                                command=lambda: info(btn_info), text="Info" ,font=(polices[0],30)) # Ouvre la page d'instructions
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                    command=lambda : parametres(btn_parametre), text="Paramètres",font=('Arial Black',30)) # Ouvre la page de paramètres
+                                    command=lambda : parametres(btn_parametre), text="Paramètres",font=(polices[0],30)) # Ouvre la page de paramètres
 
 
 # Placement des widgets
