@@ -64,6 +64,7 @@ import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
 with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
+    #print(infos_csv) 
 
 
 
@@ -77,10 +78,10 @@ Fait par Nathan d'après un ancien projet (v.4 de l'application)
 '''
 def is_connected(url) :
     
+
     print(  "\n\n\n################################",
         "\n##         Test réseau        ##",
         "\n################################\n\n",)
-
     
     
     temp = 0
@@ -95,7 +96,6 @@ def is_connected(url) :
             print('\n\nProblème réseau.\nVeuillez vous reconnecter et relancer le programme')
                 
             return False 
-        
         
         print("Réseau disponible !\n\n")
         return True
@@ -201,6 +201,8 @@ class Donnees:
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] #La liste dans laquelle on rempli les notes 
         self.habitants = None
+        
+        #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
         self.notes_finales = {}
 
 
@@ -244,7 +246,6 @@ class Donnees:
         # Si le CSV utilise le code INSEE
         if infos_csv[csv][2]['insee'] == 1 :
             rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee]
-            
         # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
         else :
             rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
@@ -296,11 +297,13 @@ class Donnees:
 
             # Si le CSV utilise le code INSEE
             if infos_csv[csv][2]['insee'] == 1 :
-                res = fichier[fichier[liste_provisoire[0]] == self.code_insee]
-            
+                res = fichier[fichier[liste_provisoire[0]] == self.code_insee] 
             # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
                 res = fichier[fichier[liste_provisoire[0]] == self.ville]
+            
+            
+            
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
@@ -393,12 +396,7 @@ class Donnees:
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']
             
-<<<<<<< Updated upstream
             nombre = int(str(nombre[0]).split(',')[0])
-            print('test', nombre)
-=======
-            nombre = int(((str(nombre[0])).split(','))[0])
->>>>>>> Stashed changes
             return calculer_fonction_affine(a, b, nombre)
         
         except :
@@ -432,7 +430,7 @@ class Donnees:
             return Donnees.recup_donnees_simple_affine(self, csv)
         
         else :
-            print("Ne peut pas être noté.")
+            print("Fonction pas encore implémentée")
         
         
 
@@ -585,9 +583,6 @@ class Donnees:
         self.liste_notes.append(note)
         self.notes_finales["sport"]=note
         return note
-
-
-
 
 
     def notes_meteo_ville(self, ville: str) -> ("dict | None"):
@@ -744,14 +739,13 @@ class Donnees:
         Pensé et réalisé par Nathan, à l'aide des fonctions au dessus
         '''
         
-        # Pour chaque CSV
         
         print(    "################################",
                 "\n##     Notes de la ville      ##",
                 "\n################################\n\n",)
 
-                
         
+        # Pour chaque CSV
         for id in infos_csv :
             if id != "communes" :
                 self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
