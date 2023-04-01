@@ -370,7 +370,7 @@ class Donnees:
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']
             
-            nombre = int(((str(nombre[0])).split(','))[0])
+            nombre = int(str(nombre[0]).split(',')[0])
             print('test', nombre)
             return calculer_fonction_affine(a, b, nombre)
         
@@ -567,6 +567,8 @@ class Donnees:
 
         - Idée de tout le Groupe (idée initial du projet) & Implementé par Thor
 
+        ---
+
         Sources:
         - [API Geolocation](https://open-meteo.com/en/docs/geocoding-api) pour les coordonees des villes.
         - [API Meteo Historique](https://open-meteo.com/en/docs/historical-weather-api) pour les donnees de meteo d'une vile.
@@ -574,7 +576,9 @@ class Donnees:
 
         """
         assert type(ville) == str, "L'argument de ville doit etre de type string"
-
+        if "_" in ville:
+            ville = ville.split("_")[0] # evite erreur avec arrondissmenet
+            
         tout_les_donnees = []
         geoloc_ville = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={ville}") # pour recuperer longitude et latitude du ville
 
@@ -631,8 +635,23 @@ class Donnees:
             
         }
 
+        nom_EN_FR = { # sert pour remplaccer les clefs des criteres pour les afficher dans les advantages et les inconveniants
+            "relativehumidity_2m": "Humidité",
+            "temperature_2m_mean": "Température",
+            "cloudcover": "Couverture nuageuse",
+            "surface_pressure": "Pression de Surface",
+            "windspeed_10m": "Vitesse du Vent",
+            "uv_index": "Index Ultra Violet",
+            "european_aqi_pm2_5": "Taille polluant 2.5μm",
+            "european_aqi_pm10": "Taille Polluant 10μm",
+            "european_aqi_no2": "Niveau Dioxyde d'azote",
+            "european_aqi_o3": "Niveau Ozone",
+            "european_aqi_so2": "Niveau dioxyde de soufre"
+        }
+
         # calcule du note de chaque critere present dans valeursIdeales et donnees_moy
         notes = calcul_note_ideale(valeursIdeales, donnees_moy)
+        notes = {nom_EN_FR[clef]:valeur for clef, valeur in notes.items()} # change les noms des clefs en Francais
 
         return notes
 
