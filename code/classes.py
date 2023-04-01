@@ -595,10 +595,11 @@ class Donnees:
         """
         assert type(ville) == str, "L'argument de ville doit etre de type string"
         
-        for char in ville:
-            if est_nombre(char):
-                ville = ville.split(char)[0] + f"{int(char):02d}"
+        for char in ville: # pour gerer les arrondissements d'un ville
+            if est_nombre(char): # on recherche un nombre pour separer le nom du ville
+                ville = ville.split(char)[0] + f"{int(char):02d}" # d'appres l'API geoloc, les arrondissement sont comme "Paris 03" pour 3 arrondisssmenet
                 break
+
         print(ville)
         tout_les_donnees = []
         geoloc_ville = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={ville}") # pour recuperer longitude et latitude du ville
