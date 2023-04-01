@@ -563,3 +563,5 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 >Suppression de communes_modifiee.csv : on utilise maintenant le fichier commune de notre base de données
 
 >Modification de la gestion des arrondissements (temporaire)
+
+>Mis en forme de l'API de météo, touts les criteres sont affiché en Français maintenant.
