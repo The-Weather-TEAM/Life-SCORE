@@ -602,7 +602,7 @@ def w_question(fenetre):
     msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =(polices[0],20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
-                                             text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent') # Boutton d'aide arrondissements
+                                             text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
                                      command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher)
     
@@ -985,13 +985,13 @@ msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeS
 logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
-                                    text= "", font=(polices[0],30, 'bold'), image=image_btn_quitter, fg_color='transparent')
+                                    text= "", font=(polices[0],30, 'bold'), image=image_btn_quitter, fg_color='transparent',hover = False)
 credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
                                 font = (polices[0],19), pady=1,justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                command=lambda: info(btn_info), text="Info" ,font=(polices[0],30, 'bold')) # Ouvre la page d'instructions
+                                command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),image=image_btn_aide, hover = False, fg_color='transparent') # Ouvre la page d'instructions
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                    command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent') # Ouvre la page de paramètres
+                                    command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent',hover = False) # Ouvre la page de paramètres
 
 
 # Placement des widgets
