@@ -835,9 +835,7 @@ def fonction_animation_score(x, total) :
     - Idée et réalisation par Nathan, aidé par nos cours de mathématiques sur les fonctions et la trigo
     '''
     # Remet le total sur 100 pour avoir un ralenti à la fin de la note
-    
-    
-    
+
     
     x = (x/total)*5
     x_pour_cos = x + 1.2
@@ -857,28 +855,26 @@ def avantages_inconvenients(dic):
 
     list_bonus= []
     list_malus= []    
-    cle_maxi = "Valeur initiale"
-    cle_mini = "Valeur initiale" 
-    const = 5
-    mini = 50 # Les malus seront compris entre 0 et 50
-    maxi = 50 
+    cle_maxi = cle_mini = "Valeur initiale"
+    mini = maxi = 50 # Les malus seront compris entre 0 et 50
+    const = 10
+
     if len(dic) < 10:
-        const = len(dic)//2
+        const = len(dic)
     print(dic)
     print(dic.keys())
     for i in range(const):
-        
+
         for cle in dic.keys():
             if dic[cle] > maxi:
                 maxi = dic[cle]
                 cle_maxi = cle
                 list_bonus.append(cle_maxi)
-                dic.pop(cle_maxi,None)
-            if dic[cle] < mini:
+            elif dic[cle] < mini:
                 mini = dic[cle]
                 cle_mini = cle
                 list_malus.append(cle_mini)
-                dic.pop(cle_maxi,None)
+                
     return list_bonus, list_malus
 
 
