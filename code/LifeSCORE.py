@@ -854,28 +854,27 @@ def avantages_inconvenients(dic):
 
     - Idée de Raphaël en utilisant les algorithmes de recherche de maximum et minimum de l'année de première
     '''
-    # Avantages
-    list_bonus= []
-    for i in range(5):
-        maxi = 50
-        cle_maxi = "Valeur initiale"
-        for cle in dic.keys():
-            if dic[cle] > maxi:
-                maxi = dic[cle]
-                cle_maxi = cle
-        list_bonus.append(cle_maxi)
-        dic.pop(cle_maxi,None)
 
-    # Inconvenients
-    list_malus= []
-    cle_mini = "Valeur initiale"
-    for i in range(5):
-        mini = 50 # REQUIERT QUE LES MALUS SOIENT EN NEGATIF !!!
+    # Avantages
+
+
+  st_malus= []    
+    cle_maxi = "Valeur initiale"
+    const = 5
+    if len(dic) < 10:
+        const = len(dic)//2
+    cle_mini = "Valconstur initiale"    list_bonus= []
+    for i in rang
+        mini = 50 # Les malus seront compris entre 0 et 50            cle_maxi = "Valeur initiale"
         for cle in dic.keys():
+            if dic[cle] > maxi
+                list_bonus.append(cle_maxi)
+                dic.pop(cle_maxi,None)
             if dic[cle] < mini:
                 mini = dic[cle]
                 cle_mini = cle
-        list_malus.append(cle_mini)
+                list_malus.append(cle_mini)
+                dic.pop(cle_maxi,None)        list_malus.append(cle_mini)
         dic.pop(cle_mini,None)
 
     return list_bonus, list_malus

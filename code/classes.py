@@ -705,6 +705,7 @@ class Donnees:
 
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
             #! Besoin d'aide pour choisir quoi va avec quoi
+            # ex: si Activite est 0, monuments_historiques serait pas pris en compte dans la note final
             "Activite": ["monuments_historiques"],
             "Age": [],
             "Scolarite": ["sport"],
