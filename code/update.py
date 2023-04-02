@@ -1,7 +1,7 @@
 '''
                         [UPDATE.PY]
-                            V.8
-             /!\  SANS LE MULTI-TELECHARGEMENT  /!\ 
+                            V.9
+          AVEC TELECHARGEMENT 125x PLUS RAPIDE !
                          
     Programme de téléchargement et mises à jour des données automatique
 
@@ -102,7 +102,17 @@ def telecharger(lien, nomfichier):
             if chunk:
                 f.write(chunk)
                 bits_telecharges += len(chunk)
+                
+                #! POUR RAF : Voici le pourcentage qui est print
+                
                 pourcentage = bits_telecharges / taille * 100
+                
+                
+                #! NE SOURTOUT PAS METTRE DE SLEEP CA BLOQUE LE TELECHARGEMENT
+                #time.sleep(1)
+                
+                
+                
                 print(pourcentage)
 
 
@@ -181,10 +191,30 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
         # Création du dossier s'il n'existe pas :
         # Fait par nous même à l'aide de la documentation de la bibliothèque os
-        if not os.path.exists(repertoire_donnees):
-            os.makedirs(repertoire_donnees)
-            os.makedirs(repertoire_donnees+'/csv')
-            os.makedirs(repertoire_donnees+'/utilisateur')
+        if not os.path.exists(repertoire_donnees+'/csv'):
+            
+            
+            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
+            fichier = repertoire_donnees+'/temp.zip'
+            
+            
+            telecharger(lien, fichier)
+            
+            with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
+            
+                # Extracting all the members of the zip 
+                # into a specific location.
+                zObject.extractall(
+                    path=repertoire_donnees)
+                
+            os.remove(os.path.join(repertoire_donnees,'temp.zip'))
+            changer_option("DERNIERE_MAJ", time.time())
+            return False
+                        
+                        
+            
+            
+            '''os.makedirs(repertoire_donnees+'/csv')'''
 
 
 
@@ -195,10 +225,10 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         
         # Création le fichier des infos s'il existe pas :
         # Source : cours de première sur l'utilisation des CSV
-        if not is_file_versions :
+        '''if not is_file_versions :
             os.path.join(repertoire_donnees, 'versions.csv')
             csv.writer(open(repertoire_donnees+'/versions.csv', "w")).writerow(['NOM', 'VERSION'])
-    
+    '''
     
     
             

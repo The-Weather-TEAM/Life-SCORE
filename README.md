@@ -579,4 +579,4 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 > Correction d'un problème avec la fonction avantages_inconvenients
 
-> Etude des téléchargements avec fichiers .zip (ils devraient être implémentés prochainement)
+> Téléchargement maintenant par un fichier zip (c'est 125x plus rapide), il ne reste plus qu'à implémenter l'interface.

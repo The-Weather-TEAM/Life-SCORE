@@ -552,6 +552,8 @@ def date_derniere_verification() -> str:
     - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
     derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction provient de classes.py
+    if derniere_maj_sec == 0 :
+        return "Aucune vérification."
     return strftime("%d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
 
 
@@ -928,8 +930,6 @@ def w_erreur(fenetre): # w pour window
 
 if not os.path.exists(repertoire_donnees):
     os.makedirs(repertoire_donnees)
-    os.makedirs(repertoire_donnees+'/csv')
-    os.makedirs(repertoire_donnees+'/utilisateur')
 
 
 '''
