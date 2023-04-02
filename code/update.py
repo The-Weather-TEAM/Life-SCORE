@@ -58,16 +58,17 @@ from classes import changer_option       # Utile pour changer les options (obvio
 
 
 
-'''
-Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
-ex: "44%  -  population  -> Fichier à jour
-
-- `pourcentage` contient le pourcentage du telechargement de tout les fichiers
-- `id` represent le nom du fichier (ex: population)
-- `message` contient le message à ajouter à la fin (ex: Fichier à jour)
-'''
 def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> str:
+    """
+    Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
+
+    ex: "44%  -  population  -> Fichier à jour
+
+    - `pourcentage` contient le pourcentage du telechargement de tout les fichiers
+    - `id` represent le nom du fichier (ex: population)
+    - `message` contient le message à ajouter à la fin (ex: Fichier à jour)
+    """
 
     pourcent_str = str(pourcentage)
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre

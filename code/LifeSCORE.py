@@ -719,6 +719,8 @@ def w_score(ville,win):
         carte_ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France", marker=True,text=str(ville)) # Insère la ville pour l'adresse (et format pour les arrondissements)
         carte_ville.set_tile_server("https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", max_zoom=22) # On decide quel carte et zoom on va utiliser
         carte_ville.place(relx=0.3, rely=0.18)
+    else:
+        win.iconphoto(False, icone_connexion)
     
 
 
@@ -746,6 +748,8 @@ def w_score(ville,win):
         msg_malus.place(relx=0.85,rely=0.45,anchor = CENTER)
         win.update()
         
+        change_etat_btn(btn_quitter) # Pour éviter des problèmes d'animations
+        change_etat_btn(btn_parametre)
         # Pour chaque entier naturel jusqu'à notre note
         for i in range(score_total_animation+1) :
                             
@@ -761,6 +765,8 @@ def w_score(ville,win):
             # Mise à jour de la page
             win.update()
             sleep(fonction_animation_score(i, score_total_animation)) 
+        change_etat_btn(btn_quitter) # Pour réactiver les bouttons
+        change_etat_btn(btn_parametre)
             
             
 
@@ -853,8 +859,7 @@ def avantages_inconvenients(dic):
 
     # Avantages
 
-    list_bonus= []
-    list_malus= []    
+    list_bonus = list_malus = []
     cle_maxi = cle_mini = "Valeur initiale"
     mini = maxi = 50 # Les malus seront compris entre 0 et 50
     const = 10
@@ -949,6 +954,7 @@ CREATION DE La FENETRE PRINCIPALE
 # Initialisation
 fenetrePrincipale = interface.CTk() # fenetre de tkinter
 icone = PhotoImage(file = nom_du_repertoire+'/systeme/icones/logo.png') # Icone provisoire (on doit la créer après la création de la fenêtre)
+icone_connexion = PhotoImage(file = nom_du_repertoire+'/systeme/icones/pas-internet.png')
 
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)

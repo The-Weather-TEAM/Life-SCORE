@@ -573,5 +573,10 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 
 02 Avril 2023 :
-> Les boutons utilisent maintenant des images.
+> Les boutons utilisent maintenant des images.;
+
 > Modification complète des polices d'écriture pour Windows / Linux Ubuntu.
+
+> Correction d'un problème avec la fonction avantages_inconvenients
+
+> Etude des téléchargements avec fichiers .zip (ils devraient être implémentés prochainement)

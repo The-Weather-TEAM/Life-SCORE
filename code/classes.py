@@ -674,12 +674,12 @@ class Donnees:
             "cloudcover": "Couverture nuageuse",
             "surface_pressure": "Pression de Surface",
             "windspeed_10m": "Vitesse du Vent",
-            "uv_index": "Index Ultra Violet",
-            "european_aqi_pm2_5": "Taille polluant 2.5μm",
-            "european_aqi_pm10": "Taille Polluant 10μm",
-            "european_aqi_no2": "Niveau Dioxyde d'azote",
-            "european_aqi_o3": "Niveau Ozone",
-            "european_aqi_so2": "Niveau dioxyde de soufre"
+            "uv_index": "Rayonnement Ultra-Violet",
+            "european_aqi_pm2_5": "Concentration en petit polluants",
+            "european_aqi_pm10": "Concentration en gros polluants",
+            "european_aqi_no2": "Concentration en NO2",
+            "european_aqi_o3": "Concentration en O3",
+            "european_aqi_so2": "Concentration en S=O2"
         }
 
         # calcule du note de chaque critere present dans valeursIdeales et donnees_moy
