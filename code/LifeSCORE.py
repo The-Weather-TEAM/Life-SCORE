@@ -439,7 +439,7 @@ def info(btn):
     windowInfo.minsize(width=int(510*4/3), height=384) # 768
 
     # Création des widgets
-    txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0)
+    txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0,border_width=2,border_color='grey')
     txt_info.insert("0.0", text = texte_info)
     txt_info.configure(state = "disabled", font = (polices[0],18),
                        wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
@@ -611,7 +611,7 @@ def w_question(fenetre):
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER)
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
     btn_entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
-    btn_arrondissement.place(relx=0.9, rely=0.9 ,anchor = SE)
+    btn_arrondissement.place(relx=0.9, rely=0.05 ,anchor = NE)
 
 
 def arrondissement(btn):
@@ -857,28 +857,31 @@ def avantages_inconvenients(dic):
 
     # Avantages
 
-    list_bonus = list_malus = []
+    liste = [''] * 10 
     cle_maxi = cle_mini = "Valeur initiale"
-    mini = maxi = 50 # Les malus seront compris entre 0 et 50
-    const = 10
+    
+    i = j = 0
 
-    if len(dic) < 10:
-        const = len(dic)
-    print(dic)
     print(dic.keys())
-    for i in range(const):
-
+    while i < 5 or j < 5 and i < len(dic) and j < len(dic):
+        mini = maxi = 50 # Les malus seront compris entre 0 et 50, les bonus entre 50 et 100
+        
         for cle in dic.keys():
-            if dic[cle] > maxi:
+            print(cle,dic[cle],maxi,mini)
+            if dic[cle] > maxi and cle not in liste:
                 maxi = dic[cle]
                 cle_maxi = cle
-                list_bonus.append(cle_maxi)
-            elif dic[cle] < mini:
+                
+            elif dic[cle] < mini and cle not in liste:
                 mini = dic[cle]
                 cle_mini = cle
-                list_malus.append(cle_mini)
+
+        liste[i] = cle_maxi
+        liste[-j-1] = cle_mini
+        i += 1 # Il est interdit d'écrire i,j += 1
+        j += 1
                 
-    return list_bonus, list_malus
+    return liste[:4],liste[5:]
 
 
 def plus_et_moins(pl,mal):
@@ -1001,11 +1004,11 @@ btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # SouthEastaussibasster pen
 
 # Placement des widgets
 btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-btn_quitter.place(relx=0.95, rely=0.9, anchor = S) # SouthEastaussibasster pendant toute l'exécution
+btn_quitter.place(relx=0.9, rely=0.9, anchor = SE) # Il devra aussi rester toute l'exécution
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
 credits.place(relx=0.5,rely=0.9, anchor = S)
-btn_info.place(relx=0.9, rely=0.9 ,anchor = SE) # SE = SouthEast (en bas à droite)
+btn_info.place(relx=0.9, rely=0.05 ,anchor = NE) # NE = NorthEast (en haut à droite)
 
 fenetrePrincipale.mainloop()
