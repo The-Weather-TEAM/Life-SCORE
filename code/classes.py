@@ -181,7 +181,7 @@ Idée et réalisation de Nathan
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
    
     #print(x)
-    m = (max - moyenne) / 50                    # On calcule le coef directeur
+    m = (max - 1.4*moyenne) / 50                    # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
    
     return (x-p)/m                              # On renvoie la note
@@ -220,7 +220,7 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recup_donnees_simple(self, csv) :
+    def recup_donnees_simple(self, csv, recursivité=False) :
         
         # On récupère le répertoire pour accéder au csv
         lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv/'+csv+'.csv'
@@ -261,7 +261,7 @@ class Donnees:
         # Au cas où il n'y a pas de données
         except IndexError : #Si pas de données
             print('Pas de données')
-            return 0
+            return None
         
         
             
@@ -273,7 +273,7 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
     
     '''
-    def recup_donnees_compter_par_habitant(self, csv):
+    def recup_donnees_compter_par_habitant(self, csv, recursivité=False, ancien_nom_ville=''):
         
         try:
             
@@ -340,8 +340,31 @@ class Donnees:
             return calculer_fonction_affine(a, b, note)
                 
         except : #Si pas de données
+            
+            
+            #! Nathan : je voulais faire de la récursivité pour transformer 'Paris 2e arrondissement' en 'Paris' et refaire la recherche pour les fichiers sans INSEE, mais la récusrivité n'a pas l'air de marcher en POO :(
+            '''            
+            if infos_csv[csv][2]['insee'] == 0 :
+        
+                ville = self.ville
+                ancien_nom = self.ville
+        
+                for char in ville: # pour gerer les arrondissements d'un ville
+                    if est_nombre(char): # on recherche un nombre pour separer le nom du ville
+                
+                        ville = ville.split(char)[0]
+                    break
+                
+                self.ville = ville
+                recup_donnees_compter_par_habitant(csv, True, ancien_nom)
+                
+            
+            '''
+            
+            
+            
             print('Pas de données')
-            return 0
+            return None
 
 
 
@@ -367,7 +390,7 @@ class Donnees:
                 nombre = 0
         except :
             print('Pas de données')
-            return 0
+            return None
         
         # On divise par le nombre d'habitants et on utilise la fonction affine
         note = nombre / self.habitant
@@ -401,7 +424,7 @@ class Donnees:
         
         except :
             print('Pas de données')
-            return 0
+            return None
 
 
 

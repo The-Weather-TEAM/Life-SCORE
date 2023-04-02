@@ -138,8 +138,8 @@
                                                                           "colonne_donnee" : [6],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "simple_affine",
-                                                                          "moyenne" : 11.7,
-                                                                          "max" : 25,
+                                                                          "moyenne" : 20,
+                                                                          "max" : 9,
                                                                           "categorie": "prix",
                                                                           "nom": "Le prix des maisons"
                                                                 
@@ -153,8 +153,8 @@
                                                                           "colonne_donnee" : [6],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "simple_affine",
-                                                                          "moyenne" : 14.8,
-                                                                          "max" : 40,
+                                                                          "moyenne" : 25,
+                                                                          "max" : 10,
                                                                           "categorie": "prix",
                                                                           "nom": "Le prix des appartements"
                                                                 
