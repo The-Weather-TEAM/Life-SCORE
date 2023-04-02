@@ -220,7 +220,7 @@ class Donnees:
     Pensé et réalisé par Nathan
     
     '''
-    def recup_donnees_simple(self, csv, recursivité=False) :
+    def recup_donnees_simple(self, csv, recursivité=False, ancien_nom_ville='') :
         
         # On récupère le répertoire pour accéder au csv
         lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv/'+csv+'.csv'
@@ -250,7 +250,8 @@ class Donnees:
         else :
             rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
             
-            
+        if recursivité :
+            self.ville = ancien_nom_ville
             
         try:
                 resultat = []
@@ -259,10 +260,22 @@ class Donnees:
                 return resultat
             
         # Au cas où il n'y a pas de données
-        except IndexError : #Si pas de données
+        except : #Si pas de données
+    
+            if recursivité :
+                self.ville = ancien_nom_ville
+                print('Pas de données')
+                return None
+               
+            if infos_csv[csv][2]['insee'] == 0 :
+        
+                ancien_nom = self.ville
+                self.ville = re.split(self.ville)[0]
+                self.recup_donnees_simple(csv, True, ancien_nom)
+            
             print('Pas de données')
             return None
-        
+
         
             
             
@@ -302,8 +315,8 @@ class Donnees:
             else :
                 res = fichier[fichier[liste_provisoire[0]] == self.ville]
             
-            
-            
+            if recursivité :
+                self.ville = ancien_nom_ville
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
@@ -341,28 +354,18 @@ class Donnees:
                 
         except : #Si pas de données
             
-            
-            #! Nathan : je voulais faire de la récursivité pour transformer 'Paris 2e arrondissement' en 'Paris' et refaire la recherche pour les fichiers sans INSEE, mais la récusrivité n'a pas l'air de marcher en POO :(
-            '''            
+            if recursivité :
+                self.ville = ancien_nom_ville
+                print('Pas de données')
+                return None
+               
             if infos_csv[csv][2]['insee'] == 0 :
         
-                ville = self.ville
                 ancien_nom = self.ville
-        
-                for char in ville: # pour gerer les arrondissements d'un ville
-                    if est_nombre(char): # on recherche un nombre pour separer le nom du ville
+                self.ville = re.split(self.ville)[0]
+                self.recup_donnees_compter_par_habitant(csv, True, ancien_nom)
                 
-                        ville = ville.split(char)[0]
-                    break
-                
-                self.ville = ville
-                recup_donnees_compter_par_habitant(csv, True, ancien_nom)
-                
-            
-            '''
-            
-            
-            
+
             print('Pas de données')
             return None
 

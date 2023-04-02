@@ -190,9 +190,9 @@
     }],
     
     "dose_rayonnements_telluriques":
-    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 1,
+    ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 0,
                                                                           "delimiteur" : ";",
-                                                                          "colonne_ville" : 0,
+                                                                          "colonne_ville" : 1,
                                                                           "colonne_donnee" : [3],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "simple_affine",

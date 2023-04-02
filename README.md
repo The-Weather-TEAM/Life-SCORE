@@ -595,3 +595,5 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 > Téléchargement maintenant par un fichier zip (c'est 125x plus rapide) & implémentation de l'interface. Marche avec la récusrsivité pour revérifier les fichiers après une première installation.
 
 > Plus de fichiers ou de csv test ! (suppression du fichier sport_test.csv)
+
+> Récursivité pour les fichiers ayant pas de code insee, et avec arrondissement (ex : Paris 2e arrondissement), si jamais on a que des données sur la ville et pas sur l'arrondissement, on refait la recherche pour toute la ville. à voir si on peut aussi le faire avec le code insee.
