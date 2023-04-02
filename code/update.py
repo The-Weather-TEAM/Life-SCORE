@@ -1,7 +1,7 @@
 '''
                         [UPDATE.PY]
-                            V.8
-             /!\  SANS LE MULTI-TELECHARGEMENT  /!\ 
+                            V.9
+          AVEC TELECHARGEMENT 125x PLUS RAPIDE !
                          
     Programme de téléchargement et mises à jour des données automatique
 
@@ -54,6 +54,8 @@ from classes import is_connected as connexion
 from classes import lire_option          # Utile pour lire les parametres d'utilisateur
 from classes import changer_option       # Utile pour changer les options (obvious)
 
+# Pour deziper
+from zipfile import ZipFile
 
 
 
@@ -74,6 +76,46 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
 
     return message
+
+
+
+
+def taille_zip(url):
+    informations = requests.head(url, allow_redirects=True)
+    content_length = informations.headers.get('Content-Length')
+    if content_length is None:
+        return None
+    else:
+        return int(content_length)
+
+
+
+
+def telecharger(lien, nomfichier):
+    taille = taille_zip(lien)
+    fichier_zip = requests.get(lien, stream=True)
+    taille_cache = 1024
+    bits_telecharges = 0
+    debut = time.time()
+    with open(nomfichier, 'wb') as f:
+        for chunk in fichier_zip.iter_content(chunk_size=taille_cache):
+            if chunk:
+                f.write(chunk)
+                bits_telecharges += len(chunk)
+                
+                #! POUR RAF : Voici le pourcentage qui est print
+                
+                pourcentage = bits_telecharges / taille * 100
+                
+                
+                #! NE SOURTOUT PAS METTRE DE SLEEP CA BLOQUE LE TELECHARGEMENT
+                #time.sleep(1)
+                
+                
+                
+                print(pourcentage)
+
+
 
 
 
@@ -149,10 +191,30 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
         # Création du dossier s'il n'existe pas :
         # Fait par nous même à l'aide de la documentation de la bibliothèque os
-        if not os.path.exists(repertoire_donnees):
-            os.makedirs(repertoire_donnees)
-            os.makedirs(repertoire_donnees+'/csv')
-            os.makedirs(repertoire_donnees+'/utilisateur')
+        if not os.path.exists(repertoire_donnees+'/csv'):
+            
+            
+            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
+            fichier = repertoire_donnees+'/temp.zip'
+            
+            
+            telecharger(lien, fichier)
+            
+            with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
+            
+                # Extracting all the members of the zip 
+                # into a specific location.
+                zObject.extractall(
+                    path=repertoire_donnees)
+                
+            os.remove(os.path.join(repertoire_donnees,'temp.zip'))
+            changer_option("DERNIERE_MAJ", time.time())
+            return False
+                        
+                        
+            
+            
+            '''os.makedirs(repertoire_donnees+'/csv')'''
 
 
 
@@ -163,10 +225,10 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         
         # Création le fichier des infos s'il existe pas :
         # Source : cours de première sur l'utilisation des CSV
-        if not is_file_versions :
+        '''if not is_file_versions :
             os.path.join(repertoire_donnees, 'versions.csv')
             csv.writer(open(repertoire_donnees+'/versions.csv', "w")).writerow(['NOM', 'VERSION'])
-    
+    '''
     
     
             

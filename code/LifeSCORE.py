@@ -552,6 +552,8 @@ def date_derniere_verification() -> str:
     - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
     derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction provient de classes.py
+    if derniere_maj_sec == 0 :
+        return "Aucune vérification."
     return strftime("%d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
 
 
@@ -924,8 +926,6 @@ def w_erreur(fenetre): # w pour window
 
 if not os.path.exists(repertoire_donnees):
     os.makedirs(repertoire_donnees)
-    os.makedirs(repertoire_donnees+'/csv')
-    os.makedirs(repertoire_donnees+'/utilisateur')
 
 
 '''
@@ -1001,7 +1001,7 @@ btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # SouthEastaussibasster pen
 
 # Placement des widgets
 btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # SouthEastaussibasster pendant toute l'exécution
+btn_quitter.place(relx=0.95, rely=0.9, anchor = S) # SouthEastaussibasster pendant toute l'exécution
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
