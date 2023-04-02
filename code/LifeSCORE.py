@@ -693,7 +693,6 @@ def w_score(ville,win):
     
     # Initialisation 
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
-
     # Données PROVISOIRES !!!
     score = Donnees_ville.note_finale() # Provisoire
     dico = Donnees_ville.notes_finales # Un dictionnaire
