@@ -73,7 +73,7 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     """
 
     pourcent_str = str(pourcentage)
-    message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
+    message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend de la longueur du nombre
 
     return message
 
@@ -91,7 +91,7 @@ def taille_zip(url):
 
 
 
-def telecharger(lien, nomfichier):
+def telecharger(lien, nomfichier,barre,win,msg_prct):
     taille = taille_zip(lien)
     fichier_zip = requests.get(lien, stream=True)
     taille_cache = 1024
@@ -105,8 +105,10 @@ def telecharger(lien, nomfichier):
                 
                 #! POUR RAF : Voici le pourcentage qui est print
                 
-                pourcentage = bits_telecharges / taille * 100
-                
+                pourcentage = bits_telecharges / taille *100 #.set prend que entre 0 et 1 donc faut pas mettre en %
+                barre.set(pourcentage/100)
+                msg_prct.configure(text = f"{round(pourcentage)}%")
+                win.update()
                 
                 #! NE SOURTOUT PAS METTRE DE SLEEP CA BLOQUE LE TELECHARGEMENT
                 #time.sleep(1)
@@ -197,8 +199,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
             fichier = repertoire_donnees+'/temp.zip'
             
-            
-            telecharger(lien, fichier)
+            message.configure(text = 'téléchargement des fichiers... \n Cela peut prendre quelques minutes')
+            telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage)
             
             with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
             

@@ -225,6 +225,8 @@ def telechargement(bouton,fenetre):
     progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
     message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
     
+    windowDownload.update()
+    
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
@@ -876,8 +878,7 @@ def avantages_inconvenients(dic):
                 mini = dic[cle]
                 cle_mini = cle
 
-        liste[i] = cle_maxi
-        liste[-j-1] = cle_mini
+        liste[i], liste[-j-1] = cle_maxi, cle_mini
         i += 1 # Il est interdit d'écrire i,j += 1
         j += 1
                 
