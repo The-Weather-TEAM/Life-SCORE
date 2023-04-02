@@ -579,4 +579,6 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 > Correction d'un problème avec la fonction avantages_inconvenients
 
-> Téléchargement maintenant par un fichier zip (c'est 125x plus rapide), il ne reste plus qu'à implémenter l'interface.
+> Téléchargement maintenant par un fichier zip (c'est 125x plus rapide) & implémentation de l'interface. Marche avec la récusrsivité pour revérifier les fichiers après une première installation.
+
+> Plus de fichiers ou de csv test ! (suppression du fichier sport_test.csv)

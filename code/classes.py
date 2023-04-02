@@ -530,61 +530,6 @@ class Donnees:
         
         
         
-        
-    '''
-    METHODE POUR NOTER LES ETABLISSEMENTS SPORTIFS
-    
-    Fait par Raphaël et Nathan
-    
-    #! VERSION QU'AVEC LE CSV TEST SPORT
-    '''
-    def note_par_habitants(self,csv,colones,m_p,delim = ','):
-        """
-        Methode qui renvoie une note en fonction des habitants
-        ajoute la valeur de la note a self.liste_notes et la retourne (si on veut l'afficher)
-        
-        csv : str qui donne le nom du csv en question
-        colones : list les colones utilisées a voir si on peut pas l'automatiser ['ComInsee','Nombre_equipements']
-        m_p : list de int (mx+p) pour la fonction affine
-        delim : str le delimiteur, une virgule par défaut
-        """
-        data = p.read_csv(self.repertoire + '/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
-        #data = p.read_csv(self.repertoire + '/donnees/csv/' + csv ,delimiter=delim ,usecols=colones,low_memory=False) 
-
-        rangee = data[(data[colones[0]]== self.code_insee)] #/!/ data[colones][0] != data[colones[0]] /!/
-        #/!/ Il MANQUE LA CONDITION DE "LA VILLE Y EST ?" /!/
-        try:
-            nbr_etab = rangee.values[0][1]
-        
-            # Calcul établiseements par habitants
-            habitant = self.recuperation_donnees('population')[0]
-            etab_par_hab = nbr_etab / int(habitant)
-            print("Le csv sport (test)\n - Par habitant :", etab_par_hab)
-
-            # Calcul réalisé avec les données Françaises
-            #16071.4*etab_sport_par_hab - 3.57143
-            note = m_p[0]*etab_par_hab + m_p[1]
-        
-            # Pour les petites villes avec plus de 0.006 étab / habitants
-            note = int(note)
-            if note > 100 :
-                note = 100
-                
-            if note < 0 :
-                note = 0
-            print(" - Note /100 :", note)
-        except IndexError : # Si pas de données
-            return None
-            
-            
-        # MOYENNE NATIONALE : 311000/67500000 habitants (envioron 4/1000) ->  note de 50/100
-        # MAX EN FRANCE DANS LES GRANDES VILLES : environ 6/1000 habitants -> note de 100/100
-        # ON TROUVE CETTE FONCTION : f(x) = 16071.4*x - 3.57143
-        self.liste_notes.append(note)
-        self.notes_finales["sport"]=note
-        return note
-
-
     def notes_meteo_ville(self, ville: str) -> ("dict | None"):
         """
         Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals

@@ -103,19 +103,10 @@ def telecharger(lien, nomfichier,barre,win,msg_prct):
                 f.write(chunk)
                 bits_telecharges += len(chunk)
                 
-                #! POUR RAF : Voici le pourcentage qui est print
-                
                 pourcentage = bits_telecharges / taille *100 #.set prend que entre 0 et 1 donc faut pas mettre en %
                 barre.set(pourcentage/100)
                 msg_prct.configure(text = f"{round(pourcentage)}%")
                 win.update()
-                
-                #! NE SOURTOUT PAS METTRE DE SLEEP CA BLOQUE LE TELECHARGEMENT
-                #time.sleep(1)
-                
-                
-                
-                print(pourcentage)
 
 
 
@@ -195,11 +186,18 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         # Fait par nous même à l'aide de la documentation de la bibliothèque os
         if not os.path.exists(repertoire_donnees+'/csv'):
             
+            '''
+            TELECHARGEMENT AVEC FICHIER ZIP
+            BCP BCP PLUS RAPIDE QU'AVANT 
             
+            Pensé par Nathan
+            Réalisé par Nathan (intégration à l'interface par Raphaël)
+            
+            '''
             lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
             fichier = repertoire_donnees+'/temp.zip'
             
-            message.configure(text = 'téléchargement des fichiers... \n Cela peut prendre quelques minutes')
+            message.configure(text = 'Téléchargement des fichiers...\nCela peut prendre quelques minutes')
             telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage)
             
             with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
@@ -211,12 +209,9 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 
             os.remove(os.path.join(repertoire_donnees,'temp.zip'))
             changer_option("DERNIERE_MAJ", time.time())
-            return False
-                        
-                        
             
-            
-            '''os.makedirs(repertoire_donnees+'/csv')'''
+            # RECURSIVITE pour vérifier si les fichiers téléchargés sont les derniers dispo
+            return executer(barre_progres,fenetre,message,message_pourcentage)
 
 
 
@@ -224,16 +219,6 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         nouvelles_informations = {}
 
 
-        
-        # Création le fichier des infos s'il existe pas :
-        # Source : cours de première sur l'utilisation des CSV
-        '''if not is_file_versions :
-            os.path.join(repertoire_donnees, 'versions.csv')
-            csv.writer(open(repertoire_donnees+'/versions.csv', "w")).writerow(['NOM', 'VERSION'])
-    '''
-    
-    
-            
 
         # Lecture du fichier CSV des versions :
         # Source : cours de première sur la bibliothèque Pandas
