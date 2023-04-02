@@ -599,6 +599,7 @@ def w_question(fenetre):
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
     fenetre.iconphoto(False, icone)
 
+    #!fenetre.bind('<Return>', lambda:ville(entree,msg_ville,fenetre))
 
     # Création des widgets
     entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = (polices[0],18))
