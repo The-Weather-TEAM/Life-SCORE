@@ -182,10 +182,12 @@ import platform
 systeme_exploitation = platform.system()
 
 if systeme_exploitation == 'Linux' :
-    polices = ['Ubuntu']
+    polices = ['Ubuntu',
+               'Ubuntu']
     
 else :
-    polices = ['Arial']
+    polices = ['Arial',
+               'Arial Black']
 
 
 
@@ -482,7 +484,7 @@ def parametres(bouton):
     # Création des widgets :
 
     # Tous les messages présents :
-    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= (polices[0], 40, 'bold'), text_color="#29A272")
+    msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= (polices[1], 40, 'bold'), text_color="#29A272")
     msg_frequence = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR", font= (polices[0], 25), text_color="#29A272")
     msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_derniere_verification()}", font= (polices[0], 16), text_color="#646464")
     msg_apparence = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION", font= (polices[0], 25), text_color="#29A272")
@@ -706,7 +708,7 @@ def w_score(ville,win):
     print(dico, "\n\n\n\n\n")
 
     # Transformation des données en texte
-    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=(polices[0],taille_police(str(ville)), 'bold'), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
+    msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=(polices[1],taille_police(str(ville)), 'bold'), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
     
@@ -742,7 +744,7 @@ def w_score(ville,win):
         # Mise en place du reste du texte, pour éviter une surcharge du nombre d'elements à rafraichir
         msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =(polices[0],25, 'bold'), justify=LEFT)
         msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =(polices[0],25,'bold'), justify=LEFT)
-        msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=(polices[0], 80, 'bold'), justify=CENTER) # On initialise
+        msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=(polices[1], 80, 'bold'), justify=CENTER) # On initialise
 
         # Placements
         msg_note.place(relx=0.9,rely=0.2, anchor=CENTER)# Nord Est
@@ -756,7 +758,7 @@ def w_score(ville,win):
             couleur = couleur_score(i)
 
             # Informations :
-            msg_annonce_note = interface.CTkLabel(win, text='Note :', font=(polices[0], 50, 'bold'), justify=CENTER)
+            msg_annonce_note = interface.CTkLabel(win, text='Note :', font=(polices[1], 50, 'bold'), justify=CENTER)
             msg_note.configure(text=str(i), text_color=couleur)
 
 
@@ -772,7 +774,7 @@ def w_score(ville,win):
     else:
         
         # Informations :
-        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =(polices[0],60),
+        msg_note = interface.CTkLabel(win, text=f'Note : \n' +score +'  ' ,text_color ='grey', font =(polices[1],60),
                                        justify=CENTER)
         msg_NonAttribue = interface.CTkLabel(win,text="Nous n'avons pas pu récuperer les informations de cette ville",
                                               width = 1000, font =(polices[0],30), justify=LEFT)
