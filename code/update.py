@@ -54,6 +54,8 @@ from classes import is_connected as connexion
 from classes import lire_option          # Utile pour lire les parametres d'utilisateur
 from classes import changer_option       # Utile pour changer les options (obvious)
 
+# Pour deziper
+from zipfile import ZipFile
 
 
 
@@ -74,6 +76,36 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend du longeur du nombre
 
     return message
+
+
+
+
+def taille_zip(url):
+    informations = requests.head(url, allow_redirects=True)
+    content_length = informations.headers.get('Content-Length')
+    if content_length is None:
+        return None
+    else:
+        return int(content_length)
+
+
+
+
+def telecharger(lien, nomfichier):
+    taille = taille_zip(lien)
+    fichier_zip = requests.get(lien, stream=True)
+    taille_cache = 1024
+    bits_telecharges = 0
+    debut = time.time()
+    with open(nomfichier, 'wb') as f:
+        for chunk in fichier_zip.iter_content(chunk_size=taille_cache):
+            if chunk:
+                f.write(chunk)
+                bits_telecharges += len(chunk)
+                pourcentage = bits_telecharges / taille * 100
+                print(pourcentage)
+
+
 
 
 

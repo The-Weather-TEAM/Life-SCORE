@@ -6,7 +6,7 @@ import os
 repertoire_courant = os.path.dirname(__file__)
 repertoire_donnees = os.path.join(repertoire_courant)
 
-lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test2.zip'
+lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
 
 
 
