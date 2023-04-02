@@ -128,22 +128,18 @@ global message_pourcentage  # STR | Renvoie l'avancée du téléchargement
 
 
 
-# Variables globales pour les images des boutons, fait par Nathan
+# initialisations des images des boutons, fait par Nathan
 images_boutons =nom_du_repertoire+'/systeme/icones/'
 
-global image_btn_chercher
 image_btn_chercher = interface.CTkImage(light_image=Image.open(images_boutons+'chercher.png'),
                                 size=(50, 50))
 
-global image_btn_quitter
 image_btn_quitter = interface.CTkImage(light_image=Image.open(images_boutons+'fermer.png'),
                                 size=(100, 100))
 
-global image_btn_parametres
 image_btn_parametres = interface.CTkImage(light_image=Image.open(images_boutons+'parametres.png'),
                                 size=(100, 100))
 
-global image_btn_aide
 image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
                                 size=(100, 100))
 
