@@ -569,3 +569,9 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 > Passe la vérification des fichiers csv en fonction du temps de maj
 
 > Première modification des polices pour la compatibilité linux / windows
+
+
+
+02 Avril 2023 :
+> Les boutons utilisent maintenant des images.
+> Modification complète des polices d'écriture pour Windows / Linux Ubuntu.
