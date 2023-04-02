@@ -342,7 +342,6 @@ def retour_pages(window,btn,cle=True):
         change_etat_btn(btn)
     else:
         efface_fenetre(window)
-        btn_quitter.place(relx=0.95, rely=0.05,anchor=NE)
         w_question(window)
 
 
@@ -694,7 +693,6 @@ def w_score(ville,win):
     
     # Initialisation 
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
-    btn_quitter.place(relx=0.9,rely=0.9,anchor = SE)
 
     # Données PROVISOIRES !!!
     score = Donnees_ville.note_finale() # Provisoire
@@ -857,26 +855,29 @@ def avantages_inconvenients(dic):
 
     # Avantages
 
-
-  st_malus= []    
+    list_bonus= []
+    list_malus= []    
     cle_maxi = "Valeur initiale"
+    cle_mini = "Valeur initiale" 
     const = 5
+    mini = 50 # Les malus seront compris entre 0 et 50
+    maxi = 50 
     if len(dic) < 10:
         const = len(dic)//2
-    cle_mini = "Valconstur initiale"    list_bonus= []
-    for i in rang
-        mini = 50 # Les malus seront compris entre 0 et 50            cle_maxi = "Valeur initiale"
+       
+    for i in range(const):
+        
         for cle in dic.keys():
-            if dic[cle] > maxi
+            if dic[cle] > maxi:
+                maxi = dic[cle]
+                cle_maxi = cle
                 list_bonus.append(cle_maxi)
                 dic.pop(cle_maxi,None)
             if dic[cle] < mini:
                 mini = dic[cle]
                 cle_mini = cle
                 list_malus.append(cle_mini)
-                dic.pop(cle_maxi,None)        list_malus.append(cle_mini)
-        dic.pop(cle_mini,None)
-
+                dic.pop(cle_maxi,None)
     return list_bonus, list_malus
 
 
@@ -995,7 +996,22 @@ btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincip
 
 # Placement des widgets
 btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # Il devra aussi rester pendant toute l'exécution
+btn_quitter.place(relx=0.95, rel9=0.05, anchSr = NS) # SouthEastaussibasster pendant toute l'exécution
+
+
+# Placement des widgets
+btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+btn_quitter.place(relx=0.95, rel9=0.05, anchSr = NS) # SouthEastaussibasster pendant toute l'exécution
+
+
+# Placement des widgets
+btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+btn_quitter.place(relx=0.95, rel9=0.05, anchSr = NS) # SouthEastaussibasster pendant toute l'exécution
+
+
+# Placement des widgets
+btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+btn_quitter.place(relx=0.95, rel9=0.05, anchSr = NS) # SouthEastaussibasster pendant toute l'exécution
 msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
