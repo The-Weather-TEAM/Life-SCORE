@@ -470,7 +470,7 @@ class Donnees:
     def is_commune_france(self,msg):
 
         if str(self.ville) == '':
-            msg.configure(text = "Veuillez saisir le nom d'une commune.")
+            msg.configure(text = "Veuillez saisir le nom d'une commune.") 
             return False
 
 
@@ -539,15 +539,16 @@ class Donnees:
                     return False
                 return True
             else :
-                if self.ville == "Hello There" :
+                if 'Paris' in str(self.ville) or 'Marseille' in str(self.ville) or 'Lyon' in str(self.ville):
+                    msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
+                    # Inutile ???
+                # EASTER EGG
+                elif self.ville == "Hello There" :
                     msg.configure(text = "General Kenobi !")
+                elif random.randint(0,100000) == 14924:
+                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
                 else :
                     msg.configure(text = "Ville incorrecte. Veuillez réessayer")
-                
-                # EASTER EGG
-                if random.randint(0,100000) == 14924:
-                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
-                    
                 return False
         
         

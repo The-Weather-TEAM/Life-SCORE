@@ -105,12 +105,25 @@ Changements :
 
 
 
-# Projet d'interface finale
+# Interface actuelle (preview v0.6)
 ### Page d'accueil :
-![image](https://user-images.githubusercontent.com/104134380/215339265-72d5fd3b-1e61-4d31-a90f-40b565ae0de9.png)
+![Capture d'écran_20230402_205543](https://user-images.githubusercontent.com/104134380/229373074-3dccc061-0095-40b5-b686-9e4d6f946ef7.png)
+
 
 ### Page de paramètres :
-![image](https://user-images.githubusercontent.com/104134380/215340861-4d5b28cd-eb84-4761-b3e2-58783fd12816.png)
+![Capture d'écran_20230402_205550](https://user-images.githubusercontent.com/104134380/229373077-5430d913-4c3c-4c4b-a334-bbef6e2ff310.png)
+
+
+### Page d'infos :
+![Capture d'écran_20230402_205558](https://user-images.githubusercontent.com/104134380/229373088-f19b8e88-b49d-4e59-989b-9a0d62e6aec9.png)
+
+
+### Page de téléchargement :
+![Capture d'écran_20230402_205606](https://user-images.githubusercontent.com/104134380/229373104-251e1da5-57c3-4905-aa60-137d49fc03bc.png)
+
+
+### Page de notation :
+![Capture d'écran_20230402_205622](https://user-images.githubusercontent.com/104134380/229373119-c7fdd02c-8934-46b8-ac2f-960dd8b11879.png)
 
 
 
