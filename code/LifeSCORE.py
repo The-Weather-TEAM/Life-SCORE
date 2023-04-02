@@ -663,10 +663,6 @@ def ville(entree,msg,fenetre):
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
         
-        #! NATHAN : POUR MODIFIER le curseur et le mettre en mode je bosse, mais ça marche pas
-        fenetre.config(cursor="watch")
-        fenetre.update()
-        
         msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
         #fonction_barre_chargement.run()
@@ -720,7 +716,7 @@ def w_score(ville,win):
         carte_ville.set_tile_server("https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", max_zoom=22) # On decide quel carte et zoom on va utiliser
         carte_ville.place(relx=0.3, rely=0.18)
     else:
-        win.iconphoto(False, icone_connexion)
+        win.iconphoto(False, icone_connexion) # Affiche l'icone d'erreur
     
 
 
