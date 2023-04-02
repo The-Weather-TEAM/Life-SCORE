@@ -29,7 +29,7 @@ def calcul_note_ideale(valeursIdeales :dict, valeursSaisies: dict) -> dict:
     # calcule le rapport entre les donnes local est la moyenne global
     listDeNotes = {}
 
-    for critere in valeursIdeales.keys(): # pour chaque critere dont on a un valeur desiré
+    for critere in valeursSaisies.keys(): # pour chaque critere dont on a un valeur desiré
         valMin, valIdeal, valMax = valeursIdeales[critere]
         valSaisit = valeursSaisies[critere]
 
