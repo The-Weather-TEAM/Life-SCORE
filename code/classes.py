@@ -557,7 +557,7 @@ class Donnees:
         
         
         
-    def notes_meteo_ville(self, ville: str) -> ("dict | None"):
+    def notes_meteo_ville(self, ville: str) -> dict:
         """
         Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals
         
@@ -611,8 +611,8 @@ class Donnees:
 
                 tout_les_donnees += list(ville_air["hourly"].items()) # on ajoute tout ces donnes a la liste de donnees
         else:
-            return None
-        if len(tout_les_donnees) == 0: return None # si vide, il y a pas de notes a faire
+            return {}
+        if len(tout_les_donnees) == 0: return {} # si vide, il y a pas de notes a faire
 
         donnees_moy = {} # va contenir les donnees moyennes de chaque critere
 
@@ -733,7 +733,7 @@ class Donnees:
         """
         
         if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
-            notes_meteo = {'test':50} #! test, ne marche pas recup notes meteo
+            notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes (# ?pq on utilise pas just le dico?)
 

@@ -1000,10 +1000,10 @@ btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.w
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                     command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent',hover = False) # Ouvre la page de paramètres
 
-btn_info.bind('<Enter>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
-                                size=(100, 100)))))
-btn_info.bind('<Leave>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'test.jpg'),
-                                size=(100, 100)))))
+# btn_info.bind('<Enter>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
+#                                 size=(100, 100)))))
+# btn_info.bind('<Leave>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'test.jpg'),
+#                                 size=(100, 100)))))
 
 
 # Placement des widgets
