@@ -870,17 +870,18 @@ def avantages_inconvenients(dic):
         
         for cle in dic.keys():
             print(cle,dic[cle],maxi,mini)
-            if dic[cle] > maxi and cle not in liste:
+            if dic[cle] > maxi and (cle,dic[cle]) not in liste:
                 maxi = dic[cle]
                 cle_maxi = cle
                 
-            elif dic[cle] < mini and cle not in liste:
+            elif dic[cle] < mini and (cle,dic[cle]) not in liste:
                 mini = dic[cle]
                 cle_mini = cle
 
-        liste[i], liste[-j-1] = cle_maxi, cle_mini
+        liste[i], liste[-j-1] = (cle_maxi,dic[cle_maxi]), (cle_mini,dic[cle_mini])
         i += 1 # Il est interdit d'écrire i,j += 1
         j += 1
+        print(liste)
                 
     return liste[:4],liste[5:]
 
@@ -893,10 +894,11 @@ def plus_et_moins(pl,mal):
     '''
     plus, moins = "Les Avantages : ", "Les Inconvénients :" # texte a retourner
     for val_plus in pl:
-        plus = plus + "\n - " + val_plus
+        plus = plus + "\n - " + val_plus[0] + f' : {val_plus[1]}'
+
     for val_moins in mal:
-        moins = moins + "\n - " + val_moins
-    #print(plus,'\n',moins)
+        moins = moins + "\n - " + val_moins[0] + f' : {val_moins[1]}'
+        
     return plus,moins
 
 

@@ -733,7 +733,7 @@ class Donnees:
         """
         
         if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
-            notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo
+            notes_meteo = {'test':50} #! test, ne marche pas recup notes meteo
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes (# ?pq on utilise pas just le dico?)
 
