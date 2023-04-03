@@ -894,10 +894,10 @@ def plus_et_moins(pl,mal):
     '''
     plus, moins = "Les Avantages : ", "Les Inconvénients :" # texte a retourner
     for val_plus in pl:
-        plus = plus + "\n - " + val_plus[0] + f' : {val_plus[1]}'
+        plus = plus + "\n - " + val_plus[0] + f' : {int(val_plus[1])}'
 
     for val_moins in mal:
-        moins = moins + "\n - " + val_moins[0] + f' : {val_moins[1]}'
+        moins = moins + "\n - " + val_moins[0] + f' : {int(val_moins[1])}'
         
     return plus,moins
 
