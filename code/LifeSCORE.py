@@ -599,7 +599,8 @@ def w_question(fenetre):
     fenetre.title('LifeScore  |  Requête de la commune') # Changement du titre de la fenêtre
     fenetre.iconphoto(False, icone)
 
-    #!fenetre.bind('<Return>', lambda:ville(entree,msg_ville,fenetre))
+    """fenetre.bind('<Return>', lambda:ville(entree,msg_ville,fenetre))
+    fenetre.update()"""
 
     # Création des widgets
     entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = (polices[0],18))
@@ -994,9 +995,15 @@ btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale
 credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
                                 font = (polices[0],19), pady=1,justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),image=image_btn_aide, hover = False, fg_color='transparent') # Ouvre la page d'instructions
+                                command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),
+                                image=image_btn_aide, hover = False, fg_color='transparent') # Ouvre la page d'instructions
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                     command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent',hover = False) # Ouvre la page de paramètres
+
+btn_info.bind('<Enter>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
+                                size=(100, 100)))))
+btn_info.bind('<Leave>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'test.jpg'),
+                                size=(100, 100)))))
 
 
 # Placement des widgets
