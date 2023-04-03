@@ -97,9 +97,7 @@ Changements :
 
 - Disponible maintenant sur Linux en installant trois compléments :
 
-`sudo apt get install python3-pip` ; 
-`sudo apt get install python3-tk` & 
-`sudo apt get install python3-pil.imagetk`
+`sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
 
 
 
