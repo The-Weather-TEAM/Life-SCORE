@@ -674,18 +674,21 @@ class Donnees:
         - idee du Group, fait par Thor.
         """
         assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
-
+        print(notes)
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
             #! Besoin d'aide pour choisir quoi va avec quoi
             # ex: si Activite est 0, monuments_historiques serait pas pris en compte dans la note final
-            "Activite": ["monuments_historiques"],
-            "Age": [],
-            "Scolarite": ["sport"],
-            "Enfants": ["ecoles", "colleges", "lycees", "sport"],
-            "Culture": ["monuments_historiques"],
-            "Citadin": [],
-            "Travail": [],
-            "Cherche_Emploi": []
+            "Ecole": ["Les écoles"],
+            "College": ["Les collèges"],
+            "Lycee": ["Les lycées"],
+            "Police": ["Les forces de l'ordre"],
+            "Festivals": ["Les festivals"],
+            "Musee": ["Les musées"],
+            "Monuments": ["Les monuments historiques"],
+            "m2maison": ["Le prix des maisons"],
+            "m2appart": ["Le prix des appartements"],
+            "Radon": ["L'exposition nucléaires", "La radioactivité"], #? ajouter "Rayonnement Ultra-Violet" ?
+            "CoeurDeVille": ["Les projets de rénovation", "Le prix des maisons", "Le prix des appartements"] # meilleur qualité de vie si moins cher
         }
 
         dictionaire_note = {"sum_numerateur": 0, "sum_denumerateur": 0} # (numerateur / denumerateur) d'un moyenne
