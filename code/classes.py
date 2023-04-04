@@ -668,8 +668,8 @@ class Donnees:
     """
     def applique_coefs_QCM(self, qcm_reponses: dict, notes: dict) -> dict:
         """
-        Applique les choix du QCM aux notes pour que les notes en question
-        sont pris en compte ou pas
+        Applique les coefs des choix du QCM aux notes pour que les notes en question 
+        sont compté plus ou moins dans la note finale.
         
         - idee du Group, fait par Thor.
         """
@@ -688,15 +688,27 @@ class Donnees:
             "Cherche_Emploi": []
         }
 
-        for reponse, valeur in qcm_reponses.items(): # pour chaque reponse du qcm
-            if not valeur: # si c'est 0 (donc si c'est non)
-                criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
-                
-                for critere in criteres: # pour chaque critere impacté par cette reponse
-                    if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
-                        del notes[critere] # on la suprimme pour enlever son impact sur la note du vile
+        dictionaire_note = {"sum_numerateur": 0, "sum_denumerateur": 0} # (numerateur / denumerateur) d'un moyenne
 
-        return notes # renvoi nouveau dictionaire de notes
+
+
+        for reponse, valeur in qcm_reponses.items(): # pour chaque reponse du qcm
+            coef = 2 if valeur else 0.5 # coef de 2 si oui, sinon de 0.5
+
+            criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
+            
+            
+            for critere in criteres: # pour chaque critere impacté par cette reponse
+                if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
+                    dictionaire_note["sum_numerateur"] += notes[critere]*coef # on calcule la note avec son coef
+                    dictionaire_note["sum_denumerateur"] += coef # on ajoute son coef au somme denumerateur
+                    del notes[critere] # vue qu'on a traité ce critere, on veut plus la re-traiter
+
+        # on rajoute les notes qui sont de coef 1
+        dictionaire_note["sum_numerateur"] += sum(list(notes.values())) 
+        dictionaire_note["sum_denumerateur"] += len(notes.keys())
+
+        return dictionaire_note # renvoi nouveau dictionaire de notes
             
 
 
@@ -735,10 +747,11 @@ class Donnees:
         if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
-            self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes (# ?pq on utilise pas just le dico?)
+            self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes
 
-        # change quels notes sont utile dependant des choix de QCM
-        self.notes_finales = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
+        # Applique les coefs aux notes par rapport au choix du QCM
+        note_moyenne_avec_coef = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
+
 
         # Pour tester avant de tout envoyer
         print("################################",
@@ -752,16 +765,16 @@ class Donnees:
         Création de la note finale
         Fait par Raphaël
         '''
-        note_finale = 0
-        for i in range(len(self.liste_notes)) :
-            if self.liste_notes[i] != None:
-                note_finale += int(self.liste_notes[i])
-            else:
-                self.liste_notes.pop(i) # Supprime tous les None
+        note_finale = int(note_moyenne_avec_coef["sum_numerateur"] / note_moyenne_avec_coef["sum_denumerateur"])
+        # for i in range(len(self.liste_notes)) : #? tu veut le garder ça raphael?
+        #     if self.liste_notes[i] != None:
+        #         note_finale += int(self.liste_notes[i])
+        #     else:
+        #         self.liste_notes.pop(i) # Supprime tous les None
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
-        return int(note_finale / len(self.liste_notes))
+        return note_finale 
 
 
 
