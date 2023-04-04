@@ -88,7 +88,7 @@ def is_connected(url) :
 
     while temp == 0 :
         try :
-            requests.get(url, timeout=10)
+            requests.get(url, timeout=5)
             temp = 1
               
                 
