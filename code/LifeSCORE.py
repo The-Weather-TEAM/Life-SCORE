@@ -151,14 +151,17 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
-list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
-                ('Avez vous moins de 30 ans ?','Age'),
-                ('Etes vous etudiant ?','Scolarite'),                
-                ('Avez vous/Vivez vous avec des enfants ?','Enfants'),
-                ('La culture a-t-elle une place importante pour vous ?','Culture'),
-                ('préférez vous la ville à la campagne ?','Citadin'),
-                ('Avez vous un travail ?','Travail'),
-                ("Etes vous en recherche d'emploi ?","Cherche_Emploi")]
+list_Questions = [('Accordez-vous de l'importance à la recherche d'une école primaire lors de vos recherches ?','Ecole'),           # Reproduire les questions dans le même style que la première
+                ('Accordez-vous de l'importance à la recherche d'un collège lors de vos recherches ?','College'),
+                ('Accordez-vous de l'importance à la recherche d'un Lycée lors de vos recherches ?','Lycee'),                
+                ('Accordez-vous de l'importance à la proximité d'un commissariat ou d'une brigade de gendarmerie dans votre ville ?','Police'),
+                ('Participez-vous de façon régulière aux festivals que se trouve près  de chez vous ?','Festivals'),
+                ('Souhaiteriez-vous qu'il y ait un ou plusieurs musées dans votre ville ?','Musee'),
+                ('Êtes-vous à la recherche de monuments classés comme "monuments historiques" dans votre ville ?','Monuments'),
+                ("Envisagez-vous d'investir dans l'achat d'une maison ?","m2maison"),
+                ("Envisagez-vous d'investir dans l'achat d'un appartement ?","m2appart"),
+                ("Êtes-vous préoccupé(e) par la présence d'éléments radioactifs tels que le radon dans l'atmosphère ?","Radon"),
+                ("Êtes-vous favorable à l'amélioration des conditions de vie dans les villes de taille moyenne ?","CoeurDeVille")]
 
 dico_Reponses = {} # Traité dans coefficients.py
 
