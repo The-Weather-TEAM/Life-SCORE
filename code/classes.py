@@ -592,7 +592,7 @@ class Donnees:
             geoloc_ville = geoloc_ville.json()["results"][0] # on recupere les donnes qui nous interess dans la reponse
 
             # on demande tout les donnees meteogologique et de qualité d'air des APIs
-            ville_meteo = requests.get(f"https://archive-api.open-meteo.com/v1/archive?latitude={geoloc_ville['latitude']}&longitude={geoloc_ville['longitude']}&start_date=2022-01-01&end_date=2023-01-01&hourly=relativehumidity_2m,surface_pressure,cloudcover,windspeed_10m&daily=temperature_2m_mean,precipitation_sum&timezone=Europe%2FBerlin")
+            ville_meteo = requests.get(f"https://archive-api.open-meteo.com/v1/archive?latitude={geoloc_ville['latitude']}&longitude={geoloc_ville['longitude']}&start_date=2022-01-01&end_date=2023-01-01&hourly=relativehumidity_2m,surface_pressure,cloudcover,windspeed_10m&daily=temperature_2m_mean&timezone=Europe%2FBerlin")
             ville_air = requests.get(f"https://air-quality-api.open-meteo.com/v1/air-quality?latitude={geoloc_ville['latitude']}&longitude={geoloc_ville['longitude']}&hourly=uv_index,european_aqi_pm2_5,european_aqi_pm10,european_aqi_no2,european_aqi_o3,european_aqi_so2")
 
             if ville_meteo.status_code == 200: # si on recoi les données meteorologique de la ville
@@ -610,9 +610,9 @@ class Donnees:
                 del ville_air["hourly"]["time"] # pour iterer plus facilement les valeurs
 
                 tout_les_donnees += list(ville_air["hourly"].items()) # on ajoute tout ces donnes a la liste de donnees
-        else:
+        else: # si on peut pas acceder l'api de geo-location
             return {}
-        if len(tout_les_donnees) == 0: return {} # si vide, il y a pas de notes a faire
+        if len(tout_les_donnees) == 0: return {} # si vide (aucun des liens ont connecté), il y a pas de notes a faire
 
         donnees_moy = {} # va contenir les donnees moyennes de chaque critere
 
