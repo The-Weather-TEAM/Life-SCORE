@@ -677,18 +677,13 @@ class Donnees:
         print(notes)
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
             #! Besoin d'aide pour choisir quoi va avec quoi
-            # ex: si Activite est 0, monuments_historiques serait pas pris en compte dans la note final
-            "Ecole": ["Les écoles"],
-            "College": ["Les collèges"],
-            "Lycee": ["Les lycées"],
-            "Police": ["Les forces de l'ordre"],
-            "Festivals": ["Les festivals"],
-            "Musee": ["Les musées"],
-            "Monuments": ["Les monuments historiques"],
-            "m2maison": ["Le prix des maisons"],
-            "m2appart": ["Le prix des appartements"],
-            "Radon": ["L'exposition nucléaires", "La radioactivité"], #? ajouter "Rayonnement Ultra-Violet" ?
-            "CoeurDeVille": ["Les projets de rénovation", "Le prix des maisons", "Le prix des appartements"] # meilleur qualité de vie si moins cher
+            # ex: si Activite est 0, monuments_historiques aura un moindre coefficent dans la note final
+            "Scolarite": ["Les collèges","Les écoles", "les lycées"],
+            "Culture": ["Les festivals","Les musées","Les monuments historiques"],
+		    "Activite": ['Les festivals'],
+            "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
+            "Precarite" : ["Le prix des maisons","Le prix des appartements"],
+            "Citadin" : [] # jsp ptetre l'enlever cette question
         }
 
         dictionaire_note = {"sum_numerateur": 0, "sum_denumerateur": 0} # (numerateur / denumerateur) d'un moyenne
@@ -748,10 +743,13 @@ class Donnees:
         """
         
         if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
+            print(1)
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
+            print(2)
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
+            print(3)
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes
-
+            print('fait',self.liste_notes)
         # Applique les coefs aux notes par rapport au choix du QCM
         note_moyenne_avec_coef = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
 

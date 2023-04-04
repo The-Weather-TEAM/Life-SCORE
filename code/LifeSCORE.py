@@ -151,17 +151,13 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
-list_Questions = [("Accordez-vous de l'importance à la recherche d'une école primaire lors de vos recherches ?","Ecole"),           # Reproduire les questions dans le même style que la première
-                ("Accordez-vous de l'importance à la recherche d'un collège lors de vos recherches ?","College"),
-                ("Accordez-vous de l'importance à la recherche d'un Lycée lors de vos recherches ?","Lycee"),                
-                ("Accordez-vous de l'importance à la proximité d'un commissariat ou d'une brigade de gendarmerie dans votre ville ?","Police"),
-                ("Participez-vous de façon régulière aux festivals que se trouve près  de chez vous ?","Festivals"),
-                ("Souhaiteriez-vous qu'il y ait un ou plusieurs musées dans votre ville ?","Musee"),
-                ("Êtes-vous à la recherche de monuments classés comme \"monuments historiques\" dans votre ville ?","Monuments"),
-                ("Envisagez-vous d'investir dans l'achat d'une maison ?","m2maison"),
-                ("Envisagez-vous d'investir dans l'achat d'un appartement ?","m2appart"),
-                ("Êtes-vous préoccupé(e) par la présence d'éléments radioactifs tels que le radon dans l'atmosphère ?","Radon"),
-                ("Êtes-vous favorable à l'amélioration des conditions de vie dans les villes de taille moyenne ?","CoeurDeVille")]
+list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
+                ('Etes vous etudiant ?','Scolarite'),                
+                ('La culture a-t-elle une place importante pour vous ?','Culture'),
+                ('préférez vous la ville à la campagne ?','Citadin'),
+                ("Etes vous en recherche d'emploi ?","Cherche_Emploi"),
+                ("Etes vous dans une situation précaire ?","Precarite")]
+
 
 dico_Reponses = {} # Traité dans coefficients.py
 
@@ -699,7 +695,7 @@ def w_score(ville,win):
     # Initialisation 
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
     # Données PROVISOIRES !!!
-    score = Donnees_ville.note_finale() # Provisoire
+    score = Donnees_ville.note_finale()
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
     
@@ -742,8 +738,8 @@ def w_score(ville,win):
         score = str(score)
         
         # Mise en place du reste du texte, pour éviter une surcharge du nombre d'elements à rafraichir
-        msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =(polices[0],25, 'bold'), justify=LEFT)
-        msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =(polices[0],25,'bold'), justify=LEFT)
+        msg_bonus = interface.CTkLabel(win,text=plus, width = 200, font =(polices[0],23, 'bold'), justify=LEFT)
+        msg_malus = interface.CTkLabel(win,text=moins, width = 200, font =(polices[0],23,'bold'), justify=LEFT)
         msg_note = interface.CTkLabel(win, text=0, text_color=couleur_score(0), font=(polices[1], 80, 'bold'), justify=CENTER) # On initialise
 
         # Placements
@@ -869,7 +865,7 @@ def avantages_inconvenients(dic):
     i = j = 0
 
     print(dic.keys())
-    while i < 5 or j < 5 and i < len(dic) and j < len(dic):
+    while (i < 5 and i < len(dic)) or (j < 5  and j < len(dic)):
         mini = maxi = 50 # Les malus seront compris entre 0 et 50, les bonus entre 50 et 100
         
         for cle in dic.keys():
