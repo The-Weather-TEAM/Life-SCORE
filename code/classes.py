@@ -123,32 +123,32 @@ def distanceEuclienne(point1: tuple[float, float],point2: tuple[float, float]) -
     return distEucli**0.5 # renvoi cette distance avec racine carré appliqué
 
 
-def kppv(donnees: list[tuple[float, float]],
+def kppv(donnees: dict,
          point: tuple[float, float],
          k: int
     ) -> list[int]:
     """
     Trouve les k plus proches voisins.
 
-    `donnees`: une liste de points de coordonees (x,y)
+    `donnees`: une dico de points de coordonees (x,y) avec en clé le nom des villes
     `point`: un seul point de coordonees (x,y)
-    `k`: les k plus proches voisins du liste `donnees` au point `point`.
+    `k`: les k plus proches voisins de la liste `donnees` au point `point`.
 
-    La fonction renvoi une liste des indices pour `donnees` contenant les `k` plus proches voisins a `point`
+    La fonction renvoie une liste des indices pour `donnees` contenant les `k` plus proches voisins a `point`
 
     Fonction de Thor fait en classe
     """
     assert type(k) == int
     assert type(point) == tuple
-    assert type(donnees) in (list, tuple) # car ça peut aussi etre un tuple de tuples
+    assert type(donnees) in (list, tuple, dict) # car ça peut aussi etre un tuple de tuples
 
     distVoisins = [] # contient la distance du point `point` au point dans `donnees`` avec leur indices correspondants
-    for index, elt in enumerate(donnees):   
-        distance = distanceEuclienne(point, elt) # calcule du distance
-        distVoisins.append((distance,index)) # ajoute au liste de points avec distance
+    for cle in donnees.keys():   
+        distance = distanceEuclienne(point, donnees[cle]) # calcul de la distance
+        distVoisins.append((distance,cle)) # ajoute au liste de points avec distance
 
     distVoisins = sorted(distVoisins) # on trie la liste par leurs distances d'ordre croissant
-    indicesDesKvoisins = [index for distance, index in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
+    indicesDesKvoisins = [cle for distance, cle in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
     return indicesDesKvoisins
 
 
@@ -595,9 +595,45 @@ class Donnees:
                     msg.configure(text = "Ville incorrecte. Veuillez réessayer")
                 return False
         
+    def k_plus_proches_voisins(self,k):
+        '''
+        Fonction qui récupère toutes les villes du département 
+        avec leurs coordonnées et trouve les k plus proches
+
+        idee du cours sur les k plus proches voisins de Thor et Raphaël
+        '''
+        fichier = open(self.repertoire + '/donnees/csv/coordonnees.csv',"r",encoding='utf-8')
+        cr = p.read_csv(fichier,delimiter=",",usecols=['latitude','longitude','nom_commune_complet','code_commune_INSEE'],encoding='utf-8',low_memory=False)
+        fichier.close()
+        rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee]
+        coordonnees0 = (rangee_unique['latitude'],rangee_unique['longitude'])
+
+        row = cr[str(cr['code_commune_INSEE'])[:-3] == str(self.code_insee)[:-3]] # Les 2 premiers chiffres (le département)
+        dico = {}
+        for ligne in row:
+            dico[ligne['nom_commune_complet']] = (ligne['latitude'],ligne['longitude'])
+        print(dico)
+        # Partie k plus proches voisins
+        liste_dix_proches = kppv(dico,coordonnees0,10)
+        liste_notes = [(nom,Donnees(nom).note_finale(meteo = False)) for coordonnees,nom in liste_dix_proches]
+        return liste_notes.sorted()# Je connais pas l'argument pour l'ordre décroissant et pour le tuple mais c l'idée
+        """
+        -------------
+        Ici on calcule les 10 villes (sans passer par la météo)
+        -------------
+
         
+
+
+        -------------
+        On renvoie la liste des villes classées avec leurs notes
+        -------------
+        """
         
-        
+
+
+
+
     def notes_meteo_ville(self, ville: str) -> dict:
         """
         Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals
@@ -760,11 +796,12 @@ class Donnees:
     Fait par Raphaëm et Nathan
     
     '''
-    def note_finale(self):
+    def note_finale(self,meteo=True):
 
 
         '''
         Ici on  récupère chaque données pour chaque CSV, si elle sont utilisables on rajoute ça dans la note finale
+        (meteo est un booléen qui décide si on souhaite avoir les notes de meteo)
         Pensé et réalisé par Nathan, à l'aide des fonctions au dessus
         '''
         
@@ -785,7 +822,7 @@ class Donnees:
         a.join()
         """
         
-        if is_connected("https://open-meteo.com/"): # ajoute a notes_finales des notes de la meteo du ville
+        if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
             print(1)
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
             print(2)
@@ -811,7 +848,7 @@ class Donnees:
         '''
         note_finale = int(note_moyenne_avec_coef["sum_numerateur"] / note_moyenne_avec_coef["sum_denumerateur"])
         # for i in range(len(self.liste_notes)) : #? tu veut le garder ça raphael?
-        #     if self.liste_notes[i] != None:
+        #     if self.liste_notes[i] != None: #! Si ça va mieux ce que t'as mis enlève le mdrr
         #         note_finale += int(self.liste_notes[i])
         #     else:
         #         self.liste_notes.pop(i) # Supprime tous les None
@@ -858,3 +895,8 @@ class Donnees:
             return str(self.ville)
 
 # Fin du code !
+
+puissa = Donnees("Puissalicon")
+if puissa.is_commune_france(None):
+    puissa.note_finale()
+print(puissa.k_plus_proches_voisins(10))
