@@ -606,26 +606,24 @@ class Donnees:
         cr = p.read_csv(fichier,delimiter=",",usecols=['latitude','longitude','nom_commune_complet','code_commune_INSEE'],encoding='utf-8',low_memory=False)
         fichier.close()
         
-        print(cr['code_commune_INSEE'][:-3])
         rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee]
         coordonnees0 = (rangee_unique['latitude'],rangee_unique['longitude'])
-        print(str(self.code_insee)[:-3])
 
-        cr_modif = cr[cr['code_commune_INSEE'][1] == 'A']
-        cr_modif = cr_modif[cr_modif['code_commune_INSEE'][1] == '2']
+
                        
 
         # On prend ceux compris entre par exemple 34000 et 34999 
-        row = cr_modif[(cr_modif['code_commune_INSEE'].astype(int) >= int(self.code_insee[:-3])*100) &
-                (cr_modif['code_commune_INSEE'].astype(int) < int(self.code_insee[:-3])*100 + 1000)]
+        row = cr[(cr['code_commune_INSEE'] >= str(int(self.code_insee[:-3])*100)) &
+                (cr['code_commune_INSEE'] < str(int(self.code_insee[:-3])*100 + 1000))]
+        print(row)
         dico = {}
-        for ligne in row:
-            dico[ligne['nom_commune_complet']] = (ligne['latitude'],ligne['longitude'])
-        print(dico)
+        for index, r in row.iterrows():
+            print(r['latitude'], r['longitude'],r['code_commune_INSEE'])
+            dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'])
         # Partie k plus proches voisins
         liste_dix_proches = kppv(dico,coordonnees0,10)
         liste_notes = [(nom,Donnees(nom).note_finale(meteo = False)) for coordonnees,nom in liste_dix_proches]
-        return liste_notes.sorted()# Je connais pas l'argument pour l'ordre décroissant et pour le tuple mais c l'idée
+        return liste_notes.sort(key=lambda x: x[-1])# Je connais pas l'argument pour l'ordre décroissant et pour le tuple mais c l'idée
         """
         -------------
         Ici on calcule les 10 villes (sans passer par la météo)
