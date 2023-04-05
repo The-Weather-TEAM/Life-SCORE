@@ -91,21 +91,47 @@ def taille_zip(url):
 
 
 
-def telecharger(lien, nomfichier,barre,win,msg_prct):
+def telecharger(lien, nomfichier,barre,win,msg_prct, message):
+    
+    '''
+    Animation du texte
+    Conçu par Nathan
+    '''
+    message0 = 'Téléchargement des fichiers\nCela peut prendre quelques minutes.'
+    message1 = 'Téléchargement des fichiers.\nCela peut prendre quelques minutes.'
+    message2 = 'Téléchargement des fichiers..\nCela peut prendre quelques minutes.'
+    message3 = 'Téléchargement des fichiers...\nCela peut prendre quelques minutes.'
+    message4 = 'C\'est presque terminé !\nMerci d\'avoir attendu.'
+    liste_msg = [message1, message2, message3, message0, message1, message2, message3, message0,
+                 message1, message2, message3, message0, message1, message2, message3, message0, 
+                 message1, message4, message4, message4]
+    
+    message.configure(text = message0)
+    msg_val = False
+    nbr_msg = 0
+    
     taille = taille_zip(lien)
     fichier_zip = requests.get(lien, stream=True)
     taille_cache = 1024
     bits_telecharges = 0
-    debut = time.time()
     with open(nomfichier, 'wb') as f:
         for chunk in fichier_zip.iter_content(chunk_size=taille_cache):
             if chunk:
                 f.write(chunk)
                 bits_telecharges += len(chunk)
                 
-                pourcentage = bits_telecharges / taille *100 #.set prend que entre 0 et 1 donc faut pas mettre en %
+                pourcentage = bits_telecharges / taille * 100 #.set prend que entre 0 et 1 donc faut pas mettre en %
                 barre.set(pourcentage/100)
                 msg_prct.configure(text = f"{round(pourcentage)}%")
+                
+                if not msg_val and round(pourcentage)%5 == 1 :
+                    msg_val = True
+                
+                if round(pourcentage)%5 == 0 and msg_val :
+                    message.configure(text = liste_msg[nbr_msg])
+                    nbr_msg += 1
+                    msg_val = False
+                    
                 win.update()
 
 
@@ -197,8 +223,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
             fichier = repertoire_donnees+'/temp.zip'
             
-            message.configure(text = 'Téléchargement des fichiers...\nCela peut prendre quelques minutes')
-            telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage)
+            telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage, message)
             
             with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
             

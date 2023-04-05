@@ -78,7 +78,7 @@ for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt")
 # Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
 if nouvelle_bibliotheque == True :
     print("\n\n\n\n\n********************\n[ATTENTION]\nVeuillez redémarrer le programme pour appliquer l'instation des bibliothèques.\n\n********************\n\n\n\n\n")
-
+    input("Veuillez presser entrer pour quitter.")
     sys.exit(os.system(f"{sys.executable} ./LifeSCORE.py"))
 print("\n\n")
 
@@ -497,6 +497,18 @@ def parametres(bouton):
                                                 command=supprimer_donnees_utilisateur,
                                                 text="SUPPRIMER",
                                                 font=(polices[0], 18))
+    
+    
+    '''
+    Désactive le bouton SUPPRIMER des données si on a toujours rien enregistré.
+    Conçu par Nathan
+    '''
+    if lire_option("REPONSE_QCM") == {} :
+        btn_supprimer_donnees.configure(state='disabled')
+    else :
+        btn_supprimer_donnees.configure(state='normal')
+    
+    
     btn_changements = interface.CTkButton(windowParam,height=60,
                                                         width=550,  
                                                         command=lambda:retour_pages(windowParam,bouton), 

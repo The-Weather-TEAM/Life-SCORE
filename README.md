@@ -595,3 +595,10 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 > Plus de fichiers ou de csv test ! (suppression du fichier sport_test.csv)
 
 > Récursivité pour les fichiers ayant pas de code insee, et avec arrondissement (ex : Paris 2e arrondissement), si jamais on a que des données sur la ville et pas sur l'arrondissement, on refait la recherche pour toute la ville. à voir si on peut aussi le faire avec le code insee.
+
+
+
+05 Avril 2023 : Présenation des avancés en classe
+> Nouvelle animation lors du premier téléchargement
+
+> Désactivation du bouton "SUPPRIMER" les données si on a toujours pas fait le QCM.
