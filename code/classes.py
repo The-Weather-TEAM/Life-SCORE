@@ -111,6 +111,47 @@ Fait par Thor
 
 """
 
+
+def distanceEuclienne(point1: tuple[float, float],point2: tuple[float, float]) -> float: # utilisé pour la fonction kppv()
+    """Renvoi la distance entre deux points donnees.
+    
+    Fonction de Thor fait en classe
+    """ 
+    assert type(point1) in (list, tuple) and type(point2) in (list, tuple) # peut n'import si list ou tuple, mais tuple est mieux
+
+    distEucli = (point2[0] - point1[0])**2 + (point2[1] - point1[1])**2 # calcule de distance au carré
+    return distEucli**0.5 # renvoi cette distance avec racine carré appliqué
+
+
+def kppv(donnees: list[tuple[float, float]],
+         point: tuple[float, float],
+         k: int
+    ) -> list[int]:
+    """
+    Trouve les k plus proches voisins.
+
+    `donnees`: une liste de points de coordonees (x,y)
+    `point`: un seul point de coordonees (x,y)
+    `k`: les k plus proches voisins du liste `donnees` au point `point`.
+
+    La fonction renvoi une liste des indices pour `donnees` contenant les `k` plus proches voisins a `point`
+
+    Fonction de Thor fait en classe
+    """
+    assert type(k) == int
+    assert type(point) == tuple
+    assert type(donnees) in (list, tuple) # car ça peut aussi etre un tuple de tuples
+
+    distVoisins = [] # contient la distance du point `point` au point dans `donnees`` avec leur indices correspondants
+    for index, elt in enumerate(donnees):   
+        distance = distanceEuclienne(point, elt) # calcule du distance
+        distVoisins.append((distance,index)) # ajoute au liste de points avec distance
+
+    distVoisins = sorted(distVoisins) # on trie la liste par leurs distances d'ordre croissant
+    indicesDesKvoisins = [index for distance, index in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
+    return indicesDesKvoisins
+
+
 # Vérifier si le fichier options est présent
 def is_options() :
     """
