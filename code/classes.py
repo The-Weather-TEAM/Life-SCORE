@@ -659,10 +659,12 @@ class Donnees:
 
         
         for key, values in tout_les_donnees: # on calcule la moyenne annuelle de chaque critere
-            keymoy = sum(values)/len(values) # calcule moyenne
-            if key == "surface_pressure": keymoy = keymoy*0.00098692 # transforme hPa -> atm
-            if key == "windspeed_10m": keymoy = keymoy*0.27778 # transforme km/h -> m/s
-            donnees_moy[key] = round(keymoy, 2) # on sauvegarde cette moyenne dans le dictionaire
+            values = [value for value in values if value] # enleve le risque d'un erreur avec l'apparition d'un "None" dans la liste de donnees (ça arrive dependent du ville)
+            if len(values) > 1: # au cas ou que tout les valeurs sont des None (improbable mais possible)
+                keymoy = sum(values)/len(values) # calcule moyenne
+                if key == "surface_pressure": keymoy = keymoy*0.00098692 # transforme hPa -> atm
+                if key == "windspeed_10m": keymoy = keymoy*0.27778 # transforme km/h -> m/s
+                donnees_moy[key] = round(keymoy, 2) # on sauvegarde cette moyenne dans le dictionaire
 
 
         valeursIdeales = { # le criteres qu'on va utiliser pour determiner des notes
