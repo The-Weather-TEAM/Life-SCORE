@@ -202,6 +202,17 @@
                                                                           "nom": "La radioactivité"
                                                                 
 
-    }]
+    }],
 
+
+    "coordonnees":
+    ["5ced14688b4c4114480ce688","dbe8a621-a9c4-4bc3-9cae-be1699c5ff25", { "insee" : 1,
+                                                                          "delimiteur" : ",",
+                                                                          "colonne_ville" : 0,
+                                                                          "colonne_donnee" : [5,6],
+                                                                          "source" : "www.data.gouv.fr",
+                                                                          "type" : "prout"
+                                                                
+
+    }]
 }
