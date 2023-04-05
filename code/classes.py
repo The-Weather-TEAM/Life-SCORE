@@ -605,10 +605,19 @@ class Donnees:
         fichier = open(self.repertoire + '/donnees/csv/coordonnees.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['latitude','longitude','nom_commune_complet','code_commune_INSEE'],encoding='utf-8',low_memory=False)
         fichier.close()
+        
+        print(cr['code_commune_INSEE'][:-3])
         rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee]
         coordonnees0 = (rangee_unique['latitude'],rangee_unique['longitude'])
+        print(str(self.code_insee)[:-3])
 
-        row = cr[str(cr['code_commune_INSEE'])[:-3] == str(self.code_insee)[:-3]] # Les 2 premiers chiffres (le département)
+        cr_modif = cr[cr['code_commune_INSEE'][1] == 'A']
+        cr_modif = cr_modif[cr_modif['code_commune_INSEE'][1] == '2']
+                       
+
+        # On prend ceux compris entre par exemple 34000 et 34999 
+        row = cr_modif[(cr_modif['code_commune_INSEE'].astype(int) >= int(self.code_insee[:-3])*100) &
+                (cr_modif['code_commune_INSEE'].astype(int) < int(self.code_insee[:-3])*100 + 1000)]
         dico = {}
         for ligne in row:
             dico[ligne['nom_commune_complet']] = (ligne['latitude'],ligne['longitude'])
