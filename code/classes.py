@@ -144,11 +144,10 @@ def kppv(donnees: dict,
 
     distVoisins = [] # contient la distance du point `point` au point dans `donnees`` avec leur indices correspondants
     for cle in donnees.keys():   
-        distance = distanceEuclienne(point, donnees[cle]) # calcul de la distance
-        distVoisins.append((distance,cle)) # ajoute au liste de points avec distance
-
+        distance = distanceEuclienne(point, (donnees[cle][0],donnees[cle][1])) # calcul de la distance
+        distVoisins.append((distance,cle,donnees[cle][2])) # ajoute au liste de points avec distance
     distVoisins = sorted(distVoisins) # on trie la liste par leurs distances d'ordre croissant
-    indicesDesKvoisins = [cle for distance, cle in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
+    indicesDesKvoisins = [(cle,insee) for distance, cle, insee in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
     return indicesDesKvoisins
 
 
@@ -236,7 +235,7 @@ CLASSE PRINCIPALE
 
 '''  
 class Donnees:
-    def __init__(self,ville) :
+    def __init__(self,ville,insee=None) :
         
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__)
@@ -245,6 +244,9 @@ class Donnees:
         
         #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
         self.notes_finales = {}
+
+        if insee != None: # Pour les 10 villes plus proches
+            self.code_insee = insee
 
 
 
@@ -607,23 +609,26 @@ class Donnees:
         fichier.close()
         
         rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee]
-        coordonnees0 = (rangee_unique['latitude'],rangee_unique['longitude'])
+        print(rangee_unique)
+        coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
+        print(coordonnees0)
 
 
                        
 
         # On prend ceux compris entre par exemple 34000 et 34999 
-        row = cr[(cr['code_commune_INSEE'] >= str(int(self.code_insee[:-3])*100)) &
-                (cr['code_commune_INSEE'] < str(int(self.code_insee[:-3])*100 + 1000))]
+        row = cr[(cr['code_commune_INSEE'] >= str(int(self.code_insee[:-3])*1000)) &
+                (cr['code_commune_INSEE'] < str(int(self.code_insee[:-3])*1000 + 1000)) &
+                (cr['code_commune_INSEE'] != str(self.code_insee))]
         print(row)
         dico = {}
         for index, r in row.iterrows():
-            print(r['latitude'], r['longitude'],r['code_commune_INSEE'])
-            dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'])
+            dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'],r['code_commune_INSEE'])
         # Partie k plus proches voisins
         liste_dix_proches = kppv(dico,coordonnees0,10)
-        liste_notes = [(nom,Donnees(nom).note_finale(meteo = False)) for coordonnees,nom in liste_dix_proches]
-        return liste_notes.sort(key=lambda x: x[-1])# Je connais pas l'argument pour l'ordre décroissant et pour le tuple mais c l'idée
+        print(liste_dix_proches)
+        liste_notes = [(nom,Donnees(nom,insee).note_finale(meteo = False)) for nom,insee in liste_dix_proches]
+        return liste_notes.sort(key=lambda x: x[-1] )
         """
         -------------
         Ici on calcule les 10 villes (sans passer par la météo)
