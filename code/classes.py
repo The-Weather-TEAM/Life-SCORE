@@ -628,7 +628,8 @@ class Donnees:
         liste_dix_proches = kppv(dico,coordonnees0,10)
         print(liste_dix_proches)
         liste_notes = [(nom,Donnees(nom,insee).note_finale(meteo = False)) for nom,insee in liste_dix_proches]
-        return liste_notes.sort(key=lambda x: x[-1] )
+        liste_notes.sort(key=lambda x: x[-1]) 
+        return liste_notes
         """
         -------------
         Ici on calcule les 10 villes (sans passer par la météo)
