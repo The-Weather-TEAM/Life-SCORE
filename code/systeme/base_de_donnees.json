@@ -203,8 +203,21 @@
                                                                 
 
     }],
+    
+    "enseignement_superieur":
+    ["58759fb5a3a7291596b43543","8be13bf9-f50e-4ef0-b143-e825d6a17a02", { "insee" : 1,
+                                                                          "delimiteur" : ";",
+                                                                          "colonne_ville" : 20,
+                                                                          "colonne_donnee" : [2],
+                                                                          "source" : "www.data.gouv.fr",
+                                                                          "type" : "compter_par_population",
+                                                                          "moyenne" : 0.0000198,
+                                                                          "max" : 0.000114,
+                                                                          "categorie": "qualité_de_vie",
+                                                                          "nom": "Les établissements d'enseignement supérieur"
+                                                                
 
-
+    }],
     "coordonnees":
     ["5ced14688b4c4114480ce688","dbe8a621-a9c4-4bc3-9cae-be1699c5ff25", { "insee" : 1,
                                                                           "delimiteur" : ",",
