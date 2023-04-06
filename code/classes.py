@@ -248,7 +248,7 @@ class Donnees:
         if insee != None: # Pour les 10 villes plus proches
             self.code_insee = insee
 
-
+    dico_meteo = {} # Variable qui peut etre accédée et modifée par toutes les instances de la classe
 
 
 
@@ -608,7 +608,7 @@ class Donnees:
         cr = p.read_csv(fichier,delimiter=",",usecols=['latitude','longitude','nom_commune_complet','code_commune_INSEE'],encoding='utf-8',low_memory=False)
         fichier.close()
         
-        rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee]
+        rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee].iloc[0]
         print(rangee_unique)
         coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
         print(coordonnees0)
@@ -617,10 +617,11 @@ class Donnees:
                        
 
         # On prend ceux compris entre par exemple 34000 et 34999 
-        row = cr[(cr['code_commune_INSEE'] >= str(int(self.code_insee[:-3])*1000)) &
-                (cr['code_commune_INSEE'] < str(int(self.code_insee[:-3])*1000 + 1000)) &
+        row = cr[(cr['code_commune_INSEE'] >= self.code_insee[:-3]+'000') &
+                (cr['code_commune_INSEE'] <= self.code_insee[:-3]+'999') &
                 (cr['code_commune_INSEE'] != str(self.code_insee))]
-        print(row)
+        
+        
         dico = {}
         for index, r in row.iterrows():
             dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'],r['code_commune_INSEE'])
@@ -628,7 +629,7 @@ class Donnees:
         liste_dix_proches = kppv(dico,coordonnees0,10)
         print(liste_dix_proches)
         liste_notes = [(nom,Donnees(nom,insee).note_finale(meteo = False)) for nom,insee in liste_dix_proches]
-        liste_notes.sort(key=lambda x: x[-1]) 
+        liste_notes.sort(key=lambda x: x[-1], reverse=True) 
         return liste_notes
         """
         -------------
@@ -836,17 +837,16 @@ class Donnees:
         """
         
         if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
-            print(1)
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
-            print(2)
+            Donnees.dico_meteo = notes_meteo
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
-            print(3)
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes
             print('fait',self.liste_notes)
         # Applique les coefs aux notes par rapport au choix du QCM
         note_moyenne_avec_coef = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
 
-
+        if not meteo :
+            self.notes_finales.update(Donnees.dico_meteo)
         # Pour tester avant de tout envoyer
         print("################################",
             "\n##       NOTES FINALES        ##",
@@ -909,7 +909,7 @@ class Donnees:
 
 # Fin du code !
 
-puissa = Donnees("Puissalicon")
+puissa = Donnees("Ajaccio")
 if puissa.is_commune_france(None):
     puissa.note_finale()
 print(puissa.k_plus_proches_voisins(10))
