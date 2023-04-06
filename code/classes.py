@@ -597,7 +597,7 @@ class Donnees:
                     msg.configure(text = "Ville incorrecte. Veuillez réessayer")
                 return False
         
-    def k_plus_proches_voisins(self,k):
+    def k_plus_proches_voisins(self,k,msg=None,win=None):
         '''
         Fonction qui récupère toutes les villes du département 
         avec leurs coordonnées et trouve les k plus proches
@@ -609,10 +609,7 @@ class Donnees:
         fichier.close()
         
         rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee].iloc[0]
-        print(rangee_unique)
         coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
-        print(coordonnees0)
-
 
                        
 
@@ -628,7 +625,11 @@ class Donnees:
         # Partie k plus proches voisins
         liste_dix_proches = kppv(dico,coordonnees0,10)
         print(liste_dix_proches)
-        liste_notes = [(nom,Donnees(nom,insee).note_finale(meteo = False)) for nom,insee in liste_dix_proches]
+        liste_notes = []
+        for nom,insee in liste_dix_proches:
+            msg.configure(text = f'Calcul de {nom} (code : {insee})')
+            win.update()
+            liste_notes.append((nom,Donnees(nom,insee).note_finale(meteo = False)))
         liste_notes.sort(key=lambda x: x[-1], reverse=True) 
         return liste_notes
         """
@@ -740,11 +741,11 @@ class Donnees:
             "surface_pressure": "Pression de Surface",
             "windspeed_10m": "Vitesse du Vent",
             "uv_index": "Rayonnement Ultra-Violet",
-            "european_aqi_pm2_5": "Concentration en petit polluants",
-            "european_aqi_pm10": "Concentration en gros polluants",
-            "european_aqi_no2": "Concentration en NO2",
-            "european_aqi_o3": "Concentration en O3",
-            "european_aqi_so2": "Concentration en S=O2"
+            "european_aqi_pm2_5": "Dose de petit polluants",
+            "european_aqi_pm10": "Dose de gros polluants",
+            "european_aqi_no2": "Dose de NO2",
+            "european_aqi_o3": "Dose de O3",
+            "european_aqi_so2": "Dose de S=O2"
         }
 
         # calcule du note de chaque critere present dans valeursIdeales et donnees_moy

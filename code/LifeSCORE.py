@@ -680,15 +680,14 @@ def ville(entree,msg,fenetre):
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
         
-        msg.configure(text = "Veuillez patienter ...") #Ne se voit même pas mais peut être remarqué si les calculs sont longs
-        #fonction_barre_chargement = threading.Thread(target=chargement, args=(fenetre,))
-        #fonction_barre_chargement.run()
-        fenetre.config(cursor="arrow")
+        msg.configure(text ='Cacul de la note de la commune et de ses "voisins"') #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         fenetre.update()
-        #Donnees_ville.note_par_habitants('sport_test.csv',['ComInsee','Nombre_equipements'],[16071.4,-3.57143],',') # Fonction présente dans classes.py
+        score = Donnees_ville.note_finale()
+        liste_voisins = Donnees_ville.k_plus_proches_voisins(10,msg,fenetre)
+        
         efface_fenetre(fenetre,"Efface_reste") # Enlève même le bouton paramètre et les pages d'aide pour ne pas obstruer l'écran
         
-        w_score(Donnees_ville,fenetre)
+        w_score(Donnees_ville,fenetre,liste_voisins,score)
 
 
 
@@ -696,7 +695,7 @@ def ville(entree,msg,fenetre):
 
 
 # troisieme page
-def w_score(ville,win):
+def w_score(ville,win,list_dix_villes,score):
     '''
     affiche la dernière page qui contient le score et le bouton pour revenir
     ville est un objet de la classe Donnees précédemment créé après avoirs appuyé sur recherche
@@ -706,10 +705,16 @@ def w_score(ville,win):
     
     # Initialisation 
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
-    # Données PROVISOIRES !!!
-    score = Donnees_ville.note_finale()
+    # Données 
+    
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
+    box_voisins = interface.CTkTextbox(win, width = 580 ,height = 80, corner_radius=0)
+    texte = ""
+    for nom,note in list_dix_villes:
+        texte += f'{ str(nom)} : {str(note)} '
+    box_voisins.insert("0.0", text = texte)
+    box_voisins.configure(state = "disabled", font = (polices[0],24),wrap = 'word')
     
     print(dico, "\n\n\n\n\n")
 
@@ -717,7 +722,7 @@ def w_score(ville,win):
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=(polices[1],taille_police(str(ville)), 'bold'), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
-    
+    box_voisins.place(relx = 0.5, rely = 0.75, anchor = CENTER)
     # Carte de la commune 
     """
     CARTE DU VILLE
@@ -797,7 +802,7 @@ def w_score(ville,win):
     # Bouton retour
     btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False),
                                       text= "Noter une autre ville", font=(polices[0],20, "bold"),image=image_btn_chercher)
-    btn_Retour.place(relx = 0.5,rely = 0.7, anchor = CENTER)
+    btn_Retour.place(relx = 0.5,rely = 0.65, anchor = CENTER)
     
 
 def taille_police(chaine):
