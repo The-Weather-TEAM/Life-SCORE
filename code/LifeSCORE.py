@@ -620,7 +620,7 @@ def w_question(fenetre):
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
                                              text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
-                                     command=lambda: ville(entree,msg_ville,fenetre),text="Recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher)
+                                     command=lambda: ville(entree,msg_ville,fenetre,btn_entree),text="Recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher)
     
     # Placement des widgets
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER)
@@ -666,7 +666,7 @@ def arrondissement(btn):
 
 
 
-def ville(entree,msg,fenetre):
+def ville(entree,msg,fenetre,bouton = None):
 
     '''
     Récupère l'entrée, vérifie si la ville existe bien:
@@ -676,13 +676,16 @@ def ville(entree,msg,fenetre):
         - L'idée de créer une classe de Donnees est détaillée dans classes.py , le reste est de Raphaël
     '''
     global Donnees_ville
+    
     ville = entree.get()
     Donnees_ville = Donnees(ville)
     if Donnees_ville.is_commune_france(msg):
-        
+        if bouton != None:
+            bouton.configure(state=DISABLED) # Pour empêcher de lancer plusieurs fois
         msg.configure(text ='Cacul de la note de la commune et de ses "voisins"') #Ne se voit même pas mais peut être remarqué si les calculs sont longs
         fenetre.update()
         score = Donnees_ville.note_finale()
+        print(score)
         liste_voisins = Donnees_ville.k_plus_proches_voisins(10,msg,fenetre)
         
         efface_fenetre(fenetre,"Efface_reste") # Enlève même le bouton paramètre et les pages d'aide pour ne pas obstruer l'écran
@@ -709,10 +712,10 @@ def w_score(ville,win,list_dix_villes,score):
     
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
-    box_voisins = interface.CTkTextbox(win, width = 580 ,height = 80, corner_radius=0)
+    box_voisins = interface.CTkTextbox(win, width = 580 ,height = 150, corner_radius=0)
     texte = ""
     for nom,note in list_dix_villes:
-        texte += f'{ str(nom)} : {str(note)} '
+        texte += f'{str(nom)} : {str(note)}/100 \n'
     box_voisins.insert("0.0", text = texte)
     box_voisins.configure(state = "disabled", font = (polices[0],24),wrap = 'word')
     
@@ -722,7 +725,7 @@ def w_score(ville,win,list_dix_villes,score):
     msg_ville = interface.CTkLabel(win,text=str(ville).capitalize(), width = 500, font=(polices[1],taille_police(str(ville)), 'bold'), justify=CENTER)# TODO fix temporaire qui aggrandit de 2.5 pour les grosses ville à rajouter, une fonction inverse pour la taille
     msg_ville.place(relx=0.5,rely=0.1,anchor=CENTER)
     plus, moins = plus_et_moins(bonus,malus) # Récupère les données et les transforme en 2 str à Afficher
-    box_voisins.place(relx = 0.5, rely = 0.75, anchor = CENTER)
+    box_voisins.place(relx = 0.5, rely = 0.85, anchor = CENTER)
     # Carte de la commune 
     """
     CARTE DU VILLE
@@ -909,7 +912,7 @@ def plus_et_moins(pl,mal):
 
     - Idee de Raphaël 
     '''
-    plus, moins = "Les Avantages : ", "Les Inconvénients :" # texte a retourner
+    plus, moins = "Les Avantages sur 100: ", "Les Inconvénients sur 100:" # texte a retourner
     for val_plus in pl:
         plus = plus + "\n - " + val_plus[0] + f' : {int(val_plus[1])}'
 

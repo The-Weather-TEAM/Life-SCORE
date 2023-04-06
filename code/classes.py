@@ -531,15 +531,16 @@ class Donnees:
                         liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
                     else: 
                         liste_ville[i] = liste_ville[i].capitalize()
-            self.ville = "-".join(liste_ville)
+            self.ville = " ".join(liste_ville)
 
         fichier = open(self.repertoire + '/donnees/csv/communes.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8',low_memory=False) # Encoding pour pouvoir avoir les accents 
 
         fichier.close()
 
-        # Recup ligne de ville pour code insee  
-        row = cr[(cr['NCCENR'] == str(self.ville)) | (cr['LIBELLE'] == str(self.ville))]
+        # Recup ligne de ville pour code insee
+        print(self.ville)
+        row = cr[(cr['NCCENR'] == str(self.ville)) | (cr['LIBELLE'] == str(self.ville)) | (cr['NCC'] == str(self.ville).upper())]
         if not row.empty:
             self.code_insee = row.values[0][0]
             self.ville = row.values[0][3]
@@ -608,7 +609,11 @@ class Donnees:
         cr = p.read_csv(fichier,delimiter=",",usecols=['latitude','longitude','nom_commune_complet','code_commune_INSEE'],encoding='utf-8',low_memory=False)
         fichier.close()
         
-        rangee_unique = cr[cr['code_commune_INSEE'] == self.code_insee].iloc[0]
+        rangee_unique = cr[(cr['code_commune_INSEE'] == self.code_insee) | (cr['code_commune_INSEE'] == self.code_insee[1:])]
+        print('LONGUEUUUUUUUUUUUUUUUUUUUUUUR',len(rangee_unique))
+        if len(rangee_unique) > 1:
+            rangee_unique = rangee_unique.iloc[0]
+        print(len)
         coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
 
                        
@@ -910,7 +915,7 @@ class Donnees:
 
 # Fin du code !
 if __name__ == "__main__":
-    puissa = Donnees("Ajaccio")
+    puissa = Donnees("Abergement-de-Varey")
     if puissa.is_commune_france(None):
         puissa.note_finale()
     print(puissa.k_plus_proches_voisins(10))
