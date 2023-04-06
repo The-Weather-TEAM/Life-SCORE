@@ -908,8 +908,8 @@ class Donnees:
             return str(self.ville)
 
 # Fin du code !
-
-puissa = Donnees("Ajaccio")
-if puissa.is_commune_france(None):
-    puissa.note_finale()
-print(puissa.k_plus_proches_voisins(10))
+if __name__ == "__main__":
+    puissa = Donnees("Ajaccio")
+    if puissa.is_commune_france(None):
+        puissa.note_finale()
+    print(puissa.k_plus_proches_voisins(10))
