@@ -710,6 +710,8 @@ def w_score(ville,win,list_dix_villes,score):
     # Initialisation 
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
     # Données 
+    if systeme_exploitation == 'Windows' :
+        fenetrePrincipale.state('zoomed')
     
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)

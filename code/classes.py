@@ -385,10 +385,10 @@ class Donnees:
             if diviseur != None :
                 rep = rep / diviseur
                 
-            print(" - Total dans la ville :", rep)
+            #print(" - Total dans la ville :", rep)
             
             note = rep / self.habitant
-            print(" - Par habitant :", note)
+            #print(" - Par habitant :", note)
             
             #On récupère directement la note en utilisant la fonction affine
             a = infos_csv[csv][2]['moyenne']
@@ -399,7 +399,7 @@ class Donnees:
             
             if recursivité :
                 self.ville = ancien_nom_ville
-                print('Pas de données')
+                #print('Pas de données')
                 return None
                
             if infos_csv[csv][2]['insee'] == 0 :
@@ -610,10 +610,14 @@ class Donnees:
         fichier.close()
         
         rangee_unique = cr[(cr['code_commune_INSEE'] == self.code_insee) | (cr['code_commune_INSEE'] == self.code_insee[1:])]
-        print('LONGUEUUUUUUUUUUUUUUUUUUUUUUR',len(rangee_unique))
+        print(rangee_unique)
         if len(rangee_unique) > 1:
-            rangee_unique = rangee_unique.iloc[0]
-        print(len)
+
+            if self.code_insee[0] == '0':
+                rangee_unique = rangee_unique.iloc[0]
+            else:
+                rangee_unique = rangee_unique.iloc[-1]
+            print(rangee_unique)
         coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
 
                        
@@ -632,8 +636,10 @@ class Donnees:
         print(liste_dix_proches)
         liste_notes = []
         for nom,insee in liste_dix_proches:
-            msg.configure(text = f'Calcul de {nom} (code : {insee})')
-            win.update()
+            if msg != None :
+                msg.configure(text = f'Calcul de {nom} (code : {insee})')
+                win.update()
+                print(nom)
             liste_notes.append((nom,Donnees(nom,insee).note_finale(meteo = False)))
         liste_notes.sort(key=lambda x: x[-1], reverse=True) 
         return liste_notes
@@ -782,7 +788,8 @@ class Donnees:
 		    "Activite": ['Les festivals'],
             "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
             "Precarite" : ["Le prix des maisons","Le prix des appartements"],
-            "Citadin" : [] # jsp ptetre l'enlever cette question
+            "Citadin" : [], # jsp ptetre l'enlever cette question,
+            "Enseignement_Superieur" : []
         }
 
         dictionaire_note = {"sum_numerateur": 0, "sum_denumerateur": 0} # (numerateur / denumerateur) d'un moyenne
@@ -885,11 +892,11 @@ class Donnees:
     
     '''
     def prepa_recup_donnees(self, id):
-        print ("\nLe csv", id)
+        #print ("\nLe csv", id)
         if infos_csv[id][2]['insee'] >= 0 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
             resultat = self.recuperation_donnees(id)
                     
-            print(" - Note /100 :", resultat)
+            #print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
             if resultat is not None :
                 if type(resultat) is not list :
@@ -915,7 +922,7 @@ class Donnees:
 
 # Fin du code !
 if __name__ == "__main__":
-    puissa = Donnees("Abergement-de-Varey")
+    puissa = Donnees("Magalas")
     if puissa.is_commune_france(None):
         puissa.note_finale()
     print(puissa.k_plus_proches_voisins(10))
