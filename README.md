@@ -4,7 +4,7 @@ Life score est une application pensée et conçue par quatre étudiants du lycé
 Réalisé par :
 - Frédéric M.
 - Nathan B.
-- Raphaaël F.
+- Raphaël F.
 - Thor N.
 
 
@@ -602,3 +602,8 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 > Nouvelle animation lors du premier téléchargement
 
 > Désactivation du bouton "SUPPRIMER" les données si on a toujours pas fait le QCM.
+
+
+
+06 Avril 2023 :
+>Intégration complète des 10 plus proches villes et de leur notes puis du tri (cela rajoute une quinzainne de secondes au processus ce qui n'est pas énorme)
