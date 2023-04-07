@@ -230,9 +230,9 @@ def telechargement(bouton,fenetre):
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
     if not erreur_maj:
-        #print(len(lire_option("REPONSE_QCM")),len(list_Questions))
+        #print(len(lire_fichier_dico("REPONSE_QCM")),len(list_Questions))
         retour_pages(windowDownload,bouton)
-        if len(lire_option("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
+        if len(lire_fichier_dico("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
         else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
             w_qcm(fenetre)
@@ -327,7 +327,7 @@ def est_termine(btn_1,btn_2):
         btn_2.destroy()
         btn_ok.place(relx=0.5,rely=0.5,anchor =CENTER)
         msg_principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
-        changer_option("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
+        modifier_fichier_dico("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
         btn_ok.configure(text="Lancer la recherche")
         return True
 
@@ -490,10 +490,10 @@ def parametres(bouton):
 
     # Tous les boutons présents :
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
-                                            command=lambda:changer_option("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message)
+                                            command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message)
                                             if est_nombre(entree_frequence_maj.get()) \
                                             else message.configure(text = "Vous devez entrer un nombre !"), # / permet un retour à la ligne dans le code
-                                            text="Confirmer") # changer_option() se trouve dans classes.py
+                                            text="Confirmer") # modifier_fichier_dico() se trouve dans classes.py
     btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,
                                                 text="SUPPRIMER",
@@ -504,7 +504,7 @@ def parametres(bouton):
     Désactive le bouton SUPPRIMER des données si on a toujours rien enregistré.
     Conçu par Nathan
     '''
-    if lire_option("REPONSE_QCM") == {} :
+    if lire_fichier_dico("REPONSE_QCM") == {} :
         btn_supprimer_donnees.configure(state='disabled')
     else :
         btn_supprimer_donnees.configure(state='normal')
@@ -519,13 +519,13 @@ def parametres(bouton):
     # Autres (les entrées et les volets "switch") :
     
     # Pour récuperer la fréquence des màj et le transformer en jours
-    frequence_maj = int(lire_option('FREQ_MAJ')/86400)
+    frequence_maj = int(lire_fichier_dico('FREQ_MAJ')/86400)
     
     entree_frequence_maj = interface.CTkEntry(windowParam, placeholder_text=frequence_maj, width=51, font= (polices[0], 18))
     switch_apparence = interface.CTkOptionMenu(windowParam, values=["Système", "Sombre", "Clair"],command=change_apparence_page)
 
     # Traduction en direct, pour voir directement quel mode on a selectioné 
-    apparence = lire_option("APPARENCE")
+    apparence = lire_fichier_dico("APPARENCE")
     if apparence == "System" : apparence = "Système"
     elif apparence == "Light" : apparence = "Clair"
     elif apparence == "Dark" : apparence = "Sombre"
@@ -565,7 +565,7 @@ def date_derniere_verification() -> str:
     
     - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
-    derniere_maj_sec = lire_option("DERNIERE_MAJ") # Cette fonction provient de classes.py
+    derniere_maj_sec = lire_fichier_dico("DERNIERE_MAJ") # Cette fonction provient de classes.py
     if derniere_maj_sec == 0 :
         return "Aucune vérification."
     return strftime("%d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
@@ -578,7 +578,7 @@ def supprimer_donnees_utilisateur():
 
     - Idee de Thor
     '''
-    changer_option("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
+    modifier_fichier_dico("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
     sys.exit() # Ferme le programme pour éviter de potentielles erreurs
 
 
@@ -595,7 +595,7 @@ def change_apparence_page(choix):
         elif choix == "Sombre": choix = "Dark"
         else:choix = "Light"
 
-        changer_option('APPARENCE', choix)
+        modifier_fichier_dico('APPARENCE', choix)
         interface.set_appearance_mode(choix)
 
 
@@ -960,12 +960,12 @@ if not os.path.exists(repertoire_donnees):
 '''
 RECUPERATION STYLE
 
-- Fonction lire_option fait par Thor dans classes.py
+- Fonction lire_fichier_dico fait par Thor dans classes.py
 
 '''
 
 # Cree les fichiers suivants et remplis par la valeur par default s'ils ne sont pas là
-style = lire_option('APPARENCE')
+style = lire_fichier_dico('APPARENCE')
 interface.set_appearance_mode(str(style))  # Modes: system (default), light, dark
 interface.set_default_color_theme("green")  # Themes: blue (default), dark-blue, green
 

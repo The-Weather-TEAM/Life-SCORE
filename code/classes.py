@@ -166,33 +166,51 @@ def is_options() :
         open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
 
 
-# Changer une option
-def changer_option(option: str, valeur: any,msg=None):
-    """Modifie la valeur d'une option donnée dans ./donnees/options.txt
+# Modifier un option/dico
+def modifier_fichier_dico(clef: str, valeur: any, fichier:str = "donnees/options.txt", msg=None):
+    """Modifie la valeur d'une valeur donnée dans un fichier contenant un string format dictionaire python.
+
+    - Par default on modifie le fichier options, sauf si on donne un fichier en parametre.
+    - Ce fonction action sur tout les repertoires enfants de /Life-SCORE/code/ 
+
     - Idée et Implémentation par Thor
     """
-    assert type(option) == str, "Le nom de l'option doit etre de type string"
+    assert type(clef) == type(fichier) == str, "Le nom du clef doit etre de type string"
+    
+    if fichier[0] == "/": # pour eviter un bug avec os.path.join()
+        fichier = fichier[1:]
+    path_options = os.path.join(os.path.dirname(__file__), fichier)
 
-    is_options()
+    if not os.path.isfile(path_options): # on lui ecrit un dictionaire vide si le fichier n'existe pas
+        open(path_options, "w").write("{}") 
+
+    if fichier == "donnees/options.txt": 
+        is_options()
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
 
-    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
-    dictionaire_options = eval(open(path_options,"r").read()) # on recupere dabord les options
-    dictionaire_options[option] = valeur                      # on change l'option
-    open(path_options, "w").write(str(dictionaire_options))   # on re-ecrit tout les options au fichier
+    dictionaire_options = eval(open(path_options,"r").read()) # on recupere d'abord le dico
+    dictionaire_options[clef] = valeur                      # on change la valeur dans le dico
+    open(path_options, "w").write(str(dictionaire_options))   # on re-ecrit le dico au fichier
 
 
-# Récupérer une option du fichier
-def lire_option(option: str):
-    """Renvoie la valeur de l'option donnée dans ./donnees/options.txt
+# Récupérer une option/dico du fichier
+def lire_fichier_dico(clef: str, fichier: str = "donnees/options.txt"):
+    """Renvoie la valeur d'un clef donné d'un fichier (options par defaut). 
+
+    - Recuper par default des donnes du fichier options, sauf si on donne un fichier en parametre.
+    - Ce fonction action sur tout les repertoires enfants de /Life-SCORE/code/
+
     - Idée et Implémentation par Thor
     """
-    assert type(option) == str, "L'argument entré doit etre un string"
+    assert type(clef) == type(fichier) == str, "Les arguments entré doivent etre des strings."
+    
+    if fichier[0] == "/": # pour eviter un bug avec os.path.join()
+        fichier = fichier[1:]
     is_options()
-    path_options = os.path.join(os.path.dirname(__file__), "donnees/options.txt")
+    path_options = os.path.join(os.path.dirname(__file__), fichier)
 
-    return eval(open(path_options, "r").read()).get(option)   # on ouvre et recupere l'option qu'on veut
+    return eval(open(path_options, "r").read()).get(clef)   # on ouvre et recupere l'option qu'on veut
     
     
 # Renvoie uniquement les nombres
@@ -856,7 +874,7 @@ class Donnees:
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes
             print('fait',self.liste_notes)
         # Applique les coefs aux notes par rapport au choix du QCM
-        note_moyenne_avec_coef = self.applique_coefs_QCM(lire_option("REPONSE_QCM"), self.notes_finales)
+        note_moyenne_avec_coef = self.applique_coefs_QCM(lire_fichier_dico("REPONSE_QCM"), self.notes_finales)
 
         if not meteo :
             self.notes_finales.update(Donnees.dico_meteo)

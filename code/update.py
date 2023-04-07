@@ -51,8 +51,8 @@ from http.client import IncompleteRead
 
 # Importation de la fonction de test de connexion :
 from classes import is_connected as connexion
-from classes import lire_option          # Utile pour lire les parametres d'utilisateur
-from classes import changer_option       # Utile pour changer les options (obvious)
+from classes import lire_fichier_dico          # Utile pour lire les parametres d'utilisateur
+from classes import modifier_fichier_dico       # Utile pour changer les options (obvious)
 
 # Pour deziper
 from zipfile import ZipFile
@@ -150,8 +150,8 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
     # Temps en secondes entre les vérifications de mises à jour :
     #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
-    temps_maj = lire_option("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
-    derniere_maj = lire_option("DERNIERE_MAJ") 
+    temps_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
+    derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
 
 
     # Passe la vérification des fichiers
@@ -233,7 +233,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     path=repertoire_donnees)
                 
             os.remove(os.path.join(repertoire_donnees,'temp.zip'))
-            changer_option("DERNIERE_MAJ", time.time())
+            modifier_fichier_dico("DERNIERE_MAJ", time.time())
             
             # RECURSIVITE pour vérifier si les fichiers téléchargés sont les derniers dispo
             return executer(barre_progres,fenetre,message,message_pourcentage)
@@ -497,7 +497,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         del nouvelles_informations[id]
                         
                         # Pour l'interface, dire la dernière màj
-                        changer_option("DERNIERE_MAJ", time.time())
+                        modifier_fichier_dico("DERNIERE_MAJ", time.time())
                         
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
