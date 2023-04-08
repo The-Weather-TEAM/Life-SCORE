@@ -613,3 +613,5 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 08 Avril 2023 :
 > Fix d'un bug qui affichait plusieurs fois le même avantage/inconvénient (si la ville avait moins de 5 notes > 50 ou moins de 5 notes < 50)
 On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées dans la liste
+
+> Ajout d'un fichier, le fichier `temporaire.txt` (nom sujet à changer) qui récupère la note des villes voisines (ainsi, en faisant plusieurs calculs dans un même entourage on ne recalcule pas plusieurs fois la même ville). Cela fait donc gagner du temps sur les futures recherches 
