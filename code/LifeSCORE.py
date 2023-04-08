@@ -152,12 +152,12 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
 list_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Reproduire les questions dans le même style que la première
-                ("Etes vous étudiant ?",'Enseignement_Superieur'),
+                ("Êtes vous étudiant ?",'Enseignement_Superieur'),
                 ("Avez-vous des enfants?",'Scolarite'),   
                 ("La culture a-t-elle une place importante pour vous ?",'Culture'),
                 ("Préférez vous la ville à la campagne ?",'Citadin'),
-                ("Etes vous en recherche d'emploi ?","Cherche_Emploi"),
-                ("Etes vous dans une situation précaire ?","Precarite")]
+                ("Êtes vous en recherche d'emploi ?","Cherche_Emploi"),
+                ("Êtes vous dans une situation précaire ?","Precarite")]
 
 
 dico_Reponses = {} # Traité dans coefficients.py
