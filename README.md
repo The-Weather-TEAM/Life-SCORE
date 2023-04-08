@@ -606,4 +606,10 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 
 06 Avril 2023 :
->Intégration complète des 10 plus proches villes et de leur notes puis du tri (cela rajoute une quinzainne de secondes au processus ce qui n'est pas énorme)
+> Intégration complète des 10 plus proches villes et de leur notes puis du tri (cela rajoute une quinzainne de secondes au processus ce qui n'est pas énorme)
+
+
+
+08 Avril 2023 :
+> Fix d'un bug qui affichait plusieurs fois le même avantage/inconvénient (si la ville avait moins de 5 notes > 50 ou moins de 5 notes < 50)
+On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées dans la liste
