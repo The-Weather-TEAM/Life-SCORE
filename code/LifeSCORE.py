@@ -151,11 +151,11 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
-list_Questions = [('Aimez vous sortir en ville ?','Activite'),           # Reproduire les questions dans le même style que la première
-                ('Etes vous etudiant ?','Enseignement_Superieur'),
-                ('Avez-vous des enfants encore scolarisé ? ?','Scolarite'),   
-                ('La culture a-t-elle une place importante pour vous ?','Culture'),
-                ('préférez vous la ville à la campagne ?','Citadin'),
+list_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Reproduire les questions dans le même style que la première
+                ("Etes vous étudiant ?",'Enseignement_Superieur'),
+                ("Avez-vous des enfants?",'Scolarite'),   
+                ("La culture a-t-elle une place importante pour vous ?",'Culture'),
+                ("Préférez vous la ville à la campagne ?",'Citadin'),
                 ("Etes vous en recherche d'emploi ?","Cherche_Emploi"),
                 ("Etes vous dans une situation précaire ?","Precarite")]
 
@@ -1001,11 +1001,11 @@ else :
 
 
 
-credits_texte = ("                        Réalisé par :\n\n" 
-+"- Nathan B    : Gestion des données, calculs & compatibilté\n" 
-+"- Raphaël F   : Interface graphique          \n"
-+"- Thor N        : Calcul des coefficients & API\n"
-+"- Frédéric M  : Recherches pour la base de données")
+credits_texte = ("""                           Réalisé par :
+Nathan Bosy     : Gestion des données, calculs & compatibilté
+Raphaël Farenc  : Interface graphique & interprétation des notes
+Thor N          : Calcul des coefficients & API
+Frédéric Marquet: Recherches pour la base de données""")
 
 
 
@@ -1020,8 +1020,8 @@ logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/ic
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
                                     text= "", font=(polices[0],30, 'bold'), image=image_btn_quitter, fg_color='transparent',hover = False)
-credits = interface.CTkLabel(fenetrePrincipale, width = 450 , corner_radius=2,text = credits_texte,
-                                font = (polices[0],19), pady=1,justify=LEFT)
+credits = interface.CTkLabel(fenetrePrincipale, width = 600 , corner_radius=2,text = credits_texte,anchor = W,fg_color='#D0D0CE',
+                                font = ('Courier',18), pady=1,justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                 command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),
                                 image=image_btn_aide, hover = False, fg_color='transparent') # Ouvre la page d'instructions
