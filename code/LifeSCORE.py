@@ -882,7 +882,7 @@ def avantages_inconvenients(dic):
 
     # Avantages
 
-    liste = [''] * 10 
+    liste = [''] * 10 # On travaille ici avec des tuples (nom,note)
     cle_maxi = cle_mini = "Valeur initiale"
     
     i = j = 0
@@ -901,7 +901,10 @@ def avantages_inconvenients(dic):
                 mini = dic[cle]
                 cle_mini = cle
 
-        liste[i], liste[-j-1] = (cle_maxi,int(dic[cle_maxi])), (cle_mini,int(dic[cle_mini]))
+        if (cle_maxi,int(dic[cle_maxi])) not in liste: # Ceci permet d'éviter d'avoir plusieurs fois le meme avantage
+            liste[i] = (cle_maxi,int(dic[cle_maxi]))   # ou inconvénient dans le cas où il y a moins de 5 notes 
+        if (cle_mini,int(dic[cle_mini])) not in liste: # au dessus de 50 ou moins de 5 notes en dessous de 50
+            liste[-j-1] = (cle_mini,int(dic[cle_mini])) 
         i += 1 # Il est interdit d'écrire i,j += 1
         j += 1
         print(liste)
@@ -915,12 +918,15 @@ def plus_et_moins(pl,mal):
 
     - Idee de Raphaël 
     '''
+    print(pl,mal,"C'est la merguez, merguez party")
     plus, moins = "Les Avantages sur 100: ", "Les Inconvénients sur 100:" # texte a retourner
     for val_plus in pl:
-        plus = plus + "\n - " + val_plus[0] + f' : {int(val_plus[1])}'
+        if val_plus != '':
+            plus = plus + "\n - " + val_plus[0] + f' : {val_plus[1]}'
 
     for val_moins in mal:
-        moins = moins + "\n - " + val_moins[0] + f' : {int(val_moins[1])}'
+        if val_moins != '':
+            moins = moins + "\n - " + val_moins[0] + f' : {val_moins[1]}'
         
     return plus,moins
 

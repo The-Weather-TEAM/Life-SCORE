@@ -878,6 +878,7 @@ class Donnees:
 
         if not meteo :
             self.notes_finales.update(Donnees.dico_meteo)
+            print(Donnees.dico_meteo,"c'est la météo il fait beau c'est la samba")
         # Pour tester avant de tout envoyer
         print("################################",
             "\n##       NOTES FINALES        ##",
