@@ -1,0 +1,1 @@
+{'Espondeilhan': 57, 'Magalas': 45, 'Puimisson': 51, 'Coulobres': 46, 'Lieuran-lès-Béziers': 54, 'Pouzolles': 50, 'Bassan': 56, 'Fouzilhon': 59, 'Pailhès': 60, 'Abeilhan': 56, 'Puissalicon': 55, 'Saint-Geniès-de-Fontedit': 57, 'Laurens': 56, 'Autignac': 45, 'Gabian': 49}

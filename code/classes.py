@@ -152,18 +152,21 @@ def kppv(donnees: dict,
 
 
 # Vérifier si le fichier options est présent
-def is_options() :
+def is_fichier(chemin : str = "donnees/options.txt") :
     """
     Fonction qui verifie si le fichier options.txt existe pour eviter des erreurs avec les autres fontions options
     - Idée + Implémentation par Nathan
     """
-    path_options = os.path.join(os.path.dirname(__file__),"donnees/options.txt") # localise le fichier cible
+    path_options = os.path.join(os.path.dirname(__file__),chemin) # localise le fichier cible
     if not os.path.isfile(path_options) : # on verifie si ce fichier n'existe pas
-        dic_def = {'APPARENCE': 'System',
-                   'FREQ_MAJ': 0,
-                   'DERNIERE_MAJ': 0,
-                   "REPONSE_QCM": {}}
-        open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
+        if chemin == "donnees/options.txt":
+            dic_def = {'APPARENCE': 'System',
+                    'FREQ_MAJ': 0,
+                    'DERNIERE_MAJ': 0,
+                    "REPONSE_QCM": {}}
+            open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
+        else:
+            open(path_options, "w").write('{}')
 
 
 # Modifier un option/dico
@@ -185,17 +188,17 @@ def modifier_fichier_dico(clef: str, valeur: any, fichier:str = "donnees/options
         open(path_options, "w").write("{}") 
 
     if fichier == "donnees/options.txt": 
-        is_options()
+        is_fichier()
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
 
     dictionaire_options = eval(open(path_options,"r").read()) # on recupere d'abord le dico
-    dictionaire_options[clef] = valeur                      # on change la valeur dans le dico
+    dictionaire_options[clef] = valeur                        # on change la valeur dans le dico
     open(path_options, "w").write(str(dictionaire_options))   # on re-ecrit le dico au fichier
 
 
 # Récupérer une option/dico du fichier
-def lire_fichier_dico(clef: str, fichier: str = "donnees/options.txt"):
+def lire_fichier_dico(cle: str | None = None, fichier: str = "donnees/options.txt"):
     """Renvoie la valeur d'un clef donné d'un fichier (options par defaut). 
 
     - Recuper par default des donnes du fichier options, sauf si on donne un fichier en parametre.
@@ -203,14 +206,16 @@ def lire_fichier_dico(clef: str, fichier: str = "donnees/options.txt"):
 
     - Idée et Implémentation par Thor
     """
-    assert type(clef) == type(fichier) == str, "Les arguments entré doivent etre des strings."
+    type(fichier) == str, "Les arguments entrés doivent être des strings."
     
     if fichier[0] == "/": # pour eviter un bug avec os.path.join()
         fichier = fichier[1:]
-    is_options()
+    is_fichier(fichier)
     path_options = os.path.join(os.path.dirname(__file__), fichier)
-
-    return eval(open(path_options, "r").read()).get(clef)   # on ouvre et recupere l'option qu'on veut
+    if cle != None :
+        return eval(open(path_options, "r").read()).get(cle)   # on ouvre et recupere l'option qu'on veut
+    else: # Si on veut le fichier entier
+        return eval(open(path_options,"r",encoding = 'utf-8').read())
     
     
 # Renvoie uniquement les nombres
@@ -653,13 +658,28 @@ class Donnees:
         liste_dix_proches = kppv(dico,coordonnees0,10)
         print(liste_dix_proches)
         liste_notes = []
+        
+        dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/temporaire.txt")
+
         for nom,insee in liste_dix_proches:
-            if msg != None :
-                msg.configure(text = f'Calcul de {nom} (code : {insee})')
-                win.update()
-                print(nom)
-            liste_notes.append((nom,Donnees(nom,insee).note_finale(meteo = False)))
-        liste_notes.sort(key=lambda x: x[-1], reverse=True) 
+            msg.configure(text = f'Calcul de {nom} (code : {insee})')
+            win.update()
+            print(nom)
+            if nom in dico_fichier_tempo : # Si on a déjà récupéré ces données là
+                liste_notes.append((nom,dico_fichier_tempo[nom]))
+            else:
+                note = Donnees(nom,insee).note_finale(meteo = False)
+                liste_notes.append((nom,note))
+                dico_fichier_tempo[nom] = note
+                modifier_fichier_dico(nom, note, fichier = 'donnees/temporaire.txt')
+
+        # On écrit tout ça dans le fichier temporaire de données
+        with open(os.path.join(nom_du_repertoire, "donnees/temporaire.txt"),'w',encoding = 'utf-8') as tempo :
+            tempo.write(str(dico_fichier_tempo))
+
+        
+        liste_notes.sort(key=lambda x: x[-1], reverse=True)
+
         return liste_notes
         """
         -------------
