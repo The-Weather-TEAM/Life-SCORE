@@ -203,8 +203,8 @@ def telechargement(bouton,fenetre, bouton_param, bouton_aide):
     change_etat_btn(bouton) # Bloque le bouton sur la page principale
     
     # POUR RAF : je sais pas où on peut les réactiver
-    #!change_etat_btn(bouton_param)
-    #!change_etat_btn(bouton_aide)
+    change_etat_btn(bouton_param)
+    change_etat_btn(bouton_aide)
     
     # Initialisation de la page
     windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
@@ -231,6 +231,8 @@ def telechargement(bouton,fenetre, bouton_param, bouton_aide):
     
     # Décide ensuite quelle action faire
     erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
+    change_etat_btn(bouton_param)
+    change_etat_btn(bouton_aide)
     if not erreur_maj:
         #print(len(lire_fichier_dico("REPONSE_QCM")),len(list_Questions))
         retour_pages(windowDownload,bouton)
