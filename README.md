@@ -632,3 +632,5 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 > Ajout de titres pour les pages d'aide et d'information.
 
 > Modification des données pour retourner 0 pour compter_par_habitant, et maintenant la note finale passe par la fonction sigmoide.
+
+> Création d'une page de détail de la note à la fin de la fonction w_score() qui permet d'afficher la note de chaque csv (critère)
