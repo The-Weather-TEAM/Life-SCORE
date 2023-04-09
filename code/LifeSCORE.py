@@ -488,7 +488,7 @@ def parametres(bouton):
     # Tous les messages présents :
     msg_titre = interface.CTkLabel(windowParam, text="PARAMÈTRES", font= (polices[1], 40, 'bold'), text_color="#29A272")
     msg_frequence = interface.CTkLabel(windowParam, text="FRÉQUENCE DE MISE À JOUR", font= (polices[0], 25), text_color="#29A272")
-    msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification: {date_derniere_verification()}", font= (polices[0], 16), text_color="#646464")
+    msg_verif = interface.CTkLabel(windowParam, text=f"Dernière Vérification : {date_derniere_verification()}", font= (polices[0], 16), text_color="#646464")
     msg_apparence = interface.CTkLabel(windowParam, text="APPARENCE DE L'APPLICATION", font= (polices[0], 25), text_color="#29A272")
     msg_donnees = interface.CTkLabel(windowParam, text="DONNÉES UTILISATEUR", font= (polices[0], 25), text_color="#29A272")
     message = interface.CTkLabel(windowParam,text="Le bouton de suppression des données fermera le programme.", width = 50, font =(polices[0],18)) # font = taille + police, justify comme sur word
@@ -572,8 +572,8 @@ def date_derniere_verification() -> str:
     '''
     derniere_maj_sec = lire_fichier_dico("DERNIERE_MAJ") # Cette fonction provient de classes.py
     if derniere_maj_sec == 0 :
-        return "Aucune vérification."
-    return strftime("%d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
+        return "aucune vérification"
+    return strftime("le %d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
 
 
 def supprimer_donnees_utilisateur():
