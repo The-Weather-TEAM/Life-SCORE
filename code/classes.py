@@ -242,6 +242,8 @@ Idée et réalisation de Nathan
 
 '''
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
+    if x == 0 :
+       return 0
    
     m = (max - 1.4*moyenne) / 50                # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
@@ -256,13 +258,19 @@ def calculer_fonction_sigmoide(moyenne, maximum, x) : # Deux points correspondan
     accentue le résultat avec ceci.
     
     '''
+    if x == 0 :
+       return 0
     difference = maximum - moyenne           # On calcule la différence entre le max et la moyenne
     coefficient = (x - moyenne) / difference # On fait un coeficient pour savoir où est situé le résultat par rapport aux moyennes
     rep = coefficient*100
     rep = 100/(1+math.exp(-0.08*rep))        # On utilise la fonction Sigmoïde
     return rep
 
-
+def fonction_sigmoide(x):
+    if x == 0 :
+       return 0
+    return 100/(1+math.exp(-0.08*(x-50)))
+    
 
 
 
@@ -916,7 +924,7 @@ class Donnees:
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
-        return note_finale 
+        return round(fonction_sigmoide(note_finale))
 
 
 

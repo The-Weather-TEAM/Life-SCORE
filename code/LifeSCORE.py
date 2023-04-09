@@ -191,7 +191,7 @@ else :
 '''
 FONCTIONS
 '''
-def telechargement(bouton,fenetre):
+def telechargement(bouton,fenetre, bouton_param, bouton_aide):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
     Puis renvoie sur le qcm ou la suite du programme
@@ -202,12 +202,17 @@ def telechargement(bouton,fenetre):
     global erreur_maj
     change_etat_btn(bouton) # Bloque le bouton sur la page principale
     
+    # POUR RAF : je sais pas où on peut les réactiver
+    #!change_etat_btn(bouton_param)
+    #!change_etat_btn(bouton_aide)
+    
     # Initialisation de la page
     windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
     windowDownload.title('LifeScore  |  Téléchargement')
     windowDownload.iconphoto(False, icone)
     windowDownload.minsize(width=int(510*4/3), height=384)
     windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
+    windowDownload.resizable(False, False)
     windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
     
 
@@ -236,7 +241,7 @@ def telechargement(bouton,fenetre):
     else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
         retour_pages(windowDownload,bouton)
         w_erreur(fenetre)
-        
+    
     windowDownload.mainloop()
 
 
@@ -436,6 +441,7 @@ def info(btn):
     windowInfo.title('LifeScore  |  Informations')
     windowInfo.iconphoto(False, icone)
     windowInfo.minsize(width=int(510*4/3), height=384) # 768
+    windowInfo.resizable(False, False)
 
     # Création des widgets
     txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0,border_width=2,border_color='grey')
@@ -711,12 +717,14 @@ def w_score(ville,win,list_dix_villes,score):
     if systeme_exploitation == 'Windows' :
         fenetrePrincipale.state('zoomed')
     
+    
+    
     dico = Donnees_ville.notes_finales # Un dictionnaire
     bonus,malus = avantages_inconvenients(dico) # Fonction non terminée (besoin du fichier qui fait les données)
     box_voisins = interface.CTkTextbox(win, width = 580 ,height = 150, corner_radius=0)
-    texte = ""
+    texte = "Notes des communes voisines :\n"
     for nom,note in list_dix_villes:
-        texte += f'{str(nom)} : {str(note)}/100 \n'
+        texte += f'\n - {str(nom)} : {str(note)}/100'
     box_voisins.insert("0.0", text = texte)
     box_voisins.configure(state = "disabled", font = (polices[0],24),wrap = 'word')
     
@@ -988,7 +996,7 @@ icone_connexion = PhotoImage(file = nom_du_repertoire+'/systeme/icones/pas-inter
 fenetrePrincipale.title('LifeScore  |  Menu principal')
 fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
-
+#fenetrePrincipale.resizable(False,False)
 
 
 if systeme_exploitation == 'Windows' :
@@ -1007,7 +1015,7 @@ Frédéric Marquet: Recherches pour la base de données""")
 
 
 # Création des widgets
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
+btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale, btn_parametre, btn_info), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
 msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =(polices[0],18), justify=CENTER)
 logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
