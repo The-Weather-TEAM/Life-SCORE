@@ -425,17 +425,13 @@ def page_info(btn):
     'https://github.com/TomSchimansky/CustomTkinter/blob/master/examples/complex_example.py'
     le reste vient de Raphaël
     """
+
     # Constante 
-    texte_info=("Bonjour ! Voilà notre protoype de LifeScore où vous pourrez visualiser la note de villes."
-    + " Pour commencer, nous réalisons un QCM de 8 questions afin de déterminer vos préférences."
-    + " Pour chaques critères, on définit une note sur 100 ainsi qu'un coefficient propre à lui même. "
-    + " Le plus de critères sont réunis afin d'avoir le plus de précision possible. "
-    + "\n\nIls sont répartis en 4 catégories :"
-    + "\n   - Le climat (pluie par an / pollution de l'air / température / vent / ...)"
-    + "\n   - La qualité de vie (activités / patrimoine / ville fleurie / ...)"
-    + "\n   - Le coût (essence / gaz / loyer / prix de la vie / salaire moyen / ...)"
-    + "\n   - La sécurité (taux d'accidents / vols / risques / ...)" #Pour une meilleure clarté du code j'écrit ce str ainsi
-    + "\n\nCeci n'est qu'un prototype et certaines communes (très peu d'habitants) peuvent ne pas apparaître à cause du manque de données. ")
+    texte_info=("Bonjour ! Bienvenue sur LifeScore, logiciel permettant d'attribuer une note sur 100 à chaque communes de France."
+    + " Pour commencer, nous réalisons un questionnaire afin de déterminer vos préférences."
+    + " Pour chaques critères (correspondant à un fichier CSV), on définit une note sur 100 ainsi qu'un coefficient propre à lui même en fonction de vos réponses. "
+    + " Nous essayons de réunir un maximum d'informations afin d'avoir une meilleure précision. "
+    + "\n\n Attention : Ce logiciel a seulement pour but d'informer les personnes et nous ne voulons en rien nuire à aucune commune de France.") #Pour une meilleure clarté du code j'écrit ce str ainsi
 
     # Initialisation de la page
     change_etat_btn(btn)
