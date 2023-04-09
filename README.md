@@ -621,7 +621,7 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 09 Avril 2023 :
 > Modification des notations : on utilise maintenant une fonction sigmoide pour accentuer les valeurs (qui sont proches des moyennes nationales).
 
-> Texte animé du premier téléchargement modifié pour expliquer à quoi sert l'application + le texte est matinenant centré
+> Texte animé du premier téléchargement modifié pour expliquer à quoi sert l'application + le texte est maintenant centré
 
 > Couleur des crédits modifié pour le mode sombre.
 
