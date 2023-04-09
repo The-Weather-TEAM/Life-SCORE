@@ -212,12 +212,12 @@ def telechargement(bouton,fenetre):
     
 
     # Création des widgets
-    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=LEFT)
+    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
     message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
     progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
     progressbar.set(0)
 
-    # Placements des widgets
+    # Placements des widget
     msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
     progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
     message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
@@ -576,6 +576,7 @@ def supprimer_donnees_utilisateur():
     - Idee de Thor
     '''
     modifier_fichier_dico("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
+    os.remove(repertoire_donnees+'/temporaire.txt')
     sys.exit() # Ferme le programme pour éviter de potentielles erreurs
 
 
@@ -1012,7 +1013,7 @@ logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/ic
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
                                     text= "", font=(polices[0],30, 'bold'), image=image_btn_quitter, fg_color='transparent',hover = False)
-credits = interface.CTkLabel(fenetrePrincipale, width = 600 , corner_radius=2,text = credits_texte,anchor = W,fg_color='#D0D0CE',
+credits = interface.CTkLabel(fenetrePrincipale, width = 600 , corner_radius=2,text = credits_texte,anchor = W,fg_color=('#D0D0CE','#141414'),
                                 font = ('Courier',18), pady=1,justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                 command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),
