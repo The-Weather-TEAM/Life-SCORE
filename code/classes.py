@@ -51,7 +51,7 @@ from requests.exceptions import ConnectionError, ReadTimeout
 
 # Multithreading, géré par Nathan (permet de faire plusieurs actions en même temps)
 import threading
-
+import math
 
 '''
 OUVERTURE DE LA BASE DE DONNEES
@@ -249,7 +249,13 @@ def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à l
    
     return (x-p)/m                              # On renvoie la note
 
-
+def calculer_fonction_sigmoide(moyenne, maximum, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
+   
+    difference = maximum - moyenne
+    coefficient = (x - moyenne) / difference
+    rep = coefficient*100
+    rep = 100/(1+math.exp(-0.08*rep))
+    return rep
 
 
 
@@ -416,7 +422,7 @@ class Donnees:
             #On récupère directement la note en utilisant la fonction affine
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']   
-            return calculer_fonction_affine(a, b, note)
+            return calculer_fonction_sigmoide(a, b, note)
                 
         except : #Si pas de données
             
@@ -468,7 +474,7 @@ class Donnees:
         a = infos_csv[csv][2]['moyenne']
         b = infos_csv[csv][2]['max']
         
-        return calculer_fonction_affine(a, b, note)
+        return calculer_fonction_sigmoide(a, b, note)
         
         
         
@@ -489,7 +495,7 @@ class Donnees:
             b = infos_csv[csv][2]['max']
             
             nombre = int(str(nombre[0]).split(',')[0])
-            return calculer_fonction_affine(a, b, nombre)
+            return calculer_fonction_sigmoide(a, b, nombre)
         
         except :
             print('Pas de données')
