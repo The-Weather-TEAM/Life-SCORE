@@ -615,7 +615,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     if is_modified and not mise_a_jour :
         
         try :
-            os.remove(repertoire_donnees+'/temporaire.txt')
+            os.remove(repertoire_donnees+'/cache.txt')
         except :
             print('Fichier cache innexistant.')
 

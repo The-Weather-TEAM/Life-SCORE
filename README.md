@@ -628,3 +628,7 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 > La fichier temporaire.txt est supprimé si on supprime les données.
 
 > Une coupure internet bloque le téléchargement mais n'arrête pas l'appli, on attend de récupérer l'accès à internet.
+
+> Ajout de titres pour les pages d'aide et d'information.
+
+> Modification des données pour retourner 0 pour compter_par_habitant, et maintenant la note finale passe par la fonction sigmoide.

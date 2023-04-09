@@ -674,7 +674,7 @@ class Donnees:
         print(liste_dix_proches)
         liste_notes = []
         
-        dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/temporaire.txt")
+        dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/cache.txt")
 
         for nom,insee in liste_dix_proches:
             msg.configure(text = f'Calcul de {nom} (code : {insee})')
@@ -686,10 +686,10 @@ class Donnees:
                 note = Donnees(nom,insee).note_finale(meteo = False)
                 liste_notes.append((nom,note))
                 dico_fichier_tempo[nom] = note
-                modifier_fichier_dico(nom, note, fichier = 'donnees/temporaire.txt')
+                modifier_fichier_dico(nom, note, fichier = 'donnees/cache.txt')
 
         # On écrit tout ça dans le fichier temporaire de données
-        with open(os.path.join(nom_du_repertoire, "donnees/temporaire.txt"),'w',encoding = 'utf-8') as tempo :
+        with open(os.path.join(nom_du_repertoire, "donnees/cache.txt"),'w',encoding = 'utf-8') as tempo :
             tempo.write(str(dico_fichier_tempo))
 
         
