@@ -584,7 +584,7 @@ def supprimer_donnees_utilisateur():
     - Idee de Thor
     '''
     modifier_fichier_dico("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
-    os.remove(repertoire_donnees+'/temporaire.txt')
+    os.remove(repertoire_donnees+'/cache.txt')
     sys.exit() # Ferme le programme pour éviter de potentielles erreurs
 
 
