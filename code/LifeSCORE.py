@@ -440,10 +440,11 @@ def info(btn):
     windowInfo = interface.CTkToplevel() # fenetre de tkinter
     windowInfo.title('LifeScore  |  Informations')
     windowInfo.iconphoto(False, icone)
-    windowInfo.minsize(width=int(510*4/3), height=384) # 768
+    windowInfo.minsize(width=int(510*4/3), height=500) # 768
     windowInfo.resizable(False, False)
 
     # Création des widgets
+    msg_titre = interface.CTkLabel(windowInfo, text="INFORMATIONS", font= (polices[1], 40, 'bold'), text_color="#29A272")
     txt_info = interface.CTkTextbox(windowInfo, width = 580 , corner_radius=0,border_width=2,border_color='grey')
     txt_info.insert("0.0", text = texte_info)
     txt_info.configure(state = "disabled", font = (polices[0],18),
@@ -451,8 +452,9 @@ def info(btn):
     btn_compris = interface.CTkButton(windowInfo, height=int(windowInfo.winfo_screenheight()/10), command=lambda:retour_pages(windowInfo,btn), text="Compris",font=(polices[0],30, 'bold'))
 
     # Placement des widgets
-    txt_info.place(relx=0.05,rely=0.05)
-    btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+    msg_titre.place(relx=0.5, rely=0.1, anchor = CENTER)
+    txt_info.place(relx=0.05,rely=0.2)
+    btn_compris.place(relx = 0.5, rely = 0.8, anchor = CENTER)
 
     # Protocole de fermeture
     windowInfo.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowInfo,btn)) 
@@ -625,7 +627,7 @@ def w_question(fenetre):
     btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
                                              text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
-                                     command=lambda: ville(entree,msg_ville,fenetre,btn_entree),text="Recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher)
+                                     command=lambda: ville(entree,msg_ville,fenetre,btn_entree),text="Recherche ",font=(polices[0],30, 'bold'),image=image_btn_chercher)
     
     # Placement des widgets
     msg_ville.place(relx= 0.5, rely=0.45, anchor = CENTER)
@@ -645,7 +647,8 @@ def arrondissement(btn):
     windowAide = interface.CTkToplevel()
     windowAide.title('LifeScore  |  Aide')
     windowAide.iconphoto(False, icone)
-    windowAide.minsize(width=int(510*4/3), height=384)
+    windowAide.resizable(False, False)
+    windowAide.minsize(width=int(510*4/3), height=500)
 
     change_etat_btn(btn) # Bloque le bouton d'accès à cette page
     texte_aide=("Si Votre ville possède plusieurs arrondissemnts (ex : Paris) :"
@@ -653,6 +656,7 @@ def arrondissement(btn):
     + "\n     - Sinon, écrivez le nom de la ville comme cela : \n\n           Nom 1er Arrondissement / Nom Ne Arrondissement (ex : Paris 2e Arrondissement)")
 
     # Création des widgets
+    msg_titre = interface.CTkLabel(windowAide, text="AIDE", font= (polices[1], 40, 'bold'), text_color="#29A272")
     txt_aide = interface.CTkTextbox(windowAide, width = 580 , corner_radius=0)
     txt_aide.insert("0.0", text = texte_aide)
     txt_aide.configure(state = "disabled", font = (polices[0],18),wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
@@ -660,8 +664,10 @@ def arrondissement(btn):
     
     
     # Placement des widgets
-    txt_aide.place(relx=0.05,rely=0.05)
-    btn_compris.place(relx = 0.5, rely = 0.7, anchor = CENTER)
+    msg_titre.place(relx=0.5, rely=0.1, anchor = CENTER)
+    txt_aide.place(relx=0.05,rely=0.2)
+    btn_compris.place(relx = 0.5, rely = 0.8, anchor = CENTER)
+
 
     # Protocole de fermeture de page
     windowAide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowAide,btn))
@@ -813,7 +819,7 @@ def w_score(ville,win,list_dix_villes,score):
 
     # Bouton retour
     btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False),
-                                      text= "Noter une autre ville", font=(polices[0],20, "bold"),image=image_btn_chercher)
+                                      text= "Noter une autre ville ", font=(polices[0],20, "bold"),image=image_btn_chercher)
     btn_Retour.place(relx = 0.5,rely = 0.65, anchor = CENTER)
     
 
