@@ -416,10 +416,10 @@ def w_qcm(win,option = None): # w pour window
     win.mainloop() # pour fermer la fenetre
 
 
-def info(btn):
+def page_info(btn):
 
     """
-    Ouvre Une fenêtre d'informations avec un texte*
+    Ouvre Une fenêtre d'informations avec un texte
 
     - Pour la TextBox, ce code python de Tom Schimansky nous a aidé à la reproduire
     'https://github.com/TomSchimansky/CustomTkinter/blob/master/examples/complex_example.py'
@@ -623,10 +623,10 @@ def w_question(fenetre):
     fenetre.update()"""
 
     # Création des widgets
-    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Puissalicon ",width=int(500/3), font = (polices[0],18))
+    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Béziers ",width=int(500/3), font = (polices[0],18))
     msg_ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =(polices[0],20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
-    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: arrondissement(btn_arrondissement), 
+    btn_arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: page_arrondissement(btn_arrondissement), 
                                              text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
                                      command=lambda: ville(entree,msg_ville,fenetre,btn_entree),text="Recherche ",font=(polices[0],30, 'bold'),image=image_btn_chercher)
@@ -638,12 +638,12 @@ def w_question(fenetre):
     btn_arrondissement.place(relx=0.9, rely=0.05 ,anchor = NE)
 
 
-def arrondissement(btn):
+def page_arrondissement(btn):
 
     '''
     Ouvre Une fenêtre d'aide avec un texte et un bouton de retour
 
-    - Copie de la fonction aide() remaniée pour les arrondissements par Raphaël 
+    - Copie de la fonction page_info() remaniée pour les arrondissements par Raphaël 
     '''
     # Initialisation
     windowAide = interface.CTkToplevel()
@@ -819,11 +819,14 @@ def w_score(ville,win,list_dix_villes,score):
         msg_note.place(relx=0.9,rely=0.1, anchor=CENTER)# Nord Est
         msg_NonAttribue.place(relx = 0.5, rely = 0.9,anchor = CENTER)
 
-    # Bouton retour
+    # Boutons
     btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False),
                                       text= "Noter une autre ville ", font=(polices[0],20, "bold"),image=image_btn_chercher)
-    btn_Retour.place(relx = 0.5,rely = 0.65, anchor = CENTER)
+    btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico),
+                                      text= "Détail ", font=(polices[0],20, "bold"))
     
+    btn_Retour.place(relx = 0.56,rely = 0.65, anchor = CENTER)
+    btn_Donnees.place(relx = 0.38,rely = 0.65, anchor = CENTER)
 
 def taille_police(chaine):
     '''
@@ -945,6 +948,44 @@ def plus_et_moins(pl,mal):
     return plus,moins
 
 
+def page_detail(btn,dictionnaire):
+    '''
+    Ouvre la fenêtre qui montre le détail des notes pour chaque CSV
+
+    - Copie de la fonction page_info() mise à jour avec les notes par Raphaël 
+    '''
+    # Initialisation
+    windowDetail = interface.CTkToplevel()
+    windowDetail.title('LifeScore  |  Détail des notes')
+    windowDetail.iconphoto(False, icone)
+    windowDetail.resizable(False, False)
+    windowDetail.minsize(width=int(510*4/3), height=500)
+
+    change_etat_btn(btn) # Bloque le bouton d'accès à cette page
+    texte_note = ""
+    liste_notes = sorted(dictionnaire.items(), key=lambda x: x[1], reverse = True) # Cela permet de trier un dictionnaire par ses clés
+    for tpl in liste_notes :
+        texte_note += f"{tpl[0]} : {int(tpl[1])} / 100 \n"
+
+    # Création des widgets
+    msg_titre = interface.CTkLabel(windowDetail, text="Détail des notes", font= (polices[1], 40, 'bold'), text_color="#29A272")
+    text_box = interface.CTkTextbox(windowDetail, width = 580 , corner_radius=0)
+    text_box.insert("0.0", text = texte_note)
+    text_box.configure(state = "disabled", font = (polices[0],18),wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
+    btn_compris = interface.CTkButton(windowDetail, height=int(windowDetail.winfo_screenheight()/10), 
+                                      command=lambda :retour_pages(windowDetail,btn), 
+                                      text="Compris",font=(polices[0],30, 'bold'))
+    
+    
+    # Placement des widgets
+    msg_titre.place(relx=0.5, rely=0.1, anchor = CENTER)
+    text_box.place(relx=0.05,rely=0.2)
+    btn_compris.place(relx = 0.5, rely = 0.8, anchor = CENTER)
+
+
+    # Protocole de fermeture de page
+    windowDetail.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDetail,btn))
+    windowDetail.mainloop()
 
 # Page d'erreur 
 def w_erreur(fenetre): # w pour window
@@ -1032,7 +1073,7 @@ btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale
 credits = interface.CTkLabel(fenetrePrincipale, width = 600 , corner_radius=2,text = credits_texte,anchor = W,fg_color=('#D0D0CE','#141414'),
                                 font = ('Courier',18), pady=1,justify=LEFT)
 btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
-                                command=lambda: info(btn_info),text = '',font=(polices[0],30, 'bold'),
+                                command=lambda: page_info(btn_info),text = '',font=(polices[0],30, 'bold'),
                                 image=image_btn_aide, hover = False, fg_color='transparent') # Ouvre la page d'instructions
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                     command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent',hover = False) # Ouvre la page de paramètres
