@@ -686,7 +686,7 @@ class Donnees:
                 note = Donnees(nom,insee).note_finale(meteo = False)
                 liste_notes.append((nom,note))
                 dico_fichier_tempo[nom] = note
-                modifier_fichier_dico(nom, note, fichier = 'donnees/cache.txt')
+                #modifier_fichier_dico(nom, note, fichier = 'donnees/cache.txt')
 
         # On écrit tout ça dans le fichier temporaire de données
         with open(os.path.join(nom_du_repertoire, "donnees/cache.txt"),'w',encoding = 'utf-8') as tempo :
