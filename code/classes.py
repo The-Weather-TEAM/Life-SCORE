@@ -48,23 +48,23 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # Bibliothèques pour éviter erreurs de coupure réseau :
 from requests.exceptions import ConnectionError, ReadTimeout
 
-
-# Multithreading, géré par Nathan (permet de faire plusieurs actions en même temps)
-import threading
+# Pour la fonction sigmoïde
 import math
+
+
+
+
 
 '''
 OUVERTURE DE LA BASE DE DONNEES
 
 '''
-
 global infos_csv
 
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
 with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
-    #print(infos_csv) 
 
 
 
@@ -93,7 +93,7 @@ def is_connected(url) :
               
                 
         except ConnectionError or ReadTimeout or TimeoutError :    
-            print('\n\nProblème réseau.\nVeuillez vous reconnecter et relancer le programme')
+            print('\n\nProblème réseau.\nVeuillez vous reconnecter.')
                 
             return False 
         
@@ -110,10 +110,8 @@ FONCTIONS UTILE DANS TOUTE L'APPLICATION
 Fait par Thor
 
 """
-
-
 def distanceEuclienne(point1: tuple[float, float],point2: tuple[float, float]) -> float: # utilisé pour la fonction kppv()
-    """Renvoi la distance entre deux points donnees.
+    """Renvoie la distance entre deux points donnees.
     
     Fonction de Thor fait en classe
     """ 
@@ -243,19 +241,26 @@ Idée et réalisation de Nathan
 '''
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
    
-    #print(x)
-    m = (max - 1.4*moyenne) / 50                    # On calcule le coef directeur
+    m = (max - 1.4*moyenne) / 50                # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
    
     return (x-p)/m                              # On renvoie la note
 
 def calculer_fonction_sigmoide(moyenne, maximum, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
-   
-    difference = maximum - moyenne
-    coefficient = (x - moyenne) / difference
+    '''
+    Ici on utilise une fonction sigmoïde (en forme de S) pour accentuer les notations :
+    
+    Souvent les villes sont proches de la moyenne nationnale, pour éviter d'avoir des notes trop homogène on
+    accentue le résultat avec ceci.
+    
+    '''
+    difference = maximum - moyenne           # On calcule la différence entre le max et la moyenne
+    coefficient = (x - moyenne) / difference # On fait un coeficient pour savoir où est situé le résultat par rapport aux moyennes
     rep = coefficient*100
-    rep = 100/(1+math.exp(-0.08*rep))
+    rep = 100/(1+math.exp(-0.08*rep))        # On utilise la fonction Sigmoïde
     return rep
+
+
 
 
 
@@ -268,19 +273,15 @@ class Donnees:
         
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__)
-        self.liste_notes = [] #La liste dans laquelle on rempli les notes 
+        self.liste_notes = [] # La liste dans laquelle on rempli les notes 
         self.habitants = None
         
-        #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
         self.notes_finales = {}
 
         if insee != None: # Pour les 10 villes plus proches
             self.code_insee = insee
 
     dico_meteo = {} # Variable qui peut etre accédée et modifée par toutes les instances de la classe
-
-
-
 
 
 
@@ -377,7 +378,6 @@ class Donnees:
             
             liste_provisoire = []
             for a in fichier.columns:
-                #print(a)
                 liste_provisoire.append(str(a))
 
             # Si le CSV utilise le code INSEE
@@ -414,10 +414,10 @@ class Donnees:
             if diviseur != None :
                 rep = rep / diviseur
                 
-            #print(" - Total dans la ville :", rep)
+            print(" - Total dans la ville :", rep)
             
             note = rep / self.habitant
-            #print(" - Par habitant :", note)
+            print(" - Par habitant :", note)
             
             #On récupère directement la note en utilisant la fonction affine
             a = infos_csv[csv][2]['moyenne']
@@ -428,7 +428,7 @@ class Donnees:
             
             if recursivité :
                 self.ville = ancien_nom_ville
-                #print('Pas de données')
+                print('Pas de données')
                 return None
                
             if infos_csv[csv][2]['insee'] == 0 :
@@ -528,7 +528,7 @@ class Donnees:
             return Donnees.recup_donnees_simple_affine(self, csv)
         
         else :
-            print("Fonction pas encore implémentée")
+            print("Fonction non implémentée.")
         
         
 
@@ -545,7 +545,7 @@ class Donnees:
     def is_commune_france(self,msg):
 
         if str(self.ville) == '':
-            msg.configure(text = "Veuillez saisir le nom d'une commune.") 
+            msg.configure(text = "Veuillez saisir le nom d'une commune :") 
             return False
 
 
@@ -582,7 +582,7 @@ class Donnees:
                 self.population = int(rangee.values[0][1])
                 
             else:
-                msg.configure(text = "Nous n'avons pas de données sur cette ville ")
+                msg.configure(text = "Nous n'avons pas de données sur cette ville.")
                 return False
             
             return True
@@ -611,21 +611,23 @@ class Donnees:
                     self.population = int(rangee.values[0][1])
                     
                 else:
-                    msg.configure(text = "Nous n'avons pas de données sur cette ville ")
+                    msg.configure(text = "Nous n'avons pas de données sur cette ville.")
                     return False
                 return True
             else :
                 if 'Paris' in str(self.ville) or 'Marseille' in str(self.ville) or 'Lyon' in str(self.ville):
                     msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
-                    # Inutile ???
+
                 # EASTER EGG
                 elif self.ville == "Hello There" :
                     msg.configure(text = "General Kenobi !")
                 elif random.randint(0,100000) == 14924:
-                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
+                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville.")
                 else :
-                    msg.configure(text = "Ville incorrecte. Veuillez réessayer")
+                    msg.configure(text = "Ville incorrecte, veuillez réessayer.")
                 return False
+        
+        
         
     def k_plus_proches_voisins(self,k,msg=None,win=None):
         '''
@@ -653,8 +655,8 @@ class Donnees:
 
         # On prend ceux compris entre par exemple 34000 et 34999 
         row = cr[(cr['code_commune_INSEE'] >= self.code_insee[:-3]+'000') &
-                (cr['code_commune_INSEE'] <= self.code_insee[:-3]+'999') &
-                (cr['code_commune_INSEE'] != str(self.code_insee))]
+                ( cr['code_commune_INSEE'] <= self.code_insee[:-3]+'999') &
+                ( cr['code_commune_INSEE'] != str(self.code_insee))]
         
         
         dico = {}
@@ -864,7 +866,7 @@ class Donnees:
     '''
     METHODE POUR DONNER LE SCORE FINALE DE LA VILLE
     
-    Fait par Raphaëm et Nathan
+    Fait par Raphaël et Nathan
     
     '''
     def note_finale(self,meteo=True):
@@ -886,12 +888,6 @@ class Donnees:
         for id in infos_csv :
             if id != "communes" :
                 self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
-            
-        """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
-            a = threading.Thread(target=self.prepa_recup_donnees, args=( id,))
-            a.start()
-        a.join()
-        """
         
         if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
@@ -918,11 +914,6 @@ class Donnees:
         Fait par Raphaël
         '''
         note_finale = int(note_moyenne_avec_coef["sum_numerateur"] / note_moyenne_avec_coef["sum_denumerateur"])
-        # for i in range(len(self.liste_notes)) : #? tu veut le garder ça raphael?
-        #     if self.liste_notes[i] != None: #! Si ça va mieux ce que t'as mis enlève le mdrr
-        #         note_finale += int(self.liste_notes[i])
-        #     else:
-        #         self.liste_notes.pop(i) # Supprime tous les None
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
@@ -937,11 +928,11 @@ class Donnees:
     
     '''
     def prepa_recup_donnees(self, id):
-        #print ("\nLe csv", id)
+        print ("\nLe csv", id)
         if infos_csv[id][2]['insee'] >= 0 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
             resultat = self.recuperation_donnees(id)
                     
-            #print(" - Note /100 :", resultat)
+            print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
             if resultat is not None :
                 if type(resultat) is not list :

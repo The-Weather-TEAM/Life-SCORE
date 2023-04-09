@@ -98,13 +98,11 @@ def telecharger(lien, nomfichier,barre,win,msg_prct, message):
     Conçu par Nathan
     '''
     message0 = 'Téléchargement des fichiers\nCela peut prendre quelques minutes.'
-    message1 = 'Téléchargement des fichiers.\nCela peut prendre quelques minutes.'
-    message2 = 'Téléchargement des fichiers..\nCela peut prendre quelques minutes.'
-    message3 = 'Téléchargement des fichiers...\nCela peut prendre quelques minutes.'
+    message1 = 'Téléchargement des fichiers.\nLifeSCORE est une application de notation de commune personnalisée.'
+    message2 = 'Téléchargement des fichiers..\nElle se base sur vos préférences pour vous dire à quel point une commune vous correspond.'
+    message3 = 'Téléchargement des fichiers..\nElle est utile par exemple pour les personnes devant emménager quelque part.'
     message4 = 'C\'est presque terminé !\nMerci d\'avoir attendu.'
-    liste_msg = [message1, message2, message3, message0, message1, message2, message3, message0,
-                 message1, message2, message3, message0, message1, message2, message3, message0, 
-                 message1, message4, message4, message4]
+    liste_msg = [message0, message1, message2, message3, message4]
     
     message.configure(text = message0)
     msg_val = False
@@ -124,7 +122,7 @@ def telecharger(lien, nomfichier,barre,win,msg_prct, message):
                 barre.set(pourcentage/100)
                 msg_prct.configure(text = f"{round(pourcentage)}%")
                 
-                if not msg_val and round(pourcentage)%5 == 1 :
+                if not msg_val and round(pourcentage)%20 == 1 :
                     msg_val = True
                 
                 if round(pourcentage)%5 == 0 and msg_val :

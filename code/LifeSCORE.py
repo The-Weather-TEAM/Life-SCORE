@@ -96,12 +96,9 @@ from classes import * # Import de nos classes créées
 from tkinter import * # On utilise certaines fonctions de Tkinter avec Customtkinter
 import customtkinter as interface # On utilisera Customtkinter principalement pour le style
 from tkintermapview import TkinterMapView # Pour les cartes de la ville
-import tkinter.font # Permet d'avoir accès à plusieurs polices d'écritures pour les textes
 from PIL import Image # pour les logos et les boutons de CTK
 
 # Lecture de données (csv)
-import pandas
-import csv
 import math
 
 # Autre(s)
@@ -992,7 +989,7 @@ fenetrePrincipale.iconphoto(False, icone)
 fenetrePrincipale.minsize(width=1280  , height=848) # Taille minimum de la fenetre
 
 
-#! Je dois finir la comptabilité
+
 if systeme_exploitation == 'Windows' :
     fenetrePrincipale.state('zoomed')
 
@@ -1006,11 +1003,6 @@ Nathan Bosy     : Gestion des données, calculs & compatibilté
 Raphaël Farenc  : Interface graphique & interprétation des notes
 Thor N          : Calcul des coefficients & API
 Frédéric Marquet: Recherches pour la base de données""")
-
-
-
-
-
 
 
 # Création des widgets
