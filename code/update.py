@@ -1,25 +1,22 @@
 '''
                         [UPDATE.PY]
-                            V.9
-          AVEC TELECHARGEMENT 125x PLUS RAPIDE !
-                         
-    Programme de téléchargement et mises à jour des données automatique
+                            V.10
+                                  
+ Programme de téléchargement et mises à jour des données automatique
 
 
 
-- Créé le dossier "data" avec tous les CSV dedans ;
-- Télécharge et installe les fichiers lors de la première utilisation ;
+- Créé le dossier "donnees" avec tous les CSV dedans ;
+- Télécharge et installe les fichiers lors de la première utilisation (sous un fichier .zip) ;
 - Recherche de mises à jour et retéléchargement des csv si nouvelle version disponible ;
 - Internet pas indispensable pour le programme, mais bloque lors de la première utilisation ;
-- Gestion d'erreur avancée (coupure d'internet, ...)
-- Création du fichier options.csv qui permet de stocker des données pour l'application
-- Implémentation de Tkinter
+- Implémentation graphique.
 
 
 SOURCES :
 Tout est basé sur nos cours, ou la documentation liée aux bibliothèques utilisés.
-Chaque processus est pensé et écrit par Nathan 
 
+Chaque processus est pensé et écrit par Nathan 
 '''
 
 
@@ -48,13 +45,14 @@ import time                              # Conversion UNIX
 from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeout
 from urllib3.exceptions import ProtocolError, ReadTimeoutError
 from http.client import IncompleteRead
+from zipfile import BadZipFile
 
 # Importation de la fonction de test de connexion :
 from classes import is_connected as connexion
-from classes import lire_fichier_dico          # Utile pour lire les parametres d'utilisateur
-from classes import modifier_fichier_dico       # Utile pour changer les options (obvious)
+from classes import lire_fichier_dico           # Utile pour lire les parametres d'utilisateur
+from classes import modifier_fichier_dico       # Utile pour changer les options (logique)
 
-# Pour deziper
+# Pour deziper les csv
 from zipfile import ZipFile
 
 
@@ -62,7 +60,7 @@ from zipfile import ZipFile
 
 
 def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> str:
-    """
+    '''
     Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
     ex: "44%  -  population  -> Fichier à jour
@@ -70,7 +68,7 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
     - `pourcentage` contient le pourcentage du telechargement de tout les fichiers
     - `id` represent le nom du fichier (ex: population)
     - `message` contient le message à ajouter à la fin (ex: Fichier à jour)
-    """
+    '''
 
     pourcent_str = str(pourcentage)
     message = pourcent_str+"%"+" "*(4-len(pourcent_str)) + "-  "+id+"  -> " + message # n espaces depend de la longueur du nombre
@@ -81,60 +79,95 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
 
 
 def taille_zip(url):
-    informations = requests.head(url, allow_redirects=True)
-    content_length = informations.headers.get('Content-Length')
-    if content_length is None:
-        return None
-    else:
-        return int(content_length)
+    '''
+    Fonction qui envoie une requête à GitHUB pour savoir la longueur du fichier zip qu'on télécharge.
+    
+    Pensé par Nathan, aidé par la documentation de requests (pour le request.head)
+    '''
+    informations = requests.head(url, allow_redirects=True) # On récupère seulement les informations du fichier (léger)
+    longueur_du_fichier = informations.headers.get('Content-Length')
+    return int(longueur_du_fichier)
 
 
 
 
 def telecharger(lien, nomfichier,barre,win,msg_prct, message):
+    '''
+    Fonction qui permet de télécharger le fichier .zip tout en affichant l'avancement
+    
+    Pensé et réalisé par Nathan
+    Compatibilité graphique par Raphaël
     
     '''
-    Animation du texte
-    Conçu par Nathan
-    '''
-    message0 = 'Téléchargement des fichiers\nCela peut prendre quelques minutes.'
-    message1 = 'Téléchargement des fichiers.\nCela peut prendre quelques minutes.'
-    message2 = 'Téléchargement des fichiers..\nCela peut prendre quelques minutes.'
-    message3 = 'Téléchargement des fichiers...\nCela peut prendre quelques minutes.'
-    message4 = 'C\'est presque terminé !\nMerci d\'avoir attendu.'
-    liste_msg = [message1, message2, message3, message0, message1, message2, message3, message0,
-                 message1, message2, message3, message0, message1, message2, message3, message0, 
-                 message1, message4, message4, message4]
-    
-    message.configure(text = message0)
-    msg_val = False
-    nbr_msg = 0
-    
-    taille = taille_zip(lien)
-    fichier_zip = requests.get(lien, stream=True)
-    taille_cache = 1024
-    bits_telecharges = 0
-    with open(nomfichier, 'wb') as f:
-        for chunk in fichier_zip.iter_content(chunk_size=taille_cache):
-            if chunk:
-                f.write(chunk)
-                bits_telecharges += len(chunk)
-                
-                pourcentage = bits_telecharges / taille * 100 #.set prend que entre 0 et 1 donc faut pas mettre en %
-                barre.set(pourcentage/100)
-                msg_prct.configure(text = f"{round(pourcentage)}%")
-                
-                if not msg_val and round(pourcentage)%5 == 1 :
-                    msg_val = True
-                
-                if round(pourcentage)%5 == 0 and msg_val :
-                    message.configure(text = liste_msg[nbr_msg])
-                    nbr_msg += 1
-                    msg_val = False
+    try :
+        
+        '''
+        Animation du texte
+        Conçu par Nathan
+        
+        Permet d'expliquer en quoi consiste l'application.
+        '''
+        message0 = 'Téléchargement des fichiers\nCela peut prendre quelques minutes.'
+        '''
+        message4 = 'C\'est presque terminé !\nMerci d\'avoir attendu.'
+        liste_msg = [message0, message4]
+        '''
+        # On initialise le messages
+        message.configure(text = message0)
+        '''
+        msg_val = False
+        nbr_msg = 0
+        '''
+        # On recupère la taille du fichier, et le cache ect.
+        taille = taille_zip(lien)
+        fichier_zip = requests.get(lien, stream=True)
+        taille_cache = 2**16 # Modifiable, en bit le nombre de données téléchargées dans un emplacement
+        bits_telecharges = 0
+        
+        with open(nomfichier, 'wb') as f:
+            
+            # Pour chaque partie du fichier, on avance
+            for emplacement in fichier_zip.iter_content(chunk_size=taille_cache):
+                if emplacement:
+                    f.write(emplacement)
+                    bits_telecharges += len(emplacement)
                     
-                win.update()
-
-
+                    # Affichage du pourcentage
+                    pourcentage = bits_telecharges / taille * 100
+                    barre.set(pourcentage/100)
+                    msg_prct.configure(text = f"{round(pourcentage)}%")
+                    
+                    '''
+                    # Pour remettre disponible le changement de message
+                    if not msg_val and round(pourcentage)%20 == 1 :
+                        msg_val = True'''
+                    
+                    '''
+                    # Changement de message tous les x pourcents
+                    if round(pourcentage) >= 90 and msg_val :
+                        message.configure(text = liste_msg[nbr_msg])
+                        nbr_msg += 1
+                        msg_val = False'''
+                    
+                    win.update()
+                    
+    # Si il y a une coupure de connexion
+    except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead or ReadTimeoutError or ReadTimeout : 
+        # On supprime le dossier donnees puis on le reconfigure
+        delete_data(os.path.join(os.path.dirname(__file__)+'/donnees'))
+        os.makedirs(os.path.join(os.path.dirname(__file__)+'/donnees'))
+        
+        lire_fichier_dico('APPARENCE') # Pour créer le fichier options.txt (fait par Thor)
+        
+        # Tant qu'on a pas une connexion établie
+        while not connexion('https://github.com/') :
+            message.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
+            win.update()
+        
+        # Récurvivité pour relacer le téléchargement de 0, et éviter les problèmes de corruption de fichiers
+        return executer(barre,win,message,msg_prct)
+        
+        
 
 
 
@@ -214,29 +247,44 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             '''
             TELECHARGEMENT AVEC FICHIER ZIP
-            BCP BCP PLUS RAPIDE QU'AVANT 
+            125x plus rapide qu'en téléchargant un par un les csv.
             
             Pensé par Nathan
             Réalisé par Nathan (intégration à l'interface par Raphaël)
             
             '''
-            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip'
+            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip' #! à changer une fois le code terminé
             fichier = repertoire_donnees+'/temp.zip'
             
             telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage, message)
             
-            with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as zObject:
-            
-                # Extracting all the members of the zip 
-                # into a specific location.
-                zObject.extractall(
-                    path=repertoire_donnees)
+            try :
+                # On dézipe le fichier
+                with ZipFile(os.path.join(repertoire_donnees,'temp.zip'), 'r') as fichier_zip:
+                    
+                        fichier_zip.extractall(
+                            path=repertoire_donnees)
                 
-            os.remove(os.path.join(repertoire_donnees,'temp.zip'))
-            modifier_fichier_dico("DERNIERE_MAJ", time.time())
-            
-            # RECURSIVITE pour vérifier si les fichiers téléchargés sont les derniers dispo
-            return executer(barre_progres,fenetre,message,message_pourcentage)
+                # On supprime le fichier téléchargé
+                os.remove(os.path.join(repertoire_donnees,'temp.zip'))
+                    
+                # Récursivité pour vérifier si les fichiers téléchargés sont les derniers dispo
+                return executer(barre_progres,fenetre,message,message_pourcentage)
+
+            # Si jamais le fichier .zip est corrompu
+            except BadZipFile :
+                # On supprime puis réinitialise le repertoire
+                delete_data(os.path.join(os.path.dirname(__file__)+'/donnees'))
+                os.makedirs(os.path.join(os.path.dirname(__file__)+'/donnees'))
+                lire_fichier_dico('APPARENCE') # Pour créer le fichier options.txt
+                
+                # Tant qu'on a pas de connexion à internet
+                while not connexion('https://github.com/') :
+                    message.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
+                    fenetre.update()
+                
+                # Récurvivité ici aussi
+                return executer(barre_progres,fenetre,message,message_pourcentage)
 
 
 
@@ -566,6 +614,12 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     
     if is_modified and not mise_a_jour :
         
+        try :
+            os.remove(repertoire_donnees+'/cache.txt')
+        except :
+            print('Fichier cache innexistant.')
+
+
         rajout_donnee = csv.writer(open(repertoire_donnees+'/versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux 
             
         for cle, val in nouvelles_informations.items():

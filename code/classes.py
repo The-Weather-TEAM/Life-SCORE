@@ -48,23 +48,23 @@ ssl._create_default_https_context = ssl._create_unverified_context
 # Bibliothèques pour éviter erreurs de coupure réseau :
 from requests.exceptions import ConnectionError, ReadTimeout
 
+# Pour la fonction sigmoïde
+import math
 
-# Multithreading, géré par Nathan (permet de faire plusieurs actions en même temps)
-import threading
+
+
 
 
 '''
 OUVERTURE DE LA BASE DE DONNEES
 
 '''
-
 global infos_csv
 
 import json # Pour la lecture des données csv
 nom_du_repertoire = os.path.dirname(__file__)
 with open(os.path.join(nom_du_repertoire, "systeme/base_de_donnees.json"), "r",encoding="utf-8") as fichier_json :
     infos_csv = json.load(fichier_json)
-    #print(infos_csv) 
 
 
 
@@ -93,7 +93,7 @@ def is_connected(url) :
               
                 
         except ConnectionError or ReadTimeout or TimeoutError :    
-            print('\n\nProblème réseau.\nVeuillez vous reconnecter et relancer le programme')
+            print('\n\nProblème réseau.\nVeuillez vous reconnecter.')
                 
             return False 
         
@@ -110,10 +110,8 @@ FONCTIONS UTILE DANS TOUTE L'APPLICATION
 Fait par Thor
 
 """
-
-
 def distanceEuclienne(point1: tuple[float, float],point2: tuple[float, float]) -> float: # utilisé pour la fonction kppv()
-    """Renvoi la distance entre deux points donnees.
+    """Renvoie la distance entre deux points donnees.
     
     Fonction de Thor fait en classe
     """ 
@@ -131,21 +129,23 @@ def kppv(donnees: dict,
     Trouve les k plus proches voisins.
 
     `donnees`: une dico de points de coordonees (x,y) avec en clé le nom des villes
-    `point`: un seul point de coordonees (x,y)
+    `point`: un seul point de coordonees (x,y) (peut contenir int ou float)
     `k`: les k plus proches voisins de la liste `donnees` au point `point`.
 
     La fonction renvoie une liste des indices pour `donnees` contenant les `k` plus proches voisins a `point`
 
-    Fonction de Thor fait en classe
+    Fonction de Thor fait en classe 
     """
+    # on verifie les conditions necessaires pour les parametres
     assert type(k) == int
     assert type(point) == tuple
-    assert type(donnees) in (list, tuple, dict) # car ça peut aussi etre un tuple de tuples
+    assert type(donnees) == dict
 
     distVoisins = [] # contient la distance du point `point` au point dans `donnees`` avec leur indices correspondants
     for cle in donnees.keys():   
         distance = distanceEuclienne(point, (donnees[cle][0],donnees[cle][1])) # calcul de la distance
         distVoisins.append((distance,cle,donnees[cle][2])) # ajoute au liste de points avec distance
+
     distVoisins = sorted(distVoisins) # on trie la liste par leurs distances d'ordre croissant
     indicesDesKvoisins = [(cle,insee) for distance, cle, insee in distVoisins[:k]] # on prend les indices des k premiers points de cette liste de distances
     return indicesDesKvoisins
@@ -159,18 +159,18 @@ def is_fichier(chemin : str = "donnees/options.txt") :
     """
     path_options = os.path.join(os.path.dirname(__file__),chemin) # localise le fichier cible
     if not os.path.isfile(path_options) : # on verifie si ce fichier n'existe pas
+        dict_def = {} # données intial qu'on ecrira au fichier
+
         if chemin == "donnees/options.txt":
-            dic_def = {'APPARENCE': 'System',
+            dict_def = {'APPARENCE': 'System', # les options defaut qu'on veut
                     'FREQ_MAJ': 0,
                     'DERNIERE_MAJ': 0,
                     "REPONSE_QCM": {}}
-            open(path_options, "w").write(str(dic_def)) # on cree et ecrit les options default a cette fichier
-        else:
-            open(path_options, "w").write('{}')
+        open(path_options, "w").write(str(dict_def)) # on ecrit les données initials au fichier
 
 
 # Modifier un option/dico
-def modifier_fichier_dico(clef: str, valeur: any, fichier:str = "donnees/options.txt", msg=None):
+def modifier_fichier_dico(cle: any, valeur: any, fichier:str = "donnees/options.txt", msg=None):
     """Modifie la valeur d'une valeur donnée dans un fichier contenant un string format dictionaire python.
 
     - Par default on modifie le fichier options, sauf si on donne un fichier en parametre.
@@ -178,27 +178,24 @@ def modifier_fichier_dico(clef: str, valeur: any, fichier:str = "donnees/options
 
     - Idée et Implémentation par Thor
     """
-    assert type(clef) == type(fichier) == str, "Le nom du clef doit etre de type string"
+    assert type(cle) not in (list, dict), "Le clé pas etre un type mutible" 
     
     if fichier[0] == "/": # pour eviter un bug avec os.path.join()
         fichier = fichier[1:]
     path_options = os.path.join(os.path.dirname(__file__), fichier)
 
-    if not os.path.isfile(path_options): # on lui ecrit un dictionaire vide si le fichier n'existe pas
-        open(path_options, "w").write("{}") 
+    is_fichier(fichier) # creation de donnees initial si fichier vide
 
-    if fichier == "donnees/options.txt": 
-        is_fichier()
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
 
     dictionaire_options = eval(open(path_options,"r").read()) # on recupere d'abord le dico
-    dictionaire_options[clef] = valeur                        # on change la valeur dans le dico
+    dictionaire_options[cle] = valeur                         # on change la valeur dans le dico
     open(path_options, "w").write(str(dictionaire_options))   # on re-ecrit le dico au fichier
 
 
 # Récupérer une option/dico du fichier
-def lire_fichier_dico(cle: str | None = None, fichier: str = "donnees/options.txt"):
+def lire_fichier_dico(cle: any = None, fichier: str = "donnees/options.txt"):
     """Renvoie la valeur d'un clef donné d'un fichier (options par defaut). 
 
     - Recuper par default des donnes du fichier options, sauf si on donne un fichier en parametre.
@@ -206,11 +203,14 @@ def lire_fichier_dico(cle: str | None = None, fichier: str = "donnees/options.tx
 
     - Idée et Implémentation par Thor
     """
-    type(fichier) == str, "Les arguments entrés doivent être des strings."
+    assert type(fichier) == str, "Le chemin pour le fichier doit etre un string" 
+    assert type(cle) not in (list, dict), "Le clé doit pas etre un type mutible"
     
     if fichier[0] == "/": # pour eviter un bug avec os.path.join()
         fichier = fichier[1:]
-    is_fichier(fichier)
+        
+    is_fichier(fichier) # creation de donnees initial si fichier vide
+
     path_options = os.path.join(os.path.dirname(__file__), fichier)
     if cle != None :
         return eval(open(path_options, "r").read()).get(cle)   # on ouvre et recupere l'option qu'on veut
@@ -242,14 +242,35 @@ Idée et réalisation de Nathan
 
 '''
 def calculer_fonction_affine(moyenne, max, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
+    if x == 0 :
+       return 0
    
-    #print(x)
-    m = (max - 1.4*moyenne) / 50                    # On calcule le coef directeur
+    m = (max - 1.4*moyenne) / 50                # On calcule le coef directeur
     p = moyenne - (m*50)                        # On calcule l'ordonnée à l'oginine
    
     return (x-p)/m                              # On renvoie la note
 
+def calculer_fonction_sigmoide(moyenne, maximum, x) : # Deux points correspondant à la moyenne (50) et le maximum (100)
+    '''
+    Ici on utilise une fonction sigmoïde (en forme de S) pour accentuer les notations :
+    
+    Souvent les villes sont proches de la moyenne nationnale, pour éviter d'avoir des notes trop homogène on
+    accentue le résultat avec ceci.
+    
+    '''
+    if x == 0 :
+       return 0
+    difference = maximum - moyenne           # On calcule la différence entre le max et la moyenne
+    coefficient = (x - moyenne) / difference # On fait un coeficient pour savoir où est situé le résultat par rapport aux moyennes
+    rep = coefficient*100
+    rep = 100/(1+math.exp(-0.08*rep))        # On utilise la fonction Sigmoïde
+    return rep
 
+def fonction_sigmoide(x):
+    if x == 0 :
+       return 0
+    return 100/(1+math.exp(-0.08*(x-50)))
+    
 
 
 
@@ -262,10 +283,9 @@ class Donnees:
         
         self.ville = str(ville)
         self.repertoire = os.path.dirname(__file__)
-        self.liste_notes = [] #La liste dans laquelle on rempli les notes 
+        self.liste_notes = [] # La liste dans laquelle on rempli les notes 
         self.habitants = None
         
-        #! Dictionnaire des notes (valeurs) avec les csv en clé. Pour Thor
         self.notes_finales = {}
 
         if insee != None: # Pour les 10 villes plus proches
@@ -277,16 +297,13 @@ class Donnees:
 
 
 
-
-
-
     '''
     METHODE QUI RECUPERE AUTOMATIQUEMENT LES DONNEES D'UN CSV (simple)
     
     Pensé et réalisé par Nathan
     
     '''
-    def recup_donnees_simple(self, csv, recursivité=False, ancien_nom_ville='') :
+    def recup_donnees_simple(self, csv, recursivite=False, ancien_nom_ville='') :
         
         # On récupère le répertoire pour accéder au csv
         lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv/'+csv+'.csv'
@@ -316,22 +333,20 @@ class Donnees:
         else :
             rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
             
-        if recursivité :
+        if recursivite :
             self.ville = ancien_nom_ville
             
         try:
-                resultat = []
-                for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
-                    resultat.append(rangee.values[0][i+1])
-                return resultat
+            resultat = []
+            for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
+                resultat.append(rangee.values[0][i+1])
+            return resultat
             
         # Au cas où il n'y a pas de données
         except : #Si pas de données
     
-            if recursivité :
+            if recursivite:
                 self.ville = ancien_nom_ville
-                print('Pas de données')
-                return None
                
             if infos_csv[csv][2]['insee'] == 0 :
         
@@ -352,12 +367,12 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple
     
     '''
-    def recup_donnees_compter_par_habitant(self, csv, recursivité=False, ancien_nom_ville=''):
+    def recup_donnees_compter_par_habitant(self, csv, recursivite=False, ancien_nom_ville=''):
         
         try:
             
             # Ici c'est tout comme la fonction au dessus
-            lien_fichier = os.path.join(os.path.dirname(__file__),'donnees')+'/csv//'+csv+'.csv'
+            lien_fichier = os.path.join(os.path.dirname(__file__),'donnees/csv/'+csv+".csv")
             
             colonnes = [infos_csv[csv][2]['colonne_ville']]
             for i in range(len(infos_csv[csv][2]['colonne_donnee'])) :
@@ -371,7 +386,6 @@ class Donnees:
             
             liste_provisoire = []
             for a in fichier.columns:
-                #print(a)
                 liste_provisoire.append(str(a))
 
             # Si le CSV utilise le code INSEE
@@ -381,7 +395,7 @@ class Donnees:
             else :
                 res = fichier[fichier[liste_provisoire[0]] == self.ville]
             
-            if recursivité :
+            if recursivite :
                 self.ville = ancien_nom_ville
             
             
@@ -408,22 +422,20 @@ class Donnees:
             if diviseur != None :
                 rep = rep / diviseur
                 
-            #print(" - Total dans la ville :", rep)
+            print(" - Total dans la ville :", rep)
             
             note = rep / self.habitant
-            #print(" - Par habitant :", note)
+            print(" - Par habitant :", note)
             
             #On récupère directement la note en utilisant la fonction affine
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']   
-            return calculer_fonction_affine(a, b, note)
+            return calculer_fonction_sigmoide(a, b, note)
                 
         except : #Si pas de données
             
-            if recursivité :
+            if recursivite :
                 self.ville = ancien_nom_ville
-                #print('Pas de données')
-                return None
                
             if infos_csv[csv][2]['insee'] == 0 :
         
@@ -468,7 +480,7 @@ class Donnees:
         a = infos_csv[csv][2]['moyenne']
         b = infos_csv[csv][2]['max']
         
-        return calculer_fonction_affine(a, b, note)
+        return calculer_fonction_sigmoide(a, b, note)
         
         
         
@@ -489,7 +501,7 @@ class Donnees:
             b = infos_csv[csv][2]['max']
             
             nombre = int(str(nombre[0]).split(',')[0])
-            return calculer_fonction_affine(a, b, nombre)
+            return calculer_fonction_sigmoide(a, b, nombre)
         
         except :
             print('Pas de données')
@@ -522,7 +534,7 @@ class Donnees:
             return Donnees.recup_donnees_simple_affine(self, csv)
         
         else :
-            print("Fonction pas encore implémentée")
+            print("Fonction non implémentée.")
         
         
 
@@ -539,7 +551,7 @@ class Donnees:
     def is_commune_france(self,msg):
 
         if str(self.ville) == '':
-            msg.configure(text = "Veuillez saisir le nom d'une commune.") 
+            msg.configure(text = "Veuillez saisir le nom d'une commune :") 
             return False
 
 
@@ -550,7 +562,7 @@ class Donnees:
             liste_ville = re.split("-| ",self.ville)# Sépare avec espace, - et '
             for i in range(len(liste_ville)):
                 if liste_ville[i] not in ['lès','l','d','en','de','des','les','à']:
-                    if liste_ville[i][:2] in ["d'","l'"] : # Si on a d'hérault
+                    if liste_ville[i][:2] in ["d'","l'"] : # Si on a "d'hérault"
                         liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
                     else: 
                         liste_ville[i] = liste_ville[i].capitalize()
@@ -576,7 +588,7 @@ class Donnees:
                 self.population = int(rangee.values[0][1])
                 
             else:
-                msg.configure(text = "Nous n'avons pas de données sur cette ville ")
+                msg.configure(text = "Nous n'avons pas de données sur cette ville.")
                 return False
             
             return True
@@ -605,21 +617,23 @@ class Donnees:
                     self.population = int(rangee.values[0][1])
                     
                 else:
-                    msg.configure(text = "Nous n'avons pas de données sur cette ville ")
+                    msg.configure(text = "Nous n'avons pas de données sur cette ville.")
                     return False
                 return True
             else :
                 if 'Paris' in str(self.ville) or 'Marseille' in str(self.ville) or 'Lyon' in str(self.ville):
                     msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
-                    # Inutile ???
+
                 # EASTER EGG
                 elif self.ville == "Hello There" :
                     msg.configure(text = "General Kenobi !")
                 elif random.randint(0,100000) == 14924:
-                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville")
+                    msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville.")
                 else :
-                    msg.configure(text = "Ville incorrecte. Veuillez réessayer")
+                    msg.configure(text = "Ville incorrecte, veuillez réessayer.")
                 return False
+        
+        
         
     def k_plus_proches_voisins(self,k,msg=None,win=None):
         '''
@@ -647,19 +661,19 @@ class Donnees:
 
         # On prend ceux compris entre par exemple 34000 et 34999 
         row = cr[(cr['code_commune_INSEE'] >= self.code_insee[:-3]+'000') &
-                (cr['code_commune_INSEE'] <= self.code_insee[:-3]+'999') &
-                (cr['code_commune_INSEE'] != str(self.code_insee))]
+                ( cr['code_commune_INSEE'] <= self.code_insee[:-3]+'999') &
+                ( cr['code_commune_INSEE'] != str(self.code_insee))]
         
         
         dico = {}
         for index, r in row.iterrows():
             dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'],r['code_commune_INSEE'])
         # Partie k plus proches voisins
-        liste_dix_proches = kppv(dico,coordonnees0,10)
+        liste_dix_proches = kppv(dico,coordonnees0,k)
         print(liste_dix_proches)
         liste_notes = []
         
-        dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/temporaire.txt")
+        dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/cache.txt")
 
         for nom,insee in liste_dix_proches:
             msg.configure(text = f'Calcul de {nom} (code : {insee})')
@@ -671,10 +685,10 @@ class Donnees:
                 note = Donnees(nom,insee).note_finale(meteo = False)
                 liste_notes.append((nom,note))
                 dico_fichier_tempo[nom] = note
-                modifier_fichier_dico(nom, note, fichier = 'donnees/temporaire.txt')
+                modifier_fichier_dico(nom, note, fichier = 'donnees/cache.txt')
 
         # On écrit tout ça dans le fichier temporaire de données
-        with open(os.path.join(nom_du_repertoire, "donnees/temporaire.txt"),'w',encoding = 'utf-8') as tempo :
+        with open(os.path.join(nom_du_repertoire, "donnees/cache.txt"),'w',encoding = 'utf-8') as tempo :
             tempo.write(str(dico_fichier_tempo))
 
         
@@ -721,11 +735,11 @@ class Donnees:
                 
                 ville = ville.split(char)[0]
                 
-                if ville != 'Marseille ' :
+                if ville != 'Marseille ' : # l'API n'a pas d'arrondissements pour Marseille
                     ville += f"{int(char):02d}" # d'appres l'API geoloc, les arrondissement sont comme "Paris 03" pour 3 arrondisssmenet
-                break
+                break # pas ideal, mais on veut pas iterer le rest.
 
-        tout_les_donnees = []
+        tout_les_donnees = [] # contient les donnes de meteo et d'air
         geoloc_ville = requests.get(f"https://geocoding-api.open-meteo.com/v1/search?name={ville}") # pour recuperer longitude et latitude du ville
 
         # recuperation de tout les donnees
@@ -751,9 +765,9 @@ class Donnees:
                 del ville_air["hourly"]["time"] # pour iterer plus facilement les valeurs
 
                 tout_les_donnees += list(ville_air["hourly"].items()) # on ajoute tout ces donnes a la liste de donnees
-        else: # si on peut pas acceder l'api de geo-location
-            return {}
-        if len(tout_les_donnees) == 0: return {} # si vide (aucun des liens ont connecté), il y a pas de notes a faire
+
+        if len(tout_les_donnees) == 0: # si vide (aucun des liens ont connecté), il y a pas de notes a faire
+            return {} 
 
         donnees_moy = {} # va contenir les donnees moyennes de chaque critere
 
@@ -763,7 +777,7 @@ class Donnees:
             if len(values) > 1: # au cas ou que tout les valeurs sont des None (improbable mais possible)
                 keymoy = sum(values)/len(values) # calcule moyenne
                 if key == "surface_pressure": keymoy = keymoy*0.00098692 # transforme hPa -> atm
-                if key == "windspeed_10m": keymoy = keymoy*0.27778 # transforme km/h -> m/s
+                elif key == "windspeed_10m": keymoy = keymoy/3.6 # transforme km/h -> m/s
                 donnees_moy[key] = round(keymoy, 2) # on sauvegarde cette moyenne dans le dictionaire
 
 
@@ -783,7 +797,7 @@ class Donnees:
             
         }
 
-        nom_EN_FR = { # sert pour remplaccer les clefs des criteres pour les afficher dans les advantages et les inconveniants
+        nom_EN_FR = { # sert pour remplaccer les cles des criteres pour les afficher dans les advantages et les inconveniants
             "relativehumidity_2m": "Humidité",
             "temperature_2m_mean": "Température",
             "cloudcover": "Couverture nuageuse",
@@ -799,7 +813,7 @@ class Donnees:
 
         # calcule du note de chaque critere present dans valeursIdeales et donnees_moy
         notes = calcul_note_ideale(valeursIdeales, donnees_moy)
-        notes = {nom_EN_FR[clef]:valeur for clef, valeur in notes.items()} # change les noms des clefs en Francais
+        notes = {nom_EN_FR[clef]:valeur for clef, valeur in notes.items()} # change les noms des clefs en Français lisible
 
         return notes
 
@@ -819,8 +833,8 @@ class Donnees:
         assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
         print(notes)
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
-            #! Besoin d'aide pour choisir quoi va avec quoi
-            # ex: si Activite est 0, monuments_historiques aura un moindre coefficent dans la note final
+
+            # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
             "Scolarite": ["Les collèges","Les écoles", "les lycées"],
             "Culture": ["Les festivals","Les musées","Les monuments historiques"],
 		    "Activite": ['Les festivals'],
@@ -830,7 +844,7 @@ class Donnees:
             "Enseignement_Superieur" : []
         }
 
-        dictionaire_note = {"sum_numerateur": 0, "sum_denumerateur": 0} # (numerateur / denumerateur) d'un moyenne
+        liste_moyenne = [0, 0] # (numerateur,  denumerateur) d'un moyenne
 
 
 
@@ -839,18 +853,17 @@ class Donnees:
 
             criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
             
-            
             for critere in criteres: # pour chaque critere impacté par cette reponse
                 if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
-                    dictionaire_note["sum_numerateur"] += notes[critere]*coef # on calcule la note avec son coef
-                    dictionaire_note["sum_denumerateur"] += coef # on ajoute son coef au somme denumerateur
+                    liste_moyenne[0] += notes[critere]*coef # on calcule la note avec son coef (le numerateur)
+                    liste_moyenne[1] += coef # on ajoute son coef au somme denumerateur
                     del notes[critere] # vue qu'on a traité ce critere, on veut plus la re-traiter
 
-        # on rajoute les notes qui sont de coef 1
-        dictionaire_note["sum_numerateur"] += sum(list(notes.values())) 
-        dictionaire_note["sum_denumerateur"] += len(notes.keys())
+        # on rajoute les notes qui sont de coef 1 (seux qui restent)
+        liste_moyenne[0] += sum(list(notes.values())) 
+        liste_moyenne[1] += len(notes.keys())
 
-        return dictionaire_note # renvoi nouveau dictionaire de notes
+        return liste_moyenne # renvoi dictionaire de note
             
 
 
@@ -858,7 +871,7 @@ class Donnees:
     '''
     METHODE POUR DONNER LE SCORE FINALE DE LA VILLE
     
-    Fait par Raphaëm et Nathan
+    Fait par Raphaël et Nathan
     
     '''
     def note_finale(self,meteo=True):
@@ -880,19 +893,14 @@ class Donnees:
         for id in infos_csv :
             if id != "communes" :
                 self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
-            
-        """ Bip boup ça marche mais ça créer des bugs au niveau des notes dcp pas ouf         
-            a = threading.Thread(target=self.prepa_recup_donnees, args=( id,))
-            a.start()
-        a.join()
-        """
         
         if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
             Donnees.dico_meteo = notes_meteo
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
-            self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes
+            self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes #? es que liste_notes est necessaire?
             print('fait',self.liste_notes)
+
         # Applique les coefs aux notes par rapport au choix du QCM
         note_moyenne_avec_coef = self.applique_coefs_QCM(lire_fichier_dico("REPONSE_QCM"), self.notes_finales)
 
@@ -911,16 +919,12 @@ class Donnees:
         Création de la note finale
         Fait par Raphaël
         '''
-        note_finale = int(note_moyenne_avec_coef["sum_numerateur"] / note_moyenne_avec_coef["sum_denumerateur"])
-        # for i in range(len(self.liste_notes)) : #? tu veut le garder ça raphael?
-        #     if self.liste_notes[i] != None: #! Si ça va mieux ce que t'as mis enlève le mdrr
-        #         note_finale += int(self.liste_notes[i])
-        #     else:
-        #         self.liste_notes.pop(i) # Supprime tous les None
+        # calcule du note finale avec les valeurs donnees de applique_coefs_QCM()
+        note_finale = int(note_moyenne_avec_coef[0] / note_moyenne_avec_coef[1])
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
-        return note_finale 
+        return round(fonction_sigmoide(note_finale))
 
 
 
@@ -931,21 +935,20 @@ class Donnees:
     
     '''
     def prepa_recup_donnees(self, id):
-        #print ("\nLe csv", id)
+        print ("\nLe csv", id)
         if infos_csv[id][2]['insee'] >= 0 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
             resultat = self.recuperation_donnees(id)
                     
-            #print(" - Note /100 :", resultat)
+            print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
-            if resultat is not None :
-                if type(resultat) is not list :
-                        # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
-                    if resultat < 0 :
-                        resultat = 0
-                    elif resultat > 100 :
-                        resultat = 100
-                    self.liste_notes.append(resultat)
-                    self.notes_finales[infos_csv[id][2]['nom']] =  resultat# Le nom formel
+            if (resultat is not None) and (type(resultat) != list):
+                # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
+                if resultat < 0 :
+                    resultat = 0
+                elif resultat > 100 :
+                    resultat = 100
+                self.liste_notes.append(resultat)
+                self.notes_finales[infos_csv[id][2]['nom']] =  resultat# Le nom formel
         else :
             print("Non noté.")
 

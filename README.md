@@ -615,3 +615,20 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées dans la liste
 
 > Ajout d'un fichier, le fichier `temporaire.txt` (nom sujet à changer) qui récupère la note des villes voisines (ainsi, en faisant plusieurs calculs dans un même entourage on ne recalcule pas plusieurs fois la même ville). Cela fait donc gagner du temps sur les futures recherches 
+
+
+
+09 Avril 2023 :
+> Modification des notations : on utilise maintenant une fonction sigmoide pour accentuer les valeurs (qui sont proches des moyennes nationales).
+
+> Texte animé du premier téléchargement modifié pour expliquer à quoi sert l'application + le texte est maintenant centré
+
+> Couleur des crédits modifié pour le mode sombre.
+
+> La fichier temporaire.txt est supprimé si on supprime les données.
+
+> Une coupure internet bloque le téléchargement mais n'arrête pas l'appli, on attend de récupérer l'accès à internet.
+
+> Ajout de titres pour les pages d'aide et d'information.
+
+> Modification des données pour retourner 0 pour compter_par_habitant, et maintenant la note finale passe par la fonction sigmoide.

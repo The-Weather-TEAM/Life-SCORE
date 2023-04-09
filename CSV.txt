@@ -1,0 +1,5 @@
+Prix gaz naturel Engie : https://www.data.gouv.fr/fr/datasets/niveaux-de-prix-par-commune-pour-les-tarifs-reglementes-de-vente-de-gaz-naturel-dengie/#/resources
+Demandeurs D'emploi : https://statistiques.pole-emploi.org/stmt/defm?nk=0&pp=las&ss=1
+Salaire net horaire moyen : https://www.insee.fr/fr/statistiques/2021266#consulter
+Naissances de 2014 à 2021 : https://www.insee.fr/fr/statistiques/1893255
+Décès de 2014 à 2021 : https://www.insee.fr/fr/statistiques/1893253
