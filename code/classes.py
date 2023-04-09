@@ -769,7 +769,7 @@ class Donnees:
             if len(values) > 1: # au cas ou que tout les valeurs sont des None (improbable mais possible)
                 keymoy = sum(values)/len(values) # calcule moyenne
                 if key == "surface_pressure": keymoy = keymoy*0.00098692 # transforme hPa -> atm
-                elif key == "windspeed_10m": keymoy = keymoy*0.27778 # transforme km/h -> m/s
+                elif key == "windspeed_10m": keymoy = keymoy/3.6 # transforme km/h -> m/s
                 donnees_moy[key] = round(keymoy, 2) # on sauvegarde cette moyenne dans le dictionaire
 
 
