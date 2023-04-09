@@ -497,9 +497,9 @@ def parametres(bouton):
 
     # Tous les boutons présents :
     btn_confirm_frequence = interface.CTkButton(windowParam, width = 7, 
-                                            command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),message)
+                                            command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),"donnees/options.txt", message)
                                             if est_nombre(entree_frequence_maj.get()) \
-                                            else message.configure(text = "Vous devez entrer un nombre !"), # / permet un retour à la ligne dans le code
+                                            else message.configure(text = "Vous devez entrer un nombre !"), # "\" permet un retour à la ligne dans le code
                                             text="Confirmer") # modifier_fichier_dico() se trouve dans classes.py
     btn_supprimer_donnees = interface.CTkButton(windowParam, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,

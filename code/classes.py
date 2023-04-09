@@ -179,7 +179,8 @@ def modifier_fichier_dico(cle: any, valeur: any, fichier:str = "donnees/options.
     - Idée et Implémentation par Thor
     """
     assert type(cle) not in (list, dict), "Le clé pas etre un type mutible" 
-    
+    assert type(fichier) == str, "Le chemin pour le fichier doit etre un string" 
+
     if fichier[0] == "/": # pour eviter un bug avec os.path.join()
         fichier = fichier[1:]
     path_options = os.path.join(os.path.dirname(__file__), fichier)
