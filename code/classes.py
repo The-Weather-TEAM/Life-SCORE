@@ -817,10 +817,9 @@ class Donnees:
         
         - idee du Groupe, fait par Thor.
         """
-        notes = notes.copy() # Permet d'éviter de modifier le dictionnaire original
         assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
-        print(notes,'tiiiiiiiiiiiiiiiiiilatotottoto')
-        print('----------------')
+        notes = notes.copy() # Permet d'éviter de modifier le dictionnaire original
+
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
 
             # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
@@ -853,7 +852,6 @@ class Donnees:
         # on rajoute les notes qui sont de coef 1 (seux qui restent)
         liste_moyenne[0] += sum(list(notes.values())) 
         liste_moyenne[1] += len(notes.keys())
-        print(liste_moyenne,'liste_moyenneeeeeeeee')
 
         return liste_moyenne # renvoi la note coefficientée
             
@@ -891,20 +889,13 @@ class Donnees:
             Donnees.dico_meteo = notes_meteo
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes #? es que liste_notes est necessaire?
-            print('fait',self.liste_notes)
+
+        if not meteo : # utilisé quand on calcule note de ville voisins
+            self.notes_finales.update(Donnees.dico_meteo) # met a jour la dictionaire de notes
 
         # Applique les coefs aux notes par rapport au choix du QCM
         note_moyenne_avec_coef = self.applique_coefs_QCM(lire_fichier_dico("REPONSE_QCM"), self.notes_finales)
 
-        if not meteo :
-            print(self.notes_finales)
-            print('---------------------------')
-            print(Donnees.dico_meteo)
-            print('----------------------------')
-            print(note_moyenne_avec_coef)
-            self.notes_finales.update(Donnees.dico_meteo) # met a jour la dictionaire de notes
-            
-            print(Donnees.dico_meteo)
         
         # Pour tester avant de tout envoyer
         print("################################",
@@ -923,7 +914,6 @@ class Donnees:
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
-        print(self.notes_finales,'toutes les notes hehehehehehhehhheheheheheehehheheheheh')
         return round(fonction_sigmoide(note_finale))
 
 
