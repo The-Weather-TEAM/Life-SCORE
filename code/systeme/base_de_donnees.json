@@ -224,7 +224,7 @@
                                                                           "colonne_ville" : 0,
                                                                           "colonne_donnee" : [5,6],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "type" : "prout"
+                                                                          "type" : "Null"
                                                                 
 
     }]

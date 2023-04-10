@@ -649,7 +649,7 @@ class Donnees:
         
         rangee_unique = cr[(cr['code_commune_INSEE'] == self.code_insee) | (cr['code_commune_INSEE'] == self.code_insee[1:])]
         print(rangee_unique)
-        if len(rangee_unique) > 1:
+        if len(rangee_unique) > 1: # Gère le cas où on récupère par exemple la ville de code 34459 et 4459
 
             if self.code_insee[0] == '0':
                 rangee_unique = rangee_unique.iloc[0]
@@ -671,22 +671,22 @@ class Donnees:
             dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'],r['code_commune_INSEE'])
         # Partie k plus proches voisins
         liste_k_proches = kppv(dico,coordonnees0,k)
-        print(liste_k_proches)
         liste_notes = []
         
         dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/cache.txt")
 
         for nom,insee in liste_k_proches:
-            msg.configure(text = f'Calcul de {nom} (code : {insee})')
-            win.update()
+            if msg != None:
+                msg.configure(text = f'Calcul de {nom} (code : {insee})')
+                win.update()
             print(nom)
             if nom in dico_fichier_tempo : # Si on a déjà récupéré ces données là
                 liste_notes.append((nom,dico_fichier_tempo[nom]))
             else:
-                note = Donnees(nom,insee).note_finale(meteo = False)
+                ville = Donnees(nom,insee)
+                note = ville.note_finale(meteo = False)
                 liste_notes.append((nom,note))
                 dico_fichier_tempo[nom] = note
-                #modifier_fichier_dico(nom, note, fichier = 'donnees/cache.txt')
 
         # On écrit tout ça dans le fichier temporaire de données
         with open(os.path.join(nom_du_repertoire, "donnees/cache.txt"),'w',encoding = 'utf-8') as tempo :
@@ -879,7 +879,7 @@ class Donnees:
         # Pour chaque CSV
         for id in infos_csv :
             if id != "communes" :
-                self.prepa_recup_donnees(id) #Ancienne méthode, pas très rapide avec bcp de CSV
+                self.prepa_recup_donnees(id)
         
         if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
             notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
@@ -893,7 +893,8 @@ class Donnees:
 
         if not meteo :
             self.notes_finales.update(Donnees.dico_meteo)
-            print(Donnees.dico_meteo,"c'est la météo il fait beau c'est la samba")
+            print(Donnees.dico_meteo)
+        
         # Pour tester avant de tout envoyer
         print("################################",
             "\n##       NOTES FINALES        ##",
@@ -911,6 +912,7 @@ class Donnees:
         
         if len(self.liste_notes) == 0: # Si on n'a pas de données
             return 'N/A'
+        print(self.notes_finales,'toutes les notes hehehehehehhehhheheheheheehehheheheheh')
         return round(fonction_sigmoide(note_finale))
 
 
@@ -923,7 +925,7 @@ class Donnees:
     '''
     def prepa_recup_donnees(self, id):
         print ("\nLe csv", id)
-        if infos_csv[id][2]['insee'] >= 0 : # Pour l'instant on regarde seulement les CSV avec un insee dedans
+        if infos_csv[id][2]['insee'] >= 0 :
             resultat = self.recuperation_donnees(id)
                     
             print(" - Note /100 :", resultat)
@@ -954,4 +956,4 @@ if __name__ == "__main__":
     puissa = Donnees("Magalas")
     if puissa.is_commune_france(None):
         puissa.note_finale()
-    print(puissa.k_plus_proches_voisins(10))
+    puissa.k_plus_proches_voisins(10)
