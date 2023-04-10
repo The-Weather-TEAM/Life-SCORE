@@ -7,7 +7,7 @@ Syntaxe de nos variables :
     - Les textes (classe interface.CTkLabel) s'écrivent msg_Nom
     - Les listes s'écrivent liste_Nom
     - Les dictionnaires s'écrivent dico_Nom
-
+    
 Pour tous les widgets du code, leurs création dépendait de notre mémoire sur Tkinter et de la documentation sur CustomTkinter 
 'https://github.com/TomSchimansky/CustomTkinter/wiki/'
 Les valeurs (de taille, de police, de couleur,... ont été trouvées après plusieurs essais par nous même)
@@ -196,7 +196,7 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
     - Condition de mise à jour par Nathan
     '''
     # Si les données doivent être mises à jour, on initialise la page
-    if update.mise_a_jour() :
+    if update.mettre_a_jour() :
         change_etat_btn(bouton) # Bloque le bouton sur la page principale
         change_etat_btn(bouton_param)
         change_etat_btn(bouton_aide)
@@ -225,7 +225,7 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
         fenetre_Telechargement.update()
         
         # Décide ensuite quelle action faire
-        erreur_maj = update.executer(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
+        erreur_maj = update.mise_a_jour(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
         change_etat_btn(bouton_param)
         change_etat_btn(bouton_aide)
         if not erreur_maj:
@@ -683,7 +683,7 @@ def analyse_ville(entree,msg,fenetre,bouton = None):
     
     ville = entree.get()
     Donnees_ville = Donnees(ville)
-    if Donnees_ville.is_commune_france(msg):
+    if Donnees_ville.est_commune_france(msg):
         if bouton != None:
             bouton.configure(state=DISABLED) # Pour empêcher de lancer plusieurs fois
         msg.configure(text ='Cacul de la note de la commune et de ses "voisins"')
@@ -740,7 +740,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
     - Source et documentation: https://github.com/TomSchimansky/TkinterMapView (la liste des cartes possibles est tout en bas du README)
     - Idée de Nathan, implémenté par Thor
     """
-    if is_connected("https://mt0.google.com/"): # On verifie qu'il y a un connection au serveUr o% on va recuperer la carte
+    if est_connecte("https://mt0.google.com/"): # On verifie qu'il y a un connection au serveUr o% on va recuperer la carte
 
         carte_Ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height()) # On declare l'objet de la carte avec Ses tailles respectives
         carte_Ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France", marker=True,text=str(ville)) # Insère le nom comme adresse (et formate pour les arrondissements)
@@ -983,20 +983,17 @@ def fenetre_erreur(fenetre):
     
     # Initialisation
     fenetre.title('LifeScore  |  Erreur')
-    fenetre.iconphoto(False, icone)
+    fenetre.iconphoto(False, icone_connexion)
     
     # Création des widgets
 
-    msg_Principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
+    msg_Principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer.\nVérifiez votre connexion et réessayer.", 
         width = 1000, font =(polices[0],18), justify=CENTER) # font = taille + police justify comme sur word
-    btn_Parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : page_parametres(btn_Parametre), text="Paramètres",font=(polices[0],30, 'bold'))
-    btn_Ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=(polices[0],30)) # Ferme la page
+    btn_Parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : page_parametres(btn_Parametre), text="",font=(polices[0],30, 'bold'),image=image_btn_parametres, fg_color='transparent',hover = False)
 
     # Placement des widgets
     msg_Principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     btn_Parametre.place(relx=0.1, rely=0.9, anchor = SW)  
-    btn_Ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
-
 
 
 # crée (s'il n'est pas présent) le dossier "donnees"

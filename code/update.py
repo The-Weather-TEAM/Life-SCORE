@@ -1,6 +1,5 @@
 '''
                         [UPDATE.PY]
-                            V.10
                                   
  Programme de téléchargement et mises à jour des données automatique
 
@@ -24,22 +23,22 @@ Chaque processus est pensé et écrit par Nathan
 
 
 '''
-BIBLIOTHEQUES ET PROGRAMMES
+BIBLIOTHEQUES ET FONCTIONS EXTERNES
  
 '''
 # Bibliothèques souvent utilisées :
-import os                                # Pour utiliser les répertoires
-from shutil import rmtree as delete_data # Pour supprimer le dossier si coupure de réseau
-import requests                          # Demandes de connexion
+import os                                         # Pour utiliser les répertoires
+from shutil import rmtree as supprimer_repertoire # Pour supprimer le dossier si coupure de réseau
+import requests                                   # Demandes de connexion
 
 # Bibliothèques pour la modification de documents :
-import csv                               # Lecture des CSV
-import pandas as p                       # Lecture et écriture des CSV
-import json                              # Pour lire notre base de données
+import csv                                        # Lecture des CSV
+import pandas as p                                # Lecture et écriture des CSV
+import json                                       # Pour lire notre base de données
 
 # Bibliothèques pour les conversions de temps :
-import datetime                          # Conversion UNIX + vérification des versions
-import time                              # Conversion UNIX
+import datetime                                   # Conversion UNIX + vérification des versions
+import time                                       # Conversion UNIX
     
 # Bibliothèques pour éviter erreurs de coupure réseau :
 from requests.exceptions import ConnectionError, ChunkedEncodingError, ReadTimeout
@@ -48,7 +47,7 @@ from http.client import IncompleteRead
 from zipfile import BadZipFile
 
 # Importation de la fonction de test de connexion :
-from classes import is_connected as connexion
+from classes import est_connecte
 from classes import lire_fichier_dico           # Utile pour lire les parametres d'utilisateur
 from classes import modifier_fichier_dico       # Utile pour changer les options (logique)
 
@@ -59,7 +58,7 @@ from zipfile import ZipFile
 
 
 
-def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> str:
+def terminal_progession(pourcentage: float, id: str, message: str) -> str:
     '''
     Fonction qui permet de formater un message pour le console du progress de telechargement des fichiers.
 
@@ -78,20 +77,20 @@ def format_progress_pourcentage(pourcentage: float, id: str, message: str) -> st
 
 
 
-def taille_zip(url):
+def taille_fichier(lien):
     '''
     Fonction qui envoie une requête à GitHUB pour savoir la longueur du fichier zip qu'on télécharge.
     
     Pensé par Nathan, aidé par la documentation de requests (pour le request.head)
     '''
-    informations = requests.head(url, allow_redirects=True) # On récupère seulement les informations du fichier (léger)
-    longueur_du_fichier = informations.headers.get('Content-Length')
-    return int(longueur_du_fichier)
+    informations = requests.head(lien, allow_redirects=True) # On récupère seulement les informations du fichier (léger)
+    taille_du_fichier = informations.headers.get('Content-Length')
+    return int(taille_du_fichier)
 
 
 
 
-def telecharger(lien, nomfichier,barre,win,msg_prct, message):
+def telecharger_fichier(lien, nom_fichier, barre_de_chargement, fenetre, msg_pourcentage, msg_information):
     '''
     Fonction qui permet de télécharger le fichier .zip tout en affichant l'avancement
     
@@ -100,77 +99,50 @@ def telecharger(lien, nomfichier,barre,win,msg_prct, message):
     
     '''
     try :
-        
-        '''
-        Animation du texte
-        Conçu par Nathan
-        
-        Permet d'expliquer en quoi consiste l'application.
-        '''
-        message0 = 'Téléchargement des fichiers\nCela peut prendre quelques minutes.'
-        '''
-        message4 = 'C\'est presque terminé !\nMerci d\'avoir attendu.'
-        liste_msg = [message0, message4]
-        '''
-        # On initialise le messages
-        message.configure(text = message0)
-        '''
-        msg_val = False
-        nbr_msg = 0
-        '''
+        msg_information.configure(text = 'Téléchargement des fichiers\nCela peut prendre quelques temps.')
+
         # On recupère la taille du fichier, et le cache ect.
-        taille = taille_zip(lien)
+        taille = taille_fichier(lien)
         fichier_zip = requests.get(lien, stream=True)
-        taille_cache = 2**16 # Modifiable, en bit le nombre de données téléchargées dans un emplacement
+        taille_cache = 2**16 # Modifiable, en bit le nombre de données téléchargées par fragment
         bits_telecharges = 0
         
-        with open(nomfichier, 'wb') as f:
+        with open(nom_fichier, 'wb') as f:
             
             # Pour chaque partie du fichier, on avance
-            for emplacement in fichier_zip.iter_content(chunk_size=taille_cache):
-                if emplacement:
-                    f.write(emplacement)
-                    bits_telecharges += len(emplacement)
+            for fragment in fichier_zip.iter_content(chunk_size=taille_cache):
+                if fragment:
+                    f.write(fragment)
+                    bits_telecharges += len(fragment)
                     
                     # Affichage du pourcentage
                     pourcentage = bits_telecharges / taille * 100
-                    barre.set(pourcentage/100)
-                    msg_prct.configure(text = f"{round(pourcentage)}%")
-                    
-                    '''
-                    # Pour remettre disponible le changement de message
-                    if not msg_val and round(pourcentage)%20 == 1 :
-                        msg_val = True'''
-                    
-                    '''
-                    # Changement de message tous les x pourcents
-                    if round(pourcentage) >= 90 and msg_val :
-                        message.configure(text = liste_msg[nbr_msg])
-                        nbr_msg += 1
-                        msg_val = False'''
-                    
-                    win.update()
+                    barre_de_chargement.set(pourcentage/100)
+                    msg_pourcentage.configure(text = f"{round(pourcentage)}%")
+
+                    fenetre.update()
                     
     # Si il y a une coupure de connexion
     except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead or ReadTimeoutError or ReadTimeout : 
+        
         # On supprime le dossier donnees puis on le reconfigure
-        delete_data(os.path.join(os.path.dirname(__file__)+'/donnees'))
+        supprimer_repertoire(os.path.join(os.path.dirname(__file__)+'/donnees'))
         os.makedirs(os.path.join(os.path.dirname(__file__)+'/donnees'))
         
         lire_fichier_dico('APPARENCE') # Pour créer le fichier options.txt (fait par Thor)
         
         # Tant qu'on a pas une connexion établie
-        while not connexion('https://github.com/') :
-            message.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
-            win.update()
+        while not est_connecte('https://github.com/') :
+            msg_information.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
+            fenetre.update()
         
         # Récurvivité pour relacer le téléchargement de 0, et éviter les problèmes de corruption de fichiers
-        return executer(barre,win,message,msg_prct)
+        return mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage)
         
         
 
 
-def mise_a_jour() :
+def mettre_a_jour() :
     '''
     Fonction qui permet de savoir si on doit mettre à jour ou non
     
@@ -178,14 +150,15 @@ def mise_a_jour() :
     pour éviter qu'une fenêtre s'ouvre même si on doit pas mettre à jour.
     '''
     # Temps en secondes entre les vérifications de mises à jour :
-    #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
-    temps_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
+    frequence_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
     derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
-    if time.time() - derniere_maj < temps_maj :
+    if time.time() - derniere_maj < frequence_maj :
         return False
     
     else :
         return True
+
+
 
 
 
@@ -194,11 +167,11 @@ FONCTION PRINCIPALE
 
 '''
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
-def executer(barre_progres,fenetre,message,message_pourcentage):
+def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
 
 
     # Variables boléennes (qui servent pour des conditions) :
-    is_file_versions = is_modified = erreur_internet = mise_a_jour = False
+    est_modifie = erreur_internet = mise_a_jour = False
 
 
     # Pour récupérer le chemin relatif vers le dossier data :
@@ -207,7 +180,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
 
     # Pour savoir si les fichiers existait avant le programme :
-    is_file_versions = os.path.isfile(repertoire_donnees+'/versions.csv')
+    est_fichier_versions = os.path.isfile(repertoire_donnees+'/versions.csv')
 
     
 
@@ -215,7 +188,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
     # Test de connexion internet sur le site data.gouv.fr dans classes.py
     # Basé sur un ancien projet de Frédéric et Nathan
-    test_connexion = connexion('https://www.data.gouv.fr')
+    test_connexion = est_connecte('https://www.data.gouv.fr')
 
     if test_connexion :
 
@@ -241,7 +214,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
 
         # Valeurs pour le calcul du pourcentage et le nombre de màj effectué(s) :
         nombre_total_csv = len(liste_csv)
-        csv_courant = 0
+        numero_csv_courant = 0
         nombre_csv_modifies = 0
 
 
@@ -252,16 +225,15 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             '''
             TELECHARGEMENT AVEC FICHIER ZIP
-            125x plus rapide qu'en téléchargant un par un les csv.
+            Plus rapide que de télécharger les fichiers csv un par un.
             
             Pensé par Nathan
             Réalisé par Nathan (intégration à l'interface par Raphaël)
-            
             '''
             lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip' #! à changer une fois le code terminé
             fichier = repertoire_donnees+'/temp.zip'
             
-            telecharger(lien, fichier,barre_progres,fenetre,message_pourcentage, message)
+            telecharger_fichier(lien, fichier, barre_de_chargement, fenetre, msg_pourcentage, msg_information)
             
             try :
                 # On dézipe le fichier
@@ -274,22 +246,22 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 os.remove(os.path.join(repertoire_donnees,'temp.zip'))
                     
                 # Récursivité pour vérifier si les fichiers téléchargés sont les derniers dispo
-                return executer(barre_progres,fenetre,message,message_pourcentage)
+                return mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage)
 
             # Si jamais le fichier .zip est corrompu
             except BadZipFile :
                 # On supprime puis réinitialise le repertoire
-                delete_data(os.path.join(os.path.dirname(__file__)+'/donnees'))
+                supprimer_repertoire(os.path.join(os.path.dirname(__file__)+'/donnees'))
                 os.makedirs(os.path.join(os.path.dirname(__file__)+'/donnees'))
                 lire_fichier_dico('APPARENCE') # Pour créer le fichier options.txt
                 
                 # Tant qu'on a pas de connexion à internet
-                while not connexion('https://github.com/') :
-                    message.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
+                while not est_connecte('https://github.com/') :
+                    msg_information.configure(text = 'Connexion perdue.\nVeuillez vérifier votre connexion à internet.')
                     fenetre.update()
                 
                 # Récurvivité ici aussi
-                return executer(barre_progres,fenetre,message,message_pourcentage)
+                return mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage)
 
 
 
@@ -312,22 +284,19 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
         '''
         # Pour chaque fichier CSV de la base de données :
         # Imaginé et codé par Nathan
-        for id in liste_csv :
+        for csv_courant in liste_csv :
             
             # Initialisation de variable boolnéenne pour savoir si le csv courant est modifié :
-            is_courant_modified = False
+            est_courant_modifie = False
             
             
             # Comptage du fichier courant + variable boolnéenne pour savoir si le fichier existait déjà
-            csv_courant += 1
-            is_courant_csv = os.path.isfile(repertoire_donnees+'/csv/'+id+'.csv')
+            numero_csv_courant += 1
+            est_courant_csv = os.path.isfile(repertoire_donnees+'/csv/'+csv_courant+'.csv')
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de tant de secondes :
-            if not is_courant_csv or time.time() - os.path.getctime(repertoire_donnees+'/csv/'+id+'.csv') > lire_fichier_dico("FREQ_MAJ") : 
-                
-                
-                
+            if not est_courant_csv or time.time() - os.path.getctime(repertoire_donnees+'/csv/'+csv_courant+'.csv') > lire_fichier_dico("FREQ_MAJ") : 
                 
                 
                 '''
@@ -341,13 +310,13 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 # Except : cours de terminale sur la gestion d'erreurs
                 #https://help.opendatasoft.com/apis/ods-explore-v2/
                 try :
-                    metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[id][0]).json()
+                    metadonnees = requests.get('https://www.data.gouv.fr/api/2/datasets/'+liste_csv[csv_courant][0]).json()
                     
                 except ConnectionError or ReadTimeoutError or ReadTimeout or TimeoutError : 
-                    test_connexion = connexion('https://www.data.gouv.fr')
+                    test_connexion = est_connecte('https://www.data.gouv.fr')
                     
                     # Si il n'y a pas de connexion et c'est le premier lancement :
-                    if not test_connexion and not is_file_versions :
+                    if not test_connexion and not est_fichier_versions :
                                              
                         # Message sur le terminal si on a pas internet :
                         msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
@@ -382,19 +351,19 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 version = version[0].split('-') + version[1].split(':')   # Séparation des jours/mois/années + heures/minutes/secondes
                 
                 # Transforme du str() en int() dans version :
-                temp_conversion_version = 0
-                for i in version :
+                tempo_conversion_version = 0
+                for indice in version :
                     
                     # Si ce n'est pas des données rondes (données avec milisecondes) :
-                    i = i.split('.', 1)[0]
+                    indice = indice.split('.', 1)[0]
                     
                     #Supprimer les données des heures en UTC (pas besoin)
-                    i = i.split('+', 1)[0]
+                    indice = indice.split('+', 1)[0]
 
 
                     # Transformation du str() en int() :
-                    version[temp_conversion_version] = int(i)
-                    temp_conversion_version += 1
+                    version[tempo_conversion_version] = int(indice)
+                    tempo_conversion_version += 1
             
             
                 # Conversion du tableau version en UNIX :
@@ -406,52 +375,51 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                        
                        
                 # On récupère la version téléchargée initialement si le fichier existait déjà :
-                if is_file_versions and is_courant_csv:
-                    message.configure(text = f"Vérification de la présence de {id}...")
-                    ligne = lire_versions[lire_versions["NOM"] == id]        # Retient seulement la ligne du fichier csv
-                    recup_version = ligne.values[0][1]                       # Retourne la version du fichier
-                    pourcentage = csv_courant/nombre_total_csv
-                    #barre_progres.configure(determinate_speed=1)
-                    barre_progres.set(pourcentage)
-                    message_pourcentage.configure(text = f"{round(pourcentage*100)}%")
+                if est_fichier_versions and est_courant_csv:
+                    msg_information.configure(text = f"Vérification de la présence de {csv_courant}...")
+                    ligne = lire_versions[lire_versions["NOM"] == csv_courant]      # Retient seulement la ligne du fichier csv
+                    recuperation_version = ligne.values[0][1]                       # Retourne la version du fichier
+                    pourcentage = numero_csv_courant/nombre_total_csv
+                    barre_de_chargement.set(pourcentage)
+                    msg_pourcentage.configure(text = f"{round(pourcentage*100)}%")
                     
                     fenetre.update()                  # Retourne la version du fichier
 
 
                 # Pour éviter une erreur, comme ça on télécharge le CSV même si on récupère pas la version :
-                else : recup_version = 0    
+                else : recuperation_version = 0    
                             
                 
                 
                 
                 # On modifie mise_a_jour ssi le .csv exisatait et si la version de l'utilisateur est différente de la dernière disponible :
-                if is_courant_csv and recup_version != version :
+                if est_courant_csv and recuperation_version != version :
                     mise_a_jour = True
                 
                 
                 # Remplissage du dictionnaire des modifications ssi c'est un nouveau .csv ou si il y a une mise à jour disponible :
-                if not is_courant_csv or mise_a_jour :
-                    nouvelles_informations[id] = version
+                if not est_courant_csv or mise_a_jour :
+                    nouvelles_informations[csv_courant] = version
                 
                 
                 
                 
                 # Téléchargement si data n'existait pas ou si la version du .csv était différente :
-                if not is_file_versions or recup_version != version :
+                if not est_fichier_versions or recuperation_version != version :
                     
                     
                     # Supprime la version actuelle ssi il y avait le fichier .csv :
-                    if is_file_versions and is_courant_csv :
-                        os.remove(repertoire_donnees+'/csv/'+id+'.csv')
+                    if est_fichier_versions and est_courant_csv :
+                        os.remove(repertoire_donnees+'/csv/'+csv_courant+'.csv')
                     
                     
                     # Données modifiées (courant et en général) :
-                    is_courant_modified = is_modified = True
+                    est_courant_modifie = est_modifie = True
                                 
                                 
                     # Lien de téléchargement :    
-                    lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[id][1]
-                    message.configure(text = "Téléchargement du fichier "+id)
+                    lien = 'https://www.data.gouv.fr/fr/datasets/r/'+liste_csv[csv_courant][1]
+                    msg_information.configure(text = "Téléchargement du fichier "+csv_courant)
                     fenetre.update()
                     
                     
@@ -471,17 +439,17 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         
                     except ConnectionError or ChunkedEncodingError or ProtocolError or IncompleteRead or ReadTimeoutError or ReadTimeout : 
                         # Les erreurs ont étés récupéré en testant le code et sur internet, pour éviter la corruption des fichiers.
-                        test_connexion = connexion('https://www.data.gouv.fr')
+                        test_connexion = est_connecte('https://www.data.gouv.fr')
                         
                         # Si il ,'y a pas de connexion et c'est le premier lancement :
-                        if not test_connexion and not is_file_versions :
+                        if not test_connexion and not est_fichier_versions :
                             
                             # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
                             msg_erreur = "\n\n\nAccès à internet impossible : nous ne pouvons pas télécharger les données nécessaires."
                             print (msg_erreur)
                             
                             # Tout supprimer pour refaire une installation propore :
-                            delete_data(repertoire_donnees+'/csv')
+                            supprimer_repertoire(repertoire_donnees+'/csv')
                             
                             erreur_internet = True
                         
@@ -502,7 +470,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     
                     
                     # On le sauvegarde avec le bon nom et l'extention :
-                    nom_du_fichier = os.path.join(repertoire_donnees+'/csv/'+id+'.csv')
+                    nom_du_fichier = os.path.join(repertoire_donnees+'/csv/'+csv_courant+'.csv')
                     open(nom_du_fichier, 'wb').write(recup_csv_internet.content)
                     
                     
@@ -510,11 +478,11 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                     # Calcul pourcentage et rajout du nombre de fichiers téléchargés :
                     # Fait par Nathan et Raphaël (pour la comptabilité Tkinter)
                     nombre_csv_modifies += 1
-                    pourcentage = csv_courant/nombre_total_csv
-                    barre_progres.configure(determinate_speed=pourcentage)
-                    barre_progres.step()
-                    barre_progres.set(pourcentage)
-                    message_pourcentage.configure(text = f"{round(pourcentage*100)}%")
+                    pourcentage = numero_csv_courant/nombre_total_csv
+                    barre_de_chargement.configure(determinate_speed=pourcentage)
+                    barre_de_chargement.step()
+                    barre_de_chargement.set(pourcentage)
+                    msg_pourcentage.configure(text = f"{round(pourcentage*100)}%")
                     fenetre.update()
                     
                     
@@ -526,11 +494,11 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 '''
                 pourcentage = round(pourcentage*100)
 
-                if is_courant_modified:
+                if est_courant_modifie:
                     # Message sur le terminal (provisoire, à modifier pour du Tkinter)
                     # avec gestion du nombre de caractères pour avoir du texte homogène
 
-                    msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier téléchargé")
+                    msg_csv_courant = terminal_progession(pourcentage, csv_courant, "Fichier téléchargé")
 
                     print (msg_csv_courant)
                     
@@ -540,14 +508,14 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         for cle, val in nouvelles_informations.items():
                             
                             # On prend seulement la  clé qui correspond au fichier courant :
-                            if cle == id :
+                            if cle == csv_courant :
                                 
                                 # On actualise la version téléchargée :
-                                lire_versions.loc[lire_versions["NOM"] == id, "VERSION"] = val
+                                lire_versions.loc[lire_versions["NOM"] == csv_courant, "VERSION"] = val
                                 lire_versions.to_csv(repertoire_donnees+'/versions.csv', index=False)
                                 
                         # On supprime les informations du dictionnaire (si en même temps il y a des nouveaux fichiers) :
-                        del nouvelles_informations[id]
+                        del nouvelles_informations[csv_courant]
                         
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
@@ -559,7 +527,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                 # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
                 # avec gestion du nombre de caractères pour avoir du texte homogène          
                 else :
-                    msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier à jour")
+                    msg_csv_courant = terminal_progession(pourcentage, csv_courant, "Fichier à jour")
 
                     print (msg_csv_courant)
                         
@@ -567,9 +535,9 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             # Message sur le terminal (provisoire, à modifier pour du Tkinter) :
             # avec gestion du nombre de caractères pour avoir du texte homogène
             else :
-                pourcentage = int(csv_courant/nombre_total_csv*100)
+                pourcentage = int(numero_csv_courant/nombre_total_csv*100)
                 
-                msg_csv_courant = format_progress_pourcentage(pourcentage, id, "Fichier à jour")
+                msg_csv_courant = terminal_progession(pourcentage, csv_courant, "Fichier à jour")
                         
                 print (msg_csv_courant)
         
@@ -591,7 +559,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             
                 
-    elif is_file_versions :
+    elif est_fichier_versions :
         # Message sur le terminal si on a pas internet (provisoire, à modifier pour du Tkinter) :
         msg_pas_internet = "\n\n\nRecherche de mises à jour annulée"
         
@@ -614,7 +582,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
     Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
     '''
     
-    if is_modified and not mise_a_jour :
+    if est_modifie and not mise_a_jour :
         
         try :
             os.remove(repertoire_donnees+'/cache.txt')

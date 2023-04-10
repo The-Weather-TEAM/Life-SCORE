@@ -76,29 +76,24 @@ SAVOIR S'IL Y A UNE CONNEXION INTERNET
 
 Fait par Nathan d'après un ancien projet (v.4 de l'application)
 '''
-def is_connected(url) :
+def est_connecte(url) :
     
 
     print(  "\n\n\n################################",
         "\n##         Test réseau        ##",
         "\n################################\n\n",)
     
-    
-    temp = 0
-
-    while temp == 0 :
-        try :
-            requests.get(url, timeout=5)
-            temp = 1
+    try :
+        requests.get(url, timeout=5)
               
                 
-        except ConnectionError or ReadTimeout or TimeoutError :    
-            print('\n\nProblème réseau.\nVeuillez vous reconnecter.')
+    except ConnectionError or ReadTimeout or TimeoutError :    
+        print('\n\nProblème réseau.\nVeuillez vous reconnecter.')
                 
-            return False 
+        return False 
         
-        print("Réseau disponible !\n\n")
-        return True
+    print("Réseau disponible !\n\n")
+    return True
 
 
 
@@ -152,9 +147,9 @@ def kppv(donnees: dict,
 
 
 # Vérifier si le fichier options est présent
-def is_fichier(chemin : str = "donnees/options.txt") :
+def est_un_fichier(chemin : str = "donnees/options.txt") :
     """
-    Fonction qui verifie si le fichier options.txt existe pour eviter des erreurs avec les autres fontions options
+    Fonction qui vérifie si le fichier options.txt existe pour eviter des erreurs avec les autres fontions options
     - Idée + Implémentation par Nathan
     """
     path_options = os.path.join(os.path.dirname(__file__),chemin) # localise le fichier cible
@@ -185,7 +180,7 @@ def modifier_fichier_dico(cle: any, valeur: any, fichier:str = "donnees/options.
         fichier = fichier[1:]
     path_options = os.path.join(os.path.dirname(__file__), fichier)
 
-    is_fichier(fichier) # creation de donnees initial si fichier vide
+    est_un_fichier(fichier) # creation de donnees initial si fichier vide
 
     if msg != None:
         msg.configure(text = "Modification effectuée !")      # Si un message est renseigné
@@ -210,7 +205,7 @@ def lire_fichier_dico(cle: any = None, fichier: str = "donnees/options.txt"):
     if fichier[0] == "/": # pour eviter un bug avec os.path.join()
         fichier = fichier[1:]
         
-    is_fichier(fichier) # creation de donnees initial si fichier vide
+    est_un_fichier(fichier) # creation de donnees initial si fichier vide
 
     path_options = os.path.join(os.path.dirname(__file__), fichier)
     if cle != None :
@@ -280,9 +275,9 @@ CLASSE PRINCIPALE
 
 '''  
 class Donnees:
-    def __init__(self,ville,insee=None) :
+    def __init__(self, comunne, insee=None) :
         
-        self.ville = str(ville)
+        self.commune = str(comunne)
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] # La liste dans laquelle on rempli les notes 
         self.habitants = None
@@ -332,10 +327,10 @@ class Donnees:
             rangee = fichier[fichier[liste_provisoire[0]] == self.code_insee]
         # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
         else :
-            rangee = fichier[fichier[liste_provisoire[0]] == self.ville]
+            rangee = fichier[fichier[liste_provisoire[0]] == self.commune]
             
         if recursivite :
-            self.ville = ancien_nom_ville
+            self.commune = ancien_nom_ville
             
         try:
             resultat = []
@@ -347,12 +342,12 @@ class Donnees:
         except : #Si pas de données
     
             if recursivite:
-                self.ville = ancien_nom_ville
+                self.commune = ancien_nom_ville
                
             if infos_csv[csv][2]['insee'] == 0 :
         
-                ancien_nom = self.ville
-                self.ville = re.split(self.ville)[0]
+                ancien_nom = self.commune
+                self.commune = re.split(self.commune)[0]
                 self.recup_donnees_simple(csv, True, ancien_nom)
             
             print('Pas de données')
@@ -394,10 +389,10 @@ class Donnees:
                 res = fichier[fichier[liste_provisoire[0]] == self.code_insee] 
             # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
-                res = fichier[fichier[liste_provisoire[0]] == self.ville]
+                res = fichier[fichier[liste_provisoire[0]] == self.commune]
             
             if recursivite :
-                self.ville = ancien_nom_ville
+                self.commune = ancien_nom_ville
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
@@ -436,17 +431,17 @@ class Donnees:
         except : #Si pas de données
             
             if recursivite :
-                self.ville = ancien_nom_ville
+                self.commune = ancien_nom_ville
                
             if infos_csv[csv][2]['insee'] == 0 :
         
-                ancien_nom = self.ville
-                self.ville = re.split(self.ville)[0]
+                ancien_nom = self.commune
+                self.commune = re.split(self.commune)[0]
                 self.recup_donnees_compter_par_habitant(csv, True, ancien_nom)
                 
 
             print('Pas de données')
-            return None
+            return 0
 
 
 
@@ -493,16 +488,16 @@ class Donnees:
     Pensé et réalisé par Nathan, basé par la fonction recup_donnees_simple et recup_donnees_population
     
     '''
-    def recup_donnees_simple_affine(self, csv):
+    def recup_donnees_simple_sigmoide(self, csv):
     
         try :
             nombre = self.recup_donnees_simple(csv)
             print(" - Donnée :", nombre)
-            a = infos_csv[csv][2]['moyenne']
-            b = infos_csv[csv][2]['max']
+            moyenne = infos_csv[csv][2]['moyenne']
+            maximum = infos_csv[csv][2]['max']
             
             nombre = int(str(nombre[0]).split(',')[0])
-            return calculer_fonction_sigmoide(a, b, nombre)
+            return calculer_fonction_sigmoide(moyenne, maximum, nombre)
         
         except :
             print('Pas de données')
@@ -532,7 +527,7 @@ class Donnees:
             return self.recup_donnees_compter_par_habitant(csv)
         
         elif type_recuperation == 'simple_affine' :
-            return self.recup_donnees_simple_affine(csv)
+            return self.recup_donnees_simple_sigmoide(csv)
         
         else :
             print("Fonction non implémentée.")
@@ -549,25 +544,25 @@ class Donnees:
     Fait par Raphaël
     
     """
-    def is_commune_france(self,msg):
+    def est_commune_france(self,msg):
 
-        if str(self.ville) == '':
+        if str(self.commune) == '':
             msg.configure(text = "Veuillez saisir le nom d'une commune :") 
             return False
 
 
-        self.ville = self.ville.strip() # Enlève les espaces en trop
+        self.commune = self.commune.strip() # Enlève les espaces en trop
         
 
-        if "-" in self.ville or ' ' in self.ville:
-            liste_ville = re.split("-| ",self.ville)# Sépare avec espace, - et '
+        if "-" in self.commune or ' ' in self.commune:
+            liste_ville = re.split("-| ",self.commune)# Sépare avec espace, - et '
             for i in range(len(liste_ville)):
                 if liste_ville[i] not in ['lès','l','d','en','de','des','les','à']:
                     if liste_ville[i][:2] in ["d'","l'"] : # Si on a "d'hérault"
                         liste_ville[i] = liste_ville[i][:2] + liste_ville[i][2].upper() + liste_ville[i][3:]
                     else: 
                         liste_ville[i] = liste_ville[i].capitalize()
-            self.ville = " ".join(liste_ville)
+            self.commune = " ".join(liste_ville)
 
         fichier = open(self.repertoire + '/donnees/csv/communes.csv',"r",encoding='utf-8')
         cr = p.read_csv(fichier,delimiter=",",usecols=['NCC','NCCENR','LIBELLE','COM'],encoding='utf-8',low_memory=False) # Encoding pour pouvoir avoir les accents 
@@ -575,11 +570,11 @@ class Donnees:
         fichier.close()
 
         # Recup ligne de ville pour code insee
-        print(self.ville)
-        row = cr[(cr['NCCENR'] == str(self.ville)) | (cr['LIBELLE'] == str(self.ville)) | (cr['NCC'] == str(self.ville).upper())]
+        print(self.commune)
+        row = cr[(cr['NCCENR'] == str(self.commune)) | (cr['LIBELLE'] == str(self.commune)) | (cr['NCC'] == str(self.commune).upper())]
         if not row.empty:
             self.code_insee = row.values[0][0]
-            self.ville = row.values[0][3]
+            self.commune = row.values[0][3]
             
             with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
                 infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
@@ -595,20 +590,20 @@ class Donnees:
             return True
         
         else:
-            self.ville = self.ville.strip('-')        
-            liste = list(self.ville)
+            self.commune = self.commune.strip('-')        
+            liste = list(self.commune)
             dico_carac_spéciaux = {"é":"e", "è":"e", "ê":"e", "ë":"e", "û":"u", "à":"a", "â":"a", "ÿ":"y", "ï":"i", 
                                     "î":"i", "ô":"o","-":" ","'":" "}
             # Remplacer les accents par leur lettres (pas ouf mais marche)
             for i in range(len(liste)):
                 if liste[i] in dico_carac_spéciaux:
                     liste[i] = dico_carac_spéciaux[liste[i]]
-            self.ville = ''.join(liste) #Redonne la ville sans accents
-            row = cr[(cr['NCC'] == str(self.ville).upper())] 
+            self.commune = ''.join(liste) #Redonne la ville sans accents
+            row = cr[(cr['NCC'] == str(self.commune).upper())] 
 
             if not row.empty:
                 self.code_insee = row.values[0][0]
-                self.ville = row.values[0][3]
+                self.commune = row.values[0][3]
                 
                 with open(self.repertoire + '/donnees/csv/population.csv',"r") as fichier : 
                     infos = p.read_csv(fichier,delimiter=",",usecols=['com_code','popleg_tot'],encoding='utf-8',low_memory=False)
@@ -622,11 +617,11 @@ class Donnees:
                     return False
                 return True
             else :
-                if 'Paris' in str(self.ville) or 'Marseille' in str(self.ville) or 'Lyon' in str(self.ville):
+                if 'Paris' in str(self.commune) or 'Marseille' in str(self.commune) or 'Lyon' in str(self.commune):
                     msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
 
                 # EASTER EGG
-                elif self.ville == "Hello There" :
+                elif self.commune == "Hello There" :
                     msg.configure(text = "General Kenobi !")
                 elif random.randint(0,100000) == 14924:
                     msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville.")
@@ -884,8 +879,8 @@ class Donnees:
             if id != "communes" :
                 self.prepa_recup_donnees(id)
         
-        if meteo and is_connected("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
-            notes_meteo = self.notes_meteo_ville(self.ville) # recup notes meteo 
+        if meteo and est_connecte("https://open-meteo.com/") : # ajoute a notes_finales des notes de la meteo du ville
+            notes_meteo = self.notes_meteo_ville(self.commune) # recup notes meteo 
             Donnees.dico_meteo = notes_meteo
             self.notes_finales.update(notes_meteo) # met a jour la dictionaire de notes
             self.liste_notes += list(notes_meteo.values()) # ajout ces notes au liste de notes #? es que liste_notes est necessaire?
@@ -949,12 +944,12 @@ class Donnees:
     Fait par Raphaël
     '''
     def __str__(self) :
-        if self.ville != '' :
-            return str(self.ville)
+        if self.commune != '' :
+            return str(self.commune)
 
 # Fin du code !
 if __name__ == "__main__":
     puissa = Donnees("Magalas")
-    if puissa.is_commune_france(None):
+    if puissa.est_commune_france(None):
         puissa.note_finale()
     puissa.k_plus_proches_voisins(10)
