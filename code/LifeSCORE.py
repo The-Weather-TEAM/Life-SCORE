@@ -2,16 +2,17 @@
                       [LIFESCORE.PY]
                  CODE PRINCIPAL DE LIFE-SCORE
 Syntaxe de nos variables : 
-    - Les boutons s'écrivent btn_NOM
-    - Les fenêtres s'écrivent windowNOM
-    - Les textes (classe interface.CTkLabel) s'écrivent msg_NOM
-    - Les listes s'écrivent list_NOM
-    - Les dictionnaires s'écrivent dico_NOM
+    - Les boutons s'écrivent btn_Nom
+    - Les fenêtres s'écrivent fenetre_Nom
+    - Les textes (classe interface.CTkLabel) s'écrivent msg_Nom
+    - Les listes s'écrivent liste_Nom
+    - Les dictionnaires s'écrivent dico_Nom
 
 Pour tous les widgets du code, leurs création dépendait de notre mémoire sur Tkinter et de la documentation sur CustomTkinter 
 'https://github.com/TomSchimansky/CustomTkinter/wiki/'
 Les valeurs (de taille, de police, de couleur,... ont été trouvées après plusieurs essais par nous même)
-De même pour les placements, nos connaissances de Tkinter nous ont permis de retrouver certaines méthodes avec des arguments précis (.place(relx et rely))
+De même pour les placements, nos connaissances de Tkinter nous ont permis de retrouver certaines méthodes 
+avec des arguments précis (.place(relx et rely))
 '''
 
 
@@ -58,13 +59,13 @@ nouvelle_bibliotheque = False
 nom_du_repertoire = os.path.dirname(__file__) # Cherche le chemin du repertoire courant
 
 # Liste des modules deja installé
-list_pip = subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=subprocess.PIPE).stdout.decode("utf-8")
+liste_pip = subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=subprocess.PIPE).stdout.decode("utf-8")
 
 # On installe tous les modules individuellement pour pouvoir les afficher un par un
 for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt"), "r").readlines(): # os.pardir équivaut à ../ en linux
     moduleSeul = module.split(">")[0] # Format module>=x.x.x
 
-    if moduleSeul + "==" in list_pip:
+    if moduleSeul + "==" in liste_pip:
         print(moduleSeul, "-> Module présent")
     else: 
         print(moduleSeul, "-> Module installé")
@@ -109,35 +110,33 @@ VARIABLES GLOBALES (utilisées à travers plusieurs fonctions)
 
 - Idée de Raphaël (au fur et à mesure que le code avançait, plusieurs variables ont été ajoutées)
 '''
-global msg_principal        # STR | On pose les questions a travers ce texte
-global list_Questions       # LIST | Les valeurs de ce tableau sont les questions 
+global msg_Principal        # STR | On pose les questions a travers ce texte
 global dico_Reponses        # DICT | Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
-global n                    # INT | Pour faire list_Questions[n]
-global btn_ok               # CTkButton | Boutton qui continue (est utilisé plusieurs fois d'où la variable globale) 
+global n                    # INT | Pour faire liste_Questions[n]
+global btn_Ok               # CTkButton | Boutton qui continue (est utilisé plusieurs fois d'où la variable globale) 
 global Donnees_ville        # Donnees | Ce que l'on va traiter grâce aux autres fichiers
-global erreur_maj           # Bool | Pour savoir si le téléchargement à causé des problèmes
 global icone                # PhotoImage | Prend les données du logo en png pour l'afficher sur chaques pages
 
 # Variables globales pour la nouvelle version de UPDATE - Idee de rendre ces variables globales de Nathan 
 global progressbar          # CTkProgressbar | Montre l'avancée visuelle du téléchargement
 global msg_aide             # STR | Renvoie l'avancée du téléchargement
-global message_pourcentage  # STR | Renvoie l'avancée du téléchargement
+global msg_Pourcentage  # STR | Renvoie l'avancée du téléchargement
 
 
 
 # initialisations des images des boutons, fait par Nathan
-images_boutons =nom_du_repertoire+'/systeme/icones/'
+chemin_images_boutons =nom_du_repertoire+'/systeme/icones/'
 
-image_btn_chercher = interface.CTkImage(light_image=Image.open(images_boutons+'chercher.png'),
+image_btn_chercher = interface.CTkImage(light_image=Image.open(chemin_images_boutons+'chercher.png'),
                                 size=(50, 50))
 
-image_btn_quitter = interface.CTkImage(light_image=Image.open(images_boutons+'fermer.png'),
+image_btn_quitter = interface.CTkImage(light_image=Image.open(chemin_images_boutons+'fermer.png'),
                                 size=(100, 100))
 
-image_btn_parametres = interface.CTkImage(light_image=Image.open(images_boutons+'parametres.png'),
+image_btn_parametres = interface.CTkImage(light_image=Image.open(chemin_images_boutons+'parametres.png'),
                                 size=(100, 100))
 
-image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
+image_btn_aide = interface.CTkImage(light_image=Image.open(chemin_images_boutons+'aide.png'),
                                 size=(100, 100))
 
 
@@ -148,7 +147,7 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(images_boutons+'aide.
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
-list_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Reproduire les questions dans le même style que la première
+liste_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Reproduire les questions dans le même style que la première
                 ("Êtes vous étudiant ?",'Enseignement_Superieur'),
                 ("Avez-vous des enfants?",'Scolarite'),   
                 ("La culture a-t-elle une place importante pour vous ?",'Culture'),
@@ -158,9 +157,6 @@ list_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Repro
 
 
 dico_Reponses = {} # Traité dans coefficients.py
-
-#icone = interface.CTkImage(light_image=Image.open(nom_du_repertoire+'/systeme/icones//logo.png'))
-
 
 
 
@@ -191,7 +187,7 @@ else :
 '''
 FONCTIONS
 '''
-def telechargement(bouton,fenetre, bouton_param, bouton_aide):
+def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
     '''
     Fonction qui lance le téléchargement à l'appui du boutton (et affiche la barre de progression)
     Puis renvoie sur le qcm ou la suite du programme
@@ -199,52 +195,49 @@ def telechargement(bouton,fenetre, bouton_param, bouton_aide):
     - Page calquée sur les autres pages d'aides vues plus loin par Raphaël
     '''
     
-    global erreur_maj
-    change_etat_btn(bouton) # Bloque le bouton sur la page principale
-    
-    # POUR RAF : je sais pas où on peut les réactiver
+    change_etat_btn(bouton) # Bloque les boutons sur la page principale
     change_etat_btn(bouton_param)
     change_etat_btn(bouton_aide)
     
     # Initialisation de la page
-    windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
-    windowDownload.title('LifeScore  |  Téléchargement')
-    windowDownload.iconphoto(False, icone)
-    windowDownload.minsize(width=int(510*4/3), height=384)
-    windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
-    windowDownload.resizable(False, False)
-    windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
+    fenetre_Telechargement = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
+    fenetre_Telechargement.title('LifeScore  |  Téléchargement')
+    fenetre_Telechargement.iconphoto(False, icone)
+    fenetre_Telechargement.minsize(width=int(510*4/3), height=384)
+    fenetre_Telechargement.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
+    fenetre_Telechargement.resizable(False, False)
+    fenetre_Telechargement.protocol("WM_DELETE_WINDOW", lambda:retour_pages(fenetre_Telechargement,bouton)) 
+    # Qu'on ferme la page ou qu'on attende la fin du téléchargement on revient sur la fenêtre principale
     
 
     # Création des widgets
-    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
-    message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
-    progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
+    msg_Aide = interface.CTkLabel(fenetre_Telechargement, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
+    msg_Pourcentage = interface.CTkLabel(fenetre_Telechargement, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
+    progressbar = interface.CTkProgressBar(fenetre_Telechargement,mode = 'determinate')
     progressbar.set(0)
 
     # Placements des widget
-    msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
+    msg_Aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
     progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
-    message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
+    msg_Pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
     
-    windowDownload.update()
+    #fenetre_Telechargement.update()
     
     # Décide ensuite quelle action faire
-    erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
+    erreur_maj = update.executer(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
     change_etat_btn(bouton_param)
     change_etat_btn(bouton_aide)
     if not erreur_maj:
-        #print(len(lire_fichier_dico("REPONSE_QCM")),len(list_Questions))
-        retour_pages(windowDownload,bouton)
-        if len(lire_fichier_dico("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
+        retour_pages(fenetre_Telechargement,bouton)
+        if len(lire_fichier_dico("REPONSE_QCM")) == len(liste_Questions): # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
         else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
             w_qcm(fenetre)
     else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
-        retour_pages(windowDownload,bouton)
+        retour_pages(fenetre_Telechargement,bouton)
         w_erreur(fenetre)
     
-    windowDownload.mainloop()
+    fenetre_Telechargement.mainloop()
 
 
 
@@ -258,7 +251,7 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
 
     - winfo_children() a été pris dans la documentation de Tkinter, les noms ont été trouvé par print() et tests par Raphaël
     """
-    if option == "Classique": # On veut garder le logo, le bouton qui ouvre la page de paramètres et les pages d'aides
+    if option == "Classique": # On veut garder le logo, les boutons de paramètres, d'information et de fermeture et les pages d'aides
         for widget in fenetre.winfo_children():
 
             if str(widget) not in ['.!ctkbutton5','.!ctkbutton4','.!ctkbutton2','.!ctkbutton3'] and "toplevel" not in str(widget):
@@ -266,14 +259,14 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
 
     else: # On veut juste garder le logo
         for widget in fenetre.winfo_children():
-
-            if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] : # Le nom du bouton où l'on met le logo (non modifiable)
+            print(widget)
+            if str(widget) not in ['.!ctkbutton5','.!ctkbutton2','.!ctkbutton3'] : # Ici on ne prend pas les boutons d'informations en compte
                 widget.destroy()
 
 
 def avancer(fenetre): 
-    global msg_principal
-    global n # n += 1 à chaques questions
+    global msg_Principal
+    global n # n += 1 à chaque questions
     """
     Passe à la question 1, ouvre le qcm et ajoute les deux boutons Non et Oui.
     
@@ -281,16 +274,18 @@ def avancer(fenetre):
 
     - Idée d'utilisation des variables globales n et du message principal par Raphaël
     """
-    if n != len(list_Questions):
-        btn_ok.place_forget() # Le cache le temps du lancement de cette fonction
+    if n != len(liste_Questions):
+        btn_Ok.place_forget() # Le cache le temps du lancement de cette fonction
         # Création des boutons
-        btn_gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,0), text="Non",font=(polices[0],30, 'bold'))
-        btn_droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=lambda: plus(btn_gauche,btn_droite,1), text="Oui",font=(polices[0],30, 'bold'))
+        btn_Gauche = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), 
+                                         command=lambda: plus(btn_Gauche,btn_Droite,0), text="Non",font=(polices[0],30, 'bold'))
+        btn_Droite = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), 
+                                         command=lambda: plus(btn_Gauche,btn_Droite,1), text="Oui",font=(polices[0],30, 'bold'))
         
         # Placements et Modifications
-        btn_gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
-        btn_droite.place(relx=0.60,rely=0.5,anchor=CENTER)
-        msg_principal.configure(text =f'{list_Questions[n][0]}') # Affiche la premiere question
+        btn_Gauche.place(relx=0.40,rely=0.5,anchor=CENTER)
+        btn_Droite.place(relx=0.60,rely=0.5,anchor=CENTER)
+        msg_Principal.configure(text =f'{liste_Questions[n][0]}') # Affiche la premiere question
     else:
         efface_fenetre(fenetre,"Efface_reste")    
         w_question(fenetre) # Ouvre la seconde page : Fin de la première
@@ -303,36 +298,35 @@ def plus(b1,b2,arg):
 
     - Idee personnelle (On avait avant une fonction plus0 et plus1, on les a combinés pour éviter la redondance) par Raphaël
     '''
-    global list_Questions
     global n
     global dico_Reponses
-    global msg_principal
+    global msg_Principal
 
     
     
-    dico_Reponses[list_Questions[n][1]] = arg
+    dico_Reponses[liste_Questions[n][1]] = arg
     n +=1
     if not est_termine(b1,b2):
-        msg_principal.configure(text = list_Questions[n][0])
+        msg_Principal.configure(text = liste_Questions[n][0])
         
-    #print(n, dico_Reponses, list_Questions[n-1][1], arg) # print pour tester bug dico
+    #print(n, dico_Reponses, liste_Questions[n-1][1], arg) # print pour tester bug dico
 
 
 def est_termine(btn_1,btn_2):
-    global msg_principal
-    global btn_ok
+    global msg_Principal
+    global btn_Ok
     '''
     Verifie si le QCM est terminé (dernière question répondue). Si c'est le cas, On affiche un message puis retour bouton ok 
 
     - Idee de Raphaël et Nathan pour terminer le qcm (une simple recherche sur les longueurs suffit)
     '''
-    if n >= len(list_Questions):
+    if n >= len(liste_Questions):
         btn_1.destroy()
         btn_2.destroy()
-        btn_ok.place(relx=0.5,rely=0.5,anchor =CENTER)
-        msg_principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
+        btn_Ok.place(relx=0.5,rely=0.5,anchor =CENTER)
+        msg_Principal.configure(text = "Merci d'avoir répondu aux questions, Veuillez continuer")
         modifier_fichier_dico("REPONSE_QCM", dico_Reponses)# Rajoute les lignes au option reponses_qcm dès qu'on quitte la page de QCM
-        btn_ok.configure(text="Lancer la recherche")
+        btn_Ok.configure(text="Lancer la recherche")
         return True
 
 
@@ -383,34 +377,33 @@ def w_qcm(win,option = None): # w pour window
     Cette fenêtre était la première créée dans notre programme, cette fonction ne crée plus la fenêtre désormais
     """
     # initialisation des variables utilisées
-    global msg_principal
-    global btn_ok
-    global list_Questions
+    global msg_Principal
+    global btn_Ok
     global n
-    n = len(list_Questions) 
+    n = len(liste_Questions) 
     
     efface_fenetre(win) # efface tout ce qui était déja présent pour rajouter ce qui nous intéresse
     
     # Création des widgets :
 
-    msg_principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =(polices[0],18), justify=CENTER)
+    msg_Principal = interface.CTkLabel(win, text="Les données utilisateur sont présentes, veuillez continuer.", width = 1000, font =(polices[0],18), justify=CENTER)
 
     
     # Boutton :
-    btn_ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher) # Commence le Qcm ou continue le programme
+    btn_Ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher) # Commence le Qcm ou continue le programme
 
     # Placement des widgets :
 
-    msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # anchor place relativement à un point (ici le centre) et relx/rely place avec un % de x et de y de ce point
+    msg_Principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # anchor place relativement à un point (ici le centre) et relx/rely place avec un % de x et de y de ce point
     # bouton ok Qui continue après le premier message
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
+    btn_Ok.place(relx=0.5, rely=0.5,anchor=CENTER) # place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 
 
 
 
     if option == None :
-        msg_principal.configure(text = "Bienvenue !  Nous allons commencer par une étude de vos préférences.")
-        btn_ok.configure(text = "Lancer Le Questionnaire")
+        msg_Principal.configure(text = "Bienvenue !  Nous allons commencer par une étude de vos préférences.")
+        btn_Ok.configure(text = "Lancer Le Questionnaire")
         n = 0
 
     win.mainloop() # pour fermer la fenetre
@@ -997,15 +990,15 @@ def w_erreur(fenetre): # w pour window
     
     # Création des widgets
 
-    msg_principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
+    msg_Principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
         width = 1000, font =(polices[0],18), justify=CENTER) # font = taille + police justify comme sur word
     btn_parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : parametres(btn_parametre), text="Paramètres",font=(polices[0],30, 'bold'))
-    btn_ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=(polices[0],30)) # Ferme la page
+    btn_Ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=(polices[0],30)) # Ferme la page
 
     # Placement des widgets
-    msg_principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
+    msg_Principal.place(relx= 0.5, rely=0.4, anchor = CENTER) # Anchor sert a le mettre au milieu et relx/rely le place a un % en x et en y 
     btn_parametre.place(relx=0.1, rely=0.9, anchor = SW)  
-    btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
+    btn_Ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)
 
 
 
@@ -1060,8 +1053,8 @@ Frédéric Marquet: Recherches pour la base de données""")
 
 
 # Création des widgets
-btn_ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:telechargement(btn_ok,fenetrePrincipale, btn_parametre, btn_info), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
-msg_principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =(polices[0],18), justify=CENTER)
+btn_Ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:fenetre_telechargement(btn_Ok,fenetrePrincipale, btn_parametre, btn_info), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
+msg_Principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =(polices[0],18), justify=CENTER)
 logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
 btn_nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
@@ -1074,9 +1067,9 @@ btn_info = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.w
 btn_parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10),
                                     command=lambda : parametres(btn_parametre), text="",font=(polices[0],30, 'bold'), image=image_btn_parametres, fg_color='transparent',hover = False) # Ouvre la page de paramètres
 
-# btn_info.bind('<Enter>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'aide.png'),
+# btn_info.bind('<Enter>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(chemin_images_bouton+'aide.png'),
 #                                 size=(100, 100)))))
-# btn_info.bind('<Leave>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(images_boutons+'test.jpg'),
+# btn_info.bind('<Leave>',  btn_info.configure(image = (interface.CTkImage(light_image=Image.open(chemin_images_bouton+'test.jpg'),
 #                                 size=(100, 100)))))
 
 
@@ -1089,8 +1082,8 @@ btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # SouthEastaussibasster pen
 # Placement des widgets
 btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
 btn_quitter.place(relx=0.9, rely=0.9, anchor = SE) # Il devra aussi rester toute l'exécution
-msg_principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
-btn_ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
+msg_Principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
+btn_Ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
 btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
 credits.place(relx=0.5,rely=0.9, anchor = S)
 btn_info.place(relx=0.9, rely=0.05 ,anchor = NE) # NE = NorthEast (en haut à droite)
