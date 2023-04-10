@@ -171,7 +171,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
 
 
     # Variables boléennes (qui servent pour des conditions) :
-    est_modifie = erreur_internet = mise_a_jour = False
+    est_modifie = erreur_internet = est_mise_a_jour = False
 
 
     # Pour récupérer le chemin relatif vers le dossier data :
@@ -394,11 +394,11 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
                 
                 # On modifie mise_a_jour ssi le .csv exisatait et si la version de l'utilisateur est différente de la dernière disponible :
                 if est_courant_csv and recuperation_version != version :
-                    mise_a_jour = True
+                    est_mise_a_jour = True
                 
                 
                 # Remplissage du dictionnaire des modifications ssi c'est un nouveau .csv ou si il y a une mise à jour disponible :
-                if not est_courant_csv or mise_a_jour :
+                if not est_courant_csv or est_mise_a_jour :
                     nouvelles_informations[csv_courant] = version
                 
                 
@@ -503,7 +503,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
                     print (msg_csv_courant)
                     
                     # Si le fichier a été mis à jour :
-                    if mise_a_jour :
+                    if est_mise_a_jour :
                         
                         for cle, val in nouvelles_informations.items():
                             
@@ -519,7 +519,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
                         
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
-                        mise_a_jour = False
+                        est_mise_a_jour = False
                     
                     
 
@@ -582,7 +582,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
     Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
     '''
     
-    if est_modifie and not mise_a_jour :
+    if est_modifie and not est_mise_a_jour :
         
         try :
             os.remove(repertoire_donnees+'/cache.txt')
