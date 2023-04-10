@@ -555,10 +555,9 @@ class Donnees:
         
         
         #! ça ne marche pas, j'ai aucune idée de pourquoi mdr
-        temp = str(self.commune.upper())
-        print(temp)
-        if temp == 'PARIS' or temp == 'MARSEILLE' or temp == 'LYON':
-            msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
+        temp = str(self.commune).upper()
+        if temp in ['PARIS','MARSEILLE','LYON']:
+            msg.configure(text = "Pour les villes possédant des arrondissements, \nréférez vous à l'aide (bouton en haut à droite)")
             return False
             
         if "-" in self.commune or ' ' in self.commune:
