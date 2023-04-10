@@ -1,1 +1,1 @@
-{'Fouzilhon': 35, 'Puissalicon': 38, 'Puimisson': 50, 'Saint-Geniès-de-Fontedit': 35, 'Laurens': 26, 'Autignac': 38, 'Pailhès': 40, 'Pouzolles': 38, 'Espondeilhan': 31, 'Gabian': 56}
+{'Fouzilhon': 28, 'Puissalicon': 31, 'Puimisson': 42, 'Saint-Geniès-de-Fontedit': 28, 'Laurens': 20, 'Autignac': 31, 'Pailhès': 33, 'Pouzolles': 31, 'Espondeilhan': 25, 'Gabian': 46}

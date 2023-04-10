@@ -464,7 +464,7 @@ class Donnees:
             self.habitant = int(self.recuperation_donnees('population')[0])
         
         # On utilise recup_donnees_simple pour éviter de faire la même chose dans un autre endroit
-        nombre = Donnees.recup_donnees_simple(self, csv)
+        nombre = self.recup_donnees_simple(csv)
         
         try :
             nombre = int(nombre[0])
@@ -496,7 +496,7 @@ class Donnees:
     def recup_donnees_simple_affine(self, csv):
     
         try :
-            nombre = Donnees.recup_donnees_simple(self, csv)
+            nombre = self.recup_donnees_simple(csv)
             print(" - Donnée :", nombre)
             a = infos_csv[csv][2]['moyenne']
             b = infos_csv[csv][2]['max']
@@ -523,16 +523,16 @@ class Donnees:
         type_recuperation = infos_csv[csv][2]['type']
         
         if type_recuperation == 'simple' :
-            return Donnees.recup_donnees_simple(self, csv)
+            return self.recup_donnees_simple(csv)
         
         elif type_recuperation  == 'par_population' :
-            return Donnees.recup_donnees_par_population(self, csv)
+            return self.recup_donnees_par_population(csv)
         
         elif type_recuperation == 'compter_par_population' or type_recuperation == 'oui_non':
-            return Donnees.recup_donnees_compter_par_habitant(self, csv)
+            return self.recup_donnees_compter_par_habitant(csv)
         
         elif type_recuperation == 'simple_affine' :
-            return Donnees.recup_donnees_simple_affine(self, csv)
+            return self.recup_donnees_simple_affine(csv)
         
         else :
             print("Fonction non implémentée.")
@@ -815,20 +815,24 @@ class Donnees:
         Applique les coefs des choix du QCM aux notes pour que les notes en question 
         sont compté plus ou moins dans la note finale.
         
-        - idee du Group, fait par Thor.
+        - idee du Groupe, fait par Thor.
         """
+        notes = notes.copy() # Permet d'éviter de modifier le dictionnaire original
         assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
-        print(notes)
+        print(notes,'tiiiiiiiiiiiiiiiiiilatotottoto')
+        print('----------------')
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
 
             # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
-            "Scolarite": ["Les collèges","Les écoles", "les lycées"],
-            "Culture": ["Les festivals","Les musées","Les monuments historiques"],
-		    "Activite": ['Les festivals'],
-            "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
-            "Precarite" : ["Le prix des maisons","Le prix des appartements"],
+            "Activite": ['Les festivals'],
+            "Enseignement_Superieur" : ["Possibilité d'études"],
+            "Scolarite": ["Les écoles","Les collèges", "Les lycées"],
+            "Culture": ["Les musées","Les monuments historiques"],
             "Citadin" : [], # jsp ptetre l'enlever cette question,
-            "Enseignement_Superieur" : []
+            "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
+            "Precarite" : ["Le prix des maisons","Le prix des appartements"]
+            
+            
         }
 
         liste_moyenne = [0, 0] # (numerateur,  denumerateur) d'un moyenne
@@ -841,16 +845,17 @@ class Donnees:
             criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
             
             for critere in criteres: # pour chaque critere impacté par cette reponse
-                if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
-                    liste_moyenne[0] += notes[critere]*coef # on calcule la note avec son coef (le numerateur)
-                    liste_moyenne[1] += coef # on ajoute son coef au somme denumerateur
-                    del notes[critere] # vue qu'on a traité ce critere, on veut plus la re-traiter
+                #if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
+                liste_moyenne[0] += notes[critere]*coef # on calcule la note avec son coef (le numerateur)
+                liste_moyenne[1] += coef # on ajoute son coef au somme denumerateur
+                del notes[critere]
 
         # on rajoute les notes qui sont de coef 1 (seux qui restent)
         liste_moyenne[0] += sum(list(notes.values())) 
         liste_moyenne[1] += len(notes.keys())
+        print(liste_moyenne,'liste_moyenneeeeeeeee')
 
-        return liste_moyenne # renvoi dictionaire de note
+        return liste_moyenne # renvoi la note coefficientée
             
 
 
@@ -892,7 +897,13 @@ class Donnees:
         note_moyenne_avec_coef = self.applique_coefs_QCM(lire_fichier_dico("REPONSE_QCM"), self.notes_finales)
 
         if not meteo :
-            self.notes_finales.update(Donnees.dico_meteo)
+            print(self.notes_finales)
+            print('---------------------------')
+            print(Donnees.dico_meteo)
+            print('----------------------------')
+            print(note_moyenne_avec_coef)
+            self.notes_finales.update(Donnees.dico_meteo) # met a jour la dictionaire de notes
+            
             print(Donnees.dico_meteo)
         
         # Pour tester avant de tout envoyer
