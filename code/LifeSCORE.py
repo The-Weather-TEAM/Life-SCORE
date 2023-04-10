@@ -1062,19 +1062,14 @@ btn_Parametre = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincip
 
 
 
-# Placement des widgets
-btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-btn_quitter.place(relx=0.95, rely=0.05, anchor = NE) # SouthEastaussibasster pendant toute l'exécution
-
-
 
 # Placement des widgets
-btn_nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
-btn_quitter.place(relx=0.9, rely=0.9, anchor = SE) # Il devra aussi rester toute l'exécution
+btn_Nul.place(relx=0.16,rely=0.16,anchor = CENTER) # Il devra rester pendant toute l'exécution du programme
+btn_Quitter.place(relx=0.9, rely=0.9, anchor = SE) # Lui aussi
 msg_Principal.place(relx= 0.5, rely = 0.4,anchor = CENTER)
 btn_Ok.place(relx=0.5, rely=0.5,anchor=CENTER) # Place le bouton en fonction de la fenetre (quand on modifie la taille il garde sa place)        
-btn_parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
+btn_Parametre.place(relx=0.1, rely=0.9, anchor = SW) # SW = SouthWest (en bas à gauche)
 credits.place(relx=0.5,rely=0.9, anchor = S)
-btn_info.place(relx=0.9, rely=0.05 ,anchor = NE) # NE = NorthEast (en haut à droite)
+btn_Info.place(relx=0.9, rely=0.05 ,anchor = NE) # NE = NorthEast (en haut à droite)
 
 fenetrePrincipale.mainloop()
