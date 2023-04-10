@@ -170,6 +170,23 @@ def telecharger(lien, nomfichier,barre,win,msg_prct, message):
         
 
 
+def mise_a_jour() :
+    '''
+    Fonction qui permet de savoir si on doit mettre à jour ou non
+    
+    Pensé et réalisé par Nathan
+    pour éviter qu'une fenêtre s'ouvre même si on doit pas mettre à jour.
+    '''
+    # Temps en secondes entre les vérifications de mises à jour :
+    #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
+    temps_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
+    derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
+    if time.time() - derniere_maj < temps_maj :
+        return False
+    
+    else :
+        return True
+
 
 
 '''
@@ -178,18 +195,6 @@ FONCTION PRINCIPALE
 '''
 # Tout le code est dans une fonction pour return s'il y a une erreur ou non :
 def executer(barre_progres,fenetre,message,message_pourcentage):
-
-
-
-    # Temps en secondes entre les vérifications de mises à jour :
-    #temps_maj = 2592000                #* Nombre de secondes dans un mois (30 jours) - Remplacée par le choix dans la page paramètres
-    temps_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
-    derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
-
-
-    # Passe la vérification des fichiers
-    if time.time() - derniere_maj < temps_maj :
-        return False
 
 
     # Variables boléennes (qui servent pour des conditions) :
@@ -319,7 +324,7 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
             
             
             # Si le fichier csv n'existe pas ou si son téléchargement a plus de tant de secondes :
-            if not is_courant_csv or time.time() - os.path.getctime(repertoire_donnees+'/csv/'+id+'.csv') > temps_maj : 
+            if not is_courant_csv or time.time() - os.path.getctime(repertoire_donnees+'/csv/'+id+'.csv') > lire_fichier_dico("FREQ_MAJ") : 
                 
                 
                 
@@ -544,9 +549,6 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         # On supprime les informations du dictionnaire (si en même temps il y a des nouveaux fichiers) :
                         del nouvelles_informations[id]
                         
-                        # Pour l'interface, dire la dernière màj
-                        modifier_fichier_dico("DERNIERE_MAJ", time.time())
-                        
                         
                         # On réinitialise mise_a_jour pour les prochains .csv :
                         mise_a_jour = False
@@ -627,6 +629,10 @@ def executer(barre_progres,fenetre,message,message_pourcentage):
                         
         
     print("\n\n\n\n\n")
+    
+    # Pour l'interface, dire la dernière màj
+    modifier_fichier_dico("DERNIERE_MAJ", time.time())
+    
     # Envoie sur le programme principal s'il y a une erreur ou non :
     return erreur_internet
 
