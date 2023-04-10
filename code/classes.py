@@ -553,7 +553,14 @@ class Donnees:
 
         self.commune = self.commune.strip() # Enlève les espaces en trop
         
-
+        
+        #! ça ne marche pas, j'ai aucune idée de pourquoi mdr
+        temp = str(self.commune.upper())
+        print(temp)
+        if temp == 'PARIS' or temp == 'MARSEILLE' or temp == 'LYON':
+            msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
+            return False
+            
         if "-" in self.commune or ' ' in self.commune:
             liste_ville = re.split("-| ",self.commune)# Sépare avec espace, - et '
             for i in range(len(liste_ville)):
@@ -617,11 +624,8 @@ class Donnees:
                     return False
                 return True
             else :
-                if 'Paris' in str(self.commune) or 'Marseille' in str(self.commune) or 'Lyon' in str(self.commune):
-                    msg.configure("Pour les villes possédant des arrondissements, référez vous à l'aide (bouton en haut à droite)")
-
                 # EASTER EGG
-                elif self.commune == "Hello There" :
+                if self.commune == "Hello There" :
                     msg.configure(text = "General Kenobi !")
                 elif random.randint(0,100000) == 14924:
                     msg.configure(text = "Gustavo Fring n'autorise pas la sortie d'information sur cette ville.")
