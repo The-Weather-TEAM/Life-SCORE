@@ -839,10 +839,10 @@ class Donnees:
             criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
             
             for critere in criteres: # pour chaque critere impacté par cette reponse
-                #if critere in notes.keys(): # verifie qu'elle n'a pas deja ete suprimmé
-                liste_moyenne[0] += notes[critere]*coef # on calcule la note avec son coef (le numerateur)
-                liste_moyenne[1] += coef # on ajoute son coef au somme denumerateur
-                del notes[critere]
+                if critere in notes.keys(): # Verifie que le critere est bien present 
+                    liste_moyenne[0] += notes[critere]*coef # on calcule la note avec son coef (le numerateur)
+                    liste_moyenne[1] += coef # on ajoute son coef au somme denumerateur
+                    del notes[critere]
 
         # on rajoute les notes qui sont de coef 1 (seux qui restent)
         liste_moyenne[0] += sum(list(notes.values())) 
