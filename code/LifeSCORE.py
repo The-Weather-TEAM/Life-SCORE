@@ -35,12 +35,6 @@ print(  "####################################################",
 
 
 
-
-
-
-
-
-
 '''
 MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 
@@ -612,7 +606,7 @@ def fenetre_question(fenetre):
 
 
     # Création des widgets
-    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Béziers ",width=int(500/3), font = (polices[0],18))
+    entree = interface.CTkEntry(fenetre,placeholder_text="ex : Béziers ",width=int(700/3), font = (polices[0],18))
     msg_Ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =(polices[0],20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
     btn_Arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: page_arrondissement(btn_Arrondissement), 
@@ -714,6 +708,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
     win.title(f'LifeScore  |  Commune de {str(ville).capitalize()}')
     if systeme_exploitation == 'Windows' :
         fenetrePrincipale.state('zoomed')
+        
 
     # Données 
 
