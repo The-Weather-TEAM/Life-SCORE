@@ -670,13 +670,13 @@ class Donnees:
         for index, r in row.iterrows():
             dico[r['nom_commune_complet']] = (r['latitude'],r['longitude'],r['code_commune_INSEE'])
         # Partie k plus proches voisins
-        liste_dix_proches = kppv(dico,coordonnees0,k)
-        print(liste_dix_proches)
+        liste_k_proches = kppv(dico,coordonnees0,k)
+        print(liste_k_proches)
         liste_notes = []
         
         dico_fichier_tempo = lire_fichier_dico(fichier = "donnees/cache.txt")
 
-        for nom,insee in liste_dix_proches:
+        for nom,insee in liste_k_proches:
             msg.configure(text = f'Calcul de {nom} (code : {insee})')
             win.update()
             print(nom)
@@ -696,21 +696,7 @@ class Donnees:
         liste_notes.sort(key=lambda x: x[-1], reverse=True)
 
         return liste_notes
-        """
-        -------------
-        Ici on calcule les 10 villes (sans passer par la météo)
-        -------------
-
         
-
-
-        -------------
-        On renvoie la liste des villes classées avec leurs notes
-        -------------
-        """
-        
-
-
 
 
     def notes_meteo_ville(self, ville: str) -> dict:
