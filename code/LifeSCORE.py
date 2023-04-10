@@ -483,8 +483,8 @@ def page_parametres(bouton):
 
     # Tous les boutons présents :
     btn_Confirm_frequence = interface.CTkButton(fenetre_Param, width = 7, 
-                                            command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_frequence_maj.get()))*86400),"donnees/options.txt", msg_General)
-                                            if est_nombre(entree_frequence_maj.get()) \
+                                            command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_Frequence_maj.get()))*86400),"donnees/options.txt", msg_General)
+                                            if est_nombre(entree_Frequence_maj.get()) \
                                             else msg_General.configure(text = "Vous devez entrer un nombre !"), # "\" permet un retour à la ligne dans le code
                                             text="Confirmer") # modifier_fichier_dico() se trouve dans classes.py
     btn_Supprimer_donnees = interface.CTkButton(fenetre_Param, width = 134, height = 42,
@@ -773,8 +773,8 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
         
         win.update()
         
-        change_etat_btn(btn_quitter) # Pour éviter des problèmes d'animations
-        change_etat_btn(btn_parametre)
+        change_etat_btn(btn_Quitter) # Pour éviter des problèmes d'animations
+        change_etat_btn(btn_Parametre)
         
         # Pour chaque entier naturel jusqu'à notre note
         for i in range(score_total_animation+1) :
@@ -787,10 +787,10 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
             win.update()
             sleep(fonction_animation_score(i, score_total_animation))
  
-        change_etat_btn(btn_quitter) # Pour réactiver les bouttons
-        change_etat_btn(btn_parametre)
+        change_etat_btn(btn_Quitter) # Pour réactiver les bouttons
+        change_etat_btn(btn_Parametre)
 
-        btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico),
+        btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico_Notes),
                                       text= "Détails", font=(polices[0],20, "bold"))
         btn_Donnees.place(relx = 0.38,rely = 0.65, anchor = CENTER) # Pour un détail des données
 
@@ -983,7 +983,7 @@ def fenetre_erreur(fenetre):
 
     msg_Principal =  interface.CTkLabel(fenetre, text="Une erreur s'est produite, le programme n'a pas pu se lancer\nEssayez de vous reconnecter à internet", 
         width = 1000, font =(polices[0],18), justify=CENTER) # font = taille + police justify comme sur word
-    btn_Parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : page_parametres(btn_parametre), text="Paramètres",font=(polices[0],30, 'bold'))
+    btn_Parametre = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda : page_parametres(btn_Parametre), text="Paramètres",font=(polices[0],30, 'bold'))
     btn_Ok = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10), command=fenetre.destroy, text="OK",font=(polices[0],30)) # Ferme la page
 
     # Placement des widgets
@@ -1045,8 +1045,10 @@ Frédéric Marquet: Recherches pour la base de données""")
 
 
 # Création des widgets
-btn_Ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), command=lambda:fenetre_telechargement(btn_Ok,fenetrePrincipale, btn_parametre, btn_info), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
-msg_Principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", width = 1000, font =(polices[0],18), justify=CENTER)
+btn_Ok = interface.CTkButton(fenetrePrincipale, height=int(fenetrePrincipale.winfo_screenheight()/10), 
+                             command=lambda:fenetre_telechargement(btn_Ok,fenetrePrincipale, btn_Parametre, btn_Info), text="Continuer",font=(polices[0],30, 'bold')) # appele la fonction question1
+msg_Principal = interface.CTkLabel(fenetrePrincipale, text="Bienvenue dans LifeScore, nous allons procéder à\nune vérification des fichiers.", 
+                                   width = 1000, font =(polices[0],18), justify=CENTER)
 logo = interface.CTkImage(light_image=Image.open(nom_du_repertoire +'/systeme/icones/gros-logo.png'), size=(400, 200))
 btn_Nul = interface.CTkButton(fenetrePrincipale,image = logo,fg_color="transparent",hover = False,text =  "") # Contient le logo
 btn_Quitter = interface.CTkButton(fenetrePrincipale,height=int(fenetrePrincipale.winfo_screenheight()/10), command=fenetrePrincipale.destroy,
