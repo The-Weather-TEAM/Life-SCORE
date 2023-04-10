@@ -344,10 +344,10 @@ class Donnees:
             if recursivite:
                 self.commune = ancien_nom_ville
                
-            if infos_csv[csv][2]['insee'] == 0 :
+            elif infos_csv[csv][2]['insee'] == 0 :
         
                 ancien_nom = self.commune
-                self.commune = re.split(self.commune)[0]
+                self.commune = re.split(" ",self.commune)[0]
                 self.recup_donnees_simple(csv, True, ancien_nom)
             
             print('Pas de données')
@@ -411,7 +411,7 @@ class Donnees:
             
             # On récupère les habitants si c'est pas déjà fait, basé sur mon autre fonction recup_donnees_par_population
             if self.habitants is None :
-                self.habitant = int(self.recuperation_donnees('population')[0])
+                self.habitant = int(self.recup_donnees_simple('population')[0])
             
             # On divise si un CSV repertorie plusieurs années
             diviseur = infos_csv[csv][2].get('diviseur')
@@ -433,10 +433,10 @@ class Donnees:
             if recursivite :
                 self.commune = ancien_nom_ville
                
-            if infos_csv[csv][2]['insee'] == 0 :
+            elif infos_csv[csv][2]['insee'] == 0 :
         
                 ancien_nom = self.commune
-                self.commune = re.split(self.commune)[0]
+                self.commune = re.split(" ", self.commune)[0]
                 self.recup_donnees_compter_par_habitant(csv, True, ancien_nom)
                 
 
