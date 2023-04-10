@@ -111,6 +111,7 @@ VARIABLES GLOBALES (utilisées à travers plusieurs fonctions)
 - Idée de Raphaël (au fur et à mesure que le code avançait, plusieurs variables ont été ajoutées)
 '''
 global dico_Reponses        # DICT | Dictionnaire de 0 et de 1 pour thor type {Q1:1,Q2,:0,Q3:0,...}(0 sera souvent un vieu/calme/fermier,...)
+global msg_Principal        # CTkLabal | Afin de le modifier nous nous devons de le poser en variable globale
 global n                    # INT | Pour faire liste_Questions[n]
 global btn_Ok               # CTkButton | Boutton qui continue (est utilisé plusieurs fois d'où la variable globale) 
 global Donnees_ville        # Donnees | Ce que l'on va traiter grâce aux autres fichiers
@@ -273,6 +274,7 @@ def efface_fenetre(fenetre,option="Classique"): # "Classique" est une valeur de 
 
 def avancer(fenetre): 
     global n # n += 1 à chaque questions
+    global msg_Principal
     """
     Passe à la question 1, ouvre le qcm et ajoute les deux boutons Non et Oui.
     
@@ -306,7 +308,7 @@ def plus(b1,b2,arg):
     '''
     global n
     global dico_Reponses
-
+    global msg_Principal
     
     
     dico_Reponses[liste_Questions[n][1]] = arg
@@ -318,6 +320,7 @@ def plus(b1,b2,arg):
 
 def est_termine(btn_1,btn_2):
     global btn_Ok
+    global msg_Principal
     '''
     Verifie si le QCM est terminé (dernière question répondue). Si c'est le cas, On affiche un message puis retour bouton ok 
 
@@ -383,13 +386,15 @@ def fenetre_questionnaire(win,option = None):
     # initialisation des variables utilisées
     global btn_Ok
     global n
+    global msg_Principal
     n = len(liste_Questions) 
     
     efface_fenetre(win) # efface certains widgets pour rajouter ceux qui nous intéresse
     
     # Création des widgets :
-
-    msg_Principal.configure(text="Les données utilisateur sont présentes, veuillez continuer.")
+    # On doit recréer le message principal pour éviter une erreur de modification
+    msg_Principal = interface.CTkLabel(fenetrePrincipale, text="Les données utilisateur sont présentes, veuillez continuer.", 
+                                   width = 1000, font =(polices[0],18), justify=CENTER)
     # Boutton :
     btn_Ok = interface.CTkButton(win, height=int(win.winfo_screenheight()/10), command=lambda: avancer(win), text="Lancer la recherche",font=(polices[0],30, 'bold'),image=image_btn_chercher) # Commence le Qcm ou continue le programm
 
@@ -638,9 +643,9 @@ def page_arrondissement(btn):
 
     change_etat_btn(btn) # Bloque le bouton d'accès à cette page
     texte_aide=("""Si Votre ville possède des arrondissements (ex : Paris) :
-        - Si vous ne saisissez que le nom de la ville, le premier arrondissement sera pris comme base"
-        - Sinon, écrivez le nom de la ville comme cela : 
-            Nom 1er Arrondissement / Nom Ne Arrondissement 
+    - Si vous ne saisissez que le nom de la ville, le premier arrondissement sera pris comme base"
+    - Sinon, écrivez le nom de la ville comme cela : 
+        Nom 1er Arrondissement / Nom Ne Arrondissement 
                 (ex : Paris 2e Arrondissement)""")
 
     # Création des widgets
@@ -974,6 +979,7 @@ def fenetre_erreur(fenetre):
 
     - Calque sur fenetre_questionnaire() par Raphaël
     '''
+    global msg_Principal
     
     # Initialisation
     fenetre.title('LifeScore  |  Erreur')
