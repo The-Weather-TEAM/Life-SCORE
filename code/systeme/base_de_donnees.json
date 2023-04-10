@@ -54,6 +54,7 @@
                                                                           "moyenne" : 0.00010510826,
                                                                           "max" : 0.00014662756,
                                                                           "categorie": "qualité_de_vie",
+                                                                          "diviseur":6,
                                                                           "nom": "Les collèges"
                                                                          
                                                                 
@@ -70,6 +71,7 @@
                                                                           "moyenne" : 0.00005076142,
                                                                           "max" : 0.00012941633,
                                                                           "categorie": "qualité_de_vie",
+                                                                          "diviseur":6,
                                                                           "nom": "Les lycées"
                                                                 
 
@@ -92,7 +94,7 @@
     ["62cf95993d99f22480f49334","47ac11c2-8a00-46a7-9fa8-9b802643f975", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : 6,
-                                                                          "colonne_donnee" : [0],
+                                                                          "colonne_donnee" : [7],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie",
@@ -208,7 +210,7 @@
     ["58759fb5a3a7291596b43543","8be13bf9-f50e-4ef0-b143-e825d6a17a02", { "insee" : 1,
                                                                           "delimiteur" : ";",
                                                                           "colonne_ville" : 20,
-                                                                          "colonne_donnee" : [2],
+                                                                          "colonne_donnee" : [21],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "compter_par_population",
                                                                           "moyenne" : 0.0000198,

@@ -398,11 +398,11 @@ class Donnees:
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
             rep = len(df)
-            
+            print("NOMBRE D'ELEMENTS      -> ", rep)
             
             # Extention pour les CSV de type oui_non
             if infos_csv[csv][2]['type'] == 'oui_non':
-                if rep != 0 :
+                if rep > 0 :
                     return 100
                 else:
                     return 0
