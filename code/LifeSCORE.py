@@ -637,8 +637,8 @@ def page_arrondissement(btn):
 
     change_etat_btn(btn) # Bloque le bouton d'accès à cette page
     texte_aide=("""Si Votre ville possède des arrondissements (ex : Paris) :
-    Vous devrez écrire le nom de la ville de cette manière : 
-        Ville 1er Arrondissement ou Ville Ne Arrondissement 
+Vous devrez écrire le nom de la ville de cette manière : 
+"Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
                 (ex : Paris 2e Arrondissement)""")
 
     # Création des widgets
