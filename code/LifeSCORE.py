@@ -197,54 +197,64 @@ def telechargement(bouton,fenetre, bouton_param, bouton_aide):
     Puis renvoie sur le qcm ou la suite du programme
 
     - Page calquée sur les autres pages d'aides vues plus loin par Raphaël
+    - Condition de mise à jour par Nathan
     '''
-    
-    global erreur_maj
-    change_etat_btn(bouton) # Bloque le bouton sur la page principale
-    
-    # POUR RAF : je sais pas où on peut les réactiver
-    change_etat_btn(bouton_param)
-    change_etat_btn(bouton_aide)
-    
-    # Initialisation de la page
-    windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
-    windowDownload.title('LifeScore  |  Téléchargement')
-    windowDownload.iconphoto(False, icone)
-    windowDownload.minsize(width=int(510*4/3), height=384)
-    windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
-    windowDownload.resizable(False, False)
-    windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
-    
+    # Si les données doivent être mises à jour, on initialise la page
+    if update.mise_a_jour() :
+        global erreur_maj
+        change_etat_btn(bouton) # Bloque le bouton sur la page principale
+        
+        # POUR RAF : je sais pas où on peut les réactiver
+        change_etat_btn(bouton_param)
+        change_etat_btn(bouton_aide)
+        
+        # Initialisation de la page
+        windowDownload = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
+        windowDownload.title('LifeScore  |  Téléchargement')
+        windowDownload.iconphoto(False, icone)
+        windowDownload.minsize(width=int(510*4/3), height=384)
+        windowDownload.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
+        windowDownload.resizable(False, False)
+        windowDownload.protocol("WM_DELETE_WINDOW", lambda:retour_pages(windowDownload,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
+        
 
-    # Création des widgets
-    msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
-    message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
-    progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
-    progressbar.set(0)
+        # Création des widgets
+        msg_aide = interface.CTkLabel(windowDownload, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
+        message_pourcentage = interface.CTkLabel(windowDownload, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
+        progressbar = interface.CTkProgressBar(windowDownload,mode = 'determinate')
+        progressbar.set(0)
 
-    # Placements des widget
-    msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
-    progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
-    message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
-    
-    windowDownload.update()
-    
-    # Décide ensuite quelle action faire
-    erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
-    change_etat_btn(bouton_param)
-    change_etat_btn(bouton_aide)
-    if not erreur_maj:
-        #print(len(lire_fichier_dico("REPONSE_QCM")),len(list_Questions))
-        retour_pages(windowDownload,bouton)
+        # Placements des widget
+        msg_aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
+        progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
+        message_pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
+        
+        windowDownload.update()
+        
+        # Décide ensuite quelle action faire
+        erreur_maj = update.executer(progressbar,windowDownload,msg_aide,message_pourcentage)
+        change_etat_btn(bouton_param)
+        change_etat_btn(bouton_aide)
+        if not erreur_maj:
+            #print(len(lire_fichier_dico("REPONSE_QCM")),len(list_Questions))
+            retour_pages(windowDownload,bouton)
+            if len(lire_fichier_dico("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
+                w_qcm(fenetre,option ="sans_qcm")
+            else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
+                w_qcm(fenetre)
+        else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
+            retour_pages(windowDownload,bouton)
+            w_erreur(fenetre)
+            
+        windowDownload.mainloop()
+        
+    # Si il n'y a pas de mise à jour à faire, on saute cette étape
+    else : 
         if len(lire_fichier_dico("REPONSE_QCM")) == len(list_Questions): # Si les données du questionnaires ont déja été remplies
             w_qcm(fenetre,option ="sans_qcm")
         else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
             w_qcm(fenetre)
-    else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
-        retour_pages(windowDownload,bouton)
-        w_erreur(fenetre)
-    
-    windowDownload.mainloop()
+        
 
 
 
@@ -819,7 +829,7 @@ def w_score(ville,win,list_dix_villes,score):
     btn_Retour = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:retour_pages(win,None,False),
                                       text= "Noter une autre ville ", font=(polices[0],20, "bold"),image=image_btn_chercher)
     btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico),
-                                      text= "Détail ", font=(polices[0],20, "bold"))
+                                      text= "Détails", font=(polices[0],20, "bold"))
     
     btn_Retour.place(relx = 0.56,rely = 0.65, anchor = CENTER)
     btn_Donnees.place(relx = 0.38,rely = 0.65, anchor = CENTER)

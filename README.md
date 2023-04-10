@@ -634,3 +634,5 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 > Modification des données pour retourner 0 pour compter_par_habitant, et maintenant la note finale passe par la fonction sigmoide.
 
 > Création d'une page de détail de la note à la fin de la fonction w_score() qui permet d'afficher la note de chaque csv (critère)
+
+>La page de téléchargement ne s'affiche plus si on ne demande pas de vérification. Correction du bug qui ne modifiait pas la valeur "dernière maj" si aucun fichier n'était mis à jour.
