@@ -810,7 +810,7 @@ class Donnees:
     
     Idée par le group, fait par Thor
     """
-    def applique_coefs_QCM(self, qcm_reponses: dict, notes: dict) -> dict:
+    def applique_coefs_QCM(self, qcm_reponses: dict, notes: dict) -> list:
         """
         Applique les coefs des choix du QCM aux notes pour que les notes en question 
         sont compté plus ou moins dans la note finale.
