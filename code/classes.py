@@ -554,7 +554,6 @@ class Donnees:
         self.commune = self.commune.strip() # Enlève les espaces en trop
         
         
-        #! ça ne marche pas, j'ai aucune idée de pourquoi mdr
         temp = str(self.commune).upper()
         if temp in ['PARIS','MARSEILLE','LYON']:
             msg.configure(text = "Pour les villes possédant des arrondissements, \nréférez vous à l'aide (bouton en haut à droite)")
