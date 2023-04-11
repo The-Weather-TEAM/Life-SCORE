@@ -1,0 +1,1 @@
+{'Espondeilhan': 29, 'Magalas': 26, 'Puimisson': 29, 'Coulobres': 29, 'Lieuran-lès-Béziers': 29, 'Pouzolles': 29, 'Bassan': 29, 'Fouzilhon': 26, 'Pailhès': 29, 'Abeilhan': 29, 'Puissalicon': 29, 'Saint-Geniès-de-Fontedit': 29, 'Laurens': 26, 'Autignac': 29, 'Gabian': 26}

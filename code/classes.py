@@ -381,15 +381,16 @@ class Donnees:
                                 low_memory=False)
             
             liste_provisoire = []
-            for a in colonnes:
-                liste_provisoire.append(str(a))
+            for a in range(len(colonnes)):
+                
+                liste_provisoire.append(a)
 
             # Si le CSV utilise le code INSEE
             if infos_csv[csv][2]['insee'] == 1 :
-                res = fichier[fichier[liste_provisoire[0]] == self.code_insee] 
+                res = fichier[fichier[0] == self.code_insee] 
             # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
-                res = fichier[fichier[liste_provisoire[0]] == self.commune]
+                res = fichier[fichier[0] == self.commune]
             
             if recursivite :
                 self.commune = ancien_nom_ville
