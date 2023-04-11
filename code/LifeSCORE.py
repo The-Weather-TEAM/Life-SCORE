@@ -700,7 +700,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
 
     ville est un objet de la classe Donnees précédemment créé après avoir appuyé sur "recherche"
 
-    - Reprise de fenetre_questionnaire() et fenetre_question() remaniée par Raphaël, la carte est de Thor avec l'api 'https://mt0.google.com'
+    - Reprise de fenetre_questionnaire() et fenetre_question() remaniée par Raphaël, la carte est de Thor avec l'api 'https://openstreetmap.org'
     '''
     
     # Initialisation 
