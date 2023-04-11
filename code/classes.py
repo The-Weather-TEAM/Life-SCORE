@@ -381,7 +381,7 @@ class Donnees:
                                 low_memory=False)
             
             liste_provisoire = []
-            for a in fichier.columns:
+            for a in colonnes:
                 liste_provisoire.append(str(a))
 
             # Si le CSV utilise le code INSEE
