@@ -635,4 +635,11 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 > Création d'une page de détail de la note à la fin de la fonction w_score() qui permet d'afficher la note de chaque csv (critère)
 
->La page de téléchargement ne s'affiche plus si on ne demande pas de vérification. Correction du bug qui ne modifiait pas la valeur "dernière maj" si aucun fichier n'était mis à jour.
+> La page de téléchargement ne s'affiche plus si on ne demande pas de vérification. Correction du bug qui ne modifiait pas la valeur "dernière maj" si aucun fichier n'était mis à jour.
+
+
+
+10 avril 2023 : 
+> Homogénisation de LifeSCORE.py : les variables ont étées formattées pour être aisément compréhensibles par une personne tierce et certaines variables globales ont perdu ce statut (jugé inutile, notamment pour la liste_Questionnaire
+
+> Correction des pages d'aides (le texte indiqué n'était pllus d'actualité)

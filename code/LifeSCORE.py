@@ -637,9 +637,8 @@ def page_arrondissement(btn):
 
     change_etat_btn(btn) # Bloque le bouton d'accès à cette page
     texte_aide=("""Si Votre ville possède des arrondissements (ex : Paris) :
-    - Si vous ne saisissez que le nom de la ville, le premier arrondissement sera pris comme base"
-    - Sinon, écrivez le nom de la ville comme cela : 
-        Nom 1er Arrondissement / Nom Ne Arrondissement 
+Vous devrez écrire le nom de la ville de cette manière : 
+"Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
                 (ex : Paris 2e Arrondissement)""")
 
     # Création des widgets
@@ -735,13 +734,16 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
     - Source et documentation: https://github.com/TomSchimansky/TkinterMapView (la liste des cartes possibles est tout en bas du README)
     - Idée de Nathan, implémenté par Thor
     """
-    if est_connecte("https://mt0.google.com/"): # On verifie qu'il y a un connection au serveUr o% on va recuperer la carte
+    if est_connecte("https://openstreetmap.org"): # On verifie qu'il y a un connection au serveUr o% on va recuperer la carte
 
         carte_Ville = TkinterMapView(win, width=0.4*win.winfo_width(), height=0.4*win.winfo_height()) # On declare l'objet de la carte avec Ses tailles respectives
         carte_Ville.set_address(f"{str(ville)[:-1] if est_nombre(str(ville)[-1]) else str(ville)}, France", marker=True,text=str(ville)) # Insère le nom comme adresse (et formate pour les arrondissements)
         carte_Ville.set_tile_server("https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", max_zoom=22) # On decide quel carte et zoom on va utiliser
-        carte_Ville.place(relx=0.3, rely=0.18)
-    else:
+        carte_Ville.place(relx=0.5, rely=0.35, anchor = CENTER)
+        
+        win.iconphoto(False, icone) 
+        
+    else :
         win.iconphoto(False, icone_connexion) # Affiche l'icone d'erreur
     
 
