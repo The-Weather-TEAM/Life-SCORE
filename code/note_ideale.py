@@ -8,30 +8,30 @@
 
 
 
-def calcul_note_ideale(valeursIdeales :dict, valeursSaisies: dict) -> dict:
+def calcul_note_ideale(dict_valeursIdeales :dict, dict_valeursSaisies: dict) -> dict:
     '''
     Calcule les notes de tout les differents valeurs par rapport a leur valeur ideal ou preferable
 
-    La structure du dictionaire `valeursIdeales` doit etre: `{critere: (valeurMinimal, valeursIdeal, valeurMaximal)}`
+    La structure du dictionaire `dict_valeursIdeales` doit etre: `{critere: (valeurMinimal, valeursIdeal, valeurMaximal)}`
 
-    Et la structure du dictionaire `valeursSaisies` doit etre: `{critere: valeur}`
+    Et la structure du dictionaire `dict_valeursSaisies` doit etre: `{critere: valeur}`
 
     Renvoi un dictoinaire de type `{critere: note}`
 
-    - `valeursIdeales` et `valeursSaisies` doivent avoir les memes noms de clefs.
-    - Un critere de `valeursIdeales` ne peut pas avoir 3 valeurs identiques. Mais il peut en avoir 2 si l'ideal est soit le Minimum ou le Maximum.
+    - `dict_valeursIdeales` et `dict_valeursSaisies` doivent avoir les memes noms de clefs.
+    - Un critere de `dict_valeursIdeales` ne peut pas avoir 3 valeurs identiques. Mais il peut en avoir 2 si l'ideal est soit le Minimum ou le Maximum.
     
     - Idée de Thor : L'idée s'apparente à celle du calcul du pourcentage d'une pente sauf qu'ici on cherche l'écart 
                     de la valeur en fonction de la longueur d'étude de ces valeurs
     '''
-    assert type(valeursIdeales) == type(valeursIdeales) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
+    assert type(dict_valeursIdeales) == type(dict_valeursIdeales) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
     
     # calcule le rapport entre les donnes local est la moyenne global
-    listDeNotes = {}
+    dict_notes = {}
 
-    for critere in valeursSaisies.keys(): # pour chaque critere dont on a un valeur desiré
-        valMin, valIdeal, valMax = valeursIdeales[critere]
-        valSaisit = valeursSaisies[critere]
+    for critere in dict_valeursSaisies.keys(): # pour chaque critere dont on a un valeur desiré
+        valMin, valIdeal, valMax = dict_valeursIdeales[critere]
+        valSaisit = dict_valeursSaisies[critere]
 
         assert len(set((valMin, valIdeal, valMax))) != 1, f"Les valeurs ideales de `{critere}` ne peuvent pas etre 3 valeurs identiques (Mais ils peuvent en etre 2)."
         assert valMin <= valIdeal <= valMax, f"Les valeurs ideales de `{critere}` ne sont pas en ordre croissant."
@@ -46,18 +46,18 @@ def calcul_note_ideale(valeursIdeales :dict, valeursSaisies: dict) -> dict:
             domainDuValeur = valMin if valSaisit <= valIdeal else valMax   
             longeurDuDomain = abs(valIdeal - domainDuValeur) # "longeur" du domaine ou se trouve valSaisit
 
-            distanceDesValeurs = abs(valIdeal - valSaisit) # difference entire valSaisit et valIdeal
+            distanceDesValeurs = abs(valIdeal - valSaisit) # difference entre valSaisit et valIdeal
             noteSurCent = 1 - (distanceDesValeurs/longeurDuDomain) # calcule un note par rapport a cette difference et la longeur du domain
 
         else: # si la valeur est en-dehors des limites, on ne l'accepte pas
             noteSurCent = 0
 
 
-        listDeNotes[critere] = round(noteSurCent*100, 4) # ajoute le note au dictionaire de notes des criteres (et les multiplie par 100 pour un pourcentage)
+        dict_notes[critere] = round(noteSurCent*100, 4) # ajoute le note au dictionaire de notes des criteres (et les multiplie par 100 pour un pourcentage)
 
     
 
-    return listDeNotes # renvoi la dictionaire avec tout les notes
+    return dict_notes # renvoi la dictionaire avec tout les notes
 
 
 
