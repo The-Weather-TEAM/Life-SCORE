@@ -21,20 +21,22 @@ def calcul_note_ideale(dict_valeursIdeales :dict, dict_valeursSaisies: dict) -> 
     - `dict_valeursIdeales` et `dict_valeursSaisies` doivent avoir les memes noms de clefs.
     - Un critere de `dict_valeursIdeales` ne peut pas avoir 3 valeurs identiques. Mais il peut en avoir 2 si l'ideal est soit le Minimum ou le Maximum.
     
+    ---
+
     - Idée de Thor : L'idée s'apparente à celle du calcul du pourcentage d'une pente sauf qu'ici on cherche l'écart 
                     de la valeur en fonction de la longueur d'étude de ces valeurs
     '''
     assert type(dict_valeursIdeales) == type(dict_valeursIdeales) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
     
-    # calcule le rapport entre les donnes local est la moyenne global
     dict_notes = {}
 
     for critere in dict_valeursSaisies.keys(): # pour chaque critere dont on a un valeur desiré
+        # recupere les donnees pour ce critere
         valMin, valIdeal, valMax = dict_valeursIdeales[critere]
         valSaisit = dict_valeursSaisies[critere]
 
         assert len(set((valMin, valIdeal, valMax))) != 1, f"Les valeurs ideales de `{critere}` ne peuvent pas etre 3 valeurs identiques (Mais ils peuvent en etre 2)."
-        assert valMin <= valIdeal <= valMax, f"Les valeurs ideales de `{critere}` ne sont pas en ordre croissant."
+        assert valMin <= valIdeal <= valMax, f"Les valeurs ideales et limites de `{critere}` ne sont pas en ordre croissant."
         
 
         if valSaisit == valIdeal: # si on a la valeur exacte que l'on recherche
@@ -53,9 +55,7 @@ def calcul_note_ideale(dict_valeursIdeales :dict, dict_valeursSaisies: dict) -> 
             noteSurCent = 0
 
 
-        dict_notes[critere] = round(noteSurCent*100, 4) # ajoute le note au dictionaire de notes des criteres (et les multiplie par 100 pour un pourcentage)
-
-    
+        dict_notes[critere] = round(noteSurCent*100, 4) # ajoute le note au dictionaire de notes (et les multiplie par 100 pour un pourcentage)
 
     return dict_notes # renvoi la dictionaire avec tout les notes
 
