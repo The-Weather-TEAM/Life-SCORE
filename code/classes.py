@@ -380,6 +380,8 @@ class Donnees:
                                 encoding='utf-8',
                                 low_memory=False)
             
+            df = p.DataFrame(fichier)
+            df.columns = ["Insee","Donnees"]
             liste_provisoire = []
             for a in range(len(colonnes)):
                 
@@ -387,18 +389,17 @@ class Donnees:
 
             # Si le CSV utilise le code INSEE
             if infos_csv[csv][2]['insee'] == 1 :
-                res = fichier[fichier[0] == self.code_insee] 
+                res = df[df['Insee'] == self.code_insee] 
             # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
-                res = fichier[fichier[0] == self.commune]
+                res = df[df['Insee'] == self.commune] # Meme si c pas un Insee on garde juste le nom
             
             if recursivite :
                 self.commune = ancien_nom_ville
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
-            df = p.DataFrame(res)
-            rep = len(df)
+            rep = len(res)
             print("NOMBRE D'ELEMENTS      -> ", rep)
             
             # Extention pour les CSV de type oui_non
