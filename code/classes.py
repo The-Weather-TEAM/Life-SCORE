@@ -380,26 +380,24 @@ class Donnees:
                                 encoding='utf-8',
                                 low_memory=False)
             
-            df = p.DataFrame(fichier)
-            df.columns = ["Insee","Donnees"]
             liste_provisoire = []
-            for a in range(len(colonnes)):
-                
-                liste_provisoire.append(a)
+            for a in fichier.columns:
+                liste_provisoire.append(str(a))
 
             # Si le CSV utilise le code INSEE
             if infos_csv[csv][2]['insee'] == 1 :
-                res = df[df['Insee'] == self.code_insee] 
+                res = fichier[fichier[liste_provisoire[0]] == self.code_insee] 
             # Si le CSV n'a pas de code INSEE (on regarde le nom de la ville)
             else :
-                res = df[df['Insee'] == self.commune] # Meme si c pas un Insee on garde juste le nom
+                res = fichier[fichier[liste_provisoire[0]] == self.commune]
             
             if recursivite :
                 self.commune = ancien_nom_ville
             
             
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
-            rep = len(res)
+            df = p.DataFrame(res)
+            rep = len(df)
             print("NOMBRE D'ELEMENTS      -> ", rep)
             
             # Extention pour les CSV de type oui_non
@@ -702,7 +700,7 @@ class Donnees:
         """
         Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals
         
-        Renvoi un `dict` avec les notes ou `None` si on n'a pas pue recuperer les donnes pour calculer des notes
+        Renvoi un dictionaire avec les notes, ou dictionaire vide si on n'a pas pue recuperer les données pour calculer des notes
 
         - Idée de tout le Groupe (idée initial du projet) & Implementé par Thor
 
