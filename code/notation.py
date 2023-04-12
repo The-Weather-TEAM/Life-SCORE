@@ -1,5 +1,5 @@
 '''
-                        [CLASSES.PY]
+                        [NOTATION.PY]
                          
          Programme qui répertorie toutes nos classes
                       et nos fonctions
@@ -700,7 +700,7 @@ class Donnees:
         """
         Determiner des notes sur les donnees meteorologique/climatique de 2022 d'une ville par rapport a des valeurs ideals
         
-        Renvoi un dictionaire avec les notes, ou dictionaire vide si on n'a pas pue recuperer les données pour calculer des notes
+        Renvoi un `dict` avec les notes ou `None` si on n'a pas pue recuperer les donnes pour calculer des notes
 
         - Idée de tout le Groupe (idée initial du projet) & Implementé par Thor
 

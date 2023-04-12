@@ -84,8 +84,8 @@ BIBLIOTHEQUES
 
 '''
 # Nos autres fichiers
-import update # Importe les fonctions et met à jour les modules en meme temps
-from classes import * # Import de nos classes créées
+import mise_a_jour as mise_a_jour # Importe les fonctions et met à jour les modules en meme temps
+from notation import * # Import de nos classes créées
 
 # Interface graphique
 from tkinter import * # On utilise certaines fonctions de Tkinter avec Customtkinter
@@ -190,7 +190,7 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
     - Condition de mise à jour par Nathan
     '''
     # Si les données doivent être mises à jour, on initialise la page
-    if update.mettre_a_jour() :
+    if mise_a_jour.mettre_a_jour() :
         change_etat_btn(bouton) # Bloque le bouton sur la page principale
         change_etat_btn(bouton_param)
         change_etat_btn(bouton_aide)
@@ -219,7 +219,7 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
         fenetre_Telechargement.update()
         
         # Décide ensuite quelle action faire
-        erreur_maj = update.mise_a_jour(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
+        erreur_maj = mise_a_jour.mise_a_jour(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
         change_etat_btn(bouton_param)
         change_etat_btn(bouton_aide)
         if not erreur_maj:

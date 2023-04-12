@@ -642,4 +642,11 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 10 avril 2023 : 
 > Homogénisation de LifeSCORE.py : les variables ont étées formattées pour être aisément compréhensibles par une personne tierce et certaines variables globales ont perdu ce statut (jugé inutile, notamment pour la liste_Questionnaire
 
-> Correction des pages d'aides (le texte indiqué n'était pllus d'actualité)
+> Correction des pages d'aides (le texte indiqué n'était plus d'actualité)
+
+
+
+11 Avril 2023 :
+> Renomage de classes.py en notation.py et update.py en mise_a_jour.py.
+
+> https://github.com/The-Weather-TEAM/Life-SCORE/issues/126 n'est pas encore résolu.

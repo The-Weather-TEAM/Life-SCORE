@@ -47,9 +47,9 @@ from http.client import IncompleteRead
 from zipfile import BadZipFile
 
 # Importation de la fonction de test de connexion :
-from classes import est_connecte
-from classes import lire_fichier_dico           # Utile pour lire les parametres d'utilisateur
-from classes import modifier_fichier_dico       # Utile pour changer les options (logique)
+from notation import est_connecte
+from notation import lire_fichier_dico           # Utile pour lire les parametres d'utilisateur
+from notation import modifier_fichier_dico       # Utile pour changer les options (logique)
 
 # Pour deziper les csv
 from zipfile import ZipFile

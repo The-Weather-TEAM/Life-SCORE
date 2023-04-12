@@ -1,1 +1,1 @@
-{'Fouzilhon': 54, 'Puissalicon': 65, 'Puimisson': 64, 'Saint-Geniès-de-Fontedit': 56, 'Laurens': 50, 'Autignac': 58, 'Pailhès': 60, 'Pouzolles': 58, 'Espondeilhan': 56, 'Gabian': 64}
+{'Boujan-sur-Libron': 38, 'Sauvian': 38, 'Corneilhan': 44, 'Lieuran-lès-Béziers': 44, 'Bassan': 38, 'Villeneuve-lès-Béziers': 42, 'Lignan-sur-Orb': 38, 'Maraussan': 44, 'Cers': 38, 'Vendres': 60}
