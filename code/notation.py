@@ -886,7 +886,7 @@ class Donnees:
 
 
         for reponse, valeur in qcm_reponses.items(): # pour chaque reponse du qcm
-            coef = 2 if valeur else 0.5 # coef de 2 si oui, sinon de 0.5
+            coef = 3 if valeur else 0.5 # coef de 3 si oui, sinon de 0.5
 
             criteres = qcm_to_criteres[reponse] # recup liste de criteres pour cette reponse
             
