@@ -103,7 +103,7 @@ FONCTIONS UTILE DANS TOUTE L'APPLICATION
 Fait par Thor
 
 """
-def distanceEuclienne(point1: tuple[float, float],point2: tuple[float, float]) -> float: # utilisé pour la fonction kppv()
+def distanceEuclidienne(point1: tuple[float, float],point2: tuple[float, float]) -> float: # utilisé pour la fonction kppv()
     """Renvoie la distance entre deux points donnees.
     
     Fonction de Thor fait en classe
@@ -136,7 +136,7 @@ def kppv(donnees: dict,
 
     distVoisins = [] # contient la distance du point `point` au point dans `donnees`` avec leur indices correspondants
     for cle in donnees.keys():   
-        distance = distanceEuclienne(point, (donnees[cle][0],donnees[cle][1])) # calcul de la distance
+        distance = distanceEuclidienne(point, (donnees[cle][0],donnees[cle][1])) # calcul de la distance
         distVoisins.append((distance,cle,donnees[cle][2])) # ajoute au liste de points avec distance
 
     distVoisins = sorted(distVoisins) # on trie la liste par leurs distances d'ordre croissant
