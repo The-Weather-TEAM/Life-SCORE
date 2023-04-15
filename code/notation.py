@@ -117,7 +117,7 @@ def distanceEuclidienne(point1: tuple[float, float],point2: tuple[float, float])
 def kppv(donnees: dict,
          point: tuple[float, float],
          k: int
-    ) -> list[int]:
+    ) -> list:
     """
     Trouve les k plus proches voisins.
 
