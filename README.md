@@ -106,23 +106,23 @@ Changements :
 
 # Interface actuelle (preview v0.6)
 ### Page d'accueil :
-![Capture d'écran_20230402_205543](https://user-images.githubusercontent.com/104134380/229373074-3dccc061-0095-40b5-b686-9e4d6f946ef7.png)
+![Capture d'écran_20230416_141216](https://user-images.githubusercontent.com/104134380/232309029-d28408a3-5136-4fee-8e87-94d537fc03cf.png)
 
 
 ### Page de paramètres :
-![Capture d'écran_20230402_205550](https://user-images.githubusercontent.com/104134380/229373077-5430d913-4c3c-4c4b-a334-bbef6e2ff310.png)
+![Capture d'écran_20230402_205550](https://user-![Capture d'écran_20230416_140933](https://user-images.githubusercontent.com/104134380/232308997-3778d21b-2c85-49dc-8606-a3e87cddacb7.png)
 
 
 ### Page d'infos :
-![Capture d'écran_20230402_205558](https://user-images.githubusercontent.com/104134380/229373088-f19b8e88-b49d-4e59-989b-9a0d62e6aec9.png)
+![Capture d'écran_20230402_205558](https://user-![Capture d'écran_20230416_140936](https://user-images.githubusercontent.com/104134380/232309003-5caffb7a-0a1e-47f5-8222-aed79bcf3c93.png)
 
 
 ### Page de téléchargement :
-![Capture d'écran_20230402_205606](https://user-images.githubusercontent.com/104134380/229373104-251e1da5-57c3-4905-aa60-137d49fc03bc.png)
+![Capture d'écran_20230402_205606](https://user-![Capture d'écran_20230416_140940](https://user-images.githubusercontent.com/104134380/232309005-d96aa79d-bb5c-4636-801f-9d6a465a7280.png)
 
 
 ### Page de notation :
-![Capture d'écran_20230402_205622](https://user-images.githubusercontent.com/104134380/229373119-c7fdd02c-8934-46b8-ac2f-960dd8b11879.png)
+![Capture d'écran_20230416_140952](https://user-images.githubusercontent.com/104134380/232309007-f2f022b2-9b8f-479d-879a-42a062e08bb9.png)
 
 
 
