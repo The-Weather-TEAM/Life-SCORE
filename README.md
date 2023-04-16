@@ -39,26 +39,30 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v0.5.3
+# Version actuelle : v0.6
 
-> Gère le téléchargement des données des villes, avec système de mise à jour automatique / Répère les préférences de l'utilisateur à l'aide d'un QCM / Recupère les données des villes et nous donne la note en fonction de l'utilisateur.
-
-> Ne prend en compte que le nombre d'établissements sportifs par nombre d'habitants dans la ville
+> Première version entièrement fonctionnelle, incluant toutes les fonctionnalités prévues afin d’utiliser l’application dans son plein potentiel.
 
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
 
-- LifeSCORE.py : *Code principal avec l'interface graphique et utilise tous les programmes. Réalise le QCM et affiche la note.*
-- classes.py : *Répertorie la classe Donnees (calcule les données), ainsi que toutes les fonctions comme is_connected*
-- update.py : *Programme de téléchargement et mises à jour des données*
-- calcul_coefficients.py : *Cacule de l'importance des notations en fonction des résultats du QCM*
+- LifeSCORE.py : *Code principal avec l'interface graphique*
+- notation.py : *Calcule les note*
+- mise_a_jour.py : *Programme de téléchargement et mises à jour des données*
 
 
 Changements :
-- Ajout de l'interface de téléchargement ;
-- Nouvelle page de paramètres qui permet de modifier certains détails comme l'apparence de l'application, la fréquence de recherche de mise à jour,... ;
-- Code plus organisé avec une partie facultative (donnees) et une obligatoire (systeme) ;
-- Nouvelle gestion des csv plus précise pour récupérer plus de données.
+- Nouvelle carte interactive qui utilise Openstreetmap ;
+- Nouvelle page de pramètres (apparence / fréquence màj / suppression données...) ;
+- Note maintenant la météo de la ville ;
+- Affiche les aventages et inconvénients de la ville ;
+- Application compatibible Windows 64bit (10 ou plus récient) et Ubuntu 22 ;
+- Augmentation de la compatibilité des csv : prend en compte ceux sans code INSEE ;
+- Interface plus imagée ;
+- Note également les 10 communes les plus proches avec un système KPP voisins ;
+- Notation accentuée par une fonction sigmoïdale ;
+- Premier téléchargement 125x plus rapide (nouveau système de compression de données) ;
+- Code réorganisé et mieux commenté.
 
 
 
@@ -89,14 +93,11 @@ Changements :
 
 
 ## Configuration recommandée :
-- Windows 10 / 11
+- Windows 10/11
 - Python 3.10 ou plus récent
-- subprocess / sys / os (Bibliothèques intégrées à Python)
-- Bibliothèques utilisés (téléchargeables avec requirements.txt) :
->Téléchargement automatique sur l'application depuis la v0.5.2.
 
-- Disponible maintenant sur Linux en installant trois compléments :
 
+- Disponible sur Ubuntu (22) en installant trois compléments :
 `sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
 
 
