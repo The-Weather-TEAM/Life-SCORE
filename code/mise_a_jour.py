@@ -230,7 +230,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
             Pensé par Nathan
             Réalisé par Nathan (intégration à l'interface par Raphaël)
             '''
-            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/test.zip' #! à changer une fois le code terminé
+            lien = 'https://github.com/The-Weather-TEAM/Life-SCORE/raw/main/donnees.zip'
             fichier = repertoire_donnees+'/temp.zip'
             
             telecharger_fichier(lien, fichier, barre_de_chargement, fenetre, msg_pourcentage, msg_information)
