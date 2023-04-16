@@ -650,3 +650,12 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 > Renomage de classes.py en notation.py et update.py en mise_a_jour.py.
 
 > https://github.com/The-Weather-TEAM/Life-SCORE/issues/126 n'est pas encore résolu.
+
+
+
+16 Avril 2023 : **Nouvelle version v0.6**
+> Correction bugs si un module n'était pas installé.
+
+> Test sur des machines virtuelles pour savoir le minimum requis de l'application.
+
+> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.
