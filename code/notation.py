@@ -325,9 +325,9 @@ CLASSE PRINCIPALE
 
 '''  
 class Donnees:
-    def __init__(self, comunne, insee=None) :
+    def __init__(self, commune, insee=None) :
         
-        self.commune = str(comunne)
+        self.commune = str(commune)
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] # La liste dans laquelle on rempli les notes 
         self.habitants = None
