@@ -52,11 +52,12 @@ Lien vers la liste complète des changements : https://github.com/The-Weather-TE
 
 
 Changements :
+
 - Nouvelle carte interactive qui utilise Openstreetmap ;
-- Nouvelle page de pramètres (apparence / fréquence màj / suppression données...) ;
+- Nouvelle page de paramètres (apparence / fréquence màj / suppression données...) ;
 - Note maintenant la météo de la ville ;
-- Affiche les aventages et inconvénients de la ville ;
-- Application compatibible Windows 64bit (10 ou plus récient) et Ubuntu 22 ;
+- Affiche les avantages et inconvénients de la ville ;
+- Application compatible Windows 64bit (10 ou plus récent) et Ubuntu 22 ;
 - Augmentation de la compatibilité des csv : prend en compte ceux sans code INSEE ;
 - Interface plus imagée ;
 - Note également les 10 communes les plus proches avec un système KPP voisins ;
