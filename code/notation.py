@@ -76,21 +76,14 @@ Fait par Nathan d'après un ancien projet (v.4 de l'application)
 '''
 def est_connecte(url) :
     
-
-    print(  "\n\n\n################################",
-        "\n##         Test réseau        ##",
-        "\n################################\n\n",)
-    
     try :
         requests.get(url, timeout=5)
               
                 
     except ConnectionError or ReadTimeout or TimeoutError :    
-        print('\n\nProblème réseau.\nVeuillez vous reconnecter.')
                 
         return False 
         
-    print("Réseau disponible !\n\n")
     return True
 
 
@@ -400,7 +393,6 @@ class Donnees:
                 self.commune = re.split(" ",self.commune)[0]
                 self.recup_donnees_simple(csv, True, ancien_nom)
             
-            print('Pas de données')
             return None
 
         
@@ -448,7 +440,6 @@ class Donnees:
             # Là on récupère seulement le nombre de lignes qui restent pour compter les éléments
             df = p.DataFrame(res)
             rep = len(df)
-            print("NOMBRE D'ELEMENTS      -> ", rep)
             
             # Extention pour les CSV de type oui_non
             if infos_csv[csv][2]['type'] == 'oui_non':
@@ -468,10 +459,9 @@ class Donnees:
             if diviseur != None :
                 rep = rep / diviseur
                 
-            print(" - Total dans la ville :", rep)
             
             note = rep / self.habitant
-            print(" - Par habitant :", note)
+
             
             #On récupère directement la note en utilisant la fonction affine
             a = infos_csv[csv][2]['moyenne']
@@ -490,7 +480,6 @@ class Donnees:
                 self.recup_donnees_compter_par_habitant(csv, True, ancien_nom)
                 
 
-            print('Pas de données')
             return 0
 
 
@@ -516,12 +505,10 @@ class Donnees:
             if nombre is None :
                 nombre = 0
         except :
-            print('Pas de données')
             return None
         
         # On divise par le nombre d'habitants et on utilise la fonction affine
         note = nombre / self.habitant
-        print(" - Par habitant :", note)
         # On récupère directement la note
         a = infos_csv[csv][2]['moyenne']
         b = infos_csv[csv][2]['max']
@@ -542,7 +529,6 @@ class Donnees:
     
         try :
             nombre = self.recup_donnees_simple(csv)
-            print(" - Donnée :", nombre)
             moyenne = infos_csv[csv][2]['moyenne']
             maximum = infos_csv[csv][2]['max']
             
@@ -550,7 +536,6 @@ class Donnees:
             return calculer_fonction_sigmoide(moyenne, maximum, nombre)
         
         except :
-            print('Pas de données')
             return None
 
 
@@ -578,10 +563,6 @@ class Donnees:
         
         elif type_recuperation == 'simple_affine' :
             return self.recup_donnees_simple_sigmoide(csv)
-        
-        else :
-            print("Fonction non implémentée.")
-        
         
 
 
@@ -625,7 +606,6 @@ class Donnees:
         fichier.close()
 
         # Recup ligne de ville pour code insee
-        print(self.commune)
         row = cr[(cr['NCCENR'] == str(self.commune)) | (cr['LIBELLE'] == str(self.commune)) | (cr['NCC'] == str(self.commune).upper())]
         if not row.empty:
             self.code_insee = row.values[0][0]
@@ -695,14 +675,12 @@ class Donnees:
         fichier.close()
         
         rangee_unique = cr[(cr['code_commune_INSEE'] == self.code_insee) | (cr['code_commune_INSEE'] == self.code_insee[1:])]
-        print(rangee_unique)
         if len(rangee_unique) > 1: # Gère le cas où on récupère par exemple la ville de code 34459 et 4459
 
             if self.code_insee[0] == '0':
                 rangee_unique = rangee_unique.iloc[0]
             else:
                 rangee_unique = rangee_unique.iloc[-1]
-            print(rangee_unique)
         coordonnees0 = (float(rangee_unique['latitude']),float(rangee_unique['longitude']))
 
                        
@@ -726,7 +704,6 @@ class Donnees:
             if msg != None:
                 msg.configure(text = f'Calcul de {nom} (code : {insee})')
                 win.update()
-            print(nom)
             if nom in dico_fichier_tempo : # Si on a déjà récupéré ces données là
                 liste_notes.append((nom,dico_fichier_tempo[nom]))
             else:
@@ -919,11 +896,6 @@ class Donnees:
         (meteo est un booléen qui décide si on souhaite avoir les notes de meteo)
         Pensé et réalisé par Nathan, à l'aide des fonctions au dessus
         '''
-        
-        
-        print(    "################################",
-                "\n##     Notes de la ville      ##",
-                "\n################################\n\n",)
 
         
         # Pour chaque CSV
@@ -945,9 +917,6 @@ class Donnees:
 
         
         # Pour tester avant de tout envoyer
-        print("################################",
-            "\n##       NOTES FINALES        ##",
-            "\n################################\n\n")
 
 
 
@@ -972,11 +941,9 @@ class Donnees:
     
     '''
     def prepa_recup_donnees(self, id):
-        print ("\nLe csv", id)
         if infos_csv[id][2]['insee'] >= 0 :
             resultat = self.recuperation_donnees(id)
                     
-            print(" - Note /100 :", resultat)
                 # Le code marche, mais la base de données renseigne seulement la moyenne pour les types de CSV par habitant
             if (resultat is not None) and (type(resultat) != list):
                 # Si le résultat est trop faible ou trop élevée (ce qui arrive), on met en place un max et un min
@@ -986,8 +953,6 @@ class Donnees:
                     resultat = 100
                 self.liste_notes.append(resultat)
                 self.notes_finales[infos_csv[id][2]['nom']] =  resultat# Le nom formel
-        else :
-            print("Non noté.")
 
 
     '''

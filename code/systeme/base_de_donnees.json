@@ -9,8 +9,7 @@
                                                                           "moyenne" : 1800,
                                                                           "max": 200000,
                                                                           "nom": "La population"
-                                                                         
-                                                                
+
 
     }],
 
@@ -25,7 +24,7 @@
                                                                           "arrondissement" : "1ER ARRONDISSEMENT",
                                                                           "nom": "Le nom de la commune"
 
-    
+
     }],
     
     "ecoles":
@@ -40,7 +39,7 @@
                                                                           "categorie": "qualité_de_vie",
                                                                           "diviseur":6,
                                                                           "nom": "Les écoles"
-                                                                
+
 
     }],
 
@@ -56,8 +55,7 @@
                                                                           "categorie": "qualité_de_vie",
                                                                           "diviseur":6,
                                                                           "nom": "Les collèges"
-                                                                         
-                                                                
+
 
     }],
 
@@ -73,7 +71,7 @@
                                                                           "categorie": "qualité_de_vie",
                                                                           "diviseur":6,
                                                                           "nom": "Les lycées"
-                                                                
+
 
     }],
 
@@ -86,7 +84,7 @@
                                                                           "type" : "oui_non",
                                                                           "categorie": "securite",
                                                                           "nom": "Les forces de l'ordre"
-                                                                
+
 
     }],
 
@@ -99,7 +97,7 @@
                                                                           "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Les festivals"
-                                                                
+
 
     }],
 
@@ -114,10 +112,10 @@
                                                                           "max" : 0.00011764705,
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Les musées"
-                                                                
+
 
     }],
-                
+
     "monuments_historiques":
     ["5af120e5b595087cfabcde81","3a52af4a-f9da-4dcc-8110-b07774dfb3bc", { "insee" : 0,
                                                                           "delimiteur" : ";",
@@ -129,10 +127,10 @@
                                                                           "max" : 0.0055,
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Les monuments historiques"
-                                                                
+
 
     }],
-    
+
     "m2_maison":
     ["639c7cf4969f3318338df9a8","dfb542cd-a808-41e2-9157-8d39b5c24edb", { "insee" : 1,
                                                                           "delimiteur" : ";",
@@ -144,10 +142,10 @@
                                                                           "max" : 9,
                                                                           "categorie": "prix",
                                                                           "nom": "Le prix des maisons"
-                                                                
+
 
     }],
-    
+
     "m2_appartement":
     ["639c7cf4969f3318338df9a8","bc9d5d13-07cc-4d38-8254-88db065bd42b", { "insee" : 1,
                                                                           "delimiteur" : ";",
@@ -159,10 +157,10 @@
                                                                           "max" : 10,
                                                                           "categorie": "prix",
                                                                           "nom": "Le prix des appartements"
-                                                                
+
 
     }],
-    
+
     "radon_nucleaire":
     ["53834c53a3a72906c7ec5c4c","817114f8-9b61-48fa-b7a4-0e3c1331a44c", { "insee" : 1,
                                                                           "delimiteur" : ";",
@@ -174,10 +172,10 @@
                                                                           "max" : 1,
                                                                           "categorie": "securite",
                                                                           "nom": "L'exposition nucléaire"
-                                                                
+
 
     }],
-    
+
     "action_coeur_de_ville":
     ["5acc7eddc751df5e21efdf20","f547b346-af1e-41b5-b647-8f23e71ffe1c", { "insee" : 1,
                                                                           "delimiteur" : ",",
@@ -187,10 +185,10 @@
                                                                           "type" : "oui_non",
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Les projets de rénovation"
-                                                                
+
 
     }],
-    
+
     "dose_rayonnements_telluriques":
     ["6148533237daa73c8aa68abf","60f43c5f-4bfb-4699-b93a-e5e9f8ffdd5f", { "insee" : 0,
                                                                           "delimiteur" : ";",
@@ -202,10 +200,10 @@
                                                                           "moyenne" : 650,
                                                                           "max" : 2000,
                                                                           "nom": "La radioactivité"
-                                                                
+
 
     }],
-    
+
     "enseignement_superieur":
     ["58759fb5a3a7291596b43543","8be13bf9-f50e-4ef0-b143-e825d6a17a02", { "insee" : 1,
                                                                           "delimiteur" : ";",
@@ -217,7 +215,7 @@
                                                                           "max" : 0.000114,
                                                                           "categorie": "qualité_de_vie",
                                                                           "nom": "Possibilité d'études"
-                                                                
+
 
     }],
     "coordonnees":
@@ -227,7 +225,7 @@
                                                                           "colonne_donnee" : [5,6],
                                                                           "source" : "www.data.gouv.fr",
                                                                           "type" : "Null"
-                                                                
+                                                     
 
     }]
 }

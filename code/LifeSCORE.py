@@ -16,14 +16,10 @@ avec des arguments précis (.place(relx et rely))
 '''
 
 
-
 # Bibliothèques essentielles pour la mise à jour des autres bibliothèques
 import subprocess
 import sys
 import os
-
-
-
 
 
 # Message de bienvenue sur le terminal
@@ -74,8 +70,10 @@ for module in open(os.path.join(nom_du_repertoire,os.pardir, "requirements.txt")
 if nouvelle_bibliotheque == True :
     print("\n\n\n\n\n********************\n[ATTENTION]\nVeuillez redémarrer le programme pour appliquer l'instation des bibliothèques.\n\n********************\n\n\n\n\n")
     input("Veuillez presser entrer pour quitter.")
-    sys.exit(os.system(f"{sys.executable} ./LifeSCORE.py"))
+    sys.exit()
 print("\n\n")
+
+
 
 
 
@@ -223,6 +221,7 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
         change_etat_btn(bouton_param)
         change_etat_btn(bouton_aide)
         if not erreur_maj:
+            
             retour_pages(fenetre_Telechargement,bouton)
             if len(lire_fichier_dico("REPONSE_QCM")) == len(liste_Questions): # Si les données du questionnaires ont déja été remplies
                 fenetre_questionnaire(fenetre,option ="sans_qcm")
