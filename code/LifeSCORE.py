@@ -621,7 +621,7 @@ def fenetre_question(fenetre):
     btn_Arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: page_info(btn_Arrondissement,'arrondissements'), 
                                              text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_Entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
-                                     command=lambda: analyse_ville(entree,msg_Ville,fenetre,btn_Entree),text="Recherche ",font=(polices[0],30, 'bold'),image=image_btn_chercher)
+                                     command=lambda: analyse_ville(entree,msg_Ville,fenetre,btn_Entree,btn_Arrondissement),text="Recherche ",font=(polices[0],30, 'bold'),image=image_btn_chercher)
     
     # Placement des widgets
     msg_Ville.place(relx= 0.5, rely=0.45, anchor = CENTER)
@@ -631,7 +631,7 @@ def fenetre_question(fenetre):
 
 
 
-def analyse_ville(entree,msg,fenetre,bouton = None):
+def analyse_ville(entree,msg,fenetre, btn_Arrondissement,bouton = None):
 
     '''
     Récupère l'entrée, vérifie si la ville existe bien:
@@ -647,6 +647,8 @@ def analyse_ville(entree,msg,fenetre,bouton = None):
     if Donnees_ville.est_commune_france(msg):
         if bouton != None:
             bouton.configure(state=DISABLED) # Pour empêcher de lancer plusieurs fois
+            change_etat_btn(btn_Arrondissement) # Pour éviter des problèmes d'animations
+            change_etat_btn(btn_Parametre)
         msg.configure(text ='Cacul de la note de la commune et de ses "voisins"')
         fenetre.update()
         score = Donnees_ville.note_finale()
@@ -743,8 +745,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
         
         win.update()
         
-        change_etat_btn(btn_Quitter) # Pour éviter des problèmes d'animations
-        change_etat_btn(btn_Parametre)
+        
         
         # Pour chaque entier naturel jusqu'à notre note
         for i in range(score_total_animation+1) :
@@ -756,8 +757,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
             # Mise à jour de la page
             win.update()
             sleep(fonction_animation_score(i, score_total_animation))
- 
-        change_etat_btn(btn_Quitter) # Pour réactiver les bouttons
+
         change_etat_btn(btn_Parametre)
 
         btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico_Notes),
