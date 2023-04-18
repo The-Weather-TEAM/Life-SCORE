@@ -460,11 +460,11 @@ def page_info(btn,attr='info'):
 
 def page_parametres(bouton):
     """
-    Fonction qui ouvre la page de paramètres avec dessus :
+    Fonction qui ouvre la page de paramètres avec :
         - Option pour modifier la fréquence de mises à jour
-        - Volet pour changer le style de l'application 
+        - Un volet pour changer le style de l'application 
         - Un bouton pour fermer la page
-        - Suprimmer donnes d'utilisateur
+        - Un bouton pour supprimer les donnees utilisateurs
 
     - Idee de Nathan et Raphaël, application CTk par Raphaël et application des fréquences de MaJ par Thor & Nathan
 
