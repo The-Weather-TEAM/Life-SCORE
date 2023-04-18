@@ -404,7 +404,7 @@ def fenetre_questionnaire(win,option = None):
     win.mainloop() # pour fermer la fenetre
 
 
-def page_info(btn):
+def page_info(btn,attr='info'):
 
     """
     Ouvre Une page d'informations avec un texte
@@ -413,22 +413,32 @@ def page_info(btn):
     'https://github.com/TomSchimansky/CustomTkinter/blob/master/examples/complex_example.py'
     le reste vient de Raphaël
     """
-
+    change_etat_btn(btn)# Bloque le bouton d'accès à cette page
     # Constante 
-    texte_info=("Bonjour ! Bienvenue sur LifeScore, logiciel permettant d'attribuer une note sur 100 à chaque communes de France."
-    + " Pour commencer, nous réalisons un questionnaire afin de déterminer vos préférences."
-    + " Pour chaques critères (correspondant à un fichier CSV), on définit une note sur 100 ainsi qu'un coefficient propre à lui même en fonction de vos réponses. "
-    + " Nous essayons de réunir un maximum d'informations afin d'avoir une meilleure précision. "
-    + "\n\n Attention : Ce logiciel a seulement pour but d'informer les personnes et nous ne voulons en rien nuire à aucune commune de France.") #Pour une meilleure clarté du code j'écrit ce str ainsi
+    if attr == 'info':
+      texte_info=("Bonjour ! Bienvenue sur LifeScore, logiciel permettant d'attribuer une note sur 100 à chaque communes de France."
+      + " Pour commencer, nous réalisons un questionnaire afin de déterminer vos préférences."
+      + " Pour chaques critères (correspondant à un fichier CSV), on définit une note sur 100 ainsi qu'un coefficient propre à lui même en fonction de vos réponses. "
+      + " Nous essayons de réunir un maximum d'informations afin d'avoir une meilleure précision. "
+      + "\n\n Attention : Ce logiciel a seulement pour but d'informer les personnes et nous ne voulons en rien nuire à aucune commune de France.") #Pour une meilleure clarté du code j'écrit ce str ainsi
 
-    # Initialisation de la page
-    change_etat_btn(btn)
-    page_Info = interface.CTkToplevel() # Toplevel de CTkinter
-    page_Info.title('LifeScore  |  Informations')
+      # Initialisation de la page
+      
+      page_Info = interface.CTkToplevel() # Toplevel de CTkinter
+      page_Info.title('LifeScore  |  Informations')
+      
+    else:
+      # Initialisation
+      page_Info = interface.CTkToplevel()
+      page_Info.title('LifeScore  |  Aide arrondissements')
+      texte_info="""Si Votre ville possède des arrondissements (ex : Paris) :
+  Vous devrez écrire le nom de la ville de cette manière : 
+  "Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
+                  (ex : Paris 2e Arrondissement)"""
+      
     page_Info.iconphoto(False, icone)
     page_Info.minsize(width=int(510*4/3), height=500)
     page_Info.resizable(False, False)
-
     # Création des widgets
     msg_Titre = interface.CTkLabel(page_Info, text="INFORMATIONS", font= (polices[1], 40, 'bold'), text_color="#29A272")
     box_Infos = interface.CTkTextbox(page_Info, width = 580 , corner_radius=0,border_width=2,border_color='grey')
@@ -608,7 +618,7 @@ def fenetre_question(fenetre):
     entree = interface.CTkEntry(fenetre,placeholder_text="ex : Béziers ",width=int(700/3), font = (polices[0],18))
     msg_Ville= interface.CTkLabel(fenetre, text="Veuillez saisir la ville recherchée", width = 1000, font =(polices[0],20), 
                                   justify=CENTER) # font = taille + police, justify comme sur word
-    btn_Arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: page_arrondissement(btn_Arrondissement), 
+    btn_Arrondissement = interface.CTkButton(fenetre, height=int(fenetre.winfo_screenheight()/10),command=lambda: page_info(btn_Arrondissement,'arrondissements'), 
                                              text="",font=(polices[0],30, 'bold'),image=image_btn_aide, fg_color='transparent',hover = False) # Boutton d'aide arrondissements
     btn_Entree = interface.CTkButton(fenetre,height=int(fenetre.winfo_screenheight()/10), 
                                      command=lambda: analyse_ville(entree,msg_Ville,fenetre,btn_Entree),text="Recherche ",font=(polices[0],30, 'bold'),image=image_btn_chercher)
@@ -618,47 +628,6 @@ def fenetre_question(fenetre):
     entree.place(relx=0.5, rely= 0.55, anchor=CENTER)
     btn_Entree.place(relx=0.5, rely= 0.65, anchor = CENTER)
     btn_Arrondissement.place(relx=0.9, rely=0.05 ,anchor = NE)
-
-
-def page_arrondissement(btn):
-
-    '''
-    Ouvre Une fenêtre d'aide avec un texte et un bouton de retour
-
-    - Copie de la fonction page_info() remaniée pour les arrondissements par Raphaël 
-    '''
-    # Initialisation
-    fenetre_Aide = interface.CTkToplevel()
-    fenetre_Aide.title('LifeScore  |  Aide arrondissements')
-    fenetre_Aide.iconphoto(False, icone)
-    fenetre_Aide.resizable(False, False)
-    fenetre_Aide.minsize(width=int(510*4/3), height=500)
-
-    change_etat_btn(btn) # Bloque le bouton d'accès à cette page
-    texte_aide=("""Si Votre ville possède des arrondissements (ex : Paris) :
-Vous devrez écrire le nom de la ville de cette manière : 
-"Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
-                (ex : Paris 2e Arrondissement)""")
-
-    # Création des widgets
-    msg_Titre = interface.CTkLabel(fenetre_Aide, text="AIDE", font= (polices[1], 40, 'bold'), text_color="#29A272")
-    box_Aide = interface.CTkTextbox(fenetre_Aide, width = 580 , corner_radius=0)
-    box_Aide.insert("0.0", text = texte_aide)
-    box_Aide.configure(state = "disabled", font = (polices[0],18),wrap="word") # disabled pour pas qu'on puisse écrire, "word" pour le retour a la ligne
-    btn_Compris = interface.CTkButton(fenetre_Aide, height=int(fenetre_Aide.winfo_screenheight()/10), command=lambda :retour_pages(fenetre_Aide,btn), text="Compris",font=(polices[0],30, 'bold'))
-    
-    
-    # Placement des widgets
-    msg_Titre.place(relx=0.5, rely=0.1, anchor = CENTER)
-    box_Aide.place(relx=0.05,rely=0.2)
-    btn_Compris.place(relx = 0.5, rely = 0.8, anchor = CENTER)
-
-
-    # Protocole de fermeture de page
-    fenetre_Aide.protocol("WM_DELETE_WINDOW", lambda:retour_pages(fenetre_Aide,btn))
-    fenetre_Aide.mainloop()
-
-
 
 
 
