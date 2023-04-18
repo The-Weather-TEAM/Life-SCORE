@@ -574,7 +574,7 @@ def date_derniere_verification() -> str:
 
 def supprimer_donnees_utilisateur():
     '''
-    Efface les choix de qcm dans le fichier ./donnees/options.txt et le cache de l'application
+    Efface les choix du questionnaire dans le fichier ./donnees/options.txt et le cache de l'application
     (Si l'utilisateur souhaite refaire le questionnaire)
 
     - Idee de Thor
