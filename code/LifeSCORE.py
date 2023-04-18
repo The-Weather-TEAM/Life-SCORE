@@ -68,9 +68,8 @@ for module in open(os.path.join(nom_du_repertoire, "systeme/modules.txt"), "r").
 
 # Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
 if nouvelle_bibliotheque == True :
-    print("\n\n\n\n\n********************\n[ATTENTION]\nVeuillez redémarrer le programme pour appliquer l'instation des bibliothèques.\n\n********************\n\n\n\n\n")
-    input("Veuillez presser entrer pour quitter.")
-    sys.exit()
+    print("\n\n\n\n\n********************\nL'application redémarre.\n\n********************\n\n\n\n\n")
+    sys.exit(os.system(f"\"{sys.executable}\" ./LifeSCORE.py")) # re-lance l'application
 print("\n\n")
 
 
