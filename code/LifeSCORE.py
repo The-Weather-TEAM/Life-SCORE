@@ -63,7 +63,7 @@ for module in open(os.path.join(nom_du_repertoire, "systeme/modules.txt"), "r").
         print(moduleSeul, "-> Module installé !")
 
         if output == "": # output == "" quand il y a une erreur d'installation
-            raise ConnectionError("Erreur de connection, verifiez votre connection d'internet!")
+            raise ConnectionError("Erreur de connection, verifiez votre connexion internet!")
 
 
 # Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
