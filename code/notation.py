@@ -324,6 +324,7 @@ class Donnees:
         self.repertoire = os.path.dirname(__file__)
         self.liste_notes = [] # La liste dans laquelle on rempli les notes 
         self.habitants = None
+        self.population = 0
         
         self.notes_finales = {}
 
@@ -844,6 +845,15 @@ class Donnees:
         assert type(qcm_reponses) == type(notes) == dict, "Les arguments doivent etre des dictionaires"
         notes = notes.copy() # Permet d'éviter de modifier le dictionnaire original
 
+        if self.population: # si la population n'est pas vide
+            # note si on aime ville ou campagne (ne sera pas present dans details ou avantages/inconveniants, que note finale)
+            notes["population"] = 50 
+            est_ville = self.population > 5000 # si un ville a plus de 5k habitants, on dit c'est un ville
+
+            # determiner si note est 0 ou 100 par rapport au qcm
+            if est_ville: notes["population"] = 100 if qcm_reponses["Citadin"] else 0
+            else: notes["population"] = 0 if qcm_reponses["Citadin"] else 100
+
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
 
             # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
@@ -851,15 +861,12 @@ class Donnees:
             "Enseignement_Superieur" : ["Possibilité d'études"],
             "Scolarite": ["Les écoles","Les collèges", "Les lycées"],
             "Culture": ["Les musées","Les monuments historiques"],
-            "Citadin" : [], # jsp ptetre l'enlever cette question,
+            "Citadin" : ["population"] if self.population else [],
             "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
             "Precarite" : ["Le prix des maisons","Le prix des appartements"]
-            
-            
         }
 
         liste_moyenne = [0, 0] # (numerateur,  denumerateur) d'un moyenne
-
 
 
         for reponse, valeur in qcm_reponses.items(): # pour chaque reponse du qcm
