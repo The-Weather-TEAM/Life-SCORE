@@ -138,11 +138,11 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(chemin_images_boutons
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
-liste_Questions = [("Aimez vous sortir en ville ?",'Activite'),           # Reproduire les questions dans le même style que la première
+liste_Questions = [("Avez-vous des enfants?",'Scolarite'),          # Reproduire les questions dans le même style que la première
                 ("Êtes vous étudiant ?",'Enseignement_Superieur'),
-                ("Avez-vous des enfants?",'Scolarite'),   
-                ("La culture a-t-elle une place importante pour vous ?",'Culture'),
                 ("Préférez vous la ville à la campagne ?",'Citadin'),
+                ("La culture a-t-elle une place importante pour vous ?",'Culture'),
+                ("Aimez vous sortir en ville ?",'Activite'),
                 ("Êtes vous en recherche d'emploi ?","Cherche_Emploi"),
                 ("Êtes vous dans une situation précaire ?","Precarite")]
 
