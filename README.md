@@ -17,8 +17,7 @@ Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour l
 - Raphaël F.
 - Thor N.
 
-
-
+![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE.svg)
 
 
 # Le projet
