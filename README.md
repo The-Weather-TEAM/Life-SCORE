@@ -1,14 +1,17 @@
 ![LIFESCORE](https://user-images.githubusercontent.com/104134380/233164637-02f39f0a-0e24-474b-a315-11dfad56b244.png)
 
-#### Life score est une application pensée et conçue par quatre étudiants du lycée Henri IV Béziers. Elle permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à plusieurs critères, partout en France.
 
+Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
-#### Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ? Nous avons la solution ! LifeSCORE est une application qui, basée sur vos préférences, va noter n'importe quelle comune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.
+**Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.**
 
+Elle comporte :
+- Un système de mise à jour pour avoir les dernières données ;
+- Une base de données non exhaustive ;
+- Un questionnaire pour connaître l'utilisateur ;
+- Les résultats avec carte, détail des notes ainsi que la comparaison avec les communes voisines.
 
-
-
-Réalisé par :
+Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour les Trophées NSI 2023-2024 :
 - Frédéric M.
 - Nathan B.
 - Raphaël F.
@@ -23,89 +26,88 @@ Le logiciel est reparti en 2 sections : la première est un questionnaire afin d
 
 
 
-### La notation
-Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui est de base 1. Le plus de critères sont réunis afin d'avoir le plus de précision possible. Ils sont répartis en 4 catégories :
 
- - Le climat *(pluie en un an / pollution de l'air / températures / vent / ...)*
- - La qualité de vie (activités / patrimoine / ville fleurie / ...)
- - Le prix *(essence / gaz / loyer / prix de la vie / salaire moyen / ...)*
- - La sécurité *(taux d'accidents / vols / risques / ...)*
+
+### La notation
+Pour chaque critère, on définit une note sur 100 ainsi qu'un coefficient qui dépend de l'utilisateur. Le plus de critères sont réunis afin d'avoir le plus de précision possible. Chaque question est reliée à un ou plusieurs csv, ce qui impactera la note en fonction des resultats obtenus.
+
+
+
 
 
 ### La personnalisation 
-Chaque utilisateur va devoir remplir un formulaire de quelques minutes. Chaque réponse impactera le coefficient de plusieurs critères, pouvant aller de nul à très important. La note ne sera donc pas la même en fonction des besoins de l'utilisateur!
+Chaque utilisateur va devoir remplir un formulaire de quelques questions. Chaque réponse impactera le coefficient de plusieurs critères, pouvant aller de 0.5 à 3. La note ne sera donc pas la même en fonction des besoins de l'utilisateur!
+
+
+
 
 
 ### La gestion d'erreurs
 Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nous faisons tout le possible pour, quoi qu'il arrive, trouver une alternative face à un problème tout en anticipant les erreurs possibles :
-- Système de l'utilisateur pas aux normes
-- Connexion internet
-- Corruption et mise à jour des fichiers...
+- Système de l'utilisateur pas aux normes ;
+- Connexion internet ;
+- Corruption et mise à jour des fichiers ;
+- Comptabilité système...
 
 
 
 
 
-# Version actuelle : v0.6
+# Version actuelle : v1.0
 
-> Première version entièrement fonctionnelle, incluant toutes les fonctionnalités prévues afin d’utiliser l’application dans son plein potentiel.
+> Version finale pour les Trophées NSI.
 
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
-
+Fichiers Python :
 - LifeSCORE.py : *Code principal avec l'interface graphique*
 - notation.py : *Calcule les note*
 - mise_a_jour.py : *Programme de téléchargement et mises à jour des données*
 
-
-Changements :
-
-- Nouvelle carte interactive qui utilise Openstreetmap ;
-- Nouvelle page de paramètres (apparence / fréquence màj / suppression données...) ;
-- Note maintenant la météo de la ville ;
-- Affiche les avantages et inconvénients de la ville ;
-- Application compatible Windows 64bit (10 ou plus récent) et Ubuntu 22 ;
-- Augmentation de la compatibilité des csv : prend en compte ceux sans code INSEE ;
-- Interface plus imagée ;
-- Note également les 10 communes les plus proches avec un système KPP voisins ;
-- Notation accentuée par une fonction sigmoïdale ;
-- Premier téléchargement 125x plus rapide (nouveau système de compression de données) ;
-- Code réorganisé et mieux commenté.
+Dossiers : 
+- systeme : *Où est stocké toutes les données obligatoire au fonctionnement de l'application*
+- donnees : *Dossier facultatif qui stocke les données, réglages utilisateurs ainsi que le cache de l'application*
 
 
 
 
-## Bibliothèques utilisées :
-- requests
+
+## Modules utilisés :
+*(téléchargés automatiquement)*
 - os
-- ssl 
-- time
+- shutil
+- requests
 - csv
 - pandas
+- json
 - datetime
 - time
-- tkinter
-- shutil
 - urllib3
 - http
-- customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
-- tkintermapview (source: https://github.com/TomSchimansky/TkinterMapView)
-- pyglet
+- zipfile
 - subprocess
 - sys
-- json
+- tkinter
+- PIL
+- math
 - random
 - re
+- ssl
+- customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
+- tkintermapview (source: https://github.com/TomSchimansky/TkinterMapView)
+
 
 
 
 
 ## Configuration recommandée :
-- Windows 10/11
-- Python 3.10 ou plus récent
-
-
-- Disponible sur Ubuntu (22) en installant trois compléments :
+- Windows 10 ou 11 64 bits
+- Python 3.10 ou plus récent **avec tkinter**
+- 4Go de RAM ou plus
+- 200Mo de disponible sur le disque dur
+- Écran d'au moins 1366 x 768
+- Une connexion internet lors du premier lancement
+- Disponible sur Linux Ubuntu (22) en installant trois compléments :
 `sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
 
 
@@ -114,23 +116,17 @@ Changements :
 
 # Interface actuelle (preview v0.6)
 ### Page d'accueil :
-![Capture d'écran_20230416_141216](https://user-images.githubusercontent.com/104134380/232309029-d28408a3-5136-4fee-8e87-94d537fc03cf.png)
-
 
 ### Page de paramètres :
-![Capture d'écran_20230402_205550](https://user-![Capture d'écran_20230416_140933](https://user-images.githubusercontent.com/104134380/232308997-3778d21b-2c85-49dc-8606-a3e87cddacb7.png)
 
 
 ### Page d'infos :
-![Capture d'écran_20230402_205558](https://user-![Capture d'écran_20230416_140936](https://user-images.githubusercontent.com/104134380/232309003-5caffb7a-0a1e-47f5-8222-aed79bcf3c93.png)
 
 
 ### Page de téléchargement :
-![Capture d'écran_20230402_205606](https://user-![Capture d'écran_20230416_140940](https://user-images.githubusercontent.com/104134380/232309005-d96aa79d-bb5c-4636-801f-9d6a465a7280.png)
 
 
 ### Page de notation :
-![Capture d'écran_20230416_140952](https://user-images.githubusercontent.com/104134380/232309007-f2f022b2-9b8f-479d-879a-42a062e08bb9.png)
 
 
 
@@ -667,4 +663,4 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 > Test sur des machines virtuelles pour savoir le minimum requis de l'application.
 
-> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.
+> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.q
