@@ -1,0 +1,33 @@
+LES MODULES : 
+
+os
+shutil
+requests
+csv
+pandas
+json
+datetime
+time
+urllib3
+http
+zipfile
+subprocess
+sys
+tkinter
+customtkiner
+tkintermapview
+PIL
+math
+random
+re
+ssl
+
+
+CONFIGURATION recommandée:
+Windows 10/11 64 Bits ou Ubuntu 22
+4 go de ram
+128 mo vram
+200mo de dispo sur le disque dur
+Python 3.11.x (amrche dès 3.9)
+Ecran d'au moins 1366 x 768
+une connexion internet lors du premier lancement

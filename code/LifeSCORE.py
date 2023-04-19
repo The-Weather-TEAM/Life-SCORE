@@ -81,7 +81,7 @@ BIBLIOTHEQUES
 
 '''
 # Nos autres fichiers
-import mise_a_jour as mise_a_jour # Importe les fonctions et met à jour les modules en meme temps
+import mise_a_jour     # Importe les fonctions et met à jour les modules en meme temps
 from notation import * # Import de nos classes créées
 
 # Interface graphique

@@ -1,1 +1,1 @@
-{'Boujan-sur-Libron': 33, 'Sauvian': 33, 'Corneilhan': 38, 'Lieuran-lès-Béziers': 40, 'Bassan': 33, 'Villeneuve-lès-Béziers': 36, 'Lignan-sur-Orb': 33, 'Maraussan': 38, 'Cers': 33, 'Vendres': 58}
+{'Castelnau-le-Lez': 60, 'Clapiers': 58, 'Saint-Jean-de-Védas': 60, 'Montferrier-sur-Lez': 75, 'Lattes': 69, 'Jacou': 56, 'Lavérune': 50, 'Juvignac': 44, 'Saint-Clément-de-Rivière': 72, 'Le Crès': 48, 'Abeilhan': 46, 'Coulobres': 48, 'Bassan': 46, 'Espondeilhan': 40, 'Boujan-sur-Libron': 44, 'Valros': 54, 'Alignan-du-Vent': 58, 'Montblanc': 50, 'Margon': 58, 'Tourbes': 56}

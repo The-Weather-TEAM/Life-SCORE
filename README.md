@@ -2,6 +2,12 @@
 
 #### Life score est une application pensée et conçue par quatre étudiants du lycée Henri IV Béziers. Elle permet, après une analyse de l'utilisateur, d'évaluer des villes et villages sur 100 par rapport à plusieurs critères, partout en France.
 
+
+#### Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ? Nous avons la solution ! LifeSCORE est une application qui, basée sur vos préférences, va noter n'importe quelle comune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.
+
+
+
+
 Réalisé par :
 - Frédéric M.
 - Nathan B.
