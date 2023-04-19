@@ -847,11 +847,11 @@ class Donnees:
         qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
 
             # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
-            "Activite": ['Les festivals'],
-            "Enseignement_Superieur" : ["Possibilité d'études"],
             "Scolarite": ["Les écoles","Les collèges", "Les lycées"],
+            "Enseignement_Superieur" : ["Possibilité d'études"],
+            "Citadin" : [], # jsp ptetre l'enlever cette question,            
             "Culture": ["Les musées","Les monuments historiques"],
-            "Citadin" : [], # jsp ptetre l'enlever cette question,
+            "Activite": ['Les festivals'],
             "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
             "Precarite" : ["Le prix des maisons","Le prix des appartements"]
             
