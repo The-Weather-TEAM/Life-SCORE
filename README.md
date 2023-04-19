@@ -104,26 +104,24 @@ Dossiers :
 - Python 3.10 ou plus récent **avec tkinter**
 - 4Go de RAM ou plus
 - 200Mo de disponible sur le disque dur
-- Écran d'au moins 1366 x 768
+- Écran d'au moins 1366px x 768px
 - Une connexion internet lors du premier lancement
-- Disponible sur Linux Ubuntu (22) en installant trois compléments :
+
+- Disponible sur Linux Ubuntu (testé sur la version 22) en installant trois compléments :
 `sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
 
 
 
 
 
-# Interface actuelle (preview v0.6)
+# Interface actuelle
 ### Page d'accueil :
 
 ### Page de paramètres :
 
-
-### Page d'infos :
-
+### Page d'informations/aide/détail des notes :
 
 ### Page de téléchargement :
-
 
 ### Page de notation :
 
@@ -133,6 +131,8 @@ Dossiers :
 
 # Journal de bord
 Toutes les modifications repertoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
+
+
 
 8 Décembre 2022
 > Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
@@ -543,8 +543,6 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 <sub>Je suis très confiant quant à l'avancée du projet, on pourrait dire que l'on est entré dans la phase finale des retouches pour avoir le meilleur code possible :)</sub>
 
-> Ajout de la fonction qui permet de redémarrer automatiquement l'application :
-![code](https://user-images.githubusercontent.com/104134380/228389760-aa2df1e5-ad27-453a-97bc-f4afa10079e8.png)
 
 
 
@@ -662,4 +660,8 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 > Test sur des machines virtuelles pour savoir le minimum requis de l'application.
 
-> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.q
+> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.
+
+
+
+19 Avril 2023 : Enregistrement de la vidéo de présentation

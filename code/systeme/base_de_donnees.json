@@ -19,9 +19,7 @@
                                                                           "colonne_ville" : 7,
                                                                           "colonne_donnee" : [1],
                                                                           "type" : "simple",
-                                                                          "commentaire" : "https://www.data.gouv.fr/fr/datasets/code-officiel-geographique-cog/",
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "arrondissement" : "1ER ARRONDISSEMENT",
                                                                           "nom": "Le nom de la commune"
 
 

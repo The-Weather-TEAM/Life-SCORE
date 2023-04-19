@@ -588,7 +588,7 @@ class Donnees:
         
         temp = str(self.commune).upper()
         if temp in ['PARIS','MARSEILLE','LYON']:
-            msg.configure(text = "Pour les villes possédant des arrondissements, \nréférez vous à l'aide (bouton en haut à droite)")
+            msg.configure(text = "Pour les villes possédant des arrondissements, \nréférez vous à l'aide (bouton en haut à droite).")
             return False
             
         if "-" in self.commune or ' ' in self.commune:
@@ -703,7 +703,7 @@ class Donnees:
 
         for nom,insee in liste_k_proches:
             if msg != None:
-                msg.configure(text = f'Calcul de {nom} (code : {insee})')
+                msg.configure(text = f'Calcul de {nom}...')
                 win.update()
             if nom in dico_fichier_tempo : # Si on a déjà récupéré ces données là
                 liste_notes.append((nom,dico_fichier_tempo[nom]))

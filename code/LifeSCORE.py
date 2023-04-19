@@ -58,9 +58,9 @@ for module in open(os.path.join(nom_du_repertoire, "systeme/modules.txt"), "r").
     if moduleSeul + "==" in liste_pip:
         print(moduleSeul, "-> Module présent")
     else: 
-        print(moduleSeul, "-> Module installé")
         output = subprocess.run([sys.executable, "-m", "pip", "install", module], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.decode("utf-8")
         nouvelle_bibliotheque = True
+        print(moduleSeul, "-> Module installé !")
 
         if output == "": # output == "" quand il y a une erreur d'installation
             raise ConnectionError("Erreur de connection, verifiez votre connection d'internet!")
@@ -212,7 +212,6 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
         msg_Aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
         progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
         msg_Pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
-        
         fenetre_Telechargement.update()
         
         # Décide ensuite quelle action faire
@@ -415,11 +414,11 @@ def page_info(btn,attr='info'):
     change_etat_btn(btn)# Bloque le bouton d'accès à cette page
     # Constante 
     if attr == 'info':
-      texte_info=("Bonjour ! Bienvenue sur LifeScore, logiciel permettant d'attribuer une note sur 100 à chaque communes de France."
+      texte_info=("Bonjour ! Bienvenue sur LifeScore, l'application permettant d'attribuer une note de compatibilité à chaque communes de France."
       + " Pour commencer, nous réalisons un questionnaire afin de déterminer vos préférences."
-      + " Pour chaques critères (correspondant à un fichier CSV), on définit une note sur 100 ainsi qu'un coefficient propre à lui même en fonction de vos réponses. "
+      + " Pour chaques critères, on définit une note sur 100 ainsi qu'un coefficient propre à lui même en fonction de vos réponses. "
       + " Nous essayons de réunir un maximum d'informations afin d'avoir une meilleure précision. "
-      + "\n\n Attention : Ce logiciel a seulement pour but d'informer les personnes et nous ne voulons en rien nuire à aucune commune de France.") #Pour une meilleure clarté du code j'écrit ce str ainsi
+      + "\n\nAttention : Ce logiciel a seulement pour but d'informer les personnes et nous ne voulons nuire à aucune commune de France. Les notes sont représentatives des données disponibles sur data.gouv.fr.") #Pour une meilleure clarté du code j'écrit ce str ainsi
 
       # Initialisation de la page
       
@@ -648,7 +647,7 @@ def analyse_ville(entree,msg,fenetre, btn_Arrondissement,bouton = None):
             bouton.configure(state=DISABLED) # Pour empêcher de lancer plusieurs fois
             change_etat_btn(btn_Arrondissement) # Pour éviter des problèmes d'animations
             change_etat_btn(btn_Parametre)
-        msg.configure(text ='Cacul de la note de la commune et de ses "voisins"')
+        msg.configure(text ='Cacul de la note de la commune et de ses voisins...')
         fenetre.update()
         score = Donnees_ville.note_finale()
         liste_Voisins = Donnees_ville.k_plus_proches_voisins(10,msg,fenetre)
@@ -760,7 +759,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
         change_etat_btn(btn_Parametre)
 
         btn_Donnees = interface.CTkButton(win,height=int(win.winfo_screenheight()/10), command=lambda:page_detail(btn_Donnees,dico_Notes),
-                                      text= "Détails", font=(polices[0],20, "bold"))
+                                      text= "Détail", font=(polices[0],20, "bold"))
         btn_Donnees.place(relx = 0.38,rely = 0.65, anchor = CENTER) # Pour un détail des données
 
             
@@ -1007,7 +1006,7 @@ else :
 credits_texte = ("""                           Réalisé par :
 Nathan Bosy     : Gestion des données, calculs & compatibilté
 Raphaël Farenc  : Interface graphique & interprétation des notes
-Thor N          : Calcul des coefficients & API
+Thor N.         : Calcul des coefficients & API
 Frédéric Marquet: Recherches pour la base de données""")
 
 
