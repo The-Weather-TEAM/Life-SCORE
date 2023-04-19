@@ -34,7 +34,7 @@
                                                                           "colonne_ville" : 7,
                                                                           "colonne_donnee" : [6],
                                                                           "source" : "www.data.gouv.fr",
-                                                                          "moyenne" : 0.00078740157,
+                                                                          "moyenne" : 0.0002,
                                                                           "max" : 0.0009,
                                                                           "categorie": "qualité_de_vie",
                                                                           "diviseur":6,
