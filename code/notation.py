@@ -848,7 +848,7 @@ class Donnees:
         if self.population: # si la population n'est pas vide
             # note si on aime ville ou campagne (ne sera pas present dans details ou avantages/inconveniants, que note finale)
             notes["population"] = 50 
-            est_ville = self.population > 5000 # si un ville a plus de 5k habitants, on dit c'est un ville
+            est_ville = self.population > 5000 # un commune est un ville a partire de 2k, mais entre 2k et 5k beaucoup resemble a des villages. Donc on prend 5k.
 
             # determiner si note est 0 ou 100 par rapport au qcm
             if est_ville: notes["population"] = 100 if qcm_reponses["Citadin"] else 0
