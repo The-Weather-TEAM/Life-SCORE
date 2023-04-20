@@ -1,7 +1,8 @@
 '''
                     [MISE_A_JOUR.PY]
                                   
- Programme de téléchargement et mises à jour des données automatique
+       Programme de téléchargement et mises à jour
+                 des données automatique
 
 
 
@@ -11,11 +12,6 @@
 - Internet pas indispensable pour le programme, mais bloque lors de la première utilisation ;
 - Implémentation graphique.
 
-
-SOURCES :
-Tout est basé sur nos cours, ou la documentation liée aux bibliothèques utilisés.
-
-Chaque processus est pensé et écrit par Nathan 
 '''
 
 
@@ -587,7 +583,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
         try :
             os.remove(repertoire_donnees+'/cache.txt')
         except :
-            print('Fichier cache innexistant.')
+            print('(fichier cache innexistant)')
 
 
         rajout_donnee = csv.writer(open(repertoire_donnees+'/versions.csv', "a")) # le "a" c'est l'équivalent de .append() pour les tableaux 
@@ -606,4 +602,4 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
 
 
 
-# Fin du programme !
+# Fin du code !

@@ -1,6 +1,5 @@
 ![LIFESCORE](https://user-images.githubusercontent.com/104134380/233164637-02f39f0a-0e24-474b-a315-11dfad56b244.png)
 
-
 Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
 **Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.**
@@ -18,6 +17,11 @@ Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour l
 - Thor N.
 
 
+
+![RELEASE](https://img.shields.io/github/release-date/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![DOWNLOADS](https://img.shields.io/github/downloads/The-Weather-TEAM/Life-SCORE/total?style=for-the-badge)
+![LIGNES](https://img.shields.io/tokei/lines/github/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
 
 
 
@@ -105,28 +109,31 @@ Dossiers :
 - Python 3.10 ou plus récent **avec tkinter**
 - 4Go de RAM ou plus
 - 200Mo de disponible sur le disque dur
-- Écran d'au moins 1366 x 768
+- Écran d'au moins 1366px x 768px
 - Une connexion internet lors du premier lancement
-- Disponible sur Linux Ubuntu (22) en installant trois compléments :
+
+- Disponible sur Linux Ubuntu (testé sur la version 22) en installant trois compléments :
 `sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
 
 
 
 
 
-# Interface actuelle (preview v0.6)
+# Interface actuelle
 ### Page d'accueil :
+![Capture d'écran_20230420_101229](https://user-images.githubusercontent.com/104134380/233303209-a761cec8-2482-4cf9-b3d1-9c6facfe8d55.png)
 
 ### Page de paramètres :
+![Capture d'écran_20230420_101234](https://user-images.githubusercontent.com/104134380/233303233-a22148b0-b4c7-4150-8069-80ddacfa9dae.png)
 
-
-### Page d'infos :
-
+### Page d'informations/aide/détail des notes :
+![Capture d'écran_20230420_101239](https://user-images.githubusercontent.com/104134380/233303255-0e363442-8f5a-4ef5-8b98-b642ac646c60.png)
 
 ### Page de téléchargement :
-
+![Capture d'écran_20230420_101243](https://user-images.githubusercontent.com/104134380/233303269-e340ccb1-43ea-4e7c-88d4-d57294b111e5.png)
 
 ### Page de notation :
+![Capture d'écran_20230420_101253](https://user-images.githubusercontent.com/104134380/233303292-887e8d56-eb0e-4eee-a835-1ccd7786aa53.png)
 
 
 
@@ -134,6 +141,8 @@ Dossiers :
 
 # Journal de bord
 Toutes les modifications repertoriées ici : https://github.com/The-Weather-TEAM/Life-SCORE/commits/main
+
+
 
 8 Décembre 2022
 > Mise en place de l'idée générale : faire une application qui permet de noter les villes. 
@@ -544,8 +553,6 @@ Petite pause pour se concentrer sur nos épreuves de spécialités
 
 <sub>Je suis très confiant quant à l'avancée du projet, on pourrait dire que l'on est entré dans la phase finale des retouches pour avoir le meilleur code possible :)</sub>
 
-> Ajout de la fonction qui permet de redémarrer automatiquement l'application :
-![code](https://user-images.githubusercontent.com/104134380/228389760-aa2df1e5-ad27-453a-97bc-f4afa10079e8.png)
 
 
 
@@ -663,4 +670,8 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 > Test sur des machines virtuelles pour savoir le minimum requis de l'application.
 
-> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.q
+> Nottoyage du code : on enlève la majorité des print qui ne servent à rien.
+
+
+
+19 Avril 2023 : Enregistrement de la vidéo de présentation
