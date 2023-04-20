@@ -6,17 +6,16 @@
 
 
 
-LISTE DES CLASSES :
-- "Donnees" : traitement des données pour le programmme :
+- CLASSE "Donnees" : traitement des données pour le programmme :
      . Traitement des données (transformer les infos d'uun csv en note) par Nathan
      . Savoir si la commune est française par Raphaël
      . Note finale par Raphaël et Nathan
+     
+- "est_connecte" : vérifie si l'utilisateur a accès à internet / au site demandé, fait par Nathan
 
-
-LISTE DES FONCTIONS :
-- "is_connected" : vérifie si l'utilisateur a accès à internet / au site demandé, fait par Nathan
 - Fonctions pour lire/écrire/initialiser les paramètres, fait par Thor
-- Fonction pour calculer une fonction affine, fait par Nathan
+
+- Fonction pour calculer une fonction affine & sigmoïdales, fait par Nathan
 
 '''
 
@@ -588,7 +587,7 @@ class Donnees:
         
         temp = str(self.commune).upper()
         if temp in ['PARIS','MARSEILLE','LYON']:
-            msg.configure(text = "Pour les villes possédant des arrondissements, \nréférez vous à l'aide (bouton en haut à droite).")
+            msg.configure(text = "Pour les villes possédant des arrondissements,\nréférez vous à l'aide (bouton en haut à droite).")
             return False
             
         if "-" in self.commune or ' ' in self.commune:
@@ -862,7 +861,6 @@ class Donnees:
             "Citadin" : ["population"] if self.population else [],            
             "Culture": ["Les musées","Les monuments historiques"],
             "Activite": ['Les festivals'],
-            "Cherche_Emploi": [], # IL NOUS FAUT UN CSV SUR L'EMPLOI
             "Precarite" : ["Le prix des maisons","Le prix des appartements"]
         }
 
@@ -971,9 +969,6 @@ class Donnees:
         if self.commune != '' :
             return str(self.commune)
 
+
+
 # Fin du code !
-if __name__ == "__main__":
-    puissa = Donnees("Magalas")
-    if puissa.est_commune_france(None):
-        puissa.note_finale()
-    puissa.k_plus_proches_voisins(10)

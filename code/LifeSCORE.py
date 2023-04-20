@@ -1,6 +1,9 @@
 '''
                       [LIFESCORE.PY]
-                 CODE PRINCIPAL DE LIFE-SCORE
+               CODE PRINCIPAL DE LIFE-SCORE
+                 
+                 
+                 
 Syntaxe de nos variables : 
     - Les boutons s'écrivent btn_Nom
     - Les fenêtres s'écrivent fenetre_Nom
@@ -13,6 +16,7 @@ Pour tous les widgets du code, leurs création dépendait de notre mémoire sur 
 Les valeurs (de taille, de police, de couleur,... ont été trouvées après plusieurs essais par nous même)
 De même pour les placements, nos connaissances de Tkinter nous ont permis de retrouver certaines méthodes 
 avec des arguments précis (.place(relx et rely))
+
 '''
 
 
@@ -36,7 +40,7 @@ MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 
 - Idée de Nathan
 - Réalisé par Thor
-- Redémarrage requis par Nathan
+- Redémarrage automatique
 '''
 
 # Message sur le terminal
@@ -46,7 +50,7 @@ print(  "################################",
 
 # Verifie si tout les modules dans module.txt sont present, sinon ils sont installés.
 nouvelle_bibliotheque = False
-nom_du_repertoire = os.path.dirname(__file__) # Cherche le chemin du repertoire courant
+nom_du_repertoire = os.path.dirname(__file__) # Cherche le chemin du repertoire couran
 
 # Liste des modules deja installé
 liste_pip = subprocess.run([sys.executable, "-m", "pip", "freeze"], stdout=subprocess.PIPE).stdout.decode("utf-8")
@@ -63,13 +67,13 @@ for module in open(os.path.join(nom_du_repertoire, "systeme/modules.txt"), "r").
         print(moduleSeul, "-> Module installé !")
 
         if output == "": # output == "" quand il y a une erreur d'installation
-            raise ConnectionError("Erreur de connection, verifiez votre connexion internet!")
+            raise ConnectionError("Erreur, verifiez votre connexion internet !")
 
 
 # Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
 if nouvelle_bibliotheque == True :
     print("\n\n\n\n\n********************\nL'application redémarre.\n\n********************\n\n\n\n\n")
-    sys.exit(os.system(f"\"{sys.executable}\" ./LifeSCORE.py")) # re-lance l'application
+    sys.exit(os.system(os.path.join(nom_du_repertoire, "LifeSCORE.py"))) # re-lance l'application
 print("\n\n")
 
 
@@ -77,7 +81,7 @@ print("\n\n")
 
 
 '''
-BIBLIOTHEQUES
+MODULES
 
 '''
 # Nos autres fichiers
@@ -138,13 +142,13 @@ image_btn_aide = interface.CTkImage(light_image=Image.open(chemin_images_boutons
 # Constantes (les questions sont aussi de nous)
 repertoire_donnees = os.path.join(nom_du_repertoire+'/donnees') # Retourne le chemin vers le dossier 'donnees'
 n = 0
+
 liste_Questions = [("Avez-vous des enfants?",'Scolarite'),          # Reproduire les questions dans le même style que la première
                 ("Êtes vous étudiant ?",'Enseignement_Superieur'),
                 ("Préférez vous la ville à la campagne ?",'Citadin'),
                 ("La culture a-t-elle une place importante pour vous ?",'Culture'),
                 ("Aimez vous sortir en ville ?",'Activite'),
-                ("Êtes vous en recherche d'emploi ?","Cherche_Emploi"),
-                ("Êtes vous dans une situation précaire ?","Precarite")]
+                ("Êtes vous dans une situation difficile économiquement ?","Precarite")]
 
 
 dico_Reponses = {} # Traité dans coefficients.py
@@ -186,59 +190,64 @@ def fenetre_telechargement(bouton,fenetre, bouton_param, bouton_aide):
     - Page calquée sur les autres pages d'aides vues plus loin par Raphaël
     - Condition de mise à jour par Nathan
     '''
-    # Si les données doivent être mises à jour, on initialise la page
-    if mise_a_jour.mettre_a_jour() :
-        change_etat_btn(bouton) # Bloque le bouton sur la page principale
-        change_etat_btn(bouton_param)
-        change_etat_btn(bouton_aide)
-        
-        # Initialisation de la page
-        fenetre_Telechargement = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
-        fenetre_Telechargement.title('LifeScore  |  Téléchargement')
-        fenetre_Telechargement.iconphoto(False, icone)
-        fenetre_Telechargement.minsize(width=int(510*4/3), height=384)
-        fenetre_Telechargement.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
-        fenetre_Telechargement.resizable(False, False)
-        fenetre_Telechargement.protocol("WM_DELETE_WINDOW", lambda:retour_pages(fenetre_Telechargement,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
-        
-
-        # Création des widgets
-        msg_Aide = interface.CTkLabel(fenetre_Telechargement, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
-        msg_Pourcentage = interface.CTkLabel(fenetre_Telechargement, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
-        progressbar = interface.CTkProgressBar(fenetre_Telechargement,mode = 'determinate')
-        progressbar.set(0)
-
-        # Placements des widget
-        msg_Aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
-        progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
-        msg_Pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
-        fenetre_Telechargement.update()
-        
-        # Décide ensuite quelle action faire
-        erreur_maj = mise_a_jour.mise_a_jour(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
-        change_etat_btn(bouton_param)
-        change_etat_btn(bouton_aide)
-        if not erreur_maj:
+    try :
+        # Si les données doivent être mises à jour, on initialise la page
+        if mise_a_jour.mettre_a_jour() :
+            change_etat_btn(bouton) # Bloque le bouton sur la page principale
+            change_etat_btn(bouton_param)
+            change_etat_btn(bouton_aide)
             
-            retour_pages(fenetre_Telechargement,bouton)
+            # Initialisation de la page
+            fenetre_Telechargement = interface.CTkToplevel() # Fenetre supplémentairz de tkinter
+            fenetre_Telechargement.title('LifeScore  |  Téléchargement')
+            fenetre_Telechargement.iconphoto(False, icone)
+            fenetre_Telechargement.minsize(width=int(510*4/3), height=384)
+            fenetre_Telechargement.focus() # Ajout de cette ligne pour éviter qur ça passe derrière la page principale
+            fenetre_Telechargement.resizable(False, False)
+            fenetre_Telechargement.protocol("WM_DELETE_WINDOW", lambda:retour_pages(fenetre_Telechargement,bouton)) # Qu'on clique sur le btn_ok ou qu'on ferme la page on obtient le même résultat
+            
+
+            # Création des widgets
+            msg_Aide = interface.CTkLabel(fenetre_Telechargement, text="Lancement de la vérification...", width = 1000, font =(polices[0],16), justify=CENTER)
+            msg_Pourcentage = interface.CTkLabel(fenetre_Telechargement, text="0%", width = 1000, font =(polices[0],12), justify=LEFT)
+            progressbar = interface.CTkProgressBar(fenetre_Telechargement,mode = 'determinate')
+            progressbar.set(0)
+
+            # Placements des widget
+            msg_Aide.place(relx = 0.5, rely = 0.4, anchor = CENTER)
+            progressbar.place(relx=0.5,rely=0.6,anchor = CENTER)
+            msg_Pourcentage.place(relx=0.5,rely=0.65,anchor = CENTER)    
+            fenetre_Telechargement.update()
+            
+            # Décide ensuite quelle action faire
+            erreur_maj = mise_a_jour.mise_a_jour(progressbar,fenetre_Telechargement,msg_Aide,msg_Pourcentage)
+            change_etat_btn(bouton_param)
+            change_etat_btn(bouton_aide)
+            if not erreur_maj:
+                
+                retour_pages(fenetre_Telechargement,bouton)
+                if len(lire_fichier_dico("REPONSE_QCM")) == len(liste_Questions): # Si les données du questionnaires ont déja été remplies
+                    fenetre_questionnaire(fenetre,option ="sans_qcm")
+                else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
+                    fenetre_questionnaire(fenetre)
+            else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
+                retour_pages(fenetre_Telechargement,bouton)
+                fenetre_erreur(fenetre)
+                
+            fenetre_Telechargement.mainloop()
+        
+
+        
+        # Si il n'y a pas de mise à jour à faire, on saute cette étape
+        else : 
             if len(lire_fichier_dico("REPONSE_QCM")) == len(liste_Questions): # Si les données du questionnaires ont déja été remplies
                 fenetre_questionnaire(fenetre,option ="sans_qcm")
             else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
                 fenetre_questionnaire(fenetre)
-        else: # Fenetre d'erreur en cas d'erreur dans le téléchargement
-            retour_pages(fenetre_Telechargement,bouton)
-            fenetre_erreur(fenetre)
             
-        fenetre_Telechargement.mainloop()
-        
-    # Si il n'y a pas de mise à jour à faire, on saute cette étape
-    else : 
-        if len(lire_fichier_dico("REPONSE_QCM")) == len(liste_Questions): # Si les données du questionnaires ont déja été remplies
-            fenetre_questionnaire(fenetre,option ="sans_qcm")
-        else: # Si les données ne sont pas toutes présentes (on lance le questionnaire)
-            fenetre_questionnaire(fenetre)
-        
-
+    except TclError :
+        # Si on ferme la fenêtre pendant la vérification de la mise à jour
+        print("Recherche de mises à jour annulée\n\n\n")
 
 
 '''
@@ -430,9 +439,10 @@ def page_info(btn,attr='info'):
       page_Info = interface.CTkToplevel()
       page_Info.title('LifeScore  |  Aide arrondissements')
       texte_info="""Si Votre ville possède des arrondissements (ex : Paris) :
-  Vous devrez écrire le nom de la ville de cette manière : 
-  "Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
-                  (ex : Paris 2e Arrondissement)"""
+Vous devrez écrire le nom de la ville de cette manière : 
+"Ville 1er Arrondissement" ou "Ville Ne Arrondissement" 
+
+(ex : Paris 2e Arrondissement)"""
       
     page_Info.iconphoto(False, icone)
     page_Info.minsize(width=int(510*4/3), height=500)
@@ -682,7 +692,7 @@ def fenetre_resultat(ville,win,liste_Dix_villes,score):
     dico_Notes = Donnees_ville.notes_finales 
     bonus,malus = avantages_inconvenients(dico_Notes) 
     box_Voisins = interface.CTkTextbox(win, width = 580 ,height = 150, corner_radius=0)
-    texte = "Notes des communes voisines :\n"
+    texte = "Notes estimées des communes voisines :\n"
 
     for nom,note in liste_Dix_villes:
         texte += f'\n - {str(nom)} : {str(note)}/100'
@@ -1041,3 +1051,7 @@ credits.place(relx=0.5,rely=0.9, anchor = S)
 btn_Info.place(relx=0.9, rely=0.05 ,anchor = NE) # NE = NorthEast (en haut à droite)
 
 fenetrePrincipale.mainloop()
+
+
+
+# Fin du code !
