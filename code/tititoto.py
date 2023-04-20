@@ -19,3 +19,16 @@ Fred
 
 
     }]
+
+    
+Thor
+qcm_to_criteres = { # Chaque reponse du QCM et ses notes qui sont en relation
+    
+    # ex: si Activite est 0 dans le QCM, la note 'Les festivales' aura un moindre coefficent dans la note final
+    "Scolarite": ["Les écoles","Les collèges", "Les lycées"],
+    "Enseignement_Superieur" : ["Possibilité d'études"],
+    "Citadin" : ["population"] if self.population else [],            
+    "Culture": ["Les musées","Les monuments historiques"],
+    "Activite": ['Les festivals'],
+    "Precarite" : ["Le prix des maisons","Le prix des appartements"]
+}
