@@ -295,7 +295,7 @@ def avancer(fenetre):
         btn_Droite.place(relx=0.60,rely=0.5,anchor=CENTER)
         msg_Principal.configure(text =f'{liste_Questions[n][0]}') # Affiche la premiere question
     else:
-        efface_fenetre(fenetre,"Efface_reste")    
+        efface_fenetre(fenetre)    
         fenetre_question(fenetre) # Ouvre la seconde page : Fin de la première
 
 
