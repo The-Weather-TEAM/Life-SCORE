@@ -1,5 +1,9 @@
 ![LIFESCORE](https://user-images.githubusercontent.com/104134380/233164637-02f39f0a-0e24-474b-a315-11dfad56b244.png)
 
+![RELEASE](https://img.shields.io/github/release-date/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![DOWNLOADS](https://img.shields.io/github/downloads/The-Weather-TEAM/Life-SCORE/total?style=for-the-badge)
+![LIGNES](https://img.shields.io/tokei/lines/github/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
 
 Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
@@ -16,8 +20,6 @@ Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour l
 - Nathan B.
 - Raphaël F.
 - Thor N.
-
-![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE.svg)
 
 
 # Le projet
@@ -116,14 +118,19 @@ Dossiers :
 
 # Interface actuelle
 ### Page d'accueil :
+![Capture d'écran_20230420_101229](https://user-images.githubusercontent.com/104134380/233303209-a761cec8-2482-4cf9-b3d1-9c6facfe8d55.png)
 
 ### Page de paramètres :
+![Capture d'écran_20230420_101234](https://user-images.githubusercontent.com/104134380/233303233-a22148b0-b4c7-4150-8069-80ddacfa9dae.png)
 
 ### Page d'informations/aide/détail des notes :
+![Capture d'écran_20230420_101239](https://user-images.githubusercontent.com/104134380/233303255-0e363442-8f5a-4ef5-8b98-b642ac646c60.png)
 
 ### Page de téléchargement :
+![Capture d'écran_20230420_101243](https://user-images.githubusercontent.com/104134380/233303269-e340ccb1-43ea-4e7c-88d4-d57294b111e5.png)
 
 ### Page de notation :
+![Capture d'écran_20230420_101253](https://user-images.githubusercontent.com/104134380/233303292-887e8d56-eb0e-4eee-a835-1ccd7786aa53.png)
 
 
 
