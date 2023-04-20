@@ -2,7 +2,7 @@
 
 Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
-**Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.**
+**Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faite pour vous, basé sur de nombreux critères.**
 
 Elle comporte :
 - Un système de mise à jour pour avoir les dernières données ;
