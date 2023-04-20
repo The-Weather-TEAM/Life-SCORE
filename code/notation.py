@@ -292,7 +292,7 @@ def calculer_fonction_sigmoide(moyenne, maximum, x) : # Deux points correspondan
     '''
     Ici on utilise une fonction sigmoïde (en forme de S) pour accentuer les notations :
     
-    Souvent les villes sont proches de la moyenne nationnale, pour éviter d'avoir des notes trop homogène on
+    Souvent les villes sont proches de la moyenne nationnale, pour éviter d'avoir des notes trop homogènes on
     accentue le résultat avec ceci.
     
     '''

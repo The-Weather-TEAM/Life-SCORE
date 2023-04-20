@@ -1014,10 +1014,10 @@ else :
 
 
 credits_texte = ("""                           Réalisé par :
-Nathan Bosy     : Gestion des données, calculs & compatibilté
+Nathan Bosy     : Gestion des données, calculs & compatibilité
 Raphaël Farenc  : Interface graphique & interprétation des notes
-Thor N.         : Calcul des coefficients & API
-Frédéric Marquet: Recherches pour la base de données""")
+Thor N.         : Calcul des coefficients, modules & API
+Frédéric Marquet: Recherches liées à la base de données""")
 
 
 # Création des widgets
