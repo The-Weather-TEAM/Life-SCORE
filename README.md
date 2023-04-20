@@ -1,10 +1,5 @@
 ![LIFESCORE](https://user-images.githubusercontent.com/104134380/233164637-02f39f0a-0e24-474b-a315-11dfad56b244.png)
 
-![RELEASE](https://img.shields.io/github/release-date/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
-![DOWNLOADS](https://img.shields.io/github/downloads/The-Weather-TEAM/Life-SCORE/total?style=for-the-badge)
-![LIGNES](https://img.shields.io/tokei/lines/github/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
-![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
-
 Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
 **Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faire pour vous, basé sur de nombreux critères.**
@@ -20,6 +15,14 @@ Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour l
 - Nathan B.
 - Raphaël F.
 - Thor N.
+
+
+
+![RELEASE](https://img.shields.io/github/release-date/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![DOWNLOADS](https://img.shields.io/github/downloads/The-Weather-TEAM/Life-SCORE/total?style=for-the-badge)
+![LIGNES](https://img.shields.io/tokei/lines/github/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
+
 
 
 # Le projet
