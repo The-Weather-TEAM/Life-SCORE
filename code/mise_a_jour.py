@@ -299,7 +299,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
                 VERIFICATION VERSION
                 Idée et code par Nathan
                 
-                Les métadonnées ont été trouvés avec la documentation de opendatasoft.com
+                Les métadonnées ont été trouvées avec la documentation de opendatasoft.com
                 '''
                 
                 # On récupère les données du CSV à l'aide d'un protocole :
@@ -575,7 +575,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
     
     '''
     AJOUT DES INFOS DES NOUVELLES VERSIONS TELECHARGEES
-    Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
+    Pensé et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
     '''
     
     if est_modifie and not est_mise_a_jour :
