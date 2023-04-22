@@ -146,7 +146,7 @@ def mettre_a_jour() :
     pour éviter qu'une fenêtre s'ouvre même si on doit pas mettre à jour.
     '''
     # Temps en secondes entre les vérifications de mises à jour :
-    frequence_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
+    frequence_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans notation.py
     derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
     if time.time() - derniere_maj < frequence_maj :
         return False
@@ -182,7 +182,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
 
 
 
-    # Test de connexion internet sur le site data.gouv.fr dans classes.py
+    # Test de connexion internet sur le site data.gouv.fr dans notation.py
     # Basé sur un ancien projet de Frédéric et Nathan
     test_connexion = est_connecte('https://www.data.gouv.fr')
 

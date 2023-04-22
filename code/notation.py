@@ -154,7 +154,7 @@ def calcul_note_ideale(dict_valeursIdeales :dict, dict_valeursSaisies: dict) -> 
     - Idée de Thor : L'idée s'apparente à celle du calcul du pourcentage d'une pente sauf qu'ici on cherche l'écart 
                     de la valeur en fonction de la longueur d'étude de ces valeurs
     '''
-    assert type(dict_valeursIdeales) == type(dict_valeursIdeales) == dict, "Les valeurs saisit doivent etre dans des dictionaires."
+    assert type(dict_valeursIdeales) == type(dict_valeursIdeales) == dict, "Les valeurs saisies doivent etre dans des dictionaires."
     
     dict_notes = {}
 
