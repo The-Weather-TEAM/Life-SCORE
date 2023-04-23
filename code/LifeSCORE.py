@@ -29,7 +29,7 @@ import os
 # Message de bienvenue sur le terminal
 print(  "####################################################",
       "\n##                   LIFE-SCORE                   ##",
-      "\n##              Terminal de débogage              ##",
+      "\n##            Vérification des modules            ##",
       "\n####################################################\n\n",)
 
 
@@ -42,11 +42,6 @@ MODULE DE MISE A JOUR DES BIBLIOTHEQUES
 - Réalisé par Thor
 - Redémarrage automatique
 '''
-
-# Message sur le terminal
-print(  "################################",
-      "\n##  Installation des modules  ##",
-      "\n################################\n\n",)
 
 # Verifie si tout les modules dans module.txt sont present, sinon ils sont installés.
 nouvelle_bibliotheque = False
@@ -170,6 +165,10 @@ if systeme_exploitation == 'Linux' :
                'Ubuntu']
     
 else :
+    # Pour fermer le terminal sur Windows
+    import win32gui, win32con
+    win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
+        
     polices = ['Arial',
                'Arial Black']
 
