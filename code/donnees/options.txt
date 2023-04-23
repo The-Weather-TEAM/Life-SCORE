@@ -1,1 +1,0 @@
-{'APPARENCE': 'System', 'FREQ_MAJ': 0, 'DERNIERE_MAJ': 1681978363.0175133, 'REPONSE_QCM': {'Scolarite': 0, 'Enseignement_Superieur': 1, 'Citadin': 1, 'Culture': 1, 'Activite': 1, 'Precarite': 0}}

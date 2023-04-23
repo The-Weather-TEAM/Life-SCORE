@@ -170,12 +170,6 @@ if systeme_exploitation == 'Linux' :
                'Ubuntu']
     
 else :
-    
-    # Pour fermer le terminal sur Windows
-    import win32gui, win32con
-    win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
-        
-    
     polices = ['Arial',
                'Arial Black']
 
@@ -301,7 +295,7 @@ def avancer(fenetre):
         btn_Droite.place(relx=0.60,rely=0.5,anchor=CENTER)
         msg_Principal.configure(text =f'{liste_Questions[n][0]}') # Affiche la premiere question
     else:
-        efface_fenetre(fenetre)    
+        efface_fenetre(fenetre,"Efface_reste")    
         fenetre_question(fenetre) # Ouvre la seconde page : Fin de la première
 
 
@@ -508,7 +502,7 @@ def page_parametres(bouton):
                                             command=lambda:modifier_fichier_dico("FREQ_MAJ", round(abs(float(entree_Frequence_maj.get()))*86400),"donnees/options.txt", msg_General)
                                             if est_nombre(entree_Frequence_maj.get()) \
                                             else msg_General.configure(text = "Vous devez entrer un nombre !"), # "\" permet un retour à la ligne dans le code
-                                            text="Confirmer") # modifier_fichier_dico() se trouve dans notation.py
+                                            text="Confirmer") # modifier_fichier_dico() se trouve dans classes.py
     btn_Supprimer_donnees = interface.CTkButton(fenetre_Param, width = 134, height = 42,
                                                 command=supprimer_donnees_utilisateur,
                                                 text="SUPPRIMER",
@@ -580,7 +574,7 @@ def date_derniere_verification() -> str:
     
     - Idee de Thor avec la documentation du module Time 'https://docs.python.org/3/library/time.html'
     '''
-    derniere_maj_sec = lire_fichier_dico("DERNIERE_MAJ") # Cette fonction provient de notation.py
+    derniere_maj_sec = lire_fichier_dico("DERNIERE_MAJ") # Cette fonction provient de classes.py
     if derniere_maj_sec == 0 :
         return "aucune vérification"
     return strftime("le %d/%m/%Y", localtime(derniere_maj_sec)) # Formate la donnée en jour mois année, heure minute
@@ -652,7 +646,7 @@ def analyse_ville(entree,msg,fenetre, btn_Arrondissement,bouton = None):
         - Si oui, continue vers la page suivante
         - Sinon, affiche un message d'erreur
     
-        - L'idée de créer une classe de Donnees est détaillée dans notation.py , le reste est de Raphaël
+        - L'idée de créer une classe de Donnees est détaillée dans classes.py , le reste est de Raphaël
     '''
     global Donnees_ville
     
@@ -983,7 +977,7 @@ if not os.path.exists(repertoire_donnees):
 '''
 RECUPERATION STYLE
 
-- Fonction lire_fichier_dico fait par Thor dans notation.py
+- Fonction lire_fichier_dico fait par Thor dans classes.py
 
 '''
 
@@ -1020,10 +1014,10 @@ else :
 
 
 credits_texte = ("""                           Réalisé par :
-Nathan Bosy     : Gestion des données, calculs & compatibilité
+Nathan Bosy     : Gestion des données, calculs & compatibilté
 Raphaël Farenc  : Interface graphique & interprétation des notes
-Thor N.         : Calcul des coefficients, modules & API
-Frédéric Marquet: Recherches liées à la base de données""")
+Thor N.         : Calcul des coefficients & API
+Frédéric Marquet: Recherches pour la base de données""")
 
 
 # Création des widgets

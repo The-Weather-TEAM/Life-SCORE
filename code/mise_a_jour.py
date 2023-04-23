@@ -146,7 +146,7 @@ def mettre_a_jour() :
     pour éviter qu'une fenêtre s'ouvre même si on doit pas mettre à jour.
     '''
     # Temps en secondes entre les vérifications de mises à jour :
-    frequence_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans notation.py
+    frequence_maj = lire_fichier_dico("FREQ_MAJ") #  Renvoie vers la fonction de Thor dans classes.py
     derniere_maj = lire_fichier_dico("DERNIERE_MAJ") 
     if time.time() - derniere_maj < frequence_maj :
         return False
@@ -182,7 +182,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
 
 
 
-    # Test de connexion internet sur le site data.gouv.fr dans notation.py
+    # Test de connexion internet sur le site data.gouv.fr dans classes.py
     # Basé sur un ancien projet de Frédéric et Nathan
     test_connexion = est_connecte('https://www.data.gouv.fr')
 
@@ -299,7 +299,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
                 VERIFICATION VERSION
                 Idée et code par Nathan
                 
-                Les métadonnées ont été trouvées avec la documentation de opendatasoft.com
+                Les métadonnées ont été trouvés avec la documentation de opendatasoft.com
                 '''
                 
                 # On récupère les données du CSV à l'aide d'un protocole :
@@ -575,8 +575,7 @@ def mise_a_jour(barre_de_chargement, fenetre, msg_information, msg_pourcentage):
     
     '''
     AJOUT DES INFOS DES NOUVELLES VERSIONS TELECHARGEES
-    Pensé et réalisé par Nathan, on a trouvé le "a" avec la documentation de python sur les fichiers (open,writer)
-    pour éviter de faire planter l'application
+    Pesné et réalisé par Nathan, on a trouvé le "a" ligne 479 sur stackoverflow pour éviter de planter l'application
     '''
     
     if est_modifie and not est_mise_a_jour :

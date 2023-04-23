@@ -1,1 +1,0 @@
-{'Boujan-sur-Libron': 29, 'Sauvian': 29, 'Corneilhan': 38, 'Lieuran-lès-Béziers': 40, 'Bassan': 29, 'Villeneuve-lès-Béziers': 35, 'Lignan-sur-Orb': 29, 'Maraussan': 36, 'Cers': 29, 'Vendres': 46, 'Portiragnes': 38, 'Montblanc': 38, 'Sérignan': 62, 'Vias': 60, 'Servian': 42, 'Valras-Plage': 50, 'Béziers': 90}
