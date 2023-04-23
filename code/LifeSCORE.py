@@ -170,6 +170,12 @@ if systeme_exploitation == 'Linux' :
                'Ubuntu']
     
 else :
+    
+    # Pour fermer le terminal sur Windows
+    import win32gui, win32con
+    win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
+        
+    
     polices = ['Arial',
                'Arial Black']
 
