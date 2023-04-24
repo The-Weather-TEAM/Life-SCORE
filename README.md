@@ -701,3 +701,10 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 
 19 Avril 2023 : Enregistrement de la vidéo de présentation
+
+
+
+24 Avril 2023
+> Dernières résolutions de cohérences
+
+> On bloque l'accès à l'écriture une fois que la recherche est lancée (sinon on peut écrire "BeziersJJJJJj" c'est pas joli)
