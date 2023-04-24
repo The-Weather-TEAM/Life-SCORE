@@ -97,6 +97,8 @@ Dossiers :
 - random
 - re
 - ssl
+- win32gui
+- win32con
 - customtkinter (source : https://github.com/TomSchimansky/CustomTkinter)
 - tkintermapview (source: https://github.com/TomSchimansky/TkinterMapView)
 
@@ -104,16 +106,40 @@ Dossiers :
 
 
 
-## Configuration recommandée :
-- Windows 10 ou 11 64 bits
-- Python 3.10 ou plus récent **avec tkinter**
-- 4Go de RAM ou plus
-- 200Mo de disponible sur le disque dur
-- Écran d'au moins 1366px x 768px
-- Une connexion internet lors du premier lancement
+# Lancement
 
-- Disponible sur Linux Ubuntu (testé sur la version 22) en installant trois compléments :
-`sudo apt-get install python3-pip python3-tk python3-pil.imagetk`
+> *Lors du premier lancement, un terminal de débogage va s’ouvrir pour installer les modules manquants, il peut redémarrer s’il manque des modules ou s’il y a eu des mises à jour. Ensuite, l’application se lance normalement !*
+
+### CONFIGURATION RECOMMANDÉE :
+
+- Windows 10 ou 11 (64 bits) ou Ubuntu (22) ;
+- 1 Go de RAM ou plus ;
+- 200 Mo de disponible sur le disque dur ;
+- Conçu pour un écran d’au moins 1366x768 ;
+- Python 3.9.0 ou plus récent avec TKINTER et PIP ;
+- Une connexion internet lors du premier lancement.
+
+
+
+### WINDOWS : 
+
+- Installer la dernière version de Python ici : https://www.python.org/downloads/
+> Faire l’installation personnalisée en sélectionnant pip et tcl/tk !
+
+- Lancer LifeSCORE.py avec Python
+
+
+
+### LINUX : 
+- Ouvrir le terminal et installer les modules tkinter manquants de base dans Ubuntu :
+`sudo apt install python3-pip python3-tk python3-pil.imagetk`
+
+- Lancer LifeSCORE.py sur le terminal : 
+`sudo python3 {chemin}/LifeSCORE.py`
+
+
+
+
 
 
 
