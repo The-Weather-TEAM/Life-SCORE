@@ -68,7 +68,7 @@ for module in open(os.path.join(nom_du_repertoire, "systeme/modules.txt"), "r").
 # Pour éviter de lancer le programme sans avoir bien installé les bibliothèques - Fait par Nathan
 if nouvelle_bibliotheque == True :
     print("\n\n\n\n\n********************\nL'application redémarre.\n\n********************\n\n\n\n\n")
-    sys.exit(os.system(os.path.join(nom_du_repertoire, "LifeSCORE.py"))) # re-lance l'application
+    sys.exit(os.system(os.path.join(nom_du_repertoire, "LifeSCORE.py"))) # relance l'application
 print("\n\n")
 
 
@@ -494,7 +494,7 @@ def page_parametres(bouton):
     msg_Verif = interface.CTkLabel(fenetre_Param, text=f"Dernière Vérification : {date_derniere_verification()}", font= (polices[0], 16), text_color="#646464")
     msg_Apparence = interface.CTkLabel(fenetre_Param, text="APPARENCE DE L'APPLICATION", font= (polices[0], 25), text_color="#29A272")
     msg_Donnees = interface.CTkLabel(fenetre_Param, text="DONNÉES UTILISATEUR", font= (polices[0], 25), text_color="#29A272")
-    msg_General = interface.CTkLabel(fenetre_Param,text="Le bouton de suppression des données fermera le programme.", width = 50, font =(polices[0],18)) # font = taille + police, justify comme sur word
+    msg_General = interface.CTkLabel(fenetre_Param,text="Le bouton de suppression des données redémarrera le programme.", width = 50, font =(polices[0],18)) # font = taille + police, justify comme sur word
 
     # Tous les boutons présents :
     btn_Confirm_frequence = interface.CTkButton(fenetre_Param, width = 7, 
@@ -588,7 +588,7 @@ def supprimer_donnees_utilisateur():
     '''
     modifier_fichier_dico("REPONSE_QCM", {}) # remet les choix du qcm a vide (donc on devra le refaire)
     os.remove(repertoire_donnees+'/cache.txt')
-    sys.exit() # Ferme le programme pour éviter de potentielles erreurs
+    sys.exit(os.system(os.path.join(nom_du_repertoire, "LifeSCORE.py"))) # relance l'application
 
 
 def change_apparence_page(choix):
