@@ -661,6 +661,7 @@ def analyse_ville(entree,msg,fenetre, btn_Arrondissement,bouton = None):
             bouton.configure(state=DISABLED) # Pour empêcher de lancer plusieurs fois
             change_etat_btn(btn_Arrondissement) # Pour éviter des problèmes d'animations
             change_etat_btn(btn_Parametre)
+        entree.configure(state="DISABLED")
         msg.configure(text ='Cacul de la note de la commune et de ses voisins...')
         fenetre.update()
         score = Donnees_ville.note_finale()
