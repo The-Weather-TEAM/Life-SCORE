@@ -708,3 +708,8 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 > Dernières résolutions de cohérences
 
 > On bloque l'accès à l'écriture une fois que la recherche est lancée (sinon on peut écrire "BeziersJJJJJj" c'est pas joli)
+
+
+
+26 Mai : Remise des prix à l'entreprise Dell Montpellier
+> Obtention du lauréat de "meilleur projet de terminale" dans l'Occitanie !
