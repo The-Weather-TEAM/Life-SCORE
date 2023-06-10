@@ -166,10 +166,10 @@ if systeme_exploitation == 'Linux' :
     
 else :
     
-    # Pour fermer le terminal sur Windows (Nous avons décidé de ne pas exécuter ces 2 lignes)
+    # Pour fermer le terminal sur Windows
     # Source : https://stackoverflow.com/questions/764631/how-to-hide-console-window-in-python
-    #import win32gui, win32con
-    #win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
+    import win32gui, win32con
+    win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
      
     polices = ['Arial',
                'Arial Black']
