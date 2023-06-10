@@ -1,5 +1,8 @@
 ![LIFESCORE](https://user-images.githubusercontent.com/104134380/233164637-02f39f0a-0e24-474b-a315-11dfad56b244.png)
 
+# Prix du meilleur projet Terminale d'Occitanie !
+
+
 Vous souhaitez aménager d'ici peu dans une nouvelle commune, mais vous ne savez pas si celle-ci vous correspond ?
 
 **Life SCORE est une application qui, basée sur vos préférences, va noter n'importe quelle commune française et va vous donner un score de compatibilité pour savoir si cette dernière est faite pour vous, basé sur de nombreux critères.**
@@ -20,7 +23,6 @@ Elle a été réalisée par quatre étudiants du lycée Henri IV Béziers pour l
 
 ![RELEASE](https://img.shields.io/github/release-date/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
 ![DOWNLOADS](https://img.shields.io/github/downloads/The-Weather-TEAM/Life-SCORE/total?style=for-the-badge)
-![LIGNES](https://img.shields.io/tokei/lines/github/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
 ![LICENSE](https://img.shields.io/github/license/The-Weather-TEAM/Life-SCORE?style=for-the-badge)
 
 
@@ -553,7 +555,6 @@ Toutes les modifications repertoriées ici : https://github.com/The-Weather-TEAM
 
 
 Petite pause pour se concentrer sur nos épreuves de spécialités
--------------
 
 
 22 Mars 2023:
@@ -704,12 +705,21 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 
 
 
-24 Avril  : Envoi du projet aux "Trophées NSI"
+24 Avril 2023 : Envoi du projet aux "Trophées NSI"
 > Dernières résolutions de cohérences
 
 > On bloque l'accès à l'écriture une fois que la recherche est lancée (sinon on peut écrire "BeziersJJJJJj" c'est pas joli)
 
 
 
-26 Mai : Remise des prix à l'entreprise Dell Montpellier
+26 Mai 2023 : Remise des prix à l'entreprise Dell Montpellier
 > Obtention du lauréat de "meilleur projet de terminale" dans l'Occitanie !
+
+
+
+10 Juin 2023 : **Nouvelle version v1.0.1**
+> Mise à jour du fichier zip pour le premier téléchargement ;
+
+> Le terminal ne s'affiche plus lors de l'utilisation de l'pplication ;
+
+> Suppression du CSV lycées.

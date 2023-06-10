@@ -57,6 +57,7 @@
 "27375","Louviers","acv-124","Louviers",2018-10-01
 "27681","Vernon","acv-212","Vernon",2018-07-02
 "28085","Chartres","acv-054","Chartres",2018-07-13
+"28088","Châteaudun","acv-224","Châteaudun",
 "28134","Dreux","acv-078","Dreux",2018-07-09
 "28280","Nogent-le-Rotrou","acv-151","Nogent-le-Rotrou",2018-07-13
 "29151","Morlaix","acv-145","Morlaix",2018-09-21
@@ -66,6 +67,7 @@
 "30007","Alès","acv-007","Alès",2018-10-10
 "30028","Bagnols-sur-Cèze","acv-021","Bagnols-sur-Cèze",2018-10-03
 "31451","Revel","acv-165","Revel",2018-09-14
+"31483","Saint-Gaudens","acv-227","Saint-Gaudens",
 "32013","Auch","acv-016","Auch",2018-10-12
 "33243","Libourne","acv-116","Libourne",2018-09-28
 "34003","Agde","acv-002","Agde",2018-10-29
@@ -132,7 +134,9 @@
 "59172","Denain","acv-072","Denain",2018-09-28
 "59178","Douai","acv-076","Douai",2018-09-20
 "59183","Dunkerque","acv-079","Dunkerque",2018-09-28
+"59295","Hazebrouck","acv-225","Hazebrouck",
 "59392","Maubeuge","acv-131","Maubeuge",2018-09-28
+"59569","Sin-le-Noble","acv-229","Sin-le-Noble",
 "59606","Valenciennes","acv-208","Valenciennes",2018-09-28
 "60057","Beauvais","acv-027","Beauvais",2018-06-11
 "60159","Compiègne","acv-065","Compiègne",2018-09-28
@@ -159,6 +163,7 @@
 "66136","Perpignan","acv-156","Perpignan",2018-09-26
 "67180","Haguenau","acv-101","Haguenau",2018-08-22
 "67437","Saverne","acv-192","Saverne",2018-09-19
+"67462","Sélestat","acv-228","Sélestat",
 "68066","Colmar","acv-064","Colmar",2018-08-23
 "68112","Guebwiller","acv-099","Guebwiller",2018-09-07
 "69243","Tarare","acv-198","Tarare",2018-09-25
@@ -195,6 +200,7 @@
 "81004","Albi","acv-005","Albi",2018-08-17
 "81065","Castres","acv-047","Castres - Mazamet",2018-09-28
 "81163","Mazamet","acv-047","Castres - Mazamet",2018-09-28
+"82033","Castelsarrasin","acv-223","Castelsarrasin",
 "82121","Montauban","acv-138","Montauban",2018-07-09
 "83023","Brignoles","acv-040","Brignoles",2018-10-01
 "83050","Draguignan","acv-077","Draguignan",2018-09-28
@@ -219,6 +225,7 @@
 "95052","Beaumont-sur-Oise","acv-026","Beaumont-sur-Oise - Persan",2018-12-06
 "95277","Gonesse","acv-097","Gonesse",2018-11-14
 "95487","Persan","acv-026","Beaumont-sur-Oise - Persan",2018-12-06
+"95500","Pontoise","acv-226","Pontoise",
 "97101","Les Abymes","acv-114","Les Abymes - Pointe-à-Pitre",2018-09-27
 "97105","Basse-Terre","acv-023","Basse-Terre",2018-09-27
 "97120","Pointe-à-Pitre","acv-114","Les Abymes - Pointe-à-Pitre",2018-09-27
