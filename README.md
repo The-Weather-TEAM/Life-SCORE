@@ -59,9 +59,8 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v1.0
+# Version actuelle : v1.0.1
 
-> Version finale pour les Trophées NSI.
 
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
 
