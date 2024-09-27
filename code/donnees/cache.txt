@@ -1,1 +1,0 @@
-{'Boujan-sur-Libron': 33, 'Sauvian': 31, 'Corneilhan': 42, 'Lieuran-lès-Béziers': 44, 'Bassan': 33, 'Villeneuve-lès-Béziers': 38, 'Lignan-sur-Orb': 33, 'Maraussan': 38, 'Cers': 33, 'Vendres': 50}
