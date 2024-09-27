@@ -1,0 +1,6 @@
+requests>=2.27.1
+pandas>=1.4.0
+customtkinter>=5.0.3
+urllib3>=1.26.8
+tkintermapview>=1.28
+pillow>=10.2.0
