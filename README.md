@@ -59,7 +59,7 @@ Notre projet porte une grande importance sur la gestion des bugs et erreurs. Nou
 
 
 
-# Version actuelle : v1.0.1
+# Version actuelle : v1.0.2
 
 
 Lien vers la liste complète des changements : https://github.com/The-Weather-TEAM/Life-SCORE/releases
@@ -719,6 +719,13 @@ On résout le bug en vérifiant si les valeurs n'ont pas déjà été posées da
 10 Juin 2023 : **Nouvelle version v1.0.1**
 > Mise à jour du fichier zip pour le premier téléchargement ;
 
-> Le terminal ne s'affiche plus lors de l'utilisation de l'pplication ;
+> Le terminal ne s'affiche plus lors de l'utilisation de l'application ;
 
 > Suppression du CSV lycées.
+
+
+
+27 Septembre 2024 : **Nouvelle version v1.0.2**
+> Mise à jour de la BDD ;
+
+> Compatibilité Python 3.12.
